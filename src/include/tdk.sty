@@ -2,6 +2,9 @@
 
 \ProvidesPackage{include/tdk}
 
+% For patching commands
+\RequirePackage{etoolbox}
+
 %
 % Encoding and language
 %
@@ -18,26 +21,36 @@
 % Typography
 %
 
-\RequirePackage[scaled=0.91,tabular,lining,semibold]{FiraSans}
-\RequirePackage[scaled=0.91]{FiraMono}
-\RequirePackage{fourier}
-\RequirePackage[scaled=0.97,space=1.02]{erewhon}
-%\RequirePackage[utopia,vvarbb,bigdelims,cmintegrals]{newtxmath}
-\RequirePackage[scr=boondoxo]{mathalfa}
+\RequirePackage[scaled=0.92,semibold]{FiraSans}
+\RequirePackage[scaled=0.92,lining]{FiraMono}
+\RequirePackage[scaled=0.98,osf]{XCharter}
+\RequirePackage[charter,vvarbb,scaled=1.07]{newtxmath}
+\RequirePackage[cal=boondoxo]{mathalfa}
 \let\mathcal\mathscr
+\RequirePackage{stmaryrd}
 \newcommand*{\thinfont}{\firalight\color{black!75}}
 
-% Improve microtypography and add tracking to small-caps text
-\RequirePackage[final,babel,kerning,tracking,letterspace=30]{microtype}
+% Improve microtypography
+\RequirePackage[final,babel,kerning,stretch=10,shrink=10]{microtype}
+
+% Set tracking for small-caps text
+% https://tex.stackexchange.com/a/157424/8744
+\DeclareMicrotypeSet{italicsmallcaps}{
+  encoding={OT1,T1,T2A,LY1,OT4,QX,T5,TS1,EU1,EU2},
+  family=rm*,
+  shape={sc,sc*,scsl,scit}
+}
+\microtypesetup{tracking=italicsmallcaps}
+\SetTracking{encoding=*, shape=sc}{30}
+\SetTracking{encoding=*, shape=scit}{50}
 
 % Microtypographic settings for Hungarian text (see Hungarian babel
 % 1.5 manual, p. 5)
-\DeclareMicrotypeBabelHook{magyar,hungarian}{kerning=magyar,spacing=}
+\DeclareMicrotypeBabelHook{magyar,hungarian}{kerning=magyar}
 \SetExtraKerning[context=magyar,unit=space]{encoding={T1,OT1,LY1}}{%
   :={500,},;={500,},?={500,},!={500,}}
 
 % Sans serif chapter titles
-\renewcommand*{\chapnamefont}{\normalfont\huge\textit}
 \renewcommand*{\chapnamefont}{\normalfont\huge\thinfont}
 \renewcommand*{\chapnumfont}{\chapnamefont}
 \renewcommand*{\chaptitlefont}{\normalfont\Huge\sffamily\bfseries\color{black}}
@@ -45,19 +58,19 @@
 \renewcommand*{\cftchapterpagefont}{\cftchapterfont}
 
 % Sans serif headings
-\setsecheadstyle{\Large\sffamily\bfseries}
-\setsubsecheadstyle{\large\sffamily\bfseries}
-\setsubsubsecheadstyle{\normalsize\sffamily\bfseries}
-\setparaheadstyle{\normalsize\sffamily\bfseries}
-\setsubparaheadstyle{\normalsize\sffamily\bfseries}
+\setsecheadstyle{\LARGE\sffamily\bfseries}
+\setsubsecheadstyle{\Large\sffamily\bfseries}
+\setsubsubsecheadstyle{\large\sffamily\bfseries}
+\setparaheadstyle{\normalsize\bfseries}
+\setsubparaheadstyle{\normalsize\scshape}
 
 % Captions
-\captionnamefont{\normalfont\sffamily\bfseries}
+\captionnamefont{\normalfont\bfseries}
 \captiondelim{\quad}
 \captiontitlefont{\normalfont}
 
 % Use a command to write upright parentheses even in italic text
-\newcommand{\paren}[1]{\textup(#1\textup)}
+\newcommand*{\paren}[1]{\textup(#1\textup)}
 
 %
 % Document divisions
@@ -66,6 +79,10 @@
 % Number subsections
 \setsecnumdepth{subsection}
 \settocdepth{subsection}
+
+% Do not justify margin notes
+\let\tdk@orig@marginpar\marginpar
+\renewcommand\marginpar[1]{\tdk@orig@marginpar{\flushleft #1\par}}
 
 % Display current chapter and section in the header
 \newcommand*{\markstyle}[1]{{\thinfont #1}}
@@ -104,14 +121,23 @@
 % Tables and lists
 %
 
-\RequirePackage{array,booktabs,mdwlist,paralist,multirow}
+\RequirePackage{array,booktabs,mdwlist,paralist,multirow,tabu}
 
 % Make tabulars looser, but do not affect matrices
+
+\newcommand*{\setarraystretch}{\renewcommand*{\arraystretch}{1.2}}
+
 \newenvironment{tighttabular}{}{}
 \let\tighttabular\tabular\let\endtighttabular\endtabular
 \renewenvironment{tabular}{%
-  \renewcommand*{\arraystretch}{1.2}
+  \setarraystretch
   \tighttabular}{\endtighttabular}
+
+\newenvironment{tighttabu}{}{}
+\let\tighttabu\tabu\let\endtighttabu\endtabu
+\renewenvironment{tabu}{%
+  \setarraystretch
+  \tighttabu}{\endtighttabu}
 
 %
 % Mathematics I
@@ -119,11 +145,46 @@
 
 \RequirePackage{amsmath,relsize,stackengine,mleftright,mathtools,upgreek,nicefrac,bm,blkarray}
 
+% Set the math font to XCharter instead of Fourier.
+%\RequirePackage[defaultmathsizes,italic]{mathastext}
+
+% Use the Computer Modern arrows for better readability.
+% http://tex.stackexchange.com/a/136339/8744
+% load the CM symbol font
+\DeclareSymbolFont{arrows}{OMS}{cmsy}{m}{n}
+% change the arrows to be taken from the CM symbol font
+\DeclareMathSymbol{\leftrightarrow}{\mathrel}{arrows}{"24}
+\DeclareMathSymbol{\leftarrow}{\mathrel}{arrows}{"20}
+   \let\gets=\leftarrow
+\DeclareMathSymbol{\rightarrow}{\mathrel}{arrows}{"21}
+   \let\to=\rightarrow
+\DeclareMathSymbol{\mapstochar}{\mathrel}{arrows}{"37}
+% the bar for making longer arrows
+\DeclareMathSymbol{\relbardash}{\mathbin}{arrows}{"00}
+\DeclareRobustCommand\relbar{%
+  \mathrel{\smash\relbardash}% \smash, because - has the same height as +
+}
+
 \allowdisplaybreaks
+
+\newcommand*{\tagstyle}[1]{{\small{(#1)}}}
+\newcommand*{\Tagstyle}[1]{\tagstyle{\textsc{#1}}}
 
 % Print small equation numbers
 % http://tex.stackexchange.com/a/100151/8744
-\def\tagform@#1{\maketag@@@{\small(#1)\@@italiccorr}}
+\def\tagform@#1{\maketag@@@{\tagstyle{#1}\@@italiccorr}}
+
+% % Fix spacing between amsmath environments in minipages
+% % http://tex.stackexchange.com/a/36963/8744
+% \pretocmd\start@align{%
+%   \if@minipage\kern-\topskip\kern-\abovedisplayskip\fi
+% }{}{}
+% \pretocmd\start@multline{%
+%   \if@minipage\kern-\topskip\kern-\abovedisplayskip\fi
+% }{}{}
+% \pretocmd\start@gather{%
+%   \if@minipage\kern-\topskip\kern-\abovedisplayskip\fi
+% }{}{}
 
 % We will use ntheorem, so we must load empheq with the ntheorem option.
 \RequirePackage[ntheorem]{empheq}
@@ -164,7 +225,7 @@
 \RequirePackage{framed}
 
 % Sans serif theorem headers
-\theoremheaderfont{\normalfont\sffamily\bfseries}
+\theoremheaderfont{\normalfont\bfseries}
 \theorembodyfont{\normalfont}
 
 % Emulate an amsthm-style proof environment
@@ -185,9 +246,12 @@
   \th@nonumberplain
   \def\theorem@headerfont{\itshape}%
   \normalfont
-  \theoremsymbol{\ensuremath{_\blacksquare}}%
   \@thm{proof}{proof}{#1.}%
 }{\@endtheorem}
+\providecommand{\proofsketchname}{Proof sketch}
+\newenvironment{proofsketch}[1][\proofsketchname]{%
+  \begin{proof}[#1]\let\proofSymbol\relax}{\end{proof}}
+    
 
 % Upright parentheses in theorem titles, leave an em space after
 % theorem number
@@ -198,10 +262,11 @@
 \theoremseparator{}
 
 % Highlight theorems with a rule
-\theorempreskip{1pt plus 0pt minus 0pt}
-\theorempostskip{1pt plus 0pt minus 0pt}
+\theorempreskip{0pt plus 0pt minus 0pt}
+% Shorted the theorem frame by 3pt to match up with the descenders.
+\theorempostskip{-2pt plus 0pt minus 0pt}
 \theoreminframepreskip{1pt plus 0pt minus 0pt}
-\theoreminframepostskip{1pt plus 0pt minus 0pt}
+\theoreminframepostskip{3pt plus 0pt minus 0pt}
 \theoremframepreskip{0.5\baselineskip}
 \theoremframepostskip{0.5\baselineskip}
 \def\theoremframecommand{{\color{black!15}\vrule width 4pt\hspace{7pt}}}
@@ -211,7 +276,6 @@
 %
 
 % Cleveref must be loaded after ntheorem
-
 
 % Cleveref adds the type of the referred entity (eg. Section~1.1) to
 % the reference. 
@@ -275,7 +339,8 @@
 \RequirePackage{graphicx}
 
 \RequirePackage{tikz}
-\usetikzlibrary{arrows.meta,calc,chains,decorations.pathreplacing,shadows,shapes.multipart,matrix,positioning,trees}
+\usetikzlibrary{arrows.meta,calc,chains,decorations.pathreplacing,
+  shadows,shapes.multipart,matrix,positioning,trees}
 
 % Create a bg layer for drawings
 \pgfdeclarelayer{bg}
@@ -373,7 +438,8 @@
 
 % Bibliography is (Author, year) style and generated by biber
 \RequirePackage[
-  style=numeric-comp,
+  style=authoryear-comp,
+  dashed=false,
   maxnames=2,
   maxbibnames=99,
   uniquename=init,
@@ -443,6 +509,15 @@
   {\usebibmacro{cite:dump}%
    \usebibmacro{postnote}}
 
+\urlstyle{tt}
+\renewcommand*{\biburlsetup}{%
+  \Urlmuskip=0mu plus 1mu\relax%
+  \mathchardef\UrlBigBreakPenalty=100\relax%
+  \renewcommand*{\UrlBigBreaks}{\do\:\do\/}%
+}
+ 
+\renewcommand*{\bibfont}{\normalfont\small}
+
 %
 % Landscape figures
 %
@@ -476,5 +551,34 @@
 
 % Include thesis topic as a literal
 \RequirePackage{pdfpages}
+
+\newcommand*{\todo}{\@ifstar\todo@star\todo@nostar}
+\newcommand*{\todo@star}[1]{\textbf{\textsf{\color{red}[TODO: #1]}}}
+\newcommand*{\todo@nostar}[1]{\marginpar{\todo@star{#1}}}
+
+\newcommand*{\textabbr}[1]{\texorpdfstring{\textsc{\MakeLowercase{#1}}}{#1}}
+\newcommand*{\textAbbr}[1]{\texorpdfstring{\textsc{\MakeLowercase{#1}}\nobreak\verythinspace}{#1}}
+% https://tex.stackexchange.com/a/196035/8744
+\newcommand*{\verythinspace}{\hspace*{0.05556em}}
+
+% https://tex.stackexchange.com/a/234724/8744
+\DeclareRobustCommand{\SMC}{%
+  \ifx\@currsize\normalsize\small\else
+   \ifx\@currsize\small\footnotesize\else
+    \ifx\@currsize\footnotesize\scriptsize\else
+     \ifx\@currsize\large\normalsize\else
+      \ifx\@currsize\Large\large\else
+       \ifx\@currsize\LARGE\Large\else
+        \ifx\@currsize\scriptsize\tiny\else
+         \ifx\@currsize\tiny\tiny\else
+          \ifx\@currsize\huge\LARGE\else
+           \ifx\@currsize\Huge\huge\else
+            \small\SMC@unknown@warning
+ \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+}
+\newcommand*{\SMC@unknown@warning}{\TBWarning{\string\SMC: nonstandard
+    text font size command -- using \string\small}}
+\newcommand*{\textSMC}[1]{{\SMC #1}}
+\newcommand*{\mixedabbr}[1]{\textSMC{\textls[40]{#1}}}
 
 \endinput

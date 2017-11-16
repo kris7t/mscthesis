@@ -3,12 +3,25 @@
 % General
 %
 
+\newcommand*{\rel}[1]{\textrm{\itshape #1\/}}
+\newcommand*{\lit}[1]{\texttt{\upshape #1}}
+
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
 \newcommand*{\dd}{\mathrm{d}}
 \newcommand*{\T}{\mathrm{T}}
 \newcommand*{\vecarrow}{}\let\vecarrow\vec
 \renewcommand*{\vec}[1]{\bm{\mathrm{#1}}}
+
+\newcommand*\circled[1]{\smash{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=1pt] (char) {\(\mathsmaller{#1}\)};}}}
+% Tuples
+\newcommand*{\ltup}{\langle}
+\newcommand*{\rtup}{\rangle}
+
+% Disjoint unions
+\newcommand*{\djcup}{\sqcup}
+\newcommand*{\bigdjcup}{\bigsqcup}
 
 %
 % Numbers
@@ -20,6 +33,16 @@
 \newcommand*{\ZZ}{\mathbb{Z}} % Whole numbers
 \newcommand*{\NN}{\mathbb{N}} % Naturals
 \newcommand*{\NNpos}{\NN^{+}} % Positive whole numbers
+\newcommand*{\BB}{\mathbb{B}} % Booleans
+
+%
+% Petri nets
+%
+\newcommand*{\outarc}{\leftarrow}
+\newcommand*{\inarc}{\rightarrow}
+\newcommand*{\inharc}{\multimap}
+\newcommand*{\assign}{\coloneq}
+\newcommand*{\member}{\mathrel{{+}{=}}}
 
 %
 % Probability
@@ -28,6 +51,24 @@
 \let\Pr\relax
 \DeclareMathOperator{\Pr}{\mathbb{P}}
 \DeclareMathOperator{\Ex}{\mathbb{E}}
+
+%
+% Types
+%
+
+\newcommand*{\subtype}{\mathrel{<\vcentcolon}}
+\newcommand*{\oftype}{\mathrel{\vcentcolon}}
+\newcommand*{\bagtype}[1]{#1\mathclose{\texttt{[]}}}
+
+%
+% EBNF
+%
+
+\newcommand*{\ebnfEq}{\Coloneqq}
+\newcommand*{\ebnfCont}{\mathrel{\hphantom{\ebnfEq}\mathllap{\mid}}}
+\newcommand*{\ebnfSingleEq}{\mathrel{\hphantom{\ebnfEq}\mathllap{=}}}
+\newcommand*{\ebnfV}[1]{\ensuremath{#1}}
+\newcommand*{\ebnfVar}[1]{\ebnfV{\rel{#1}}}
 
 %%% Local Variables:
 %%% mode: latex
