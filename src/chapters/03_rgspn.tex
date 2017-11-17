@@ -53,12 +53,12 @@ The \textabbr{RGSPN} formalism contains six symbol \emph{kinds} which comprise \
 \item \textbf{Places} correspond to Petri net places. The token game of the net changes the markings of the places starting from their defined initial marking. The marking is a nonnegative whole number, i.e.~colored variants of \textAbbr{GSPN}s are not currently supported. When \textAbbr{RGSPN}s are shown as graphs places are displayed as \(\bigcirc\)~circles.
 \item \textbf{Transitions} correspond to Petri net transitions. They are equipped with a \emph{firing policy}, which is either \emph{timed} or \emph{immediate}. Timed transitions have a \emph{rate} parameter, which is the rate of the exponentially distributed firing delay. Immediate transitions have a probability \emph{weight} and a \emph{priority} consistently with the net-level specification of immediate transitions in \textAbbr{GSPN}s~\citep{}. Graphically, timed transitions are \(\square\)~rectangles, while immediate transitions are \(\blacksquare\)~filled.
 \item \textbf{Variables} are expressions that may refer to the markings of transitions, other variables and parameters of the net. The \emph{type} of the expression determines the context where a reference to a variable may appear in the net. Variables are shown as \(\triangle\)~triangles.
-\item \textbf{Parameters} are associated with constant real values and express the dependence of the model on continuous parameters. Parameter nodes are preserved during the inlining of the net into a \textabbr{GSPN} as symbolic placeholders. Hence the external tool that solves the \textabbr{GSPN} to answer the queries may constrUct a parametric \textabbr{CTMC} and apply sensitivity analysis~\todo*{cite} or parameter synthesis~\todo*{cite}. The graphical notation for a parameter symbol is a \(\blacktriangle\)~filled triangle.
+\item \textbf{Parameters} are associated with constant real values and express the dependence of the model on continuous parameters. Parameter nodes are preserved during the inlining of the net into a \textabbr{GSPN} as symbolic placeholders. Hence the external tool that solves the \textabbr{GSPN} to answer the queries may construct a parametric \textabbr{CTMC} and apply sensitivity analysis~\todo*{cite} or parameter synthesis~\todo*{cite}. The graphical notation for a parameter symbol is a \(\blacktriangle\)~filled triangle.
 \end{itemize}
 
 \begin{figure}
   \centering
-  \includegraphics[scale=0.65]{figures/rgspn_example}
+  \includegraphics{figures/rgspn_example}
   \caption{Example \textabbr{RGSPN} model with two deadlock-free dining philosophers and an aggregate performance measure \textit{totalThinkingTime}.}
 \end{figure}
 

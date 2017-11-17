@@ -2,6 +2,10 @@
 
 \ProvidesPackage{include/tdk}
 
+% Set pdf versiont at the beginning
+% https://tex.stackexchange.com/a/87946/8744
+\usepackage{pdf14}
+
 % For patching commands
 \RequirePackage{etoolbox}
 
@@ -95,7 +99,7 @@
   \def\chaptermark##1{%
     \markboth{\thechapter\quad##1}{}}%
   \def\tocmark{%
-    \markboth{\contentsname}{}}
+    \markboth{\contentsname}{\contentsname}}
   \def\sectionmark##1{%
     \markright{%
       \ifnum\c@secnumdepth > \z@
@@ -202,14 +206,35 @@
 % Use cleveref for labels far away (loaded after hyperref)
 \renewcommand*{\reftextfaraway}[1]{on~\cpageref{#1}}
 
-% Now we can load hyperref
+% PDF/A-1b magic
+% https://tex.stackexchange.com/a/136653/8744
+% We cheat and only embed the ICC profile with ghostscript in the
+% PDA_defs.ps script, after normalizing the fonts in the document.
+% \immediate\pdfobj stream attr{/N 3}  file{eciRGB_v2.icc}
+% \pdfcatalog{%
+% /OutputIntents [ <<
+% /Type /OutputIntent
+% /S/GTS_PDFA1
+% /DestOutputProfile \the\pdflastobj\space 0 R
+% /OutputConditionIdentifier (eciRGB v2)
+% /Info(eciRGB v2)
+% >> ]
+% }
+
+% Now we can load hyperxml and hyperref
+\RequirePackage{hyperxmp}
 \RequirePackage[
   hyperfootnotes=false,
   breaklinks=true,
   hypertexnames=false,
   plainpages=false,
   pdfpagelabels=true,
-  hidelinks
+  hidelinks,
+  pdftex,
+  pdfa=true,  % Do not violate PDF/A-1b intentionally (real compilance is
+              % achieved by ghostscript).
+  bookmarksopen=true,
+  bookmarksopenlevel=3
 ]{hyperref}
 
 %
@@ -336,7 +361,10 @@
 % Graphics
 %
 
+\RequirePackage[rgb]{xcolor}
 \RequirePackage{graphicx}
+% https://tex.stackexchange.com/a/50834/8744
+\pdfinclusioncopyfonts=1
 
 \RequirePackage{tikz}
 \usetikzlibrary{arrows.meta,calc,chains,decorations.pathreplacing,

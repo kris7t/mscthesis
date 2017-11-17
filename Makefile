@@ -1,18 +1,29 @@
 PROJECTNAME=MScThesis
 
-.PHONY: all clean
+.PHONY: all latex figures clean
 
-all:
-	if [ -a out/run2.pid ]; then rm -rf out; fi;
-	if [ -a out/run1.pid ]; then touch out/run2.pid; fi;
-	mkdir -p out pdf
-	touch out/run1.pid
+CONVERT_SVG := $(patsubst src/figures/%.svg,out/figures/%.pdf,$(wildcard src/figures/*.svg))
 
-	mkdir -p out out/include out/chapters pdf
-	cd src; texfot latexmk -pdf -outdir=../out -jobname=$(PROJECTNAME) -interaction=nonstopmode main; echo $?
-	mv out/$(PROJECTNAME).pdf pdf/$(PROJECTNAME).pdf
+all: latex pdf/$(PROJECTNAME).pdf
 
-	rm  out/run*.pid
+pdf/$(PROJECTNAME).pdf: out/$(PROJECTNAME).pdf
+	gs -sDEVICE=pdfwrite -q -P- -dNOPAUSE -dBATCH -dCompatibilityLevel=1.4 -dPDFA=2 -dPDFACompatibilityPolicy=1 -dOPM=0 -dColorConversionStrategy=/RGB -sProcessColorModel=DeviceRGB -dPDFSETTINGS=/prepress -dOptimize=true -dEmbedAllFonts=true -dSubsetFonts=true -dCompressFonts=true -dCompressPages=true -dCannotEmbedFontPolicy=/Warning -sDEVICE=pdfwrite -sOutputFile=pdf/$(PROJECTNAME).pdf src/PDFA_def.ps out/$(PROJECTNAME).pdf
+
+figures: $(CONVERT_SVG)
+	@true
+
+$(CONVERT_SVG): out/figures/%.pdf: src/figures/%.svg
+	inkscape --file=$^ --export-area=drawing --without-gui --export-pdf=$@
+
+latex:
+	@if [ -a out/run2.pid ]; then rm -rf out; echo "============"; echo "PREVIOUS RUN WAS UNEXPECTEDLY INTERRUPTED, CLEANING OUTPUT DIRECTORY!"; echo "------------"; fi
+	@if [ -a out/run1.pid ]; then touch out/run2.pid; fi
+	@mkdir -p out pdf
+	@touch out/run1.pid
+	@mkdir -p out out/include out/figures out/chapters pdf
+	@$(MAKE) --no-print-directory figures
+	@cd src; latexmk -pdf -pdflatex="texfot --quiet pdflatex --file-line-error --shell-escape" -outdir=../out -jobname=$(PROJECTNAME) -interaction=nonstopmode main; echo $?
+	@rm  out/run*.pid
 
 jenkins: clean all
 
