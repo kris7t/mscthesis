@@ -138,11 +138,11 @@ The \emph{dependence qualifier} specifies the evaluation context of an expressio
 \item A \lit{param} expression refers to the values of continuous model parameters, which are embodied by parameter symbols.
 \item A \lit{marking} expression refers to the token counts of places; therefore it yields a different value in different Petri net markings.
 \item A \lit{weight} expression is both parameter- and marking-dependent.
-\item A \lit{prop} expression is a performance measure or query that can be determined by model checking and stochastic analysis.
-\item A \lit{path} expression is a path property. It may be a complete \textabbr{LTL} query or appear as a path formula in a \(\textabbr{CTL}^*\) \lit{prop} query.
+\item A \lit{prop} expression is a performance measure or query that can be determined by model checking and stochastic analysis, but may also depend on the initial marking.
+\item A \lit{path} expression is a path property defined along a trace of model execution. It may be a complete \textabbr{LTL} query or appear as a path formula in a \(\textabbr{CTL}^*\) \lit{prop} query.
 \end{compactitem}
 
-Some analysis methods only allow specific kinds of parameter-dependence, such as \(C^1\) differentiable expressions~\citep{Blake88sensitivity} or rational functions~\citep{Blake88sensitivity}. However, no attempt is make to track different classes of parameter-dependent functions in \lit{param} expressions, because the restrictions on parametric expressions are highly specific to these analysis methods. If such validations is required, either the \textabbr{RGSPN} can be inspected when being exported for analysis, or the type system can be modified for the needs of the particular analysis method.
+Some analysis methods only allow specific kinds of parameter-dependence, such as \(C^1\) differentiable expressions~\citep{Blake88sensitivity} or rational functions~\citep{Hanh11parametric}. However, no attempt is make to track different classes of parameter-dependent functions in \lit{param} expressions, because the restrictions on parametric expressions are highly specific to these analysis methods. If such validations is required, either the \textabbr{RGSPN} can be inspected when being exported for analysis, or the type system can be modified for the needs of the particular analysis method.
 
 \subsubsection{Subtyping}
 
