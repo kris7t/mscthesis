@@ -142,7 +142,7 @@ The \emph{dependence qualifier} specifies the evaluation context of an expressio
 \item A \lit{path} expression is a path property defined along a trace of model execution. It may be a complete \textabbr{LTL} query or appear as a path formula in a \(\textabbr{CTL}^*\) \lit{prop} query.
 \end{compactitem}
 
-Some analysis methods only allow specific kinds of parameter-dependence, such as \(C^1\) differentiable expressions~\citep{Blake88sensitivity} or rational functions~\citep{Hanh11parametric}. However, no attempt is make to track different classes of parameter-dependent functions in \lit{param} expressions, because the restrictions on parametric expressions are highly specific to these analysis methods. If such validations is required, either the \textabbr{RGSPN} can be inspected when being exported for analysis, or the type system can be modified for the needs of the particular analysis method.
+Some analysis methods only allow specific kinds of parameter-dependence, such as \(C^1\) differentiable expressions~\citep{Blake88sensitivity} or rational functions~\citep{Hahn11parametric}. However, no attempt is make to track different classes of parameter-dependent functions in \lit{param} expressions, because the restrictions on parametric expressions are highly specific to these analysis methods. If such validations is required, either the \textabbr{RGSPN} can be inspected when being exported for analysis, or the type system can be modified for the needs of the particular analysis method.
 
 \subsubsection{Subtyping}
 
