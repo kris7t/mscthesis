@@ -6,7 +6,6 @@ tramp
 .\#*
 
 out/
-pdf/
 /*.txss
 /*.sublime-workspace
 /*.sublime-project

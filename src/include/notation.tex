@@ -5,6 +5,7 @@
 
 \newcommand*{\rel}[1]{\textrm{\itshape #1\/}}
 \newcommand*{\lit}[1]{\texttt{\upshape #1}}
+\newcommand*{\symb}{}\let\symb\rel
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
@@ -43,6 +44,10 @@
 \newcommand*{\inharc}{\multimap}
 \newcommand*{\assign}{\coloneq}
 \newcommand*{\member}{\mathrel{{+}{=}}}
+\newcommand*{\Par}{\rel{Par}}
+\newcommand*{\Expr}{\rel{Expr}}
+\newcommand*{\Type}{\rel{Type}}
+\newcommand*{\RGSPN}{\textit{RGSPN}}
 
 %
 % Probability
@@ -59,6 +64,7 @@
 \newcommand*{\subtype}{\mathrel{<\vcentcolon}}
 \newcommand*{\oftype}{\mathrel{\vcentcolon}}
 \newcommand*{\bagtype}[1]{#1\mathclose{\texttt{[]}}}
+\newcommand*{\vartype}[2]{#1\ #2}
 
 %
 % EBNF

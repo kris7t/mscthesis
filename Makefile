@@ -7,13 +7,13 @@ CONVERT_SVG := $(patsubst src/figures/%.svg,out/figures/%.pdf,$(wildcard src/fig
 all: latex pdf/$(PROJECTNAME).pdf
 
 pdf/$(PROJECTNAME).pdf: out/$(PROJECTNAME).pdf src/PDFA_def.ps
-	gs -sDEVICE=pdfwrite -q -P- -dNOPAUSE -dBATCH -dCompatibilityLevel=1.4 -dPDFA=2 -dPDFACompatibilityPolicy=1 -dOPM=0 -dColorConversionStrategy=/RGB -sProcessColorModel=DeviceRGB -dPDFSETTINGS=/prepress -dOptimize=true -dEmbedAllFonts=true -dSubsetFonts=true -dCompressFonts=true -dCompressPages=true -dCannotEmbedFontPolicy=/Warning -sDEVICE=pdfwrite -sOutputFile=$@ src/PDFA_def.ps $^
+	gs -sDEVICE=pdfwrite -q -P- -dNOPAUSE -dBATCH -dCompatibilityLevel=1.4 -dPDFA=2 -dPDFACompatibilityPolicy=1 -dOPM=0 -dColorConversionStrategy=/RGB -sProcessColorModel=DeviceRGB -dPDFSETTINGS=/prepress -dOptimize=true -dEmbedAllFonts=true -dSubsetFonts=true -dCompressFonts=true -dCompressPages=true -dCannotEmbedFontPolicy=/Warning -sDEVICE=pdfwrite -sOutputFile=$@ src/PDFA_def.ps $<
 
 figures: $(CONVERT_SVG)
 	@true
 
 $(CONVERT_SVG): out/figures/%.pdf: src/figures/%.svg
-	inkscape --file=$^ --export-area=drawing --without-gui --export-pdf=$@
+	inkscape --file=$< --export-area=drawing --without-gui --export-pdf=$@
 
 latex:
 	@if [ -a out/run2.pid ]; then rm -rf out; echo "============"; echo "PREVIOUS RUN WAS UNEXPECTEDLY INTERRUPTED, CLEANING OUTPUT DIRECTORY!"; echo "============"; fi

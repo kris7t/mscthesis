@@ -21,14 +21,14 @@
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
             <y:GroupNode>
-              <y:Geometry height="284.80572669921895" width="287.43092116210926" x="483.35072" y="251.26883330078118"/>
+              <y:Geometry height="284.805726699219" width="287.43092116210926" x="483.35072" y="251.26883330078113"/>
               <y:Fill color="#FFFFFF" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#B3CBFF" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="287.43092116210926" x="0.0" y="0.0">philosopher1</y:NodeLabel>
               <y:Shape type="roundrectangle"/>
               <y:State closed="false" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
               <y:Insets bottom="1" bottomF="1.0" left="1" leftF="1.0" right="1" rightF="1.0" top="1" topF="1.0"/>
-              <y:BorderInsets bottom="13" bottomF="12.53376000000003" left="7" leftF="6.963199999999915" right="19" rightF="18.713641162109298" top="12" topF="12.408714599609368"/>
+              <y:BorderInsets bottom="2" bottomF="2.243911163623693" left="7" leftF="6.963199999999915" right="18" rightF="18.37844116210954" top="6" topF="5.908714599609425"/>
             </y:GroupNode>
             <y:GroupNode>
               <y:Geometry height="50.0" width="50.0" x="841.0" y="361.0"/>
@@ -51,7 +51,7 @@
               <y:Geometry height="30.0" width="30.0" x="622.4031999999997" y="291.69599999999997"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="53.7486572265625" x="32.0" y="7.2251739501953125">thinking1<y:LabelModel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="19.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="97.0" x="32.0" y="5.5">&lt;html&gt;thinking1  &lt;font color="#0000ff"&gt;: place&lt;/font&gt;&lt;tt&gt;  &lt;/tt&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -69,7 +69,7 @@
               <y:Geometry height="30.0" width="30.0" x="622.4031999999997" y="374.8124000000001"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="48.675445556640625" x="32.0" y="7.2251739501953125">waiting1<y:LabelModel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="19.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="91.0" x="32.0" y="5.5">&lt;html&gt;waiting1  &lt;font color="#0000ff"&gt;: place&lt;/font&gt;&lt;tt&gt;  &lt;/tt&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -87,7 +87,8 @@
               <y:Geometry height="30.0" width="30.0" x="622.4031999999997" y="450.2980000000001"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="43.2904052734375" x="32.0" y="7.2251739501953125">eating1<y:LabelModel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="30.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="42.0" x="32.0" y="0.0">&lt;html&gt;eating1&lt;br&gt;
+&lt;font color="#0000ff"&gt;: place&lt;/font&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -105,8 +106,9 @@
               <y:Geometry height="15.0" width="30.0" x="622.4031999999997" y="341.06960000000004"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="96.0" x="32.0" y="-8.5">&lt;html&gt;getHungry1&lt;br&gt;
-&lt;font family="DejaVu Sans"&gt;λ&lt;/font&gt; = hungryRate1&lt;tt&gt; &lt;/tt&gt;<y:LabelModel>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="94.0" x="32.0" y="-14.0">&lt;html&gt;getHungry1&lt;br&gt;
+&lt;font family="DejaVu Sans"&gt;λ&lt;/font&gt; = hungryRate1&lt;font size=1&gt;&lt;tt&gt;  &lt;/tt&gt;&lt;/font&gt;&lt;br&gt;
+&lt;font color="#0000ff"&gt;: tran&lt;/font&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -124,8 +126,9 @@
               <y:Geometry height="8.0" width="30.0" x="622.4031999999997" y="423.5552000000001"/>
               <y:Fill color="#999999" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="71.0" x="32.0" y="-12.0">&lt;html&gt;startEating1&lt;tt&gt; &lt;/tt&gt;&lt;br&gt;
-w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="69.0" x="32.0" y="-17.5">&lt;html&gt;startEating1&lt;font size=1&gt;&lt;tt&gt; &lt;/tt&gt;&lt;/font&gt;&lt;br&gt;
+w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
+&lt;font color="#0000ff"&gt;: tran&lt;/font&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -143,14 +146,9 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
               <y:Geometry height="15.0" width="30.0" x="622.4031999999997" y="499.0408000000001"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="92.0" x="32.0" y="-8.5">&lt;html&gt;finishEating1&lt;br&gt;
-&lt;font family="Fira Sans"&gt;λ&lt;/font&gt; = eatingRate1&lt;tt&gt; &lt;/tt&gt;<y:LabelModel>
-                  <y:SmartNodeLabelModel distance="2.0"/>
-                </y:LabelModel>
-                <y:ModelParameter>
-                  <y:SmartNodeLabelModelParameter labelRatioX="-0.5" labelRatioY="0.0" nodeRatioX="0.5" nodeRatioY="0.0" offsetX="2.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
-                </y:ModelParameter>
-              </y:NodeLabel>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="free" modelPosition="anywhere" textColor="#000000" verticalTextPosition="bottom" visible="true" width="94.0" x="32.0" y="-9.210151163623664">&lt;html&gt;getHungry1&lt;br&gt;
+&lt;font family="DejaVu Sans"&gt;λ&lt;/font&gt; = hungryRate1&lt;font size=1&gt;&lt;tt&gt; &lt;/tt&gt;&lt;/font&gt;&lt;br&gt;
+&lt;font color="#0000ff"&gt;: tran&lt;/font&gt;</y:NodeLabel>
               <y:Shape type="rectangle"/>
             </y:ShapeNode>
           </data>
@@ -185,8 +183,9 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
               <y:Geometry height="30.0" width="30.0" x="491.31391999999994" y="280.2271999999999"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="27.09930419921875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="80.20611572265625" x="32.0" y="1.450347900390625">thinkingTime1
-= #thinking1<y:LabelModel>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="79.0" x="32.0" y="-6.5">&lt;html&gt;thinkingTime1&lt;br&gt;
+= #thinking1&lt;br&gt;
+&lt;font color="#0000ff"&gt;: marking int&lt;/font&gt;&lt;font size=1&gt;&lt;tt&gt;  &lt;/tt&gt;&lt;/font&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -201,11 +200,12 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
           <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
-              <y:Geometry height="30.0" width="30.0" x="491.31391999999994" y="326.06960000000004"/>
+              <y:Geometry height="30.0" width="30.0" x="491.31391999999994" y="323.710304"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="27.09930419921875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="71.70278930664062" x="32.0" y="1.450347900390625">hungryRate1
-= 3.0<y:LabelModel>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="85.0" x="32.0" y="-6.5">&lt;html&gt;hungryRate1&lt;br&gt;
+= 3.0&lt;br&gt;
+&lt;font color="#0000ff"&gt;: const double&lt;/font&gt;&lt;font size=1&gt;&lt;tt&gt;  &lt;/tt&gt;&lt;/font&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -220,11 +220,12 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
           <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
-              <y:Geometry height="30.0" width="30.0" x="491.6903999999996" y="371.91200000000015"/>
+              <y:Geometry height="30.0" width="30.0" x="491.6903999999996" y="367.1934080000001"/>
               <y:Fill color="#999999" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="27.09930419921875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="67.996826171875" x="32.0" y="1.450347900390625">eatingRate1
-= 0.5<y:LabelModel>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="89.0" x="32.0" y="-6.5">&lt;html&gt;eatingRate1&lt;br&gt;
+= 0.5&lt;br&gt;
+&lt;font color="#0000ff"&gt;: param double&lt;/font&gt;&lt;font size=1&gt;&lt;tt&gt;  &lt;/tt&gt;&lt;/font&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -282,14 +283,14 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
             <y:GroupNode>
-              <y:Geometry height="284.80572669921895" width="287.766121162109" x="788.340812672" y="251.26883330078118"/>
+              <y:Geometry height="284.805726699219" width="287.43092116210926" x="788.340812672" y="251.26883330078113"/>
               <y:Fill color="#FFFFFF" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#B3CBFF" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="287.766121162109" x="0.0" y="0.0">philosopher2</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#B3CBFF" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="287.43092116210926" x="0.0" y="0.0">philosopher2</y:NodeLabel>
               <y:Shape type="roundrectangle"/>
               <y:State closed="false" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
               <y:Insets bottom="1" bottomF="1.0" left="1" leftF="1.0" right="1" rightF="1.0" top="1" topF="1.0"/>
-              <y:BorderInsets bottom="13" bottomF="12.53376000000003" left="7" leftF="6.963199999999915" right="19" rightF="18.713641162109298" top="12" topF="12.408714599609368"/>
+              <y:BorderInsets bottom="2" bottomF="1.8343111636237381" left="7" leftF="6.963199999999915" right="17" rightF="17.37844116210954" top="6" topF="5.908714599609425"/>
             </y:GroupNode>
             <y:GroupNode>
               <y:Geometry height="50.0" width="50.0" x="841.0" y="361.0"/>
@@ -312,7 +313,7 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
               <y:Geometry height="30.0" width="30.0" x="927.3932926719997" y="291.69599999999997"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="54.49224853515625" x="32.0" y="7.2251739501953125">thinking2<y:LabelModel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="19.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="98.0" x="32.0" y="5.5">&lt;html&gt;thinking2  &lt;font color="#0000ff"&gt;: place&lt;/font&gt;&lt;tt&gt;  &lt;/tt&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -330,7 +331,7 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
               <y:Geometry height="30.0" width="30.0" x="927.3932926719997" y="374.8124"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="49.419036865234375" x="32.0" y="7.2251739501953125">waiting2<y:LabelModel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="19.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="92.0" x="32.0" y="5.5">&lt;html&gt;waiting2  &lt;font color="#0000ff"&gt;: place&lt;/font&gt;&lt;tt&gt;  &lt;/tt&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -348,7 +349,8 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
               <y:Geometry height="30.0" width="30.0" x="927.3932926719997" y="450.2980000000001"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="44.03399658203125" x="32.0" y="7.2251739501953125">eating2<y:LabelModel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="30.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="43.0" x="32.0" y="0.0">&lt;html&gt;eating2&lt;br&gt;
+&lt;font color="#0000ff"&gt;: place&lt;/font&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -366,8 +368,9 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
               <y:Geometry height="15.0" width="30.0" x="927.3932926719997" y="341.06960000000004"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="97.0" x="32.0" y="-8.5">&lt;html&gt;getHungry2&lt;br&gt;
-&lt;font family="DejaVu Sans"&gt;λ&lt;/font&gt; = hungryRate2&lt;tt&gt; &lt;/tt&gt;<y:LabelModel>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="95.0" x="32.0" y="-14.0">&lt;html&gt;getHungry2&lt;br&gt;
+&lt;font family="DejaVu Sans"&gt;λ&lt;/font&gt; = hungryRate2&lt;font size=1&gt;&lt;tt&gt;  &lt;/tt&gt;&lt;/font&gt;&lt;br&gt;
+&lt;font color="#0000ff"&gt;: tran&lt;/font&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -385,8 +388,9 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
               <y:Geometry height="8.0" width="30.0" x="927.3932926719997" y="423.5552000000001"/>
               <y:Fill color="#999999" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="72.0" x="32.0" y="-12.0">&lt;html&gt;startEating2&lt;tt&gt; &lt;/tt&gt;&lt;br&gt;
-w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="70.0" x="32.0" y="-17.5">&lt;html&gt;startEating2&lt;font size=1&gt;&lt;tt&gt; &lt;/tt&gt;&lt;/font&gt;&lt;br&gt;
+w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
+&lt;font color="#0000ff"&gt;: tran&lt;/font&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -404,14 +408,9 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
               <y:Geometry height="15.0" width="30.0" x="927.3932926719997" y="499.0408000000001"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="97.0" x="32.0" y="-8.5">&lt;html&gt;getHungry2&lt;br&gt;
-&lt;font family="DejaVu Sans"&gt;λ&lt;/font&gt; = hungryRate2&lt;tt&gt; &lt;/tt&gt;<y:LabelModel>
-                  <y:SmartNodeLabelModel distance="2.0"/>
-                </y:LabelModel>
-                <y:ModelParameter>
-                  <y:SmartNodeLabelModelParameter labelRatioX="-0.5" labelRatioY="0.0" nodeRatioX="0.5" nodeRatioY="0.0" offsetX="2.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
-                </y:ModelParameter>
-              </y:NodeLabel>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="free" modelPosition="anywhere" textColor="#000000" verticalTextPosition="bottom" visible="true" width="95.0" x="32.0" y="-8.800551163623709">&lt;html&gt;getHungry2&lt;br&gt;
+&lt;font family="DejaVu Sans"&gt;λ&lt;/font&gt; = hungryRate2&lt;font size=1&gt;&lt;tt&gt; &lt;/tt&gt;&lt;/font&gt;&lt;br&gt;
+&lt;font color="#0000ff"&gt;: tran&lt;/font&gt;</y:NodeLabel>
               <y:Shape type="rectangle"/>
             </y:ShapeNode>
           </data>
@@ -447,8 +446,9 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
               <y:Geometry height="30.0" width="30.0" x="796.3040126719999" y="280.2271999999999"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="27.09930419921875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="80.94970703125" x="32.0" y="1.450347900390625">thinkingTime2
-= #thinking2<y:LabelModel>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="80.0" x="32.0" y="-6.5">&lt;html&gt;thinkingTime2&lt;br&gt;
+= #thinking2&lt;br&gt;
+&lt;font color="#0000ff"&gt;: marking int&lt;/font&gt;&lt;font size=1&gt;&lt;tt&gt;  &lt;/tt&gt;&lt;/font&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -463,11 +463,12 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
           <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
-              <y:Geometry height="30.0" width="30.0" x="796.3040126719999" y="326.06960000000004"/>
+              <y:Geometry height="30.0" width="30.0" x="796.3040126719999" y="323.710304"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="27.09930419921875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="72.44638061523438" x="32.0" y="1.450347900390625">hungryRate2
-= 2.8<y:LabelModel>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="85.0" x="32.0" y="-6.5">&lt;html&gt;hungryRate2&lt;br&gt;
+= 2.8&lt;br&gt;
+&lt;font color="#0000ff"&gt;: const double&lt;/font&gt;&lt;font size=1&gt;&lt;tt&gt;  &lt;/tt&gt;&lt;/font&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -482,11 +483,12 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
           <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
-              <y:Geometry height="30.0" width="30.0" x="796.6804926719996" y="371.91200000000015"/>
+              <y:Geometry height="30.0" width="30.0" x="796.6804926719996" y="367.1934080000001"/>
               <y:Fill color="#999999" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="27.09930419921875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="68.74041748046875" x="32.0" y="1.450347900390625">eatingRate2
-= 0.45<y:LabelModel>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="89.0" x="32.0" y="-6.5">&lt;html&gt;eatingRate2&lt;br&gt;
+= 0.45&lt;br&gt;
+&lt;font color="#0000ff"&gt;: param double&lt;/font&gt;&lt;font size=1&gt;&lt;tt&gt;  &lt;/tt&gt;&lt;/font&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -544,14 +546,14 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
             <y:GroupNode>
-              <y:Geometry height="76.78137387082512" width="304.39552633599965" x="627.3634637490549" y="163.30938463315437"/>
+              <y:Geometry height="76.78137387082512" width="304.39552633599965" x="627.3634637490549" y="163.3093846331543"/>
               <y:Fill color="#FFFFFF" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#FFE1B3" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="304.39552633599965" x="0.0" y="0.0">table</y:NodeLabel>
               <y:Shape type="roundrectangle"/>
               <y:State closed="false" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
               <y:Insets bottom="1" bottomF="1.0" left="1" leftF="1.0" right="1" rightF="1.0" top="1" topF="1.0"/>
-              <y:BorderInsets bottom="15" bottomF="15.102037535998392" left="9" leftF="8.997506880000742" right="11" rightF="10.734732812263587" top="10" topF="10.129684235217354"/>
+              <y:BorderInsets bottom="13" bottomF="12.602037535998335" left="9" leftF="8.997506880000742" right="8" rightF="8.154746239997962" top="3" topF="3.3508605952361847"/>
             </y:GroupNode>
             <y:GroupNode>
               <y:Geometry height="50.0" width="50.0" x="841.0" y="361.0"/>
@@ -574,8 +576,9 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
               <y:Geometry height="30.0" width="30.0" x="767.6042438450565" y="189.9887209679811"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="27.09930419921875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="120.42001342773438" x="32.0" y="1.450347900390625">totalThinkingTime
-= sum(thinkingTimes)<y:LabelModel>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="123.0" x="32.0" y="-6.5">&lt;html&gt;totalThinkingTime&lt;br&gt;
+= sum(thinkingTimes)&lt;font size=1&gt;&lt;tt&gt;  &lt;/tt&gt;&lt;/font&gt;&lt;br&gt;
+&lt;font color="#0000ff"&gt;: prop double&lt;/font&gt;&lt;font size=1&gt;&lt;tt&gt;  &lt;/tt&gt;&lt;/font&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -593,11 +596,12 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
               <y:Geometry height="30.0" width="30.0" x="637.3609706290556" y="189.9887209679811"/>
               <y:Fill color="#FFFFFF" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="italic" hasBackgroundColor="false" hasLineColor="false" height="15.58563232421875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="80.7578125" x="32.0" y="7.207183837890625">thinkingTimes<y:LabelModel>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="30.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="89.0" x="34.33989668094705" y="-6.778823639981226">&lt;html&gt;&lt;i&gt;thinkingTimes&lt;/i&gt;&lt;br&gt;
+&lt;font color="#0000ff"&gt;: prop double[]&lt;font size=1&gt;&lt;tt&gt;  &lt;/tt&gt;&lt;/font&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
-                  <y:SmartNodeLabelModelParameter labelRatioX="-0.5" labelRatioY="0.0" nodeRatioX="0.5" nodeRatioY="0.0" offsetX="2.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+                  <y:SmartNodeLabelModelParameter labelRatioX="-0.5" labelRatioY="-0.2740392120006261" nodeRatioX="0.5" nodeRatioY="-0.5" offsetX="4.339896680947049" offsetY="0.0" upX="0.0" upY="-1.0"/>
                 </y:ModelParameter>
               </y:NodeLabel>
               <y:Shape type="triangle"/>
@@ -696,6 +700,8 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
             </y:ModelParameter>
             <y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
+          <y:EdgeLabel alignment="center" backgroundColor="#FFFFFF" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#0000FF" verticalTextPosition="bottom" visible="true" width="36.370208740234375" x="84.51414137139591" y="-16.58703873538144">:place<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          </y:EdgeLabel>
           <y:BendStyle smoothed="true"/>
         </y:PolyLineEdge>
       </data>
@@ -738,13 +744,7 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" backgroundColor="#FFFFFF" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" verticalTextPosition="bottom" visible="true" width="51.313995361328125" x="-119.22438381347695" y="-30.87855384285581">leftFork1<y:LabelModel>
-              <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
-            </y:LabelModel>
-            <y:ModelParameter>
-              <y:SmartEdgeLabelModelParameter angle="0.0" distance="30.0" distanceToCenter="true" position="center" ratio="0.5" segment="-1"/>
-            </y:ModelParameter>
-            <y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" backgroundColor="#FFFFFF" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="19.0" horizontalTextPosition="center" iconTextGap="4" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" verticalTextPosition="bottom" visible="true" width="95.0" x="-127.7405738567694" y="-31.82416916557645">&lt;html&gt;leftFork1  &lt;font color="#0000ff"&gt;: place&lt;/font&gt;&lt;tt&gt;  &lt;/tt&gt;<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="true"/>
         </y:PolyLineEdge>
@@ -831,7 +831,9 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" backgroundColor="#FFFFFF" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="italic" hasLineColor="false" height="15.58563232421875" horizontalTextPosition="center" iconTextGap="4" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#404040" verticalTextPosition="bottom" visible="true" width="59.81732177734375" x="54.9891841121098" y="-30.27494651606355">rightFork2<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" backgroundColor="#FFFFFF" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="italic" hasLineColor="false" height="15.58563232421875" horizontalTextPosition="center" iconTextGap="4" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#404040" verticalTextPosition="bottom" visible="true" width="59.81732177734375" x="54.848152548153394" y="-32.6613488476861">rightFork2<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          </y:EdgeLabel>
+          <y:EdgeLabel alignment="center" backgroundColor="#FFFFFF" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#0000FF" verticalTextPosition="bottom" visible="true" width="39.5484619140625" x="73.59080751574993" y="-18.943628051757855">: place<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="true"/>
         </y:PolyLineEdge>
@@ -875,7 +877,7 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" backgroundColor="#FFFFFF" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" verticalTextPosition="bottom" visible="true" width="52.057586669921875" x="-119.59619910046138" y="-30.836029682855667">leftFork2<y:LabelModel>
+          <y:EdgeLabel alignment="center" backgroundColor="#FFFFFF" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="19.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" verticalTextPosition="bottom" visible="true" width="95.0" x="-141.06740576550044" y="-31.698616657953323">&lt;html&gt;leftFork1  &lt;font color="#0000ff"&gt;: place&lt;/font&gt;&lt;tt&gt;  &lt;/tt&gt;<y:LabelModel>
               <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
             </y:LabelModel>
             <y:ModelParameter>

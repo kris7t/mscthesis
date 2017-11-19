@@ -2,8 +2,11 @@
 \documentclass[11pt,a4paper,twoside,openright,extrafontsizes]{memoir}
 
 \renewcommand*{\baselinestretch}{1.04}
-\semiisopage
+\settypeblocksize{*}{\dimexpr\paperheight/2}{1.6180339887}
 \setlrmargins{*}{*}{1}
+\setulmargins{*}{*}{1.6180339887}
+\setheadfoot{\baselineskip}{\baselineskip}
+\setheaderspaces{*}{\baselineskip}{*}
 \checkandfixthelayout
 
 \newif\iftdkoneside

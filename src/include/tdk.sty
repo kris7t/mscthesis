@@ -25,14 +25,15 @@
 % Typography
 %
 
-\RequirePackage[scaled=0.92,semibold]{FiraSans}
-\RequirePackage[scaled=0.92,lining]{FiraMono}
+\RequirePackage[scaled=0.91,semibold]{FiraSans}
+\RequirePackage[scaled=0.91,lining]{FiraMono}
 \RequirePackage[scaled=0.98,osf]{XCharter}
-\RequirePackage[charter,vvarbb,scaled=1.07]{newtxmath}
+\RequirePackage[libertine,vvarbb,scaled=1.07]{newtxmath}
 \RequirePackage[cal=boondoxo]{mathalfa}
 \let\mathcal\mathscr
 \RequirePackage{stmaryrd}
 \newcommand*{\thinfont}{\firalight\color{black!75}}
+\newcommand*{\LFfont}{\normalfont\fontfamily{XCharter-TLF}\selectfont}
 
 % Improve microtypography
 \RequirePackage[final,babel,kerning,stretch=10,shrink=10]{microtype}
@@ -55,7 +56,7 @@
   :={500,},;={500,},?={500,},!={500,}}
 
 % Sans serif chapter titles
-\renewcommand*{\chapnamefont}{\normalfont\huge\thinfont}
+\renewcommand*{\chapnamefont}{\normalfont\Huge\thinfont}
 \renewcommand*{\chapnumfont}{\chapnamefont}
 \renewcommand*{\chaptitlefont}{\normalfont\Huge\sffamily\bfseries\color{black}}
 \renewcommand*{\cftchapterfont}{\normalfont\sffamily\bfseries}
@@ -67,6 +68,12 @@
 \setsubsubsecheadstyle{\large\sffamily\bfseries}
 \setparaheadstyle{\normalsize\bfseries}
 \setsubparaheadstyle{\normalsize\scshape}
+
+\setbeforeparaskip{11pt plus 3pt minus 6pt}
+\setbeforesubparaskip{11pt plus 3pt minus 6pt}
+
+% Paragraph-life sectioning
+\newcommand*{\newpara}{\vspace{\beforeparaskip}\noindent\hspace*{\paraindent}}
 
 % Captions
 \captionnamefont{\normalfont\bfseries}
@@ -85,8 +92,9 @@
 \settocdepth{subsection}
 
 % Do not justify margin notes
+\RequirePackage{ragged2e}
 \let\tdk@orig@marginpar\marginpar
-\renewcommand\marginpar[1]{\tdk@orig@marginpar{\flushleft #1\par}}
+\renewcommand\marginpar[1]{\tdk@orig@marginpar{\RaggedRight #1\par}}
 
 % Display current chapter and section in the header
 \newcommand*{\markstyle}[1]{{\thinfont #1}}
@@ -173,6 +181,7 @@
 
 \newcommand*{\tagstyle}[1]{{\small{(#1)}}}
 \newcommand*{\Tagstyle}[1]{\tagstyle{\textsc{#1}}}
+\newcommand*{\Tag}[1]{\tag{\textsc{#1}}}
 
 % Print small equation numbers
 % http://tex.stackexchange.com/a/100151/8744
@@ -292,8 +301,8 @@
 \theorempostskip{-2pt plus 0pt minus 0pt}
 \theoreminframepreskip{1pt plus 0pt minus 0pt}
 \theoreminframepostskip{3pt plus 0pt minus 0pt}
-\theoremframepreskip{0.5\baselineskip}
-\theoremframepostskip{0.5\baselineskip}
+\theoremframepreskip{11pt plus 3pt minus 6pt}
+\theoremframepostskip{11pt plus 3pt minus 6pt}
 \def\theoremframecommand{{\color{black!15}\vrule width 4pt\hspace{7pt}}}
 
 %
@@ -314,7 +323,16 @@
 \DeclareRobustCommand{\labelfullref}{\cref@fullref{labelcref}}
 
 % Only number referred equations
+
+% HACK Do not do this at home
+% https://tex.stackechange.com/a/220277/8744
+\let\etoolboxforlistloop\forlistloop 
 \RequirePackage{autonum}
+\let\forlistloop\etoolboxforlistloop
+% biblatex check whether etextools is loaded and emits an error.
+% We fool \@ifpackageloaded by removing the macro \ver@etextools.sty
+\expandafter\let\csname ver@etextools.sty\endcsname\relax
+
 % Make autonum cleveref- and varioref-aware
 \autonum@generatePatchedReferenceCSL{Cref}
 \autonum@generatePatchedReferenceCSL{labelcref}
@@ -518,6 +536,9 @@
   %  \clearfield{url}}{}
 }
 
+\DeclareFieldFormat{isbn}{\mkbibacro{ISBN}\addcolon\space{\LFfont {#1}}}
+\DeclareFieldFormat{issn}{\mkbibacro{ISsN}\addcolon\space{\LFfont {#1}}}
+
 % Bibliography is "References"
 \DefineBibliographyStrings{english}{%
   bibliography = {References}
@@ -537,7 +558,7 @@
   {\usebibmacro{cite:dump}%
    \usebibmacro{postnote}}
 
-\urlstyle{tt}
+\let\UrlFont\LFfont
 \renewcommand*{\biburlsetup}{%
   \Urlmuskip=0mu plus 1mu\relax%
   \mathchardef\UrlBigBreakPenalty=100\relax%
