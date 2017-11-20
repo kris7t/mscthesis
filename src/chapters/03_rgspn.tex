@@ -130,7 +130,7 @@ The possible types are described by the following \textabbr{EBNF}-like grammar:
 
 The types \lit{place} and \lit{tran} correspond to places and transitions in the \textabbr{RGSPN} and the references thereof. Types of collections are formed by appending the \emph{collection qualifier} suffix \lit{[]} to the type of the members.
 
-The types of variables deviate from routine. Following the conventions in the presentation of substructural type systems (see e.g.~\cite{Walker05substructural}), the types of variables is split into a qualifier and a \emph{pretype}. The pretype part expresses the domain of values, \lit{boolean} for truth values \(\mathbb{B} = \{\lit{true}, \lit{false}\}\), \lit{int} for integers and \lit{double} for real numbers.
+The types of variables deviate from routine. Inspired by conventions from the presentation of substructural type systems (see e.g.~\cite{Walker05substructural}) the types of variables are split into a qualifier and a \emph{pretype}. The pretype part expresses the domain of values, \lit{boolean} for truth values \(\mathbb{B} = \{\lit{true}, \lit{false}\}\), \lit{int} for integers and \lit{double} for real numbers.
 
 The \emph{dependence qualifier} specifies the evaluation context of an expression as follows:
 \begin{compactitem}
@@ -142,47 +142,86 @@ The \emph{dependence qualifier} specifies the evaluation context of an expressio
 \item A \lit{path} expression is a path property defined along a trace of model execution. It may be a complete \textabbr{LTL} query or appear as a path formula in a \(\textabbr{CTL}^*\) \lit{prop} query.
 \end{compactitem}
 
-Some analysis methods only allow specific kinds of parameter-dependence, such as \(C^1\) differentiable expressions~\citep{Blake88sensitivity} or rational functions~\citep{Hahn11parametric}. However, no attempt is make to track different classes of parameter-dependent functions in \lit{param} expressions, because the restrictions on parametric expressions are highly specific to these analysis methods. If such validations is required, either the \textabbr{RGSPN} can be inspected when being exported for analysis, or the type system can be modified for the needs of the particular analysis method.
+Because symbol kinds are separated from types, the type system can be adapted for many different scenarios while leaving the Petri net structure intact. Some of these possible extension based on existing literature are explored in Remarks~\ref{rem:rgspn:parametric} and \ref{rem:rgspn:colored}.
+
+\begin{remark}\label{rem:rgspn:parametric}
+  Some analysis methods only allow specific kinds of parameter-dependence, such as \(C^1\) differentiable expressions~\citep{Blake88sensitivity} or rational functions~\citep{Hahn11parametric}. However, no attempt is make to track different classes of parameter-dependent functions in \lit{param} expressions, because the restrictions on parametric expressions are highly specific to these analysis methods. If such validations is required, either the \textabbr{RGSPN} can be inspected when being exported for analysis, or the type system can be modified for the needs of the particular analysis method.
+\end{remark}
 
 \subsubsection{Subtyping}
 
-\todo*{Draw a nice subdependence and subpretyping lattice}
+The type system proposed in \cref{eq:rgspn:type-ebnf} can be overly rigid, because otherwise valid usages of expressions are forbidden, e.g.~a \lit{const} literal is incompatible with a \lit{marking} context. We introduce subtyping to our type system for flexibility by enabling coercions between different dependence contexts and pretypes.
+
+Subtyping is a binary relation \({\subtype} \subseteq \rel{Type} \times \rel{Type}\), where \(\tau \subtype \tau'\) signifies that terms of type \(\tau\) are convertible to type \(\tau\). It is reflexive, i.e.~\(\tau \subtype \tau\) for all \(\tau \in \rel{Type}\).
+
+Subtyping for variable types is the direct product of the partial orders
+\begin{equation}
+  \mleft(\begin{tikzpicture}[x=1cm,y=0.8cm,inner sep=0pt,thick,baseline=(weight.base)]
+    \node (const) at (0, 0) {\strut\lit{const}};
+    \node (param) at (-1,1) {\strut\lit{param}};
+    \node (marking) at (1,1) {\strut\lit{marking}};
+    \node (weight) at (0,2) {\strut\lit{weight}};
+    \node (prop) at (0,3) {\strut\lit{prop}};
+    \node (path) at (0,4) {\strut\lit{path}};
+    \draw (const.north) -- (param.south);
+    \draw (const.north) -- (marking.south);
+    \draw (param.north) -- (weight.south);
+    \draw (marking.north) -- (weight.south);
+    \draw (weight) -- (prop);
+    \draw (prop) -- (path);
+  \end{tikzpicture}\mright) \mkern10mu\times\mkern10mu
+  \mleft(\;\begin{tikzpicture}[x=1.5cm,y=1.2cm,inner sep=0pt,thick,baseline=($(int.base)!0.5!(double.base)$)]
+    \node (int) at (0, 0) {\strut\lit{int}};
+    \node (double) at (0,1) {\strut\lit{double}};
+    \node (boolean) at (-1,0) {\strut\lit{boolean}};
+    \draw (int) -- (double);
+  \end{tikzpicture}\;\mright)
+\end{equation}
+of the sets \rel{Dependence} and \rel{Pretype}, respectively, where comparable elements are connected with upward paths in the style of e.g.~\citet{Walker05substructural}. For example, \(\vartype{\lit {const}}{\lit{int}} \subtype \vartype{\lit{marking}}{\lit{double}}\), because \(\lit{const} \preceq \lit{marking}\) and \(\lit{int} \preceq \lit{double}\) in the partial orders. The semantics of variable type coercions are discussed in \vref{ssec:rgspn:semantics}.
+
+Collection types are covariant in their member types; therefore \(\tau \subtype \tau'\) if and only if \(\bagtype{\tau} \subtype \bagtype{\tau'}\). Type coercion of collections is performed elementwise.
+
+\begin{remark}\label{rem:rgspn:colored}
+  It would be possible to include more elaborate abstract syntax and subtyping rules for types, for example to describe colored Petri nets, where scalar token counts in markings are replaced by multisets over the elements of the \emph{color class} or \emph{sort} corresponding to each place. In the colored setting, instead of a single \lit{place} type, types of places carry a sort parameter. \citet{Kindler07modular} studied modular colored Petri nets with sort and operator symbols. A sort symbol reference is a color class that can be imported into the module from outside and is thus left abstract inside the module. Types of places thus may depend on the sort symbols.
+
+  Modular colored nets may also contain \emph{operator} symbols, which transform members of a color class into another. In our framework, these could be modeled by symbols of type \(\tau \to \sigma\), i.e~operators that transform values of type \(\tau\) into values of type \(\sigma\). Thus the syntax of type is extended with~\(\ebnfVar{Type} \ebnfEq \ldots \mid \ebnfVar{Type} \to \ebnfVar{Type}\). The arising challenges seem to require more elaborate type theoretical machinery, such as typed lambda calculus with subtyping (see e.g. Chapters~15 and~16 of~\cite{Pierce02tapl}).
+\end{remark}
 
 \subsection{Formal definition}
 
 In this section we first define \textabbr{RGSPN} signatures as set of symbols of various kinds.\todo{Change \emph{kinds}.} Then the definition of an \textabbr{RGSPN} on a given signature is elaborated, which extends the signature with the properties of the symbols and the edges of the net. This separation allows deferring the details of the \emph{expressions} of a signature to \vref{sec:rgspn:expression} even though expression will serves as the properties of symbols in the definition of \textAbbr{RGSPN}s.
 
 \begin{dfn}
-  An \emph{\textabbr{RGSPN} signatrue} is a 7-tuple \(\Sigma = \ltup P, T_T, T_i, V, \Par, R, C \rtup\), where the sets \(P, T_t, T_i, V, \Par, R, C\) are disjoint and
+  An \emph{\textabbr{RGSPN} signatrue} is a 12-tuple
+  \begin{equation}
+    \Sigma = \ltup P, T_T, T_i, V, \Par, R, C, \rel{dep}, \rel{pretype}, \rel{value}, \rel{target}, \rel{member}\rtup \text,
+  \end{equation}
+  where the sets \(P, T_t, T_i, V, \Par, R, C,\) are disjoint and
   \begin{compactitem}
   \item \(P\) is a set of \emph{places};
   \item \(T_T\) and \(T_i\) are a sets of \emph{timed} and \emph{immediate transitions}, respectively;
   \item \(V\) is a set of \emph{variables};
   \item \(\Par\) is a set of \emph{parameters};
   \item \(R\) is a set of \emph{references};
-  \item \(C\) is a set of \emph{collections}.
+  \item \(C\) is a set of \emph{collections};
+  \item \(\rel{dep}\colon V \to \rel{Dependence}\) is the \emph{variable dependence} function;
+  \item \(\rel{pretype}\colon V \to \rel{Pretype}\) is the \emph{variable pretype} function;
+  \item \(\rel{value}\colon V \cup \Par \to \Expr_\Sigma \cup \mathbb{R}\) is a function, such that \(\rel{value}(v) \in \Expr_\Sigma\) for all \(v \in V\) and \(\rel{value}(\theta) \in \mathbb{R}\) for all \(\theta \in \Par\);
+  \item \(\rel{target}\colon R \to \rel{Type}\) is the \emph{reference target type} function;
+  \item \(\rel{member}\colon C \to \rel{Type}\) is the \emph{collection member type} function.
   \end{compactitem}
 \end{dfn}
 
 We will abuse notation such that \(\Sigma\) also stands for the set \(P \cup T_t \cup T_i \cup V \cup \Par \cup R \cup C\) of all symbols. Furthermore, \(\Expr_\Sigma\) will denote the set of all algebraic expressions that may mention symbols of \(\Sigma\).
 
 \begin{dfn}
-  An \emph{\textabbr{RGSPN}} is a 15-tuple
-  \begin{equation}
-    \RGSPN = \ltup \Sigma, m_0, \lambda, w, \pi, \rel{dep}, \rel{pretype}, \rel{value}, \rel{target}, \rel{member}, {\outarc}, {\inarc}, {\inharc}, {\assign}, {\member} \rtup \text,
-  \end{equation}
-  where
+  An \emph{\textabbr{RGSPN}} is a 10-tuple \(N = \ltup \Sigma, m_0, \lambda, w, \pi, {\outarc}, {\inarc}, {\inharc}, {\assign}, {\member} \rtup\), where
   \begin{compactitem}
-  \item \(\Sigma = \ltup P, T_T, T_i, V, \Par, R, C \rtup\) is an \textabbr{RGSPN} signature;
+  \item \(\Sigma = \ltup P, T_T, T_i, V, \Par, R, C, \ldots\rtup\) is an \textabbr{RGSPN} signature;
   \item \(m_0 \colon P \to \Expr_\Sigma\) is the \emph{initial marking} function;
   \item \(\lambda \colon T_T \to \Expr_\Sigma\) is the \emph{timed transition rate} function;
   \item \(w\colon T_i \to \Expr_\Sigma\) is the \emph{immediate transition weight} function;
   \item \(\pi\colon T_i \to \Expr_\Sigma\) is the \emph{immediate transition priority} function;
-  \item \(\rel{dep}\colon V \to \rel{Dependence}\) is the \emph{variable dependence} function;
-  \item \(\rel{pretype}\colon V \to \rel{Pretype}\) is the \emph{variable pretype} function;
-  \item \(\rel{value}\colon V \cup \Par \to \Expr_\Sigma \cup \mathbb{R}\) is a function, such that \(\rel{value}(v) \in \Expr_\Sigma\) for all \(v \in V\) and \(\rel{value}(\theta) \in \mathbb{R}\) for all \(\theta \in \Par\);
-  \item \(\rel{target}\colon R \to \rel{Type}\) is the \emph{reference target type} function;
-  \item \(\rel{member}\colon C \to \rel{Type}\) is the \emph{collection member type} function;
   \item \({\outarc}, {\inarc}, {\inharc} \subseteq \Sigma \times \Expr_\Sigma \times \Sigma\) are the relations of \emph{output, input} and \emph{inhibitor arcs}, respectively, which are free of parallel arcs, i.e.~\(\ltup p, e_1, t \rtup, \ltup p, e_2, t \rtup \in {\outarc}\) implies \(e_1 = e_2\) and this property holds also for \(\inarc\) and \(\inharc\);
   \item \({\assign} \subseteq R \times \Sigma\) is the relation of \emph{reference assignments};
   \item \({\member} \in \rel{Multiset}(\Sigma \times \Sigma)\) is the multiset relation of \emph{collection memberships}.
@@ -214,7 +253,7 @@ Types for the symbols of the net are synthesized by the function \(\rel{type}\co
 \end{equation}
 The types of places and transitions match their kinds, while variables have a variable type according to their dependence and pretype. The types of parameters are fixed to \(\vartype{\lit{param}}{\lit{double}}\), as they are continuous and parameter dependent by definition. References always have the type of the symbol they may point at; therefore they may stand for the pointed symbol. Collections append a collection type qualifier to the type of their members.
 
-The \emph{typing relation} \({\_} \vdash {\_} \oftype {\_}\) assigns types to expressions \(e \in \Expr_\Sigma\). We write \(\Sigma \vdash e \oftype \tau\) if \(e\) is of type \(\tau\) in the context of the \textabbr{RGSPN} \(\Sigma\). As it will be seen in \vref{sec:rgspn:expression} the typing relation respects subtyping, i.e.
+The \emph{typing relation} \({\_} \vdash {\_} \oftype {\_}\) assigns types to expressions \(e \in \Expr_\Sigma\). We write \(\Sigma \vdash e \oftype \tau\) if \(e\) is of type \(\tau\) in the context of the \textabbr{RGSPN} signature \(\Sigma\). As it will be seen in \vref{sec:rgspn:expression} the typing relation respects subtyping, i.e.
 \begin{equation}
   \frac{\Sigma \vdash e \oftype \tau \quad \tau \subtype \tau'}{%
     \Sigma \vdash e \oftype \tau'} \Tag{T-Sub} \,\text.
@@ -236,10 +275,12 @@ In well-typed \textAbbr{RGSPN}s, where expressions and edges respect strong typi
   \end{compactitem}
 \end{dfn}
 
-The requirements are based on the assumptions in \textabbr{GSPN} and \textabbr{CTMC} solution algorithms. While the inscriptions of arcs \(e\) are allowed to have dependence \lit{marking}, because marking-dependent arcs may lead to simplifications of stochastic models~\citep{Ciardo93decomposition}. However, as some external tools only support arcs with constant inscriptions, \(\Sigma \vdash e \oftype \vartype{\lit{const}}{\lit{int}}\) may be enforced instead for compatibility.
+\begin{remark}
+  The requirements are based on the assumptions in \textabbr{GSPN} and \textabbr{CTMC} solution algorithms. While the inscriptions of arcs \(e\) are allowed to have dependence \lit{marking}, because marking-dependent arcs may lead to simplifications of stochastic models~\citep{Ciardo93decomposition}. However, as some external tools only support arcs with constant inscriptions, \(\Sigma \vdash e \oftype \vartype{\lit{const}}{\lit{int}}\) may be enforced instead for compatibility.
 
-Similarly, marking-dependent immediate transition weight can also pose a difficulty in solving the model~\citep{Teruel03netlevel}, which can be averted by requiring \(\Sigma \vdash w(t) \oftype \vartype{\lit{param}}{\lit{double}}\) for all \(t \in T_i\). In contrast, some state-space explorations methods, such as the decision diagram based algorithm proposed by~\citet{Marussy17priorities}, may permit marking-dependent priorities \(\Sigma \vdash \pi(t) \oftype \vartype{\lit{marking}}{\lit{int}}\).
-
+  Similarly, marking-dependent immediate transition weight can also pose a difficulty in solving the model~\citep{Teruel03netlevel}, which can be averted by requiring \(\Sigma \vdash w(t) \oftype \vartype{\lit{param}}{\lit{double}}\) for all \(t \in T_i\). In contrast, some state-space explorations methods, such as the decision diagram based algorithm proposed by~\citet{Marussy17priorities}, may permit marking-dependent priorities \(\Sigma \vdash \pi(t) \oftype \vartype{\lit{marking}}{\lit{int}}\).
+\end{remark}
+  
 From now on all discussed \textAbbr{RGSPN}s will be assumed to be well-typed.
 
 \begin{figure}

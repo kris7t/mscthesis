@@ -287,24 +287,6 @@
   \begin{proof}[#1]\let\proofSymbol\relax}{\end{proof}}
     
 
-% Upright parentheses in theorem titles, leave an em space after
-% theorem number
-\newtheoremstyle{tdk}%
-{\labelsep=1em\item[\hskip\labelsep \theorem@headerfont ##1~##2\theorem@separator]}%
-{\labelsep=1em\item[\hskip\labelsep {\theorem@headerfont ##1~##2}~\paren{##3}\theorem@separator]}
-\theoremstyle{tdk}
-\theoremseparator{}
-
-% Highlight theorems with a rule
-\theorempreskip{0pt plus 0pt minus 0pt}
-% Shorted the theorem frame by 3pt to match up with the descenders.
-\theorempostskip{-2pt plus 0pt minus 0pt}
-\theoreminframepreskip{1pt plus 0pt minus 0pt}
-\theoreminframepostskip{3pt plus 0pt minus 0pt}
-\theoremframepreskip{11pt plus 3pt minus 6pt}
-\theoremframepostskip{11pt plus 3pt minus 6pt}
-\def\theoremframecommand{{\color{black!15}\vrule width 4pt\hspace{7pt}}}
-
 %
 % References II
 %
@@ -366,7 +348,24 @@
 
 % We must define theorems after cleveref.
 
-% Define theorem-like environments
+% Upright parentheses in theorem titles, leave an em space after
+% theorem number
+\newtheoremstyle{tdk}%
+{\labelsep=1em\item[\hskip\labelsep \theorem@headerfont ##1~##2\theorem@separator]}%
+{\labelsep=1em\item[\hskip\labelsep {\theorem@headerfont ##1~##2}~\paren{##3}\theorem@separator]}
+\theoremstyle{tdk}
+\theoremseparator{}
+
+% Highlight theorems with a rule
+\theorempreskip{0pt plus 0pt minus 0pt}
+% Shorted the theorem frame by 3pt to match up with the descenders.
+\theorempostskip{-2pt plus 0pt minus 0pt}
+\theoreminframepreskip{1pt plus 0pt minus 0pt}
+\theoreminframepostskip{3pt plus 0pt minus 0pt}
+\theoremframepreskip{11pt plus 3pt minus 6pt}
+\theoremframepostskip{11pt plus 3pt minus 6pt}
+\def\theoremframecommand{{\color{black!15}\vrule width 4pt\hspace{7pt}}}
+
 \newshadedtheorem{thm}{Theorem}[chapter]
 \newshadedtheorem{prop}[thm]{Proposition}
 \newshadedtheorem{lem}[thm]{Lemma}
@@ -374,6 +373,13 @@
 \newshadedtheorem{obs}[thm]{Observation}
 \newshadedtheorem{example}{Example}[chapter]
 \newshadedtheorem{runningExample}[example]{Running example}
+
+% Remarks are not emphasised with a border and are typeset with a small font.
+\theorempreskip{11pt plus 3pt minus 6pt}
+\theorempostskip{11pt plus 3pt minus 6pt}
+
+\newtheorem{remark}[example]{Remark}
+\AtBeginEnvironment{remark}{\small}
 
 %
 % Graphics
