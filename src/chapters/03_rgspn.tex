@@ -155,7 +155,7 @@ The type system proposed in \cref{eq:rgspn:type-ebnf} can be overly rigid, becau
 Subtyping is a binary relation \({\subtype} \subseteq \rel{Type} \times \rel{Type}\), where \(\tau \subtype \tau'\) signifies that terms of type \(\tau\) are convertible to type \(\tau\). It is reflexive, i.e.~\(\tau \subtype \tau\) for all \(\tau \in \rel{Type}\).
 
 Subtyping for variable types is the direct product of the partial orders
-\begin{equation}
+\begin{equation}\label{eq:rgspn:partial-order}
   \mleft(\begin{tikzpicture}[x=1cm,y=0.8cm,inner sep=0pt,thick,baseline=(weight.base)]
     \node (const) at (0, 0) {\strut\lit{const}};
     \node (param) at (-1,1) {\strut\lit{param}};
@@ -184,7 +184,7 @@ Collection types are covariant in their member types; therefore \(\tau \subtype 
 \begin{remark}\label{rem:rgspn:colored}
   It would be possible to include more elaborate abstract syntax and subtyping rules for types, for example to describe colored Petri nets, where scalar token counts in markings are replaced by multisets over the elements of the \emph{color class} or \emph{sort} corresponding to each place. In the colored setting, instead of a single \lit{place} type, types of places carry a sort parameter. \citet{Kindler07modular} studied modular colored Petri nets with sort and operator symbols. A sort symbol reference is a color class that can be imported into the module from outside and is thus left abstract inside the module. Types of places thus may depend on the sort symbols.
 
-  Modular colored nets may also contain \emph{operator} symbols, which transform members of a color class into another. In our framework, these could be modeled by symbols of type \(\tau \to \sigma\), i.e~operators that transform values of type \(\tau\) into values of type \(\sigma\). Thus the syntax of type is extended with~\(\ebnfVar{Type} \ebnfEq \ldots \mid \ebnfVar{Type} \to \ebnfVar{Type}\). The arising challenges seem to require more elaborate type theoretical machinery, such as typed lambda calculus with subtyping (see e.g. Chapters~15 and~16 of~\cite{Pierce02tapl}).
+  Modular colored nets may also contain \emph{operator} symbols, which transform members of a color class into another. In our framework, these could be modeled by symbols of type \(\tau \to \sigma\), i.e.~operators that transform values of type \(\tau\) into values of type \(\sigma\), extending syntax of types~\(\ebnfVar{Type} \ebnfEq \ldots \mid \ebnfVar{Type} \to \ebnfVar{Type}\). The arising challenges seem to require more elaborate type theoretical machinery, such as typed lambda calculus with subtyping (see e.g. Chapters~15 and~16 of~\cite{Pierce02tapl}).
 \end{remark}
 
 \subsection{Formal definition}
@@ -232,7 +232,7 @@ Note the separation between timed \(T_T\) and immediate transitions \(T_i\). In 
  
 All quantitative aspects of the net are described by expressions \(\Expr_\Sigma\) with the exception of the values of the parameters, which must be real numbers.\todo{Should this go somewhere else?} As any computation is forbidden inside parameter values, so that parameter synthesis tool may set new values of the parameters without needing to respect any constraints between parameter values implicit in the value computations. Explicit constraints, such as interval bounds for parameters may be added as an extension of \textAbbr{RGSPN}s; however, they are currently not supported. If multiple values depending on a shared set of parameters are needed, variable symbols with value expressions may be used instead.
 
-Edges of the net are between pairs of arbitrary symbols, e.g.~arcs are not restricted to go from place symbols to transition symbols, because any symbol may be replaces by a reference of compatible type. However, reference assignments must assign the symbol to be pointed at to a reference, as no other symbol kind can act as an assignable.
+Edges of the net are between pairs of arbitrary symbols, e.g.~arcs are not restricted to go from place symbols to transition symbols, because any symbol may be replaced by a reference of compatible type. However, reference assignments must assign the symbol to be pointed at to a reference, as no other symbol kind can act as an assignable.
 
 Although parallel arcs are forbidden, parallel collection membership edges are permitted by making \({\member}\) a multiset relation, i.e.~a \emph{bag} of tuples, such as \(\Lbag \ltup c, s \rtup, \ltup c, s \rtup, \ldots \Rbag\).
 
@@ -291,7 +291,7 @@ From now on all discussed \textAbbr{RGSPN}s will be assumed to be well-typed.
 \end{figure}
 
 \begin{runningExample}
-  \Vref{fig:rgspn:example-typed} shows the model from \vref{ex:rgspn:example} extended with type annotations in blue. Places, transitions and parameters have their expected typed \lit{place}, \lit{tran}, \(\vartype{\lit{param}}{\lit{double}}\). Variables are annotated according to their \rel{dep} and \rel{pretype}, while collections bear the collection qualifier suffix \lit{[]}.
+  \Vref{fig:rgspn:example-typed} shows the model from \vref{ex:rgspn:example} extended with type annotations in blue. Places, transitions and parameters have their expected types \lit{place}, \lit{tran}, \(\vartype{\lit{param}}{\lit{double}}\). Variables are annotated according to their \rel{dep} and \rel{pretype}, while collections bear the collection qualifier suffix \lit{[]}.
 
   There are several examples of subtyping in action: the symbols \symb{thinking\-Time1}, \symb{thinking\-Time2}, \symb{eating\-Rate1}, \symb{eating\-Rate2} are used as rates of timed transitions despite their types \(\vartype{\lit{const}}{\lit{double}}\) and \(\vartype{\lit{param}}{\lit{double}}\). The collection \symb{thinking\-Times} of \(\vartype{\lit{prop}}{\lit{double}}\) members contains the symbols \symb{thinking\-Time1} and \symb{thinking\-Time2} of type \(\vartype{\lit{marking}}{\lit{int}}\).
 \end{runningExample}
@@ -299,10 +299,161 @@ From now on all discussed \textAbbr{RGSPN}s will be assumed to be well-typed.
 \section{Expressions}
 \label{sec:rgspn:expression}
 
+In this section we propose an abstract syntax for expressions that describe the quantitative aspects of \textabbr{RGSPN} models, including arc inscriptions, initial markings firing policies in \vref{dfn:rgspn:rgspn}, as well as the performance measures and queries of interest.
+
+The expression language \(\textabbr{CTL}^*\) includes state and path operators in addition to references to net elements, basic arithmetic and logical operators. These additional operators enable defining queries concerning \textabbr{CTL}, \textabbr{LTL} or \(\textabbr{CTL}^*\) properties. Similarly to the flexibility of the type system, the syntax of expressions can be also extended if the definition of further properties, such as \textabbr{CSL} formulas are desired. Validation and interpretation of the queries, such as checking whether a \(\textabbr{CTL}^*\) formula is in \textabbr{CTL} when full \(\textabbr{CTL}^*\) is not supported, is the responsibility of the external model checking tool.
+
+The valid expression on an \textabbr{RGSPN} signature \(\Sigma\) form the set \(\Expr_\Sigma\) described by the following \textabbr{EBNF}-like grammar:
+\begin{equation}
+  \label{eq:rgspn:expression}
+  \begin{aligned}
+    \ebnfV{\Expr_\Sigma} &\ebnfEq \ebnfVar{Literal} 
+    \mid \ebnfV{\Sigma} \mid \lit\# \ebnfV{\Sigma} \mid \ebnfVar{Aggregate} \lit( \ebnfV{\Sigma} \lit)
+    \mid \ebnfVar{Unary}\; \ebnfV{\Expr_\Sigma} \\*
+    &\ebnfCont \ebnfV{\Expr_\Sigma} \mathbin{\ebnfVar{Binary}} \ebnfV{\Expr_\Sigma}
+    \mid \lit{if}\ \lit(\ebnfV{\Expr_\Sigma}\lit)\ \ebnfV{\Expr_\Sigma}\ \lit{else}\ \ebnfV{\Expr_\Sigma} \text, \\
+    \ebnfVar{Literal} &\ebnfEq \ebnfV{\NN} \mid \ebnfV{\RR} \mid \ebnfV{\BB} \text, \\
+    \ebnfVar{Aggregate} &\ebnfEq \lit{sum} \mid \lit{prod}
+    \mid \lit{all} \mid \lit{any} \text, \\  
+    \ebnfVar{Unary} &\ebnfEq \lit{+} \mid \lit{-} \mid \lit{!} \mid \lit{A} \mid \lit{E} \mid \lit{X}  \mid \lit{F} \mid \lit{G} \text, \\
+    \ebnfVar{Binary} &\ebnfEq \lit{+} \mid \lit{-} \mid \lit{*} \mid \lit{/}
+    \mid \lit{==} \mid \lit{!=} \mid \lit{<} \mid \lit{<=} \mid \lit{>} \mid \lit{>=}
+    \mid \lit{\&\&} \mid \lit{||} \mid \lit{U} \text.
+  \end{aligned}
+\end{equation}
+
+The expression language contains Boolean, integer and real literals, a standard set of unary and binary operators, a ternary conditional operator, as well as \(\textabbr{CTL}^*\) state operators \lit{A}, \lit{E} and path operators \lit{X}, \lit{F}, \lit{G}, \lit{U}. Variable symbols and references thereof from \(\Sigma\) may be mentioned as-is and are interpreted as the \rel{value}s of the variables. Places can be also mentioned by prefixing them with \lit{\#} and correspond to \lit{marking} dependent expressions referring to the number of tokens on the place. Collections must be paired with an \emph{aggregation operator} to turn their multiset of member symbols into a single value.
+
+Note that marking expressions and collection aggregations directly take a symbol from \(\Sigma\) instead of an expression \(\Expr_\Sigma\); therefore \enquote{\(\lit{if}\ \lit(\lit\#p_1 > 0\lit)\ \lit\#p_2\ \lit{else}\ \lit\#p_3\)} is a valid expression, but \enquote{\(\#\lit(\lit{if}\ \lit(\lit\#p_1 > 0\lit)\ p_2\ \lit{else}\ p_3\lit)\)} is invalid. This restriction, while not constraining expressivity significantly, allow for more straightforward inlining and implification of expressions when the \textabbr{RGSPN} is transformed into a \textabbr{GSPN}.
+
 \subsection{Typing}
+
+\begin{table}
+  \caption{Typing rules for expressions.}
+  \label{fig:rgspn:typing}
+  \begin{tabu}{@{}X[c]r@{}}
+    \toprule
+    \(\dfrac{{\diamond} \in \{\lit{+}, \lit{-}\}
+      \quad \rho \in \{\lit{int}, \lit{double}\}
+      \quad \Sigma \vdash e \oftype \delta\,\rho
+    }{\Sigma \vdash \mathop{\diamond} e \oftype \delta\,\rho}\),
+    & \Tagstyle{T-Unary\(\pm\)} \\[1.2ex]
+    \(\dfrac{\Sigma \vdash e \oftype \delta\,\lit{boolean}
+    }{\Sigma \vdash \lit{!} e \oftype \delta\,\lit{boolean}}\),
+    & \Tagstyle{T-UnaryNot} \\[1.2ex]
+    \(\dfrac{{\diamond} \in \{\lit{A}, \lit{U}\}
+      \quad \Sigma \vdash e \oftype \vartype{\lit{path}}{\lit{boolean}}
+    }{\Sigma \vdash \mathop{\diamond} e \oftype \vartype{\lit{prop}}{\lit{boolean}}}\),
+    & \Tagstyle{T-UnaryState} \\[1.2ex]
+    \(\dfrac{{\diamond} \in \{\lit{X}, \lit{F}, \lit{G}\}
+      \quad \Sigma \vdash e \oftype \vartype{\lit{path}}{\lit{boolean}}
+    }{\Sigma \vdash \mathop{\diamond} e \oftype \vartype{\lit{path}}{\lit{boolean}}}\),
+    & \Tagstyle{T-UnaryPath} \\[1.2ex]
+    \(\dfrac{{\diamond} \in \{\lit{+}, \lit{-}, \lit{*}\}
+      \quad \rho \in \{\lit{int}, \lit{double}\}
+      \quad \Sigma \vdash e_1 \oftype \delta\,\rho
+      \quad \Sigma \vdash e_2 \oftype \delta\,\rho
+    }{\Sigma \vdash e_1 \mathbin{\diamond} e_2 \oftype \delta \,\rho}\),
+    & \Tagstyle{T-BinNumeric} \\[1.2ex]
+    \(\dfrac{\Sigma \vdash e_1 \oftype \delta\,\lit{double}
+      \quad \Sigma \vdash e_2 \oftype \delta\,\lit{double}
+    }{\Sigma \vdash e_1 \mathbin{\lit/} e_2 \oftype \delta \,\lit{double}}\),
+    & \Tagstyle{T-BinDiv} \\[1.2ex]
+    \(\dfrac{\Sigma \vdash e_1 \oftype \vartype{\lit{path}}{\lit{boolean}}
+      \quad \Sigma \vdash e_2 \oftype \vartype{\lit{path}}{\lit{boolean}}
+    }{\Sigma \vdash e_1 \mathbin{\lit{U}} e_2 \oftype \vartype{\lit{path}}{\lit{boolean}}}\),
+    & \Tagstyle{T-BinUntil} \\[1.2ex]
+    \(\dfrac{{\diamond} \in \{\lit{==}, \lit{!=}\}
+      \quad \Sigma \vdash e_1 \oftype \delta\,\rho
+      \quad \Sigma \vdash e_2 \oftype \delta\,\rho
+    }{\Sigma \vdash e_1 \mathbin{\diamond} e_2 \oftype \delta\,\lit{boolean}}\),
+    & \Tagstyle{T-BinEq} \\[1.2ex]
+    \(\dfrac{{\diamond} \in \{\lit{<}, \lit{<=}, \lit{>}, \lit{>=}\}
+      \quad \Sigma \vdash e_1 \oftype \delta\,\lit{double}
+      \quad \Sigma \vdash e_2 \oftype \delta\,\lit{double}
+    }{\Sigma \vdash e_1 \mathbin{\diamond} e_2 \oftype \delta\,\lit{boolean}}\),
+    & \Tagstyle{T-BinCompare} \\[1.2ex]
+    \(\dfrac{{\diamond} \in \{\lit{\&\&}, \lit{||}\}
+      \quad \Sigma \vdash e_1 \oftype \delta\,\lit{boolean}
+      \quad \Sigma \vdash e_2 \oftype \delta\,\lit{boolean}
+    }{\Sigma \vdash e_1 \mathbin{\diamond} e_2 \oftype \delta\,\lit{boolean}}\),
+    & \Tagstyle{T-BinLogical} \\[1.2ex]
+    \(\dfrac{\Sigma \vdash e_1 \oftype \delta\,\lit{boolean}
+      \quad \Sigma \vdash e_2 \oftype \delta\,\rho
+      \quad \Sigma \vdash e_3 \oftype \delta\,\rho
+    }{\Sigma \vdash \lit{if}\ \lit(e_1\lit)\ e_2\ \lit{else}\ e_3 \oftype \delta\,\rho}\), &
+    \Tagstyle{T-If} \\[1.2ex]
+    \(\dfrac{\rel{agg} \in \{\lit{sum}\mkern1mu, \lit{prod}\}
+      \quad \rho \in \{\lit{int}, \lit{double}\}
+      \quad \rel{type}(b) = \bagtype{\delta\,\rho}
+    }{\Sigma \vdash \rel{agg}\lit(b\lit) \oftype \delta\,\rho}\),
+    & \Tagstyle{T-AggNumeric} \\[1.2ex]
+    \(\dfrac{\rel{agg} \in \{\lit{all}, \lit{any}\}
+      \quad \rel{type}(b) = \bagtype{\delta\,\lit{boolean}}
+    }{\Sigma \vdash \rel{agg}\lit(b\lit) \oftype \delta\,\lit{boolean}}\),
+    & \Tagstyle{T-AggLogical} \\[1.2ex]
+    \multicolumn{2}{@{}p{\linewidth}@{}}{
+      \begin{tabu}{@{}X[c]rX[c]r@{}}
+        \(v \oftype \rel{type}(v)\),
+        & \Tagstyle{T-Var}
+        & \(\dfrac{\rel{type}(p) \subtype \lit{place}
+        }{\lit{\#} p \oftype \vartype{\lit{marking}}{\lit{int}}}\),
+        & \Tagstyle{T-Marking} \\[1.2ex]
+        \(\dfrac{\ell \in \llbracket\rho\rrbracket
+        }{\Sigma \vdash \ell \oftype \lit{const}\,\rho}\),
+        & \Tagstyle{T-Literal}
+        & \(\dfrac{\Sigma \vdash e \oftype \tau\quad \tau \subtype \tau'
+        }{\Sigma \vdash e \oftype \tau'}\),
+        & \Tagstyle{T-Sub}
+      \end{tabu}
+    } \\
+    \multicolumn{2}{@{}l@{}}{
+      \small where \(\llbracket\lit{int}\rrbracket = \mathbb{N}\),
+      \(\llbracket\lit{double}\rrbracket = \mathbb{Z}\) and
+      \(\llbracket\lit{boolean}\rrbracket = \mathbb{B}\).
+    } \\
+    \bottomrule
+  \end{tabu}
+\end{table}
+
+A complete set of typing rules for \(\Expr_\Sigma\) is presented in~\vref{fig:rgspn:typing}, which described the relation \(\_ \vdash \_ \oftype \_\). The judgement \(\Sigma \vdash e \oftype \tau\) assigns a type \(\tau\) to an expression \(e \in \rel{Expr}(\Sigma)\) in the context of an \textabbr{RGSPN} signature \(\Sigma\). 
+
+The types of unary operators, binary operators, conditional and aggregate expressions are captured by the rules \textsc{T-Unary}, \textsc{T-Bin}, \textsc{T-If} and \textsc{T-Agg}. Instead of introducing types for operators and typing rules for operator application, typing rules for all operators are written out explicitly. While this approach increases the number of typing rules considerably, the lack of function types and polymorphic types allows the syntax of \(\rel{Type}\) to remain simple. If more generality is desired, the type system may be extended to support user-defined operators and operator types as described in \vref{rem:rgspn:colored}.
+
+In spite of being handled only in the type derivation rules, several operators are polymorphic in the types of the arguments. However, \textsc{T-BinaryDiv} forces both arguments of the division operator be be real numbers, so that ambiguities concerning integer division are avoided. Most compound expressions are \emph{dependency polymorphic}, that is, the types of their arguments may have any dependency qualifier \(\delta\), which will be inherited by the type of the whole expression. The exception are the \(\textabbr{CTL}^*\) operators, which operate on \lit{path} formulas and produce \lit{path} or \lit{prop} state formulas. 
+
+Variable and marking references are handled by \textsc{T-Var} and \textsc{T-Marking}. Referring to markings of places always produces a \lit{marking} dependent \lit{int}. \textsc{T-Literal} assigns \lit{const} types to literal constants. Lastly, \textsc{T-Sub} allows the use of subtyping in type derivations.
 
 \subsection{Semantics}
 \label{ssec:rgspn:semantics}
+
+In this section we sketch the semantics of \(\Expr_\Sigma\) both for structural expression of an \textabbr{RGSPN} and for performance measures and queries. Most of the expression evaluation happens in external analysis tools when marking- and parameter-dependent expressions are interpreted to construct a \textabbr{CTMC} from the Petri net and when queries are answered. Therefore, exporting \textAbbr{RGSPN}s for external tools must be performed with care to ensure that the tool interprets the provided input according to these semantics. This may require nontrivial transformation of the expressions to the input language of the tool and may even be impossible to fully achieve when the external tool is missing some analysis features. In the latter case, the user receives an error message during export.
+
+Values of pretypes \lit{boolean}, \lit{int} and \lit{double} can be interpreted as members of the sets \(\mathbb{B} = \{\lit{true}, \lit{false}\}\) of truth values, \(\mathbb{Z}\) of integers and \(\mathbb{R}\) of real numbers, respectively.\footnote{In practice, representations on integers and floating-point numbers with a finite number of bits are used instead. However, this distinction only becomes important in the external analysis tools, where finite numerical precision necessitates careful design of algorithms to control approximation error \todo*{Cite Bayer MDP paper}.} Formally, pretypes have the interpretations
+\begin{align}
+  \llbracket \lit{boolean} \rrbracket &= \mathbb{B} \text,
+  & \llbracket \lit{int} \rrbracket &= \mathbb{Z} \text,
+  & \llbracket \lit{double} \rrbracket &= \mathbb{R} \text.
+\end{align}
+
+Variable types \(\vartype{\delta}{\rho}\) can be viewed as functions from some \emph{context} determined by the dependence qualifier \(\delta\) to the set \(\llbracket \rho \rrbracket\). In the case \(\delta = \lit{const}\), the context is empty, so \(\llbracket \vartype{\lit{const}}{\rho} \rrbracket\) is isomorphic to \(\llbracket \rho \rrbracket\). For other qualifiers, the context may be comprised of a vector \(\vec{\uptheta} \in \mathbb{R}^{\lvert \Par \rvert}\) of parameter values and the current marking of the Petri net \(m\). Queries with \lit{prop} and \lit{path} dependence may also require the entire \textabbr{CTMC} that describes the logical and stochastic behavior of the \textabbr{RGSPN} for evaluation. Finally, \lit{path} properties are evaluated on an execution path \(\Pi = m_1 \to m_2 \to \ldots\) of markings (or equivalently, \textabbr{CTMC} states). The interpretations of variable types can be summarized as
+\begin{equation}
+  \begin{array}{@{}r@{\,}c@{\ }c@{\ }c@{\ }c@{\,}l@{\,}c@{}}
+    & \text{\footnotesize parameters} & \text{\footnotesize marking} & \text{\footnotesize \textabbr{CTMC}} & \text{\footnotesize path} & & \text{\footnotesize value} \\*
+    \llbracket \vartype{\lit{const}}{\rho} \rrbracket \colon& & & & & &p \in \llbracket \rho \rrbracket \text, \\
+    \llbracket \vartype{\lit{param}}{\rho} \rrbracket \colon& \vec{\uptheta} & & & & \mapsto &p \in \llbracket \rho \rrbracket \text, \\
+    \llbracket \vartype{\lit{marking}}{\rho} \rrbracket \colon& & m & & & \mapsto &p \in \llbracket \rho \rrbracket \text, \\
+    \llbracket \vartype{\lit{weight}}{\rho} \rrbracket \colon& \vec{\uptheta}\mathrlap, & m & & & \mapsto &p \in \llbracket \rho \rrbracket \text, \\
+    \llbracket \vartype{\lit{prop}}{\rho} \rrbracket \colon& \vec{\uptheta}\mathrlap, & m\mathrlap, & \textabbr{CTMC} & & \mapsto &p \in \llbracket \rho \rrbracket \text, \\
+    \llbracket \vartype{\lit{path}}{\rho} \rrbracket \colon& \vec{\uptheta}\mathrlap, & & \textabbr{CTMC}\mathrlap, & \Pi & \mapsto &p \in \llbracket \rho \rrbracket \text. \\
+  \end{array}
+\end{equation}
+
+Type coercion from \lit{int} to \lit{double} act in the obvious way. Dependence coercion along the partial order from \vref{eq:rgspn:partial-order} introduces arguments to the interpretation functions that are ignored. For example, coercing \(\lit{const}\) to \(\lit{weight}\) results in a function that ignores its \(\vec{\uptheta}\) and \(m\) arguments while returning a constant value. The only non-straightforward coercion is from \lit{prop} to \lit{path}. In order to be consistent with \(\textabbr{CTL}^*\) formulas this conversion is defined such that the first marking \(m_1\) of the path \(\Pi = m_1 \to m_2 \to \ldots\) serves as the current marking argument \(m\) of the \lit{prop} computation when it is treated as a \lit{path} property.
+
+Operators from \vref{eq:rgspn:expression} act pointwise on the interpretation functions, e.g.~to calculate \(e_1 \mathbin{\diamond} e_2\), \(e_1\) and \(e_2\) are separately evaluated in the dependence context, then the operator \(\diamond\) is applied to the resulting values.\footnote{This makes variable types with a dependence qualifier other than \lit{const} specializations of \emph{Reader} applicative functors \todo*{cite}.}
+
+The \(\textabbr{CTL}^*\) operators, which explicitly require \lit{prop} and \lit{path} dependence contexts, are excepted from pointwise evaluation. A \lit{prop} expression is treated as a state predicate over markings \(m\) after plugging the parameter binding \(\vec{\uptheta}\) and the \textabbr{CTMC} into the interpretation function. Similarly, \lit{path} expressions are treated as predicates over paths \(\Pi\) and are composed by the operators according to \(\textabbr{CTL}^*\) semantics (see e.g.~\todo*{Cite}).
 
 \section{Reference inlining}
 \label{sec:rgspn:inlining}
@@ -455,24 +606,6 @@ The \emph{composition} of \textabbr{RGSPN} modules with signatures \(\Sigma_1\) 
 In this section we propose an abstract syntax for expressions that describe the quantitative aspects of reference \textabbr{GSPN} models. Such expressions will describe the arc inscription, the initial marking a and the firing distributions of the Petri net. In addition, the reward measures to be evaluated will be also written in the same manner.
 
 Given an \textabbr{RGSPN} signature \(\Sigma\) we define \(\rel{Expr}(\Sigma)\) as the set of valid expressions over \(\Sigma\). This set is described with an \textabbr{EBNF}-like notation as follows. Note that we only consider finite expression trees, thus \(\rel{Expr}(\Sigma)\) is a least fixed point described by the following \textabbr{EBNF}-like grammar:
-\begin{equation}
-  \label{eq:rgspn:expression}
-  \begin{aligned}
-    \ebnfV{\rel{Expr}(\Sigma)} &\ebnfEq \ebnfVar{Unary}\; \ebnfV{\rel{Expr}(\Sigma)}
-    \mid \ebnfV{\rel{Expr}(\Sigma)} \mathbin{\ebnfVar{Binary}} \ebnfV{\rel{Expr}(\Sigma)} \\*
-    &\ebnfCont \lit{if (\ebnfV{\rel{Expr}(\Sigma)}) \ebnfV{\rel{Expr}(\Sigma)} else \ebnfV{\rel{Expr}(\Sigma)}} \\*
-    &\ebnfCont \ebnfVar{Aggregate} \lit{(} \ebnfV{B^\Sigma} \lit{)} \mid
-      \ebnfV{V^\Sigma} \mid \lit{\#} \ebnfV{P^\Sigma} 
-      \mid \ebnfVar{Literal} \text, \\
-    \ebnfVar{Unary} &\ebnfEq \lit{+} \mid \lit{-} \mid \lit{!} \text, \\
-    \ebnfVar{Binary} &\ebnfEq \lit{+} \mid \lit{-} \mid \lit{*} \mid \lit{/}
-    \mid \lit{==} \mid \lit{!=} \mid \lit{<} \mid \lit{<=} \mid \lit{>} \mid \lit{>=}
-    \mid \lit{\&\&} \mid \lit{||} \text, \\
-    \ebnfVar{Aggregate} &\ebnfEq \lit{sum} \mid \lit{prod}
-    \mid \lit{all} \mid \lit{any} \text, \\
-    \ebnfVar{Literal} &\ebnfEq \ebnfV{\NN} \mid \ebnfV{\RR} \mid \ebnfV{\BB} \text.
-  \end{aligned}
-\end{equation}
 
 Elements of \(\rel{Expr}(\Sigma)\) are arithmetic expressions containing basic unary and binary operators, conditionals, literals \lit{int}, \lit{double} and \lit{boolean} values, as well as mentions of the symbols of \(\Sigma\). \(\rel{Expr}(\Sigma)\) contains unary, binary and aggregation operators, as well as conditional expressions; however, the exact set of available operators will not be important in the following discussion. We suppose that the set of available operators is sufficient for expressing the quantitative aspects required by the modeled problem.
 
@@ -480,71 +613,7 @@ Concrete and reference variables \(V^\Sigma\) may be mentioned in expressions as
 
 \subsubsection{Typing}
 
-The relation \(\Sigma \vdash e \oftype \tau\) assigns a type \(\tau\) to an expression \(e \in \rel{Expr}(\Sigma)\) in the context of an \textabbr{RGSPN} signature \(\Sigma\). This typing relation is the largest ternary relation which satisfies the inference rules shown in~\cref{fig:rgspn:typing}. If an expression is assigned a type, its type is always of the form \(\delta\,\rho\).
-
-\begin{figure}
-  \begin{tabu}{@{}X[c]r@{}}
-    \(\dfrac{{\diamond} \in \{\lit{+}, \lit{-}\}
-      \quad \rho \in \{\lit{int}, \lit{double}\}
-      \quad \Sigma \vdash e \oftype \delta\,\rho
-    }{\Sigma \vdash \mathop{\diamond} e \oftype \delta\,\rho}\),
-    & \Tagstyle{T-Unary\(\pm\)} \\[1ex]
-    \(\dfrac{\Sigma \vdash e \oftype \delta\,\lit{boolean}
-    }{\Sigma \vdash \mathop{\lit{!}} e \oftype \delta\,\lit{boolean}}\),
-    & \Tagstyle{T-UnaryNot} \\[1ex]
-    \(\dfrac{{\diamond} \in \{\lit{+}, \lit{-}, \lit{*}, \lit{/}\}
-      \quad \rho \in \{\lit{int}, \lit{double}\}
-      \quad \Sigma \vdash e_1 \oftype \delta\,\rho
-      \quad \Sigma \vdash e_2 \oftype \delta\,\rho
-    }{\Sigma \vdash e_1 \mathbin{\diamond} e_2 \oftype \delta \,\rho}\),
-    & \Tagstyle{T-BinNumeric} \\[1ex]
-    \(\dfrac{{\diamond} \in \{\lit{==}, \lit{!=}\}
-      \quad \Sigma \vdash e_1 \oftype \delta\,\rho
-      \quad \Sigma \vdash e_2 \oftype \delta\,\rho
-    }{\Sigma \vdash e_1 \mathbin{\diamond} e_2 \oftype \delta\,\lit{boolean}}\),
-    & \Tagstyle{T-BinEq} \\[1ex]
-    \(\dfrac{{\diamond} \in \{\lit{<}, \lit{<=}, \lit{>}, \lit{>=}\}
-      \quad \Sigma \vdash e_1 \oftype \delta\,\lit{double}
-      \quad \Sigma \vdash e_2 \oftype \delta\,\lit{double}
-    }{\Sigma \vdash e_1 \mathbin{\diamond} e_2 \oftype \delta\,\lit{boolean}}\),
-    & \Tagstyle{T-BinCompare} \\[1ex]
-    \(\dfrac{{\diamond} \in \{\lit{\&\&}, \lit{||}\}
-      \quad \Sigma \vdash e_1 \oftype \delta\,\lit{boolean}
-      \quad \Sigma \vdash e_2 \oftype \delta\,\lit{boolean}
-    }{\Sigma \vdash e_1 \mathbin{\diamond} e_2 \oftype \delta\,\lit{boolean}}\),
-    & \Tagstyle{T-BinLogical} \\[1ex]
-    \(\dfrac{\Sigma \vdash e_1 \oftype \delta\,\lit{boolean}
-      \quad \Sigma \vdash e_2 \oftype \delta\,\rho
-      \quad \Sigma \vdash e_3 \oftype \delta\,\rho
-    }{\Sigma \vdash \lit{if (\(e_1\)) \(e_2\) else \(e_3\)} \oftype \delta\,\rho}\), &
-    \Tagstyle{T-If} \\[1ex]
-    \(\dfrac{\rel{agg} \in \{\lit{sum}\mkern1mu, \lit{prod}\}
-      \quad \rho \in \{\lit{int}, \lit{double}\}
-      \quad \rel{type}(b) = \bagtype{\delta\,\rho}
-    }{\Sigma \vdash \lit{\rel{agg}(\(b\))} \oftype \delta\,\rho}\),
-    & \Tagstyle{T-AggNumeric} \\[1ex]
-    \(\dfrac{\rel{agg} \in \{\lit{all}, \lit{any}\}
-      \quad \rel{type}(b) = \bagtype{\delta\,\lit{boolean}}
-    }{\Sigma \vdash \lit{\rel{agg}(\(b\))} \oftype \delta\,\lit{boolean}}\),
-    & \Tagstyle{T-AggLogical} \\[1ex]
-    \multicolumn{2}{@{}p{\linewidth}@{}}{
-      \begin{tabu}{@{}X[c]rX[c]r@{}}
-        \(v \oftype \rel{type}(v)\), & \Tagstyle{T-Var}
-        & \(\lit{\#} p \oftype \lit{marking int}\), & \Tagstyle{T-Marking} \\[.5ex]
-        \(\dfrac{\ell \in \rel{Literal}_\rho}{\Sigma \vdash \ell \oftype
-          \lit{const}\,\rho}\), & \Tagstyle{T-Literal}
-        & \(\dfrac{\Sigma \vdash e \oftype \tau\quad \tau \subtype
-          \tau'}{\Sigma \vdash e \oftype \tau'}\), & \Tagstyle{T-Sub}
-      \end{tabu}
-    }
-  \end{tabu}
-  \bigskip
-  where \(\rel{Literal}_{\lit{int}} = \mathbb{N}\),
-  \(\rel{Literal}_{\lit{double}} = \mathbb{R}\) and
-  \(\rel{Literal}_{\lit{boolean}} = \mathbb{B}\).
-  \caption{Typing rules for expressions.}
-  \label{fig:rgspn:typing}
-\end{figure}
+The relation \(\Sigma \vdash e \oftype \tau\) assigns a type \(\tau\) to an expression \(e \in \rel{Expr}(\Sigma)\) in the context of an \textabbr{RGSPN} signature \(\Sigma\). This typing relation is the largest ternary relation which satisfies the inference rules shown in \cref{fig:rgspn:typing}. If an expression is assigned a type, its type is always of the form \(\delta\,\rho\).
 
 The types of unary operators, binary operators, conditional and aggregate expressions are captured by the rules \textsc{T-Un}, \textsc{T-Bin}, \textsc{T-If} and \textsc{T-Agg}. Instead of introducing polyporphic types for operators and typing rules for operator application, the typing rules for all operators are written out explicitly. While this approach increases the number of typing rules considerably, the lack of function types and polymorphic types allows the syntax of \(\rel{Type}\) to remain simple. If more generality is desired, operator types can be introduced to the syntax of types to support e.g.~user-defined operators. Such types are also used in modular colored Petri nets~\citep{Kindler07modular}.
 

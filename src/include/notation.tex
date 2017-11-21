@@ -72,7 +72,7 @@
 \newcommand*{\ebnfEq}{\Coloneqq}
 \newcommand*{\ebnfCont}{\mathrel{\hphantom{\ebnfEq}\mathllap{\mid}}}
 \newcommand*{\ebnfSingleEq}{\mathrel{\hphantom{\ebnfEq}\mathllap{=}}}
-\newcommand*{\ebnfV}[1]{\ensuremath{#1}}
+\newcommand*{\ebnfV}[1]{\ensuremath{\mathopen{\text\guilsinglleft}#1\mathclose{\text\guilsinglright}}}
 \newcommand*{\ebnfVar}[1]{\ebnfV{\rel{#1}}}
 
 %%% Local Variables:
