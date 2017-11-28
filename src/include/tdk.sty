@@ -133,7 +133,7 @@
 % Tables and lists
 %
 
-\RequirePackage{array,booktabs,mdwlist,paralist,multirow,tabu}
+\RequirePackage{array,booktabs,mdwlist,paralist,multirow,tabu,siunitx}
 
 % Make tabulars looser, but do not affect matrices
 
@@ -160,22 +160,22 @@
 % Set the math font to XCharter instead of Fourier.
 %\RequirePackage[defaultmathsizes,italic]{mathastext}
 
-% Use the Computer Modern arrows for better readability.
-% http://tex.stackexchange.com/a/136339/8744
-% load the CM symbol font
-\DeclareSymbolFont{arrows}{OMS}{cmsy}{m}{n}
-% change the arrows to be taken from the CM symbol font
-\DeclareMathSymbol{\leftrightarrow}{\mathrel}{arrows}{"24}
-\DeclareMathSymbol{\leftarrow}{\mathrel}{arrows}{"20}
-   \let\gets=\leftarrow
-\DeclareMathSymbol{\rightarrow}{\mathrel}{arrows}{"21}
-   \let\to=\rightarrow
-\DeclareMathSymbol{\mapstochar}{\mathrel}{arrows}{"37}
-% the bar for making longer arrows
-\DeclareMathSymbol{\relbardash}{\mathbin}{arrows}{"00}
-\DeclareRobustCommand\relbar{%
-  \mathrel{\smash\relbardash}% \smash, because - has the same height as +
-}
+% % Use the Computer Modern arrows for better readability.
+% % http://tex.stackexchange.com/a/136339/8744
+% % load the CM symbol font
+% \DeclareSymbolFont{arrows}{OMS}{cmsy}{m}{n}
+% % change the arrows to be taken from the CM symbol font
+% \DeclareMathSymbol{\leftrightarrow}{\mathrel}{arrows}{"24}
+% \DeclareMathSymbol{\leftarrow}{\mathrel}{arrows}{"20}
+%    \let\gets=\leftarrow
+% \DeclareMathSymbol{\rightarrow}{\mathrel}{arrows}{"21}
+%    \let\to=\rightarrow
+% \DeclareMathSymbol{\mapstochar}{\mathrel}{arrows}{"37}
+% % the bar for making longer arrows
+% \DeclareMathSymbol{\relbardash}{\mathbin}{arrows}{"00}
+% \DeclareRobustCommand\relbar{%
+%   \mathrel{\smash\relbardash}% \smash, because - has the same height as +
+% }
 
 \allowdisplaybreaks
 

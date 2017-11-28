@@ -191,7 +191,7 @@ Collection types are covariant in their member types; therefore \(\tau \subtype 
 
 In this section we first define \textabbr{RGSPN} signatures as set of symbols of various kinds.\todo{Change \emph{kinds}.} Then the definition of an \textabbr{RGSPN} on a given signature is elaborated, which extends the signature with the properties of the symbols and the edges of the net. This separation allows deferring the details of the \emph{expressions} of a signature to \vref{sec:rgspn:expression} even though expression will serves as the properties of symbols in the definition of \textAbbr{RGSPN}s.
 
-\begin{dfn}
+\begin{dfn}\label{dfn:rgspn:rgspn}
   An \emph{\textabbr{RGSPN} signatrue} is a 12-tuple
   \begin{equation}
     \Sigma = \ltup P, T_T, T_i, V, \Par, R, C, \rel{dep}, \rel{pretype}, \rel{value}, \rel{target}, \rel{member}\rtup \text,
@@ -324,7 +324,7 @@ The valid expression on an \textabbr{RGSPN} signature \(\Sigma\) form the set \(
 
 The expression language contains Boolean, integer and real literals, a standard set of unary and binary operators, a ternary conditional operator, as well as \(\textabbr{CTL}^*\) state operators \lit{A}, \lit{E} and path operators \lit{X}, \lit{F}, \lit{G}, \lit{U}. Variable symbols and references thereof from \(\Sigma\) may be mentioned as-is and are interpreted as the \rel{value}s of the variables. Places can be also mentioned by prefixing them with \lit{\#} and correspond to \lit{marking} dependent expressions referring to the number of tokens on the place. Collections must be paired with an \emph{aggregation operator} to turn their multiset of member symbols into a single value.
 
-Note that marking expressions and collection aggregations directly take a symbol from \(\Sigma\) instead of an expression \(\Expr_\Sigma\); therefore \enquote{\(\lit{if}\ \lit(\lit\#p_1 > 0\lit)\ \lit\#p_2\ \lit{else}\ \lit\#p_3\)} is a valid expression, but \enquote{\(\#\lit(\lit{if}\ \lit(\lit\#p_1 > 0\lit)\ p_2\ \lit{else}\ p_3\lit)\)} is invalid. This restriction, while not constraining expressivity significantly, allow for more straightforward inlining and implification of expressions when the \textabbr{RGSPN} is transformed into a \textabbr{GSPN}.
+Note that marking expressions and collection aggregations directly take a symbol from \(\Sigma\) instead of an expression \(\Expr_\Sigma\); therefore \enquote{\(\lit{if}\ \lit(\lit\#p_1 > 0\lit)\ \lit\#p_2\ \lit{else}\ \lit\#p_3\)} is a valid expression, but \enquote{\(\lit\#\lit(\lit{if}\ \lit(\lit\#p_1 > 0\lit)\ p_2\ \lit{else}\ p_3\lit)\)} is invalid. This restriction, while not constraining expressivity significantly, allow for more straightforward inlining and implification of expressions when the \textabbr{RGSPN} is transformed into a \textabbr{GSPN}.
 
 \subsection{Typing}
 
@@ -455,251 +455,14 @@ Operators from \vref{eq:rgspn:expression} act pointwise on the interpretation fu
 
 The \(\textabbr{CTL}^*\) operators, which explicitly require \lit{prop} and \lit{path} dependence contexts, are excepted from pointwise evaluation. A \lit{prop} expression is treated as a state predicate over markings \(m\) after plugging the parameter binding \(\vec{\uptheta}\) and the \textabbr{CTMC} into the interpretation function. Similarly, \lit{path} expressions are treated as predicates over paths \(\Pi\) and are composed by the operators according to \(\textabbr{CTL}^*\) semantics (see e.g.~\todo*{Cite}).
 
+\todo*{The sections below should go to the transformation chapter.}
+
 \section{Reference inlining}
 \label{sec:rgspn:inlining}
 
 \subsection{Handling inconsistent models}
 \label{ssec:rgspn:inconsistent}
 
-\section{Implementation notes}
-
-\todo*{material to reuse below this point:}
-
-\subsection{Reference \textabbr{GSPN} signatures}
-
-Following the terminology of \emph{modular \textabbr{PNML}} models introduced by \citet{Kindler01modular}, we define the signatures of reference \textabbr{GSPN} models as a collection of symbols. Therefore, in our setting places and transitions of Petri nets are different kinds of symbols.
-
-\emph{Variables} are introduced as another kind of symbols to describe the quantitative aspects of the model, including both parameter-dependence and marking-dependence. Parameters that bound from outside, e.g.\ specified in an instance of an engineering model, as well as expressions that are interpreted as marking-dependent random variables can be modeled as variable symbols.
-
-The possible types of symbols are described by the following \textabbr{EBNF}-like grammar:
-\begin{equation}
-  \begin{aligned}
-    \ebnfVar{Type} &\ebnfEq \lit{place} \mid \lit{tran} \mid \ebnfVar{VarType} \mid \bagtype{\ebnfVar{VarType}} \text, \\
-    \ebnfVar{VarType} &\ebnfEq \ebnfVar{Dependence}\ \ebnfVar{Pretype} \text,\\
-    \rel{Dependence} &\ebnfEq \lit{const} \mid \lit{marking} \mid \lit{analysis}\text, \\
-    \ebnfVar{Pretype} &\ebnfEq \lit{int} \mid \lit{double} \mid \lit{boolean} \text.
-  \end{aligned}
-\end{equation}
-The types of \emph{variables}, i.e.~the types \ebnfVar{VarType}, are of the form \(\delta\, \rho\), where \(\delta \in \rel{Dependence}\) and \(\rho \in \rel{Pretype}\). The dependence \(\delta\) describes the aspects of the model that determine the value of the variable.
-
-Variables with \(\lit{const}\) dependence (e.g.~\(\lit{const int}\)) are constant values and may only depend on the structure of the model. In contrast, \(\lit{marking}\) variables are marking-dependent quantities that can be only evaluated and runtime. They can serve as marking-dependent arc inscriptions, transition rates or random variables used in stochastic analyses. Lastly, variables with \(\lit{analysis}\) dependence describe the analyses to be performed of the model.
-
-The pretype \(\rho\) describes the runtime representation of the computed value of the variable. With an abuse of notation, we will write \(\NN\), \(\RR\) and \(\BB\) for the sets of possible values of \lit{int}, \lit{double} and \lit{boolean} variables, respectively.
-
-In addition to variable symbols, \emph{bags} of variables are also introduced to aggregate quantitative aspects defined in multiple parts of the model. An example of such aggregation is the total operational expenses random variable in a performability model, which is the sum of the operational expense random variables of the different system components. The operational expense variables of the individual components can be collected into a bag before summation.
-
-Composition of Petri net modules is aided by \emph{reference} symbols. We will call non-reference symbols \emph{concrete}. Instead of being defined in the Petri net itself, such reference symbols can be connected to other symbols by reference assignments. We follow the conventions in modular \textabbr{PNML}s~\citep{Kindler01modular}, such that reference symbols can refer to a single concrete symbol, while conrete symbols can be assigned to multiple references.
-
-Hence the formal definition of reference \textabbr{GSPN} signatures:
-
-\begin{dfn}
-  A \emph{reference \textabbr{GSPN} \paren{\textabbr{RGSPN}} signature} is a tuple \(\Sigma = \ltup S^\Sigma, S_r^\Sigma, \rel{type} \rtup\), where:
-  \begin{compactitem}
-  \item \(S^\Sigma\) is a set of \emph{symbols}.
-  \item \(S_r^\Sigma \subseteq S^\Sigma\) is the set of \emph{reference symbols}.
-  \item \(\rel{type}\colon S^\Sigma \to \rel{Type}\) is the \emph{symbol typing function}.
-  \end{compactitem}
-\end{dfn}
-
-The places, transitions, variables and bags of a signature \(\Sigma = \ltup S^\Sigma, S_r^\Sigma, \rel{type} \rtup\) can be defined as
-\begin{align}
-  P^\Sigma &= \{s \in S^\Sigma : \rel{type}(s) = \lit{place}\}\text,
-  &T^\Sigma &= \{s \in S^\Sigma : \rel{type}(s) = \lit{tran}\}\text, \\
-  V^\Sigma &= \{s \in S^\Sigma : \rel{type}(s) \in \rel{VarType}\}\text,
-  &B^\Sigma &= \{s \in S^\Sigma : \rel{type}(s) \in \bagtype{\rel{VarType}}\}\text,
-\end{align}
-respectively. Moreover, the set of all concrete symbols is \(S_c^\Sigma = S^\Sigma \setminus S_r^\Sigma\),
-therefore the sets of concrete places \(P^\Sigma_c = P^\Sigma \cap S_c^\Sigma\), transitions \(T^\Sigma_c = T^\Sigma \cap S_c^\Sigma\) and variables \(V^\Sigma_c = V^\Sigma \cap S_c^\Sigma\) can be formed. The superscript \(\Sigma\) will be omitted when the signature is apparent from context.
-
-\subsubsection{Subtyping}
-
-\begin{figure}%
-  \begin{tabu}{@{}XX@{}}
-    {\begin{tabu}{@{}X[c]r@{}}
-        \(\alpha \subtype \alpha\), & \Tagstyle{S-Refl} \\
-        \(\lit{const} \subtype \lit{marking}\), & \Tagstyle{SD-Marking} \\
-        \(\lit{const} \subtype \lit{analysis}\), & \Tagstyle{SD-Analysis} \\
-        \(\lit{int} \subtype \lit{double}\), & \Tagstyle{SPt-Double}
-      \end{tabu}}
-    & {\begin{tabu}{@{}X[c]r@{}}
-        \(\dfrac{
-          \delta_1 \subtype \delta_2 \quad \rho_1 \subtype \rho_2
-        }{
-          \delta_1\,\rho_1 \subtype \delta_2\,\rho_2
-        }\), & \Tagstyle{S-Var} \\[1.5ex]
-        \(\dfrac{
-          \tau_1 \subtype \tau_2
-        }{
-          \bagtype{\tau_1} \subtype \bagtype{\tau_2}
-        }\) & \Tagstyle{S-Bag}
-      \end{tabu}}
-  \end{tabu}
-  \caption{Subtyping rules for \textabbr{RGSPN} signatures.}
-  \label{fig:rgspn:subtype}
-\end{figure}
-
-In order to capture valid and invalid assignments of references, the set of types defined in \cref{eq:rgspn:type-ebnf} is augmented with a subtyping relation to express compatibility between symbols. The \emph{\textabbr{RGSPN} subtyping relation} is the largest binary relation \({\subtype} \subseteq \rel{Type}^2 \cup \rel{Dependence}^2 \cup \rel{Pretype}^2\) which satisfies the subtyping rules shown in \cref{fig:rgspn:subtype}.
-
-The rules \textsc{S-Relf} ensures that subtyping is reflexive over both types, dependences and types. The compatibility of variable types is captured by \textsc{S-Var} to follow both dependence and pretype subtyping, while \textsc{S-Bag} makes bags covariant in their member types. \textsc{SD-Marking} and \textsc{SD-Analysis} allow the introduction of dependences, i.e.~a constant may be used where a marking dependent value is required, albeit it depends on the current marking in a trivial way. \textsc{SPt-Double} lets \lit{int} values be coerced into \lit{double} values; however, there are no coertions for \lit{boolean}.
-
-We remark that it would be possible to include more elaborate abstract syntax and subtyping rules for types, for example to describe colored Petri nets. In colored nets, \emph{color classes} or \emph{sorts} are associated with places and scalar token counts are replaced by multisets over the elements of the color class. \citet{Kindler07modular} studied modular colored Petri nets with sort and operator symbols. A sort symbol reference is a color class that can be imported into the module from outside and is thus left abstract inside the module. Types of places thus may depend on the sort symbols.
-
-In addition, modular colored nets may also contain \emph{operator} symbols, which transform members of a color class into another. In our type theoretical framework, these can be modeled by \(\ebnfVar{Type} \ebnfEq \ldots \mid \ebnfVar{Type} \to \ebnfVar{Type}\), i.e.~symbols of type \(\tau \to \tau'\) are operators that transform values of type \(\tau\) into values of type \(\tau'\). Polyporphic operators may also be considered. The arising challenges could be handled by tools from simply typed lambda calculus and system F with subtyping (see e.g.~\citet[Chapters~15 and~26]{Pierce02tapl}).
-
-\subsubsection{Symbol assignment}
-
-An \emph{assignment} between of a reference symbol \(r \in S_r\) and another symbol \(s \in S\) signifies that any occurrence of \(r\) should be replaced by \(s\). Similarly, \emph{appending} the sybol \(s\) symbol to a bag \(b \in S\) signifies that any aggregation expression that refers to \(b\) should account for the value of \(s\).
-
-\begin{dfn}
-  \label{dfn:rgspn:assign}
-  The relation \({\assign} \subseteq S_r \times S\) is an \emph{\textabbr{RGSPN} assignment relation} of the signature \(\Sigma = \ltup S, S_r, \rel{type} \rtup\) subject to the following conditions:
-  \begin{compactenum}
-  \item \(\rel{type}(s) \subtype \rel{type}(r)\) for all \(r \assign s\). \label{it:rgspn:assign:subtype}
-  \item If \(r \assign s_1\) and \(r \assign s_2\) then \(s_1 = s_2\), i.e.~the relation \(\assign\) is the graph of a function. \label{it:rgspn:assign:single}
-  \item There are no \emph{reference cycles} of symbols, that is, sequences \(r_1, r_2, \ldots, r_k, r_{k + 1} = r_1\), where \(r_i \assign r_{i + 1}\) for all \(i = 1, 2, \ldots, k\). \label{it:rgspn:assign:cycle}
-  \end{compactenum}
-  If for each \(r \in S_r\) there exists some \(s \in S\) such that \(r \assign s\), we say that \(\assign\) is \emph{fully specified}.
-\end{dfn}
-
-Condition~\ref{it:rgspn:assign:subtype} ensures that type of \(s\) is a subtype of the type of \(r\), thus \(s\) can be used anywhere \(r\) would occur. Condition~\ref{it:rgspn:assign:single} forbids multiple assignments to the same reference, while condition~\ref{it:rgspn:assign:cycle} prevents cycles of references, where the recursive substitution of references with their assigned symbols would fail to terminate.
-
-As assignments between references are permitted, the relation \rel{assign} must be traversed recursively to extract the concrete symbols corresponding to reference. The condition for fully specified assignment relations ensures that no reference symbol is encountered during this traversal which does not have an assigned symbol. 
-\begin{dfn}
-  The \emph{concretization} of symbols according to an \textabbr{RGSPN} assignment relation \({\assign} \subseteq S_r \times S\) of \(\Sigma = \ltup S, S_r, \rel{type} \rtup\) is \(\rel{conc}\colon S \to S_c\), where
-  \begin{equation}
-    \rel{conc}(s) = \begin{cases}
-      s, & \text{if \(s \in S_c\),} \\
-      \rel{conc}(s'), & \text{if \(s \in S_r\) and \(s \assign s'\).}
-    \end{cases}
-  \end{equation}
-  This function is well-defined if \(\assign\) is fully specified.
-\end{dfn}
-
-While only a single symbol can be assigned to a reference, a bag may have many members that describe quantitative aspects that are to be aggregated from different parts of the model. Thus a bag symbol may have any number of \emph{member symbols}.
-\begin{dfn}
-  The multiset relation \({\member} \in \rel{Multiset}(B \times S)\) is an \emph{\textabbr{RGSPN} bag membership relation} of the signature \(\Sigma = \ltup S, S_r, \rel{type} \rtup\) if \(\bagtype{\rel{type}(s)} \subtype \rel{type}(b)\) for all \(b \member s\).
-\end{dfn}
-
-Note that while the assignment relation \(\assign\) is a set of pairs, \(\member\) is defined as a multiset of pairs. To illustrate the advantages of multiset semantics, consider the signature \(\ltup \{b, s, r\}, \{r\}, \rel{type} \rtup\) in the following example: Let \(b \in S_c\) be a bag symbol of type \(\bagtype{\tau}\), and let \(s \in S_c\) and \(r \in S_r\) be a concrete and reference symbol of type $\tau$, respectively. Moreover, let the assignment relation be \((\assign) = \{\ltup r, s\rtup\}\) while the bag membership relation is \((\member) = \Lbag \ltup b, s\rtup, \ltup b, r\rtup\Rbag\). The concrete symbol \(s\) appears twice in the bag \(b\), once by a direct membership pair in \(\member\) and once indirectly by being assigned to the reference \(r\). When we replace \(r\) by its concretization \(\rel{conc}(r) = s\), the membership relation becomes \((\member)' = \Lbag \ltup b, s\rtup, \ltup b, s\rtup\Rbag\), hence \(s\) still appears twice. Were set semantics used instead, the multiplicity of \(r\) would have been changed from 2 to 1 in the bag \(b\).
-
-Alternatively, assigning two symbols with equal concretizations to the same bag could be forbidden, making the \(\member\) from the example above an incorrect bag membership relation. We followd the more lenient route by multiset semantics, as it yields more predictable behavior when a union \((\member) = (\member)_1 \uplus (\member)_2\) of membership relations is considered.
-
-\begin{dfn}
-  The \emph{member symbols} of bag symbols according to an \textabbr{RGSPN} assignment relation \({\assign} \subseteq S_r \times S\) and bag membership relation \({\member} \in \rel{Multiset}(B \times S)\) of \(\Sigma = \ltup S, S_r, \rel{type} \rtup\) is \(\rel{members}\colon B \to \rel{Multiset}(S_c)\), where
-  \begin{equation}
-    \label{eq:rgspn:member-symbols}
-    \rel{members}(b) = \Lbag \rel{conc}(r) : b' \member r, \rel{conc}(b) = \rel{conc}(b')\Rbag \text.
-  \end{equation}
-  This function is well-defined if \(\assign\) is fully specified and yields the empty multiset for bags with no member symbols.
-\end{dfn}
-
-The process of replacing symbols with their concretizations in the membership relation is captured in the member symbols function to find the members of a bag. \Cref{eq:rgspn:member-symbols} uses concretization to handle the cases when either the bag, its member symbols or both are references. The multiplicities of members are preserved because \(\rel{members}\) is multiset-valued.
-
-\subsubsection{Signature composition}
-
-While the proposed assignment and membership relations are interpreted over a single signature \(\Sigma\), it is possible compose modules by \textabbr{RGSPN} assignment. Let the \emph{disjoint union} \(\Sigma = \Sigma_1 \sqcup \Sigma_2\) of \(\Sigma_1 = \ltup S_1, S_{r,1}, \rel{type}_1 \rtup\) and \(\Sigma_2 = \ltup S_2, S_{r,2}, \rel{type}_2 \rtup\) denote the signature \(\Sigma = \ltup S_1 \sqcup S_2, S_{r,1} \sqcup S_{r,2}, \rel{type} \rtup\) with \(\rel{type}\) extended to \(S_1 \sqcup S_2\) in the straightforward way. This operator is commutative, associative and the the \emph{empty signature} \(\Sigma_\emptyset = \ltup \emptyset, \emptyset, \rel{type}_\emptyset\rtup\) is its unit, where \(\rel{type}_\emptyset\) is trivial.
-
-The \emph{composition} of \textabbr{RGSPN} modules with signatures \(\Sigma_1\) and \(\Sigma_2\) can be described by the assigment relation \((\assign) = (\assign)_1 \cup (\assign)_2 \cup (\assign)_{1,2}\) over the signature \(\Sigma_1 \sqcup \Sigma_2\), where \((\assign)_1\) and \((\assign)_2\) are reference assignments in \(\Sigma_1\) and \(\Sigma_2\), respectively, while \((\assign)_{1,2}\) intermixes the symbols of the two source signatures. The membership relation \((\member) = (\member)_1 \uplus (\member)_2 \uplus (\member)_{1,2}\) factors similarly via multiset union. This construction generalizes to the composition of multiple modules by exploiting associativity and commutativity.
-
-\subsection{Expressions}
-
-In this section we propose an abstract syntax for expressions that describe the quantitative aspects of reference \textabbr{GSPN} models. Such expressions will describe the arc inscription, the initial marking a and the firing distributions of the Petri net. In addition, the reward measures to be evaluated will be also written in the same manner.
-
-Given an \textabbr{RGSPN} signature \(\Sigma\) we define \(\rel{Expr}(\Sigma)\) as the set of valid expressions over \(\Sigma\). This set is described with an \textabbr{EBNF}-like notation as follows. Note that we only consider finite expression trees, thus \(\rel{Expr}(\Sigma)\) is a least fixed point described by the following \textabbr{EBNF}-like grammar:
-
-Elements of \(\rel{Expr}(\Sigma)\) are arithmetic expressions containing basic unary and binary operators, conditionals, literals \lit{int}, \lit{double} and \lit{boolean} values, as well as mentions of the symbols of \(\Sigma\). \(\rel{Expr}(\Sigma)\) contains unary, binary and aggregation operators, as well as conditional expressions; however, the exact set of available operators will not be important in the following discussion. We suppose that the set of available operators is sufficient for expressing the quantitative aspects required by the modeled problem.
-
-Concrete and reference variables \(V^\Sigma\) may be mentioned in expressions as-is and are interpreted as references to the values they hold. In contrast, collection variables must be paired with an \emph{aggregation operator} to turn the multiple variables assigned to them into a single value. Place symbols \(P^\Sigma\) can be also mentioned and correspond to \lit{marking} dependent expressions by referring to the number of tokens on the place.
-
-\subsubsection{Typing}
-
-The relation \(\Sigma \vdash e \oftype \tau\) assigns a type \(\tau\) to an expression \(e \in \rel{Expr}(\Sigma)\) in the context of an \textabbr{RGSPN} signature \(\Sigma\). This typing relation is the largest ternary relation which satisfies the inference rules shown in \cref{fig:rgspn:typing}. If an expression is assigned a type, its type is always of the form \(\delta\,\rho\).
-
-The types of unary operators, binary operators, conditional and aggregate expressions are captured by the rules \textsc{T-Un}, \textsc{T-Bin}, \textsc{T-If} and \textsc{T-Agg}. Instead of introducing polyporphic types for operators and typing rules for operator application, the typing rules for all operators are written out explicitly. While this approach increases the number of typing rules considerably, the lack of function types and polymorphic types allows the syntax of \(\rel{Type}\) to remain simple. If more generality is desired, operator types can be introduced to the syntax of types to support e.g.~user-defined operators. Such types are also used in modular colored Petri nets~\citep{Kindler07modular}.
-
-In spite of being handled only in the type derivation rules, operators are polymorphic in the types of the arguments. All compound expressions are \emph{dependency polymorphic}, that is, the types of their arguments may have any dependency qualifier \(\delta\), which will be inherited by the type of the whole expression. In addition, most operators are also polymorphic in the pretypes of their arguments.
-
-Variable and marking references are handled by \textsc{T-Var} and \textsc{T-Marking}. Referring to markings of places always produces a \lit{marking} dependent \lit{int}. In contrast, \textsc{T-Literal} assigns \lit{const} types to literal constants. Lastly, \textsc{T-Sub} allows the use of subtyping in type derivations.
-
-\subsubsection{Analysis expressions}
-
-The abstract syntax presented in \cref{eq:rgspn:expression} contains no expressions that produce values of dependen \lit{analysis}. In this section we propose a small set of analyses which treat \lit{marking} dependent expressions as random variables,
-\begin{equation}
-  \begin{aligned}
-    \ebnfV{\rel{Expr}(\Sigma)} &\ebnfEq \ldots \\
-    &\ebnfCont \lit{transient(\(\ebnfV{\rel{Expr}(\Sigma)}\), \(\ebnfV{\rel{Expr}(\Sigma)}\))} \mid \lit{accumulate(\(\ebnfV{\rel{Expr}(\Sigma)}\), \(\ebnfV{\rel{Expr}(\Sigma)}\))} \\
-    &\ebnfCont \lit{steadystate(\(\ebnfV{\rel{Expr}(\Sigma)}\))} \mid \lit{mtff(\(\ebnfV{\rel{Expr}(\Sigma)}\))} \text.
-  \end{aligned}
-\end{equation}
-These expressions enable embedding the analyses to be performed directly into the \textabbr{RGSPN} model.
-
-\begin{figure}
-  \begin{tabu}{@{}X[c]r@{}}
-    \(\dfrac{\Sigma \vdash e_1 \oftype \lit{marking double}
-      \quad \Sigma \vdash e_2 \oftype \lit{const double}
-    }{\Sigma \vdash \lit{transient(\(e_1\), \(e_2\))} \oftype \lit{analysis double}}\),
-    & \Tagstyle{T-Transient} \\[1ex]
-    \(\dfrac{\Sigma \vdash e_1 \oftype \lit{marking double}
-      \quad \Sigma \vdash e_2 \oftype \lit{const double}
-    }{\Sigma \vdash \lit{accumulate(\(e_1\), \(e_2\))} \oftype \lit{analysis double}}\),
-    & \Tagstyle{T-Accumulate} \\[1ex]
-    \(\dfrac{\Sigma \vdash e \oftype \lit{marking double}
-    }{\Sigma \vdash \lit{steadystate(\(e\))} \oftype \lit{analysis double}}\),
-    & \Tagstyle{T-Steadystate} \\[1ex]
-    \(\dfrac{\Sigma \vdash e \oftype \lit{marking boolean}
-    }{\Sigma \vdash \lit{mtff(\(e\))} \oftype \lit{analysis double}}\),
-    & \Tagstyle{T-Mtff}
-  \end{tabu}
-  \caption{Typing rules for analysis expressions.}
-  \label{fig:rgspn:analysis-typing}
-\end{figure}
-
-The embedded analysis expressions are explicitly tagged with the \lit{analysis} dependence according to the typing rules in \cref{fig:rgspn:analysis-typing}. Thus analysis results can be forbidden from influencing the behaviour of the Petri net. For example, the steady-state expectation of a random variable cannot influence the timing of a stochastic Petri net transition, because the timing determines the steady-state of the model.
-
-The \lit{transient} and \lit{accumulate} analyses take a random variable of type \lit{marking double} and a time instant of type \lit{const double}. The result of the analysis is the expected value of the random variable and the expected value of the time integral of the random variable at the specified time moment. This value can be determined by transient stochastic analysis of the underlying continuous-time Markov chain (\textabbr{CTMC}) of the stochastic model.
-
-Steady-state analysis is possible by the expression \lit{steadystate}, which also takes a \lit{marking double} random variable and returns its expected value according to the steady-state distribution of the underlying \textabbr{CTMC}.
-
-Mean-time-to-first-failure analysis, also called mean time to reach a state partition, is provided by \lit{mtff}, which takes a \lit{marking boolean} expression and returns the mean time for the expression to become \lit{true}.
-
-\subsection{Reference \textabbr{GSPN} definitions}
-
-In this section we consider generalized stochastic Petri nets over an \textabbr{RGSPN} signatures. These nets may contain reference symbols, such as reference places and transitions, hence the name reference \textabbr{GSPN}.
-
-Similarly to generalized stochastic Petri nets, places are annotated with initial markings, while transitions are annotated with priorities and weights. To describe the quantitative aspects of the model, variable symbols are annotated with algebraic expressions over the net's signature.
-
-\begin{dfn}
-  \label{dfn:rgspn:rgspn}
-  A \emph{reference \textabbr{gspn}} is a tuple \(\rel{RGSPN} = \ltup \Sigma, F, W, M_0, \pi, \lambda, \rel{value} \rtup\), where:
-  \begin{compactitem}
-  \item \(\Sigma\) is a reference \textabbr{GSPN} signature.
-  \item \(F \subseteq P \times \{\inarc, \outarc, \inharc\} \times T\) is the set of \emph{arcs}.
-  \item \(W\colon F \to \rel{Expr}(\Sigma)\) is the \emph{arc inscription function}.
-  \item \(M_0\colon P_c \to \rel{Expr}(\Sigma)\) is the \emph{initial marking function}.
-  \item \(\pi\colon T_c \to \rel{Expr}(\Sigma) \cup \{\bot\}\) is the \emph{transition priority function}.
-  \item \(\lambda\colon T_c \to \rel{Expr}(\Sigma)\) is the \emph{transition weight function}. If \(\pi(t) = \bot\), we will refer to \(\lambda(t)\) as the \emph{transition rate} of the \emph{timed} transition \(t\). Otherwise \(t\) will be called \emph{immediate}.
-  \item \(\rel{value}\colon V_c \to \rel{Expr}(\Sigma)\) is the \emph{variable value function}.
-  \end{compactitem}
-\end{dfn}
-
-\Cref{dfn:rgspn:rgspn} replaces numerical values in generalized stochastic Petri nets with expressions over the \textabbr{RGSPN}'s signature. Therefore, quantitative aspects can be described by expressions. The behaviour of reference symbols is left unspecified, because they can only stand for other symbols through reference assignment.
-
-Generalized stochastic Petri nets are usually defined such that transitions with priority 0 are timed, while transitions with positive priority have immediate firing policy. However, in \textabbr{RGSPN}s, the transition priority is an expression possibly involving various symbols from the signature \(\Sigma\). As we consider \textabbr{RGSPN}s independently from a reference assignment relation \(\assign\), these expressions may not be readily evaluated. Hence the special value \(\bot\) was introduces to signify timed transitions without the evaluation of expressions.
-
-Quantitative aspects of an \textabbr{RGSPN} model should satify the following typing conditions:
-
-\begin{dfn}
-  An \textabbr{RGSPN} \(\rel{RGSPN} = \ltup \Sigma, F, W, M_0, \pi, \lambda, \rel{value} \rtup\) is \emph{well-typed} if
-  \begin{compactitem}
-  \item \(\Sigma \vdash W(f) \oftype \lit{marking int}\) for all \(f \in F\),
-  \item \(\Sigma \vdash M_0(p) \oftype \lit{const int}\) for all \(p \in P_c\),
-  \item \(\Sigma \vdash \pi(t) \oftype \lit{const int}\) if \(\pi(t) \ne \bot\) for all \(t \in T_c\),
-  \item \(\Sigma \vdash \lambda(t) \oftype \lit{marking double}\) for all \(t \in T_c\),
-  \item \(\Sigma \vdash \rel{value}(v) \oftype \rel{type}(v)\) for all \(v \in V_c\).
-  \end{compactitem}
-\end{dfn}
-
-Expressions with \lit{analysis} dependence are forbidden from influencing the behavior of the \textabbr{RGSPN}, as changes in net behavior affect the outcomes of analyses and would lead to a feedback loop. In contrast, \lit{marking} dependent arc weights and transition weights are allowed, since they can be handled by usual stochastic analysis techniques.
 
 %%% Local Variables:
 %%% mode: latex
