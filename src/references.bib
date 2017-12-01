@@ -13,7 +13,7 @@
   author = {Kindler, Ekkart},
   title = {Modular \textabbr{PNML} revisited: Some ideas for strict typing},
   year = 2007,
-  booktitle = {Proc.\ 14.\ Workshop Al\-go\-rith\-men und Werk\-zeuge f{\"u}r Pet\-ri\-netze},
+  booktitle = {Proc.\ 14th\ Workshop Al\-go\-rith\-men und Werk\-zeuge f{\"u}r Pet\-ri\-netze},
   publisher = {Universit{\"a}t Koblenz-Landau},
   pages = {20-25},
   url = {http://www2.cs.uni-paderborn.de/cs/kindler/Publikationen/copies/AWPN07-PNMLmodules.pdf}
@@ -106,10 +106,17 @@
   title = {Industrial applications of the {PetriDotNet} modelling and analysis tool},
   author = {Andr{\'a}s V{\"o}r{\"o}s and D{\'a}niel Darvas and {\'A}kos Hajdu and Attila Klenik and Krist{\'o}f Marussy and Vince Moln{\'a}r and Tam{\'a}s Bartha and Istv{\'a}n Majzik},
   year = {2017},
-  journal = {Sci.\ Comp.\ Prog.},
+  journal = {J.\ Sci.\ Comp.\ Prog.},
   publisher = {Elsevier},
   doi = {10.1016/j.scico.2017.09.003},
   pubstate = {inpress}
+}
+
+@manual{Voros17pdnmanual,
+  title = {PetriDotNet~1.5 User Manual},
+  author = {Andr{\'a}s V{\"o}r{\"o}s and D{\'a}niel Darvas and {\'A}kos Hajdu and Attila J{\'a}mbor and Attila Klenik and Krist{\'o}f Marussy and Vince Moln{\'a}r and Tam{\'a}s Bartha and Istv{\'a}n Majzik},
+  year = 2017,
+  url = {http://petridotnet.inf.mit.bme.hu/releases/pdn1_manual.pdf}
 }
 
 @inproceedings{Hirel00spnp,
@@ -130,7 +137,7 @@
   year = 2006,
   journal = {J.\ Perf.\ Eval.},
   volume = {63},
-  issue = {6},
+  number = {6},
   pages = {578-608},
   publisher = {Elsevier},
   doi = {10.1016/j.peva.2005.06.001}
@@ -174,7 +181,7 @@
   year = 2008,
   journal = {J.\ Sys.\ Soft.},
   volume = {82},
-  issue = {1},
+  number = {1},
   pages = {3-22},
   publisher = {Elsevier},
   doi = {10.1016/j.jss.2008.03.066}
@@ -334,6 +341,18 @@ Systems},
   doi = {10.1109/TSE.2003.1245298}
 }
 
+@article{Miner06saturation,
+  title = {Saturation for a General Class of Models},
+  author = {Andrew S. Miner},
+  year = 2006,
+  journal = {\textabbr{IEEE} Trans.\ Softw.\ Eng.},
+  volume = {32},
+  number = {8},
+  pages = {559-570},
+  publisher = {\textabbr{IEEE}},
+  doi = {10.1109/TSE.2006.81}
+}
+
 @inproceedings{Marussy17priorities,
   title = {Getting the Priorities Right: Saturation for Prioritised {P}etri Nets},
   author = {Krist{\'o}f Marussy and Vince Moln{\'a}r and Andr{\'a}s V{\"o}r{\"o}s and Istv{\'a}n Majzik},
@@ -402,11 +421,12 @@ Systems},
   series = {\textabbr{CEUR} Workshop Proceedings},
   volume = {1340},
   booktitle = {Proc.\ of the 1st Int.\ Workshop on Combining Modelling with Search- and Example-Based Approaches},
+  publisher = {\textabbr{CEUR-WS}},
   url = {http://ceur-ws.org/Vol-1340/paper6.pdf}
 }
 
 @manual{Maechler16diptest,
-    title = {\texttt{diptest}: {H}artigan's Dip Test Statistic for Unimodality - Corrected},
+    title = {{diptest}: {H}artigan's Dip Test Statistic for Unimodality -- Corrected},
     author = {Martin Maechler},
     year = {2016},
     note = {R package version 0.75-7},
@@ -422,4 +442,161 @@ Systems},
   series = {\textabbr{LNCS}},
   pubstate = {forthcoming},
   url = {https://inf.mit.bme.hu/sites/default/files/publications/fmhe2017-model-generation.pdf}
+}
+
+@inproceedings{Semerath16generation,
+  title = {Iterative and Incremental Model Generation by Logic Solvers},
+  author = {Oszk{\'a}r Semer{\'a}th and Andr{\'a}s V{\"o}r{\"o}s and D{\'a}niel Varr{\'o}},
+  year = 2016,
+  booktitle = {\textabbr{FASE} 2016},
+  series = {\textabbr{LNCS}},
+  volume = {9633},
+  pages = {87-103},
+  publisher = {Springer},
+  doi = {10.1007/978-3-662-49665-7_6}
+}
+
+@inproceedings{Semerath16backward,
+  title = {Incremental backward change propagation of view models by logic solvers},
+  author = {Oszk{\'a}r Semer{\'a}th and Csaba Debreceni and {\'A}kos Horv{\'a}th and D{\'a}niel Varr{\'o}},
+  year = 2016,
+  booktitle = {Proc. \textabbr{ACM}/\textabbr{IEEE} 19th Int.\ Conf.\ Model Driven Eng.\ Lang.\ Syst.},
+  pages = {306-316},
+  publisher = {\textabbr{ACM}},
+  doi = {10.1145/2976767.2976788}
+}
+
+@inproceedings{Semerath17rewriting,
+  title = {Graph Constraint Evaluation over Partial Models by Constraint Rewriting},
+  author = {Oszk{\'a}r Semer{\'a}th and D{\'a}niel Varr{\'o}},
+  year = 2017,
+  booktitle = {\textabbr{ICMT} 2017},
+  series = {\textabbr{ICMT} 2017},
+  volume = {10374},
+  pages = {138-154},
+  publisher = {Springer},
+  doi = {10.1007/978-3-319-61473-1_10}
+}
+
+@thesis{Molnar17optimization,
+  title = {Sztochasztikus modellek param{\'e}tereinek optimaliz{\'a}ciója: eszk{\"o}z{\"o}k {\'e}s kih{\'i}v{\'a}sok},
+  author = {T{\'i}mea Moln{\'a}r},
+  year = 2017,
+  type = {Bachleor's thesis},
+  school = {{Faculty of Electrical Engineering and Informatics, Budapest University of Technology and Economics}},
+  langid = {magyar},
+  language = {In Hungarian},
+  note = {\todo*{Add URL once it is available.}}
+  % url = {http://}
+}
+
+@techreport{Lucio12ftgpm,
+  title = {The Formalism Transformation Graph as a Guide to Model Driven Engineering},
+  author = {Levi L{\'u}cio and Joachim Denil and Hans Vangheluwe and Sadaf Mustafiz and Bart Meyers},
+  year = 2012,
+  institution = {School of Computer Science, McGill University},
+  number = {\textabbr{CS}-\textabbr{TR}-2012.1},
+  url = {https://www.cs.mcgill.ca/media/tech_reports/10_The_Formalism_Transformation_Graph_as_a_Guide_to_Model_Driven_Engineering.pdf}
+}
+
+@misc{Kordon17mcc,
+  title = {Complete Results for the 2017 Edition of the {M}odel {C}hecking {C}ontest},
+  author = {Fabrice Kordon and Hubert Garavel and Lom-Messan Hillah and Francis {Hulin-Hubard} and Bernard Berthomieu and Gianfranco Ciardo and Maximilien Colange and Silvano {Dal Zilio} and Elvio Gilberto Amparore and Marco Beccuti and Torsten Liebke and Jeroen Meijer and Andrew S. Miner and Christian Rohr and Jiri Srba and Yann {Thierry-Mieg} and Jaco {van der Pol} and Karsten Wolf},
+  year = 2017,
+  url = {http://mcc.lip6.fr/2017/results.php}
+}
+
+@inproceedings{Hillah17repository,
+  title = {{P}etri {N}ets {R}epository: A Tool to Benchmark and Debug Petri Net Tools},
+  author = {Lom-Messan Hillah and Fabrice Kordon},
+  year = 2017,
+  booktitle = {\textabbr{PETRI NETS} 2017},
+  series = {\textabbr{LNCS}},
+  volume = 10258,
+  pages = {125-135},
+  publisher = {Springer},
+  doi = {10.1007/978-3-319-57861-3_9}
+}
+
+@inproceedings{Ciardo01saturation,
+  title = {Saturation: An Efficient Iteration Strategy for Symbolic State-Space Generation},
+  author = {Gianfranco Ciardo and Gerald L{\"u}ttgen and Radu Siminiceanu},
+  year = 2001,
+  booktitle = {\textabbr{TACAS} 2001},
+  series = {\textabbr{LNCS}},
+  volume = {2031},
+  pages = {328-342},
+  publisher = {Springer},
+  doi = {10.1007/3-540-45319-9_23}
+}
+
+@article{Ciardo12tenyears,
+  title = {Ten Years of Saturation: A {P}etri Net Perspective},
+  author = {Gianfranco Ciardo and Yang Zhao and Xiaoqing Jin},
+  year = 2012,
+  booktitle = {\mixedabbr{T}o\mixedabbr{PN}o\mixedabbr{C} \textabbr{V}},
+  series = {\textabbr{LNCS}},
+  volume = {6900},
+  pages = {51-95},
+  publisher = {Springer},
+  doi = {10.1007/978-3-642-29072-5_3}
+}
+
+@article{Miner04mdd,
+  title = {Implicit \textabbr{GSPN} reachability set generation using decision diagrams},
+  author = {Andrew S. Miner},
+  journal = {J.\ Perf.\ Eval.},
+  year = {2004},
+  volume = {56},
+  number = {1-4},
+  pages = {145-165},
+  publisher = {Elsevier},
+  doi = {10.1016/j.peva.2003.07.005}
+}
+
+@article{Kam98mdd,
+  title = {Multi-valued decision diagrams: theory and applications},
+  author = {Timothy Kam and Tiziano Villa and Robert Brayton and Alberto {Sangiovanni-Vincentelli}},
+  year = 1998,
+  journal = {Int.\ J.\ Multiple-Valued Logic},
+  volume = {4},
+  number = {1-2},
+  pages = {9-62},
+  note = {\todo*{Find \textabbr{DOI} or some other way to access this article}}
+}
+
+@inproceedings{Amparore17ordering,
+  title = {Decision Diagrams for {P}etri Nets: which Variable Ordering?},
+  author = {Elvio Gilberto Amparore and Susanna Donatelli and Marco Beccuti and Giulio Garbi and Andrew S. Miner},
+  booktitle = {Proc.\ Int.\ Workshop on Petri Nets and Softw.\ Eng.},
+  year = 2017,
+  pages = {31-50},
+  series = {\textabbr{CEUR} Workshop Proceedings},
+  volume = {1846},
+  publisher = {\textabbr{CEUR-WS}},
+  url = {hhttp://ceur-ws.org/Vol-1846/paper3.pdf}
+}
+
+@inproceedings{Marussy16decompositions,
+  title = {Efficient Decomposition Algorithm for Stationary Analysis of Complex Stochastic {P}etri Net Models},
+  author = {Krist{\'o}f Marussy and Attila Klenik and Vince Moln{\'a}r and Andr{\'a}s V{\"o}r{\"o}s and Istv{\'a}n Majzik and Mikl{\'o}s Telek},
+  year = 2016,
+  booktitle = {\textabbr{PETRI NETS} 2016},
+  series = {\textabbr{LNCS}},
+  volume = {9698},
+  pages = {281-300},
+  publisher = {Springer},
+  doi = {10.1007/978-3-319-39086-4_17}
+}
+
+@inproceedings{Garavel15nupn,
+  title = {Nested-Unit Petri Nets: A Structural Means to Increase Efficiency and Scalability of Verification on Elementary Nets},
+  author = {Hubert Garavel},
+  year = 2015,
+  booktitle = {\textabbr{PETRI NETS} 2015},
+  series = {\textabbr{LNCS}},
+  volume = {9115},
+  pages = {179-199},
+  publisher = {Springer},
+  doi = {10.1007/978-3-319-19488-2_9}
 }

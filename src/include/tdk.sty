@@ -212,8 +212,6 @@
 % if the referred label is on a different page.
 \RequirePackage{varioref}
 
-% Use cleveref for labels far away (loaded after hyperref)
-\renewcommand*{\reftextfaraway}[1]{on~\cpageref{#1}}
 
 % PDF/A-1b magic
 % https://tex.stackexchange.com/a/136653/8744
@@ -243,7 +241,8 @@
   pdfa=true,  % Do not violate PDF/A-1b intentionally (real compilance is
               % achieved by ghostscript).
   bookmarksopen=true,
-  bookmarksopenlevel=3
+  bookmarksopenlevel=3,
+  bookmarksnumbered
 ]{hyperref}
 
 %
@@ -294,7 +293,10 @@
 % Cleveref must be loaded after ntheorem
 
 % Cleveref adds the type of the referred entity (eg. Section~1.1) to
-% the reference. 
+% the reference.
+% Note that cleveref 1.19 (in TeXLive as of 2017 December) breaks
+% varioref, so we use a local copy of 1.19.1 instead.
+% https://tex.stackexchange.com/a/208690/8744
 \RequirePackage[capitalise,noabbrev]{cleveref}
 % Protect pages and equations from capitalization
 \crefname{page}{{p}age}{{p}ages}
@@ -325,13 +327,15 @@
 \autonum@generatePatchedReferenceCSL{Fullref}
 \autonum@generatePatchedReferenceCSL{labelfullref}
 
+% Use cleveref for labels far away
+\renewcommand*{\reftextfaraway}[1]{on~\cpageref{#1}}
+
 % Do not print anything if the referred label is near.
 \renewcommand*{\reftextfaceafter}{}
 \renewcommand*{\reftextfacebefore}{}
 \renewcommand*{\reftextbefore}{}
 \renewcommand*{\reftextafter}{}
 \renewcommand*{\reftextcurrent}{}
-
 % http://tex.stackexchange.com/a/44186
 \patchcmd{\cref@old@@vpageref}{\reftextfacebefore}{\unskip}{}{}
 \patchcmd{\cref@old@@vpageref}{\reftextfaceafter}{\unskip}{}{}
@@ -572,6 +576,35 @@
 }
  
 \renewcommand*{\bibfont}{\normalfont\small}
+
+% Use brackets instead of parentheses in citations.
+% https://tex.stackexchange.com/a/16792/8744
+\newrobustcmd*{\parentexttrack}[1]{%
+  \begingroup
+  \blx@blxinit
+  \blx@setsfcodes
+  \blx@bibopenparen#1\blx@bibcloseparen
+  \endgroup}
+\AtEveryCite{%
+  \let\parentext=\parentexttrack%
+  \let\bibopenparen=\bibopenbracket%
+  \let\bibcloseparen=\bibclosebracket}
+
+% Bibmacro patching tools courtesy of Enrico Gregorio (egreg).
+% https://tex.stackexchange.com/a/41867/8744
+\def\act@on@bibmacro#1#2{%
+  \expandafter#1\csname abx@macro@\detokenize{#2}\endcsname
+}
+\def\patchbibmacro{\act@on@bibmacro\patchcmd}
+\def\pretobibmacro{\act@on@bibmacro\pretocmd}
+\def\apptobibmacro{\act@on@bibmacro\apptocmd}
+\def\showbibmacro{\act@on@bibmacro\show}
+
+% Patch bibliography to also use brackets.
+% https://tex.stackexchange.com/a/41867/8744
+\patchbibmacro{date+extradate}{\printtext[parens]}{\printtext[brackets]}{}{}
+
+\newcommand*{\citepeg}[2][]{\citep[see e.g.\@][#1]{#2}}
 
 %
 % Landscape figures

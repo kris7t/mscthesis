@@ -4,23 +4,28 @@ PROJECTNAME=MScThesis
 
 CONVERT_SVG := $(patsubst src/figures/%.svg,out/figures/%.pdf,$(wildcard src/figures/*.svg))
 
+CONVERT_PDF := $(patsubst src/figures/%.pdf,out/figures/%.pdf,$(wildcard src/figures/*.pdf))
+
 all: latex docs/$(PROJECTNAME).pdf
 
-docs/$(PROJECTNAME).pdf: out/$(PROJECTNAME).pdf src/PDFA_def.ps
-	gs -sDEVICE=pdfwrite -q -P- -dNOPAUSE -dBATCH -dCompatibilityLevel=1.4 -dPDFA=2 -dPDFACompatibilityPolicy=1 -dOPM=0 -dColorConversionStrategy=/RGB -sProcessColorModel=DeviceRGB -dPDFSETTINGS=/prepress -dOptimize=true -dEmbedAllFonts=true -dSubsetFonts=true -dCompressFonts=true -dCompressPages=true -dCannotEmbedFontPolicy=/Warning -sDEVICE=pdfwrite -sOutputFile=$@ src/PDFA_def.ps $<
+docs/$(PROJECTNAME).pdf: src/PDFA_def.ps out/$(PROJECTNAME).pdf
+	gs -sDEVICE=pdfwrite -q -P- -dNOPAUSE -dBATCH -dCompatibilityLevel=1.4 -dPDFA=2 -dPDFACompatibilityPolicy=1 -dOPM=0 -dColorConversionStrategy=/RGB -sProcessColorModel=DeviceRGB -dPDFSETTINGS=/prepress -dOptimize=true -dEmbedAllFonts=true -dSubsetFonts=true -dCompressFonts=true -dCompressPages=true -dCannotEmbedFontPolicy=/Warning -sDEVICE=pdfwrite -sOutputFile=$@ $^
 
-figures: $(CONVERT_SVG)
+figures: $(CONVERT_SVG) $(CONVERT_PDF)
 	@true
 
 $(CONVERT_SVG): out/figures/%.pdf: src/figures/%.svg
 	inkscape --file=$< --export-area=drawing --without-gui --export-pdf=$@
 
+$(CONVERT_PDF): out/figures/%.pdf: src/figures/%.pdf
+	gs -sDEVICE=pdfwrite -q -P- -dNOPAUSE -dBATCH -dCompatibilityLevel=1.4 -dOPM=0 -dColorConversionStrategy=/RGB -sProcessColorModel=DeviceRGB -dPDFSETTINGS=/prepress -dOptimize=true -dEmbedAllFonts=true -dSubsetFonts=true -dCompressFonts=true -dCompressPages=true -dCannotEmbedFontPolicy=/Warning -sDEVICE=pdfwrite -sOutputFile=$@ $^
+
 latex:
 	@if [ -a out/run2.pid ]; then rm -rf out; echo "============"; echo "PREVIOUS RUN WAS UNEXPECTEDLY INTERRUPTED, CLEANING OUTPUT DIRECTORY!"; echo "============"; fi
 	@if [ -a out/run1.pid ]; then touch out/run2.pid; fi
-	@mkdir -p out docs
+	@mkdir -p out
 	@touch out/run1.pid
-	@mkdir -p out out/include out/figures out/chapters pdf
+	@mkdir -p out/include out/figures out/chapters docs
 	@$(MAKE) --no-print-directory figures
 	@cd src; latexmk -pdf -pdflatex="texfot --quiet pdflatex --file-line-error --shell-escape" -outdir=../out -jobname=$(PROJECTNAME) -interaction=nonstopmode main; echo $?
 	@rm  out/run*.pid

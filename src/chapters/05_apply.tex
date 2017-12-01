@@ -3,6 +3,14 @@
 
 To achieve our goal of supporting design-space exploration with stochastic metrics, a formalism for the convenient modular construction of stochastic models was presented in the previous chapters along with a technique for transforming engineering (architectural) models into stochastic models. Now the application of these tools in design-space exploration (\textabbr{DSE}) toolchains is discussed.
 
+Users may configure the model transformation framework proposed in \cref{chap:transform} by providing a transformation description, which determines the source \textabbr{DSL} and the \textabbr{RGSPN} fragments instantiated by transformation according to source model. Integrating the transformation engine into a \textabbr{DSE} pipeline enables running any such transformation description to provide analysis models.
+
+Queries associated with the analysis models are represented as variables in the \textAbbr{RGSPN}s derived by our transformation. The answers to the queries, which can calculated by external stochastic analysis tools, guide the \textabbr{DSE} process as constraints to satisfy and goal functions to optimize. To carry out the computation the design space explorer must interface with the analysis tools. Serialization in \textabbr{ISO}/\textabbr{IEC}~15909-2:\citeyear{ISO1590922011} \textabbr{PNML} format was provided for interoperability with externals tools. However, the toochain integrator must provide means to run the external solver, to serialize stochastic queries in its input format and to read the analysis results.
+
+As the literature pertaining the optimization of stochastic models was already reviewed in \vref{sec:intro:relwork}, in this chapter we start by describing the tasks related to the integration of our analysis model transformation framework with a \textabbr{DSE} toolchain. In addition, we describe the implementation of the framework along with the interfaces provided to users and our empirical evaluation of its scalability.
+
+\section{Integration with design-space exploration toolchains}
+
 \citet{Kang10effective} have identified cornerstones of an effective \textabbr{DSE} framework as
 \begin{inparaenum}
 \item a suitable \emph{representation} of the design space,
@@ -10,66 +18,121 @@ To achieve our goal of supporting design-space exploration with stochastic metri
 \item an \emph{exploration method} for navigating interesting solutions.
 \end{inparaenum}
 The approaches and representations used for \textabbr{DSE} in the context of model-driven engineering were further classified by \citet{Vanherpen14patterns}. They have identified the following \emph{\textabbr{DSE} patterns} of exploration methods:
-\begin{itemize}
-\item The \emph{Model Generation Pattern} synthesizes design candidates that satisfy a set of constraints, which are imposed imposed based on the metamodel and in addition by the designer. During the exploration, design candidates are represented as solutions of a constraint satisfaction problem.
+\begin{itemize*}
+\item The \emph{Model Generation Pattern} synthesizes design candidates that satisfy a set of constraints, which are imposed based on the metamodel and in addition by the designer. During the exploration, design candidates are represented as solutions of a constraint satisfaction problem.
 \item The \emph{Model Adaptation Pattern} constructs an exploration representation, such as a string of genes in genetic algorithms~\todo*{cite}, from an initial model provided by the designer. Based on the guidance of a goal function further design candidates are devised in this intermediate form using (meta-)heuristic search.
 \item The \emph{Model Transformation Pattern} directly represents the design candidates as an instance model. Model transformation rules that yield alternative models are scheduled using (meta-)heuristics to optimize a goal function.
 \item The \emph{Exploration Chaining Pattern} adds multiple abstraction layers to \textabbr{DSE} to prune the space of alternative solutions. At each abstraction layer, an exploration pattern is used to prune non-feasible solutions while selecting feasible solutions to be refined in the next layer. Domain knowledge is used to define abstraction layers. Costly evaluation of design candidates is usually deferred to the lower layers.
-\end{itemize}
+\end{itemize*}
+
 \citet{Vanherpen14patterns} also classified the representations employed by \textabbr{DSE} patterns:
-\begin{enumerate}
+\begin{enumerate*}
 \item The starting point for exploration is expressed in a \emph{model} formalism.
 \item Constraints to be satisfied by the design alternatives and objective function to be optimized are captured by \emph{constraint} and \emph{goal} formalisms.
 \item Design candidates are stored in an \emph{exploration formalism} during the exploration. In the \emph{Model Transformation Pattern}, this coincides with the \emph{model} formalism.
-\item The exploration formalism may be transformed into an \emph{analysis} formalism to check feasability with respect to the constraints.
+\item The exploration formalism may be transformed into an \emph{analysis} formalism to check feasibility with respect to the constraints.
 \item A second transformation may target a \emph{performance} formalism to check optimality with respect to the goal functions.
 \item Execution traces yielding the design alternatives are stored in a \emph{trace} formalism.
 \item Finally, the solution is output in a \emph{solution} formalism, which may coincide with either the model or the trace formalism.
-\end{enumerate}
+\end{enumerate*}
 
-The \textabbr{RGSPN} formalism proposed in \cref{chap:rgspn} may serve as both an \emph{analysis} formalism when constraints are formulated in terms of stochastic analysis queries and as a \emph{performance} formalism when the optimized goal function is a stochastic metric. Hence in \textabbr{DSE} the transformation proposed in \cref{chap:transform} should be employed as a means of transformin models in the \emph{exploration} formalism to the \emph{analysis} formalism. In more elaborate transformation chains, where a separate analysis formalism is employed and \textAbbr{RGSPN}s are only used as \emph{performance} formalism, the \emph{analysis} formalism may serve as a source instead. The traceability links produced by the transformation ensure that the results of the analysis can be intepreted as information about the satisfaction of constraints and the values of goal functions defined over the engineering formalisms.
+The \textabbr{RGSPN} formalism proposed in \cref{chap:rgspn} may serve as both an \emph{analysis} formalism when constraints are formulated in terms of stochastic analysis queries and as a \emph{performance} formalism when the optimized goal function is a stochastic metric. Hence in \textabbr{DSE} the transformation proposed in \cref{chap:transform} should be employed as a means of transforming models in the \emph{exploration} formalism to the \emph{analysis} formalism. In more elaborate transformation chains, where a separate analysis formalism is employed and \textAbbr{RGSPN}s are only used as \emph{performance} formalism, the \emph{analysis} formalism may serve as a source instead. The traceability links produced by the transformation ensure that the results of the analysis can be interpreted as information about the satisfaction of constraints and the values of goal functions defined over the engineering formalisms.
 
-\citep{Varro17generation}
+The proposed approach based on incremental model transformation is especially suited for the \emph{Model Transformation} \textabbr{DSE} pattern, where the change-driver mapping to \textAbbr{RGSPN}s can be performed directly from the \emph{model} formalism. Hence the same mapping is applicable for both stand-alone engineering models and in \textabbr{DSE}, while the change-driver transformation may react to source model changes caused by the exploration rules. The transformation description, which specifies the creation of \textAbbr{RGSPN}s from the \emph{model} formalism, can serve as the \emph{constraint} or \emph{goal} formalism, since it encodes which stochastic queries are constructed and evaluated for the instance models.
 
-\todo*{}
+For application in the context of \emph{Model Generation} and \emph{Model Adaptation} the transformation description for our analysis transformation engine must be formulated with the \emph{exploration} or an intermediate \emph{analysis} formalism as the source. The resulting transformation will be only suitable for \textabbr{DSE} and not for standalone model mapping. Moreover, in \emph{Model Generation} change-driven incrementality may have diminished utility, because constraint solvers often generate solution in the \emph{exploration} formalism from scratch instead of applying change operations. Adaptation of constraint solvers to the incremental setting is challenging due to scalability issues~\citep{Semerath16generation}, especially in the case of graph generation with complex structural constraints~\citep{Semerath16backward}.
 
-\section{Integration with design-space exploration toolchains}
+\begin{remark}
+  A recent approach in \emph{Model Generation} combines partial interpretations from mathematical logic and techniques from Boolean satisfiability (\textabbr{SAT}) solvers to formulate the problem in terms of \emph{Model Adaptation}~\citep{Varro17generation}. The \emph{exploration} formalism in this approach is a partial interpretation of the original \emph{model} formalism. It is possible to evaluate model queries on the partial interpretation by constraint rewriting of queries over the original \emph{model} formalism~\citep{Semerath17rewriting}. Therefore our transformation engine could be adapted to construct \textAbbr{RGSPN}s from the partially interpreted \emph{exploration} formalism based on a transformation description developed for the original \emph{model} language by rewriting (\enquote{lifting}) the involved model queries, which would enable incremental execution in all three major \textabbr{DSE} paradigms.
+\end{remark}
+
+\begin{remark}
+  Retaining parameter symbols in \textAbbr{RGSPN}s for use with external solvers provides an opportunity for \emph{Exploration Chaining}. The elements of the \textabbr{CTMC} parameter vector \(\vec{\uptheta} \in \mathbb{R}^{\lvert \Par \rvert}\) correspond to primitive attributes of engineering model elements after transformation. Hence the vector is a concise \emph{exploration} representation of a design alternative once its structure is fixed and only attributes need to be filled in. As a nested exploration method, algorithms based on sensitivity analysis and numerical optimization~\citep{Molnar17optimization} or parametric abstractions~\citep{Quatmann16mdp} may be employed so that the higher-level exploration method can be reserved to propose candidate structures for the design. 
+\end{remark}
+
+\subsection{Model transformation based design-space explorers}
+
+Incremental transformation to \textabbr{RGSPN} analysis models was considered above in the contexts of various \textabbr{DSE} patterns. We now describe the operation of our transformation engine with the \emph{Model Transformation Pattern}, which is perhaps the most amenable to change-driven synchronization of analysis models.
 
 \begin{figure}
   \centering
   \includegraphics[scale=0.9]{figures/dse_ftg_pm}
-  \caption{Formalism transformation graph and process model of the \emph{Model Transformation} \textabbr{DSE} pattern with \textabbr{RGSPN}-based analysis. The components in \emph{bold} were implemented in our work, while the rest of the components should be supplied by the \textabbr{DSE} framework and stochastic analysis tool.}
+  \caption{\textabbr{FTG+PM} of the \emph{Model Transformation} \textabbr{DSE} pattern with \textabbr{RGSPN}-based analysis. The components in \textbf{bold} were implemented in our work, while the rest of the components should be supplied by the \textabbr{DSE} framework and stochastic analysis tool.}
+  \label{fig:apply:ftg-pm}
 \end{figure}
 
-\subsection{Design-space explorers}
+The Formalism Transformation Graph and Process Model (\textabbr{FTG+PM}) notation was proposed by \citet{Lucio12ftgpm} as a guide to carry out model transformations in multi-paradigm modeling. An  extended version of the \emph{Model Transformation Pattern} \textabbr{FTG+PM} of \citet[Figure~4]{Vanherpen14patterns} is shown in \cref{fig:apply:ftg-pm}, which illustrates model transformation based \textabbr{DSE} with incrementally synchronized \textabbr{RGSPN} analysis models. The Formalism Transformation Graph (\textabbr{FTG}) on the left shows the modeling languages as rectangles and the involved model transformations as circles. Arrows indicate the direction of transformations, such that bidirectional arrows correspond to in-place model modification. The Process Model (\textabbr{PM}) contains the transformation activities, which are displayed as rounded rectangles, their control flow (solid arrows) and data flows (dashed arrows). Languages and transformations provided by our framework are emphasized in bold.
 
-\subsection{Formal analysis tools}
+Model transformation based \textabbr{DSE} works directly on the \emph{model} formalism. Heuristics or meta-heuristics provided by the \textabbr{DSE} toolchain in the \emph{Create Candidate Solutions} activity apply model transformations according to some goal functions. In order to support change-driven synchronization of the \textabbr{RGSPN} view for analysis, the transformations should be in-place so that change notifications can be propagated. In the \textabbr{PM}, the in-place model modification is indicated by data flows of pieces of input and output data of the same type.
+
+The \emph{To Analysis} activity derives the \textabbr{RGSPN} analysis model by interpreting the transformation description in the \emph{goal} formalism with our transformation engine, which was described in \cref{chap:transform}. The analysis models are derived incrementally by modifying the \textAbbr{RGSPN}s in place according to changes in the candidate solution. The resulting \textAbbr{RGSPN} contains both the stochastic analysis model and the variable symbols that correspond to the goal functions.
+
+The queries pertaining goal functions and queries can be answered on the analysis model by executing the stochastic analysis in an external tool. The \textabbr{RGSPN} model is transferred to the external tool by serializing it in a standardized interchange format, which is the \emph{Solver Input Formalism}. Moreover, the queries themselves must be serialized in the appropriate \emph{Solver Input Query} formalism. The \emph{To Solver Representation} activity performs this task. We provide an implementation of this activity as part of our framework that targets them \textabbr{ISO}/\textabbr{IEC}~15909-2:\citeyear{ISO1590922011} \textabbr{PNML} format as the \emph{Solver Input Formalsm} while using extensions defined by the PetriDotNet tool~\citep{Voros17pdn} to convey timings of Petri net transitions and stochastic queries.
+
+After the \emph{Execute Analysis} activity, which usually involves calling an external program, the answers to the stochastic queries are obtained in the \emph{Solver Output Formalism}. This representation must be parsed in the \emph{Interpret Solver Output} activity so that the values of the goal functions are available to the \textabbr{DSE} toolchain. The \textabbr{DSE} toolchain incorporates the results of the analysis into the \emph{trace} representation; thus the candidate designs in the solution store can be compared according to their fitness.
+
+The \emph{Model Transformation} \textabbr{DSE} pattern is iterative. The traces, which are enriched with the values of the goal functions, are incorporated by the \emph{Create Candidate Solutions} heuristics to produce new design candidates. The in-place modification of the candidate design and the \textabbr{RGSPN} is signified in the \textabbr{PM} by the data flow going into the decision node at the end of the loop and the data flow back to the start of the loop.
+
+Finally, if required, the optimal solution or a set of solutions can be transformed from the trace representation to the \emph{solution} formalism by the \emph{From Trace Representation} activity.
+
+\subsection{Stochastic analysis tools}
+
+To answer the queries posed as variable symbols in the \textabbr{RGSPN} analysis models external stochastic analysis tools must be invoked. As discussed in the previous section, this requires a modification of the \textabbr{DSE} toolchain to produce input for the external tool, invoke it and parse its output. However, additional support for this workflow must be incorporated into the analysis tool, too.
+
+Firstly, the analysis tool needs to have an interface for unattended execution. Various ways to provide this interface include command-line applications and web services. For example, the PetriDotNet analysis tool contains a separate binary executable for running stochastic analyses in the command line.\footnote{This tool, similarly to the rest of PetriDotNet~1.5b2 is available from \url{https://inf.mit.bme.hu/en/research/tools/petridotnet} upon request. More information can be found in the user manual by \citet{Voros17pdnmanual}.} While initiatives such as the Model Checking Contesti~(\textabbr{MCC})~\citep{Kordon17mcc} and the Petri Nets Repository~\citep{Hillah17repository} strive for common interfaces for Petri net analysis tools, to our best knowledge, no generic interface is widely supported. Hence even though models serialized in the \textabbr{PNML} format are portable between solvers, each of them must be called in a specific way.
+
+Secondly, any parameters required by the analysis in addition to the stochastic model and the queries must be supplied automatically. For stochastic Petri net analysis, these parameters include the ordering of state variable in symbolic analysis methods when the model is converted into a \textabbr{CTMC} and the choice of numeric algorithm to solve the arising systems of linear or differential equations.
+
+\subsubsection{Variable ordering}
+
+Symbolic computations methods such as \emph{saturation}~\citep{Ciardo01saturation,Ciardo12tenyears} are often used in the state-space exploration of Petri nets, which is required for model checking logical properties and the construction of \textAbbr{CTMC}s from stochastic Petri nets~\citep{Miner04mdd}. Symbolic algorithms represent the reachable state space of the formal model as a \emph{decision diagram}, such as a multi-valued decision diagram (\textabbr{MDD})~\citep{Kam98mdd}. The decision diagram is a directed acyclic graph where each node belongs to a given \emph{level}. Each state variable of the model, which may be the marking of single place or a collection of places in Petri nets, is assigned to a different level. The assignment is referred to as the variable \emph{ordering}. Outgoing edges from nodes are labeled with the possible values of the state variable, such that each path in the graph is a reachable state, i.e.~a reachable Petri net marking.
+
+The transitions in the formal model induce a next-state relation over the states in the diagram. The reachable state space can be determined by fixed-point iteration of the next-state relation. By selecting appropriate representation of the next-state relation, even complex models, such as stochastic Petri nets with immediate transition priorities can be handled~\citep{Miner06saturation,Marussy17priorities}. However, the variable ordering has dramatic effects on the run time of the fixed point computation~\citep{Amparore17ordering}. Stochastic analysis is further made difficult due to the decompositions employed in the numerical solution of \textAbbr{CTMC}s often requiring variable assignments that differ from those suitable for symbolic analysis~\citep{Marussy16decompositions}.
+
+As the structure of the derived Petri net model may constantly change during exploration, the variable ordering cannot be provided to the solver manually. Either the solver itself or some other component of the \textabbr{DSE} pipeline must generate an acceptable variable ordering. Based on the abstraction level at which the generation is done, we suggest three possible solutions as follows:
+\begin{itemize*}
+\item The stochastic analysis tool itself may generate a variable order by some heuristic, such as those surveyed by \citet{Amparore17ordering}.
+\item The \textabbr{RGSPN} transformation engine may communicate the groupings of places induced by the instantiation of Petri net modules to the analysis tool. The nested-unit Petri net (\textabbr{NUPN}) format was proposed by \citet{Garavel15nupn} to encode such grouping and was employed in the 2017 edition of the \textabbr{MCC} to aid variable ordering heuristics of the participating tools~\citep{Kordon17mcc}.\footnote{The specification for embedding \textabbr{NUPN} data in \textabbr{PNML} files is available at \url{https://mcc.lip6.fr/nupn.php}.}
+\item It would be also possible to extend the transformation specifications such that our transformation engine could generate variable orderings along with \textAbbr{RGSPN}s.
+\end{itemize*}
+
+\subsubsection{Numerical algorithm selection}
+
+Another setting which may dramatically impact the solution time and accuracy of stochastic models is the choice of the numerical algorithms.
+
+In stead-state and mean time to state partition analysis, solving the \textabbr{CTMC} reduces to a system of linear equations, where the number of variables and equations equal to the size of the reachable state space of the model. The matrix of this system of linear equations is the \emph{infinitesimal generator matrix} of the \textabbr{CTMC}, which is sparse and often amenable to decomposed storage~\citep{}. Due to the size of the systems direct solution methods are infeasible and iterative numerical methods are employed instead.
+
+\todo*{}
 
 \section{Software implementation}
 
 A software tool for the development of transformation specifications and their execution was implemented as a plug-in for the Eclipse Oxygen.1 Integrated Development Environment~(\textabbr{IDE}). The plug-in is based on open source technologies from the Eclipse Modeling Project: the \emph{Eclipse Modeling Foundation}~(\textabbr{EMF}), the \emph{XText} framework for language engineering and \emph{\textabbr{VIATRA}} scalable reactive model queries and transformations.\todo{Cite the relevant technologies, or use \textabbr{URL} footnotes?}
 
-The software consists of two major components. Both \textabbr{RGSPN} modules and model transformations from arbitrary \textabbr{EMF}-based \textAbbr{DSL}s to \textAbbr{RGSPN}s can be developed in the transformation specification environment. The transformation can be executed either inside the \textabbr{IDE} for testing or inside a \textabbr{DSE} program after Java code generation. Together with a runtime library implementing the transformation engine, the generated Java code provides incremental transformation from the engineering \textAbbr{DSL} to stochastic Petri nets.
+The software consists of two major components. Both \textabbr{RGSPN} modules and model transformations from arbitrary \textabbr{EMF}-based \textAbbr{DSL}s to \textAbbr{RGSPN}s can be developed in the transformation specification environment. The transformation can be executed either inside the \textabbr{IDE} for testing or inside a \textabbr{DSE} program after Java code generation. Together with a runtime library implementing the transformation engine, the generated Java code provides incremental transformation from the engineering \textAbbr{DSL}s to stochastic Petri nets.
+
+\todo*{}
 
 \subsection{Specification environment}
+
+\subsubsection{Model export}
+
+\subsubsection{Code generation}
 
 \subsection{Transformation execution}
 
 \section{Evaluation of incremental transformations}
 
-We carried out preliminary scalability evaluation of our transformation runtime in order to study the overhead the imposed on transformation imposes on design-space exploration. Both \emph{batch execution}---where the transformation engine is initially instantiated and the intermediate and target \textabbr{RGSPN} models are materialized according to the engineering models---and \emph{incremental execution}---where each source model change is immediately translated into intermediate and target model changes---were studied. More specifically, we carried out the evaluation in the \emph{dining philosophers} domain to address three research questions:
-\begin{description}
-\item[\textabbr{RQ1}] How does the initial batch transformation from the engineering \textabbr{DSL} to the formal stochastic model (\textabbr{GSPN}) scale with respect to size of the input model?
-\item[\textabbr{RQ2}] How does the incremental transformation scale with respect to the size and the change operations of the input model?
-\item[\textabbr{RQ3}] What is the overhead associated with the serialization of models to the \textabbr{ISO}/\textabbr{IEC} \textabbr{PNML} interchange format?
-\end{description}
+We carried out preliminary scalability evaluation of our transformation runtime in order to study the overhead the imposed on transformation imposes on design-space exploration. Both \emph{batch execution}---where the transformation engine is initially instantiated and the intermediate and target \textabbr{RGSPN} models are materialized according to the engineering models---and \emph{incremental execution}---where each source model change is immediately translated into intermediate and target model changes---were studied. More specifically, we carried out the evaluation in the \emph{dining philosophers} domain to address the following three research questions:
+\paragraph{\textabbr{RQ1}} How does the initial batch transformation from the engineering \textabbr{DSL} to the formal stochastic model (\textabbr{GSPN}) scale with respect to size of the input model?
+\paragraph{\textabbr{RQ2}} How does the incremental transformation scale with respect to the size and the change operations of the input model?
+\paragraph{\textabbr{RQ3}} What is the overhead associated with the serialization of models to the \textabbr{ISO}/\textabbr{IEC} \textabbr{PNML} interchange format?
 
-Answering these questions may help identifying strengths and weaknesses of the proposed approach to the stochastic evaluation of engineering models. Moreover, the answers to \textbf{\textabbr{RQ1}} and  \textbf{\textabbr{RQ2}} aid in determining whether incremental or batch model transformation should be used according to the usual size of source changes. This choice arises when there is no need to construct the target model change as a sequence of operations for each source change; therefore incremental execution is not necessitated and the system integrator can chose between either execution schemes. Lastly, the answer to \textbf{\textabbr{RQ3}} tells whether the overhead of serialization into a portable format is acceptable or more direct integration and communication with the external solver is needed.
+\newpara Answering these questions may help identifying strengths and weaknesses of the proposed approach to the stochastic evaluation of engineering models. Moreover, the answers to \textbf{\textabbr{RQ1}} and  \textbf{\textabbr{RQ2}} aid in determining whether incremental or batch model transformation should be used according to the usual size of source changes. This choice arises when there is no need to construct the target model change as a sequence of operations for each source change; therefore incremental execution is not necessitated and the system integrator can chose between either execution schemes. Lastly, the answer to \textbf{\textabbr{RQ3}} tells whether the overhead of serialization into a portable format is acceptable or more direct integration and communication with the external solver is needed.
 
 \subsection{Measurement setup}
 
 \begin{table}
-  \caption{Source model, abstract net and concrete net sizees for the philosophers models.}
+  \caption{Source model, abstract net and concrete net sizes for the philosophers models.}
   \label{tbl:apply:model-size}
   \sisetup{table-number-alignment=center}
   \centering
@@ -89,13 +152,13 @@ Answering these questions may help identifying strengths and weaknesses of the p
 Measurements were performed on instances of the \emph{dining philosophers} domain model, which was used throughout this work as a running example. The number of philosophers and thus the size of the source model was set to \(N = 8\), \(16\), \(32\), \(64\) and \(128\). \Cref{tbl:apply:model-size} shows the sizes of the source models, as well as the sizes of the derived intermediate abstract \textAbbr{RGSPN}s and target concrete \textAbbr{RGSPN}s, including any symbol, edge and expression objects.
 
 To evaluate incremental execution, various \emph{change operations} were defined as follows:
-\begin{itemize}
+\begin{itemize*}
 \item \textbf{Swap} rotates the seating order two philosophers adjacent around the table. This change only modifies references in the source model; hence is simulates a \textabbr{DSE} rule with no object creation and deletion.
 \item \textbf{New} creates a new philosopher and inserts it between two existing philosophers.
 \item \textbf{Delete} removes a philosopher from the table and deletes it from the model.
 \item \textbf{Fixed\-Mix} simulates a compound model change of fixed size by a randomly ordered mixture of \(8\)~\textbf{swap}, \(4\)~\textbf{new} and \(4\)~\textbf{delete} operations.
 \item \textbf{Scaled\-Mix} simulates a compound model change of model-dependent size by a randomly ordered mixture of \(N\)~\textbf{swap}, \(\frac{N}{2}\)~\textbf{new} and \(\frac{N}{2}\)~\textbf{delete} operations.
-\end{itemize}
+\end{itemize*}
 
 The compound model change \textbf{scaled\-Mix} was devised such that half of the philosophers is replaced around the table, while \textbf{fixed\-Mix} is obtained from \textbf{scaled\-Mix} by setting \(N = 8\) to the size of the smallest input model. The model elements involved in the simple and compound model changes were randomized similarly to the order of simple operations without compound ones. However, the random seed was fixed for each measurements, i.e.~the model changes are always deterministic given the input model size.
 
@@ -103,7 +166,7 @@ Measurements of a given execution scheme and change type comprise a \emph{scenar
 
 To avoid measuring the latency of the hard disk, the target \textabbr{GSPN} models were serialized in the \textabbr{PNML} format to an in-memory output stream. However, for externals tools that can only read Petri nets from a disk, an in-memory file system may be needed instead.
 
-Measurements were performed on a workstation with two Intel Xeon 5160 dual-core 3.00\thinspace GHz processors and 16\thinspace GB memory. The heap size of the Java 1.8u144 virtual machine was limited to 8\thinspace GB with a 30\thinspace s wall clock time limit for each iteration.
+Measurements were performed on a workstation with two dual-core Intel Xeon 5160 3.00\thinspace \mixedabbr{GHz} processors and 16\thinspace \textabbr{GB} memory. The heap size of the Java 1.8u144 virtual machine was limited to 8\thinspace \textabbr{GB} with a 30\thinspace s wall clock time limit for each iteration.
 
 \subsection{Results}
 
@@ -140,12 +203,12 @@ Therefore instead of fitting a single curve for each scenario, data points were 
 The minimum and maximum execution times of each scenario and model size, which are representative of the execution times in two clusters, are shown in \cref{tbl:apply:minmax}. Because the considered model changes did not affect the run times of batch transformations, we only report the run time of the batch transformation of the initial model. The symbol \(\updownarrow\) indicates significant (\(p < 0.05\)) bimodality of the execution time distributions according to Hartigan's dip test~\citep{Maechler16diptest}, while~--~denotes unimodal distributions.
 
 In order to study the source of bimodality in the execution times, a further experiment was conducted. The batch transformations, which had the most striking bimodality, was executed with further instrumentation on the source model containing \(N = 128\) philosophers. Four stages of the transformation were distinguished:
-\begin{enumerate}
+\begin{enumerate*}
 \item The \emph{view query} phase prepares the model queries that are the preconditions of the view transformation. In \textabbr{VIATRA} Query, this corresponds to the construction of an appropriate \textabbr{RETE} net~\todo*{cite?} and the traversal of the source model to populate the base relations.
 \item The \emph{view transformation} phase fires the transformation rules on the \textabbr{VIATRA} Event-driven Virtual Machine (\textabbr{EVM}) to construct the abstract \textabbr{RGSPN} model with references.
 \item The \emph{concretizer query} phase traverses the abstract net to prepare the precondition queries of the concretizer transformation.
 \item The \emph{concretizer transformation} phase is ran on the \textabbr{EVM} to resolve references and inline expression in the abstract net to construct the concrete \textabbr{RGSPN} target model.
-\end{enumerate}
+\end{enumerate*}
 In ordinary transformation execution, the query phases are ran simultaneously to avoid spurious model traversal. Moreover, the transformation phases share an \textabbr{EVM} execution schema that provides sequential execution by prioritized firing of transformation rules. However, in our experiment, we separated the phases to observe their run times individually.
 
 \begin{figure}
@@ -185,28 +248,29 @@ Lastly, the time taken by serialization of the target models in \textabbr{ISO}/\
 \subsection{Observations}
 
 The research questions \textbf{\textabbr{RQ1}--3} may be answered based on the presented measurement results as follows:
-\begin{description}
-\item[\textabbr{RQ1}] Batch transformations scaled superlinearly in the size of the input model. Transformation of the largest studied source model, which had 129 elements, took up to 15\thinspace s to produce a 8452-element output model along with traceability information which affords incremental synchronization of the target \textabbr{RGSPN} according to future source model changes.
 
-  The run time exhibited significats bimodality, apparent to both visual examination an Hartigan's dip test of bimodality. In the most extreme case of \(N = 128\) philosophers, iterations in the upper cluster of run times took nearly twice as long a those in the lower cluster, while for smaller input models, the difference was up to 50\%.
-\item[\textabbr{RQ2}] Incremental synchronization of the \textbf{swap} change operation was found to take linear time as the function of the source model time. Therefore the synchronization time depends on not only the changes to be synchronized but also on the size of the input model. Synchronization time for \textbf{create} and \textbf{delete} changes was found to be superlinear similarly to the batch transformation. This indicates the the creation and removal of objects has larger overhead than the modification of references in the source model and the transformed \textabbr{RGSPN}.
+\paragraph{\textabbr{RQ1}} Batch transformations scaled superlinearly in the size of the input model. Transformation of the largest studied source model, which had 129 elements, took up to 15\thinspace s to produce a 8452-element output model along with traceability information which affords incremental synchronization of the target \textabbr{RGSPN} according to future source model changes.
 
-  Synchronization time was below that of batch transformation in the \textbf{fixed\-Mix} compound change operation. However, for the change operation \textbf{scaled\-Mix} of model-dependent size, batch transformation was found to be faster that incremental synchronization in all cases except \(N = 8\). Therefore we can conclude that if change operations affect large portions of the input model batch transformation may be more economical than incremental synchronization; although for smaller input changes, synchronization won by a margin of at least 14\%, the smallest difference being achieved on the \textbf{fixed\-Mix} change with \(N = 16\).
-\item[\textabbr{RQ3}] The \textabbr{PNML} serialization routine, which traverses the concrete \textabbr{RGSPN} model to produce its \textabbr{PNML} equivalent, scaled linearly in the size of the input model. However, the cause of this phenomemon is probably that the size of concrete \textabbr{GSPN} itself is only a constant multiple of the input model size. The size of the generated \textabbr{PNML} was also a multiple of the input model size. In all measured cases \textabbr{PNML} serialization took no more than \(\nicefrac{1}{3}\) of a second, much less than the time taken by analysis tools to analyze stochastic Petri net models similar to the ones considered. Therefore \textabbr{PNML} serialization is not a significant overhead compared to stochastic analysis. It is also generally smaller than the time taken by batch transformation.
-\end{description}
+The run time exhibited significant bimodality, apparent to both visual examination an Hartigan's dip test of bimodality. In the most extreme case of \(N = 128\) philosophers, iterations in the upper cluster of run times took nearly twice as long a those in the lower cluster, while for smaller input models, the difference was up to 50\%.
 
-Bimodality of transformation run time distributions was found to be caused by the execution of the \textabbr{RGSPN} concretizer transformation on the \textabbr{VIATRA} Event-driven Virtual Machine. We hyphotesize that the large differences is execution time are caused by the nondeterministic scheduling in \textabbr{EVM}.
+\paragraph{\textabbr{RQ2}} Incremental synchronization of the \textbf{swap} change operation was found to take linear time as the function of the source model time. Therefore the synchronization time depends on not only the changes to be synchronized but also on the size of the input model. Synchronization time for \textbf{create} and \textbf{delete} changes was found to be superlinear similarly to the batch transformation. This indicates the creation and removal of objects has larger overhead than the modification of references in the source model and the \textabbr{RGSPN}.
 
-While conflicting transformation rules of differing priorities are fired in the order of their priorities, the ordering between rules of the same priority are not defined. The firing of a low-priority rule may activate a higher priority one. In the implementation of our concretizer transformation, the work performed by some high-priority rules may be occasionally undone by a low-priority rule when \textabbr{RGSPN} references are resolved and expressions are inlined due to the dependency tracking required for for expression inlining. Thus if low-priority rules are fired in an unsuitable order, some work must be redone by high-priority rules after the corrent dependencies are taken into account. Although taking dependencies between \textabbr{RGSPN} symbols and expressions at the level of \textabbr{EVM} conflict resolution may alleviate this issue, performing such tracking efficiently remains in the scope of future work.
+Synchronization time was below that of batch transformation in the \textbf{fixed\-Mix} compound change operation. However, for the change operation \textbf{scaled\-Mix} of model-dependent size, batch transformation was found to be faster that incremental synchronization in all cases except \(N = 8\). Therefore we can conclude that if change operations affect large portions of the input model batch transformation may be more economical than incremental synchronization; although for smaller input changes, synchronization won by a margin of at least 14\%, the smallest difference being achieved on the \textbf{fixed\-Mix} change with \(N = 16\).
 
-Due to the hashing employed by the conflict resolver, the firing order of equal priority rules is determined at runtime by \texttt{hashCode()} of the rule activation objects, which is not overridden from its default implementation. In the Java runtime environment, the default \texttt{hashCode()} is connected with the allocation of objects and forcing it to be deterministic for the sake of consistent measurements is difficult. Hence the apparently random switching between fast and slow execution of the concretizer transformation.
+\paragraph{\textabbr{RQ3}} The \textabbr{PNML} serialization routine, which traverses the concrete \textabbr{RGSPN} model to produce its \textabbr{PNML} equivalent, scaled linearly in the size of the input model. However, the cause of this phenomemon is probably that the size of concrete \textabbr{GSPN} itself is only a constant multiple of the input model size. The size of the generated \textabbr{PNML} was also a multiple of the input model size. In all measured cases \textabbr{PNML} serialization took no more than \(\nicefrac{1}{3}\) of a second, much less than the time taken by analysis tools to analyze stochastic Petri net models similar to the ones considered. Therefore \textabbr{PNML} serialization is not a significant overhead compared to stochastic analysis. It is also generally smaller than the time taken by batch transformation.
+
+\newpara Bimodality of transformation run time distributions was found to be caused by the execution of the \textabbr{RGSPN} concretizer transformation on the \textabbr{VIATRA} Event-driven Virtual Machine. We hypothesize that the large differences is execution time are caused by the nondeterministic scheduling in \textabbr{EVM}.
+
+While conflicting transformation rules of differing priorities are fired in the order of their priorities, the ordering between rules of the same priority are not defined. The firing of a low-priority rule may activate a higher priority one. In the implementation of our concretizer transformation, the work performed by some high-priority rules may be occasionally undone by a low-priority rule when \textabbr{RGSPN} references are resolved and expressions are inlined due to the dependency tracking required for expression inlining. Thus if low-priority rules are fired in an unsuitable order, some work must be redone by high-priority rules after the correct dependencies are taken into account. Although taking dependencies between \textabbr{RGSPN} symbols and expressions at the level of \textabbr{EVM} conflict resolution may alleviate this issue, performing such tracking efficiently remains in the scope of future work.
+
+Due to the hashing employed by the conflict resolver, the firing order of equal priority rules is determined at runtime by \texttt{hashCode} of the rule activation objects, which is not overridden from its default implementation. In the Java runtime environment, the default \texttt{hashCode} is connected with the allocation of objects and forcing it to be deterministic for the sake of consistent measurements is difficult. Hence the apparently random switching between fast and slow execution of the concretizer transformation.
 
 \subsection{Threats to validity}
 
 An internal threat to validity was the possibility of an incorrect implementation of the transformation engine or the incorrect description of the transformation from the dining philosophers domain model to Petri nets. To ensure correctness the transformation outputs were manually inspected for the small source models for consistency with the source models and the transformation description.
 
-Moreover, interferences may have occurred in the measurement environment. To reduce interferences, the measurements were ran on a physical machine on which no other task was executed at the time. Each scenario and input model was measured 30 times after 10 warm-up iterations to reduce random noise and the interferences caused by ongoing just-in-time compilation. Garbage collection within the runtime enviroment was also controlled manually to ensure that subsequent iterations did not interfere.
+Moreover, interferences may have occurred in the measurement environment. To reduce interferences, the measurements were ran on a physical machine on which no other task was executed at the time. Each scenario and input model was measured 30 times after 10 warm-up iterations to reduce random noise and the interferences caused by ongoing just-in-time compilation. Garbage collection within the runtime environment was also controlled manually to ensure that subsequent iterations did not interfere.
 
-Despite these attemps, run time distributions were found to be bimodal having two clusters with small variance instead of a single cluster with small variance. We conducted further measurements to break down the transformation into phases and hypothesize that this phenomenon is intrinsic to the current implementation of the transformation insteand of being caused by interferences.
+Despite these attempts, run time distributions were found to be bimodal having two clusters with small variance instead of a single cluster with small variance. We conducted further measurements to break down the transformation into phases and hypothesize that this phenomenon is intrinsic to the current implementation of the transformation instead of being caused by interferences.
 
-As we conducted our expriments on in single domain with a single transformation description, several external threats to validity impede generalization. Firstly, further studies are needed to observe the behavior of the transformation on different domain models and transformation descriptions. Secondly, as the size of the target \textabbr{RGSPN} models was a constant multiple of the size of the source models, behaviors depending on the sizes of either of these models could not be distinguished from each other.
+As we conducted our experiments on in single domain with a single transformation description, several external threats to validity impede generalization. Firstly, further studies are needed to observe the behavior of the transformation on different domain models and transformation descriptions. Secondly, as the size of the target \textabbr{RGSPN} models was a constant multiple of the size of the source models, behaviors depending on the sizes of either of these models could not be distinguished from each other.

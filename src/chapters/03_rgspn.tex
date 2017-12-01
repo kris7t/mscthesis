@@ -27,7 +27,7 @@ We opt for modularity instead of compositionality to avoid restricting the model
 
 \subsection{Modeling formalisms}
 
-Continuous-time Markov chains (\textAbbr{CTMC}s) are common tools for the reliability and performability prediction of critical systems~(see e.g.~\cite{Reibman89markov}). However, instead of modeling with \textAbbr{CTMC}s directly, usually higher-level formalisms are used to obtain more compact models. The semantics of these models are defined in terms of \textAbbr{CTMC}s or related stochastic processes, such as Markov regenerative processes~\citep{Logothetis95mrm,Telek96mrm}. Usually the higher-level formalism belongs to one of these three classes:
+Continuous-time Markov chains (\textAbbr{CTMC}s) are common tools for the reliability and performability prediction of critical systems~\citepeg{Reibman89markov}. However, instead of modeling with \textAbbr{CTMC}s directly, usually higher-level formalisms are used to obtain more compact models. The semantics of these models are defined in terms of \textAbbr{CTMC}s or related stochastic processes, such as Markov regenerative processes~\citep{Logothetis95mrm,Telek96mrm}. Usually the higher-level formalism belongs to one of these three classes:
 
 \newpara \textbf{Queuing networks} (\textAbbr{QN}s) describe the routing of \emph{customers} or \emph{work items} between \emph{queues}. The times spent in queues are described by random variables. \todo{Should we cite a review about \textAbbr{QN}s?}
 
@@ -130,17 +130,17 @@ The possible types are described by the following \textabbr{EBNF}-like grammar:
 
 The types \lit{place} and \lit{tran} correspond to places and transitions in the \textabbr{RGSPN} and the references thereof. Types of collections are formed by appending the \emph{collection qualifier} suffix \lit{[]} to the type of the members.
 
-The types of variables deviate from routine. Inspired by conventions from the presentation of substructural type systems (see e.g.~\cite{Walker05substructural}) the types of variables are split into a qualifier and a \emph{pretype}. The pretype part expresses the domain of values, \lit{boolean} for truth values \(\mathbb{B} = \{\lit{true}, \lit{false}\}\), \lit{int} for integers and \lit{double} for real numbers.
+The types of variables deviate from routine. Inspired by conventions from the presentation of substructural type systems \citepeg{Walker05substructural} the types of variables are split into a qualifier and a \emph{pretype}. The pretype part expresses the domain of values, \lit{boolean} for truth values \(\mathbb{B} = \{\lit{true}, \lit{false}\}\), \lit{int} for integers and \lit{double} for real numbers.
 
 The \emph{dependence qualifier} specifies the evaluation context of an expression as follows:
-\begin{compactitem}
+\begin{itemize*}
 \item A \lit{const} expression yields a value without further input.
 \item A \lit{param} expression refers to the values of continuous model parameters, which are embodied by parameter symbols.
 \item A \lit{marking} expression refers to the token counts of places; therefore it yields a different value in different Petri net markings.
 \item A \lit{weight} expression is both parameter- and marking-dependent.
 \item A \lit{prop} expression is a performance measure or query that can be determined by model checking and stochastic analysis, but may also depend on the initial marking.
 \item A \lit{path} expression is a path property defined along a trace of model execution. It may be a complete \textabbr{LTL} query or appear as a path formula in a \(\textabbr{CTL}^*\) \lit{prop} query.
-\end{compactitem}
+\end{itemize*}
 
 Because symbol kinds are separated from types, the type system can be adapted for many different scenarios while leaving the Petri net structure intact. Some of these possible extension based on existing literature are explored in Remarks~\ref{rem:rgspn:parametric} and \ref{rem:rgspn:colored}.
 
@@ -184,7 +184,7 @@ Collection types are covariant in their member types; therefore \(\tau \subtype 
 \begin{remark}\label{rem:rgspn:colored}
   It would be possible to include more elaborate abstract syntax and subtyping rules for types, for example to describe colored Petri nets, where scalar token counts in markings are replaced by multisets over the elements of the \emph{color class} or \emph{sort} corresponding to each place. In the colored setting, instead of a single \lit{place} type, types of places carry a sort parameter. \citet{Kindler07modular} studied modular colored Petri nets with sort and operator symbols. A sort symbol reference is a color class that can be imported into the module from outside and is thus left abstract inside the module. Types of places thus may depend on the sort symbols.
 
-  Modular colored nets may also contain \emph{operator} symbols, which transform members of a color class into another. In our framework, these could be modeled by symbols of type \(\tau \to \sigma\), i.e.~operators that transform values of type \(\tau\) into values of type \(\sigma\), extending syntax of types~\(\ebnfVar{Type} \ebnfEq \ldots \mid \ebnfVar{Type} \to \ebnfVar{Type}\). The arising challenges seem to require more elaborate type theoretical machinery, such as typed lambda calculus with subtyping (see e.g. Chapters~15 and~16 of~\cite{Pierce02tapl}).
+  Modular colored nets may also contain \emph{operator} symbols, which transform members of a color class into another. In our framework, these could be modeled by symbols of type \(\tau \to \sigma\), i.e.~operators that transform values of type \(\tau\) into values of type \(\sigma\), extending syntax of types~\(\ebnfVar{Type} \ebnfEq \ldots \mid \ebnfVar{Type} \to \ebnfVar{Type}\). The arising challenges seem to require more elaborate type theoretical machinery, such as typed lambda calculus with subtyping \citepeg[Chapters~15 and~16]{Pierce02tapl}.
 \end{remark}
 
 \subsection{Formal definition}
@@ -299,7 +299,7 @@ From now on all discussed \textAbbr{RGSPN}s will be assumed to be well-typed.
 \section{Expressions}
 \label{sec:rgspn:expression}
 
-In this section we propose an abstract syntax for expressions that describe the quantitative aspects of \textabbr{RGSPN} models, including arc inscriptions, initial markings firing policies in \vref{dfn:rgspn:rgspn}, as well as the performance measures and queries of interest.
+In this section we propose an abstract syntax for expressions that describe the quantitative aspects of \textabbr{RGSPN} models, including arc inscriptions, initial markings and firing policies in \vref{dfn:rgspn:rgspn}, as well as the performance measures and queries of interest.
 
 The expression language \(\textabbr{CTL}^*\) includes state and path operators in addition to references to net elements, basic arithmetic and logical operators. These additional operators enable defining queries concerning \textabbr{CTL}, \textabbr{LTL} or \(\textabbr{CTL}^*\) properties. Similarly to the flexibility of the type system, the syntax of expressions can be also extended if the definition of further properties, such as \textabbr{CSL} formulas are desired. Validation and interpretation of the queries, such as checking whether a \(\textabbr{CTL}^*\) formula is in \textabbr{CTL} when full \(\textabbr{CTL}^*\) is not supported, is the responsibility of the external model checking tool.
 
@@ -416,7 +416,7 @@ Note that marking expressions and collection aggregations directly take a symbol
   \end{tabu}
 \end{table}
 
-A complete set of typing rules for \(\Expr_\Sigma\) is presented in~\vref{fig:rgspn:typing}, which described the relation \(\_ \vdash \_ \oftype \_\). The judgement \(\Sigma \vdash e \oftype \tau\) assigns a type \(\tau\) to an expression \(e \in \rel{Expr}(\Sigma)\) in the context of an \textabbr{RGSPN} signature \(\Sigma\). 
+A complete set of typing rules for \(\Expr_\Sigma\) is presented in~\vref{fig:rgspn:typing}, which describes the relation \(\_ \vdash \_ \oftype \_\). The judgement \(\Sigma \vdash e \oftype \tau\) assigns a type \(\tau\) to an expression \(e \in \rel{Expr}(\Sigma)\) in the context of an \textabbr{RGSPN} signature \(\Sigma\). 
 
 The types of unary operators, binary operators, conditional and aggregate expressions are captured by the rules \textsc{T-Unary}, \textsc{T-Bin}, \textsc{T-If} and \textsc{T-Agg}. Instead of introducing types for operators and typing rules for operator application, typing rules for all operators are written out explicitly. While this approach increases the number of typing rules considerably, the lack of function types and polymorphic types allows the syntax of \(\rel{Type}\) to remain simple. If more generality is desired, the type system may be extended to support user-defined operators and operator types as described in \vref{rem:rgspn:colored}.
 
@@ -429,7 +429,9 @@ Variable and marking references are handled by \textsc{T-Var} and \textsc{T-Mark
 
 In this section we sketch the semantics of \(\Expr_\Sigma\) both for structural expression of an \textabbr{RGSPN} and for performance measures and queries. Most of the expression evaluation happens in external analysis tools when marking- and parameter-dependent expressions are interpreted to construct a \textabbr{CTMC} from the Petri net and when queries are answered. Therefore, exporting \textAbbr{RGSPN}s for external tools must be performed with care to ensure that the tool interprets the provided input according to these semantics. This may require nontrivial transformation of the expressions to the input language of the tool and may even be impossible to fully achieve when the external tool is missing some analysis features. In the latter case, the user receives an error message during export.
 
-Values of pretypes \lit{boolean}, \lit{int} and \lit{double} can be interpreted as members of the sets \(\mathbb{B} = \{\lit{true}, \lit{false}\}\) of truth values, \(\mathbb{Z}\) of integers and \(\mathbb{R}\) of real numbers, respectively.\footnote{In practice, representations on integers and floating-point numbers with a finite number of bits are used instead. However, this distinction only becomes important in the external analysis tools, where finite numerical precision necessitates careful design of algorithms to control approximation error \todo*{Cite Bayer MDP paper}.} Formally, pretypes have the interpretations
+\subsubsection{Pretypes and dependence qualifiers}
+
+Values of pretypes \lit{boolean}, \lit{int} and \lit{double} can be interpreted as members of the sets \(\mathbb{B} = \{\lit{true}, \lit{false}\}\) of truth values, \(\mathbb{Z}\) of integers and \(\mathbb{R}\) of real numbers, respectively.\footnote{In practice, representations on integers and floating-point numbers with a finite number of bits are used instead. However, this distinction only becomes important in the external analysis tools, where finite numerical precision necessitates careful design of algorithms to control approximation error \todo*{Cite Bayer MDP paper}.} Formally, pretypes have the interpretations specified in \vref{fig:rgspn:typing}, i.e.
 \begin{align}
   \llbracket \lit{boolean} \rrbracket &= \mathbb{B} \text,
   & \llbracket \lit{int} \rrbracket &= \mathbb{Z} \text,
@@ -438,22 +440,25 @@ Values of pretypes \lit{boolean}, \lit{int} and \lit{double} can be interpreted 
 
 Variable types \(\vartype{\delta}{\rho}\) can be viewed as functions from some \emph{context} determined by the dependence qualifier \(\delta\) to the set \(\llbracket \rho \rrbracket\). In the case \(\delta = \lit{const}\), the context is empty, so \(\llbracket \vartype{\lit{const}}{\rho} \rrbracket\) is isomorphic to \(\llbracket \rho \rrbracket\). For other qualifiers, the context may be comprised of a vector \(\vec{\uptheta} \in \mathbb{R}^{\lvert \Par \rvert}\) of parameter values and the current marking of the Petri net \(m\). Queries with \lit{prop} and \lit{path} dependence may also require the entire \textabbr{CTMC} that describes the logical and stochastic behavior of the \textabbr{RGSPN} for evaluation. Finally, \lit{path} properties are evaluated on an execution path \(\Pi = m_1 \to m_2 \to \ldots\) of markings (or equivalently, \textabbr{CTMC} states). The interpretations of variable types can be summarized as
 \begin{equation}
-  \begin{array}{@{}r@{\,}c@{\ }c@{\ }c@{\ }c@{\,}l@{\,}c@{}}
-    & \text{\footnotesize parameters} & \text{\footnotesize marking} & \text{\footnotesize \textabbr{CTMC}} & \text{\footnotesize path} & & \text{\footnotesize value} \\*
+  \begin{array}{@{}r@{\,}c@{\,}c@{\,}c@{\,}c@{\,}l@{\,}c@{}}
     \llbracket \vartype{\lit{const}}{\rho} \rrbracket \colon& & & & & &p \in \llbracket \rho \rrbracket \text, \\
     \llbracket \vartype{\lit{param}}{\rho} \rrbracket \colon& \vec{\uptheta} & & & & \mapsto &p \in \llbracket \rho \rrbracket \text, \\
     \llbracket \vartype{\lit{marking}}{\rho} \rrbracket \colon& & m & & & \mapsto &p \in \llbracket \rho \rrbracket \text, \\
-    \llbracket \vartype{\lit{weight}}{\rho} \rrbracket \colon& \vec{\uptheta}\mathrlap, & m & & & \mapsto &p \in \llbracket \rho \rrbracket \text, \\
-    \llbracket \vartype{\lit{prop}}{\rho} \rrbracket \colon& \vec{\uptheta}\mathrlap, & m\mathrlap, & \textabbr{CTMC} & & \mapsto &p \in \llbracket \rho \rrbracket \text, \\
-    \llbracket \vartype{\lit{path}}{\rho} \rrbracket \colon& \vec{\uptheta}\mathrlap, & & \textabbr{CTMC}\mathrlap, & \Pi & \mapsto &p \in \llbracket \rho \rrbracket \text. \\
+    \llbracket \vartype{\lit{weight}}{\rho} \rrbracket \colon& \vec{\uptheta}, & m & & & \mapsto &p \in \llbracket \rho \rrbracket \text, \\
+    \llbracket \vartype{\lit{prop}}{\rho} \rrbracket \colon& \vec{\uptheta}, & m, & \textabbr{CTMC} & & \mapsto &p \in \llbracket \rho \rrbracket \text, \\
+    \llbracket \vartype{\lit{path}}{\rho} \rrbracket \colon& \vec{\uptheta}, & & \textabbr{CTMC}, & \Pi & \mapsto &p \in \llbracket \rho \rrbracket \text. \\
   \end{array}
 \end{equation}
 
 Type coercion from \lit{int} to \lit{double} act in the obvious way. Dependence coercion along the partial order from \vref{eq:rgspn:partial-order} introduces arguments to the interpretation functions that are ignored. For example, coercing \(\lit{const}\) to \(\lit{weight}\) results in a function that ignores its \(\vec{\uptheta}\) and \(m\) arguments while returning a constant value. The only non-straightforward coercion is from \lit{prop} to \lit{path}. In order to be consistent with \(\textabbr{CTL}^*\) formulas this conversion is defined such that the first marking \(m_1\) of the path \(\Pi = m_1 \to m_2 \to \ldots\) serves as the current marking argument \(m\) of the \lit{prop} computation when it is treated as a \lit{path} property.
 
+\subsubsection{Operators}
+
 Operators from \vref{eq:rgspn:expression} act pointwise on the interpretation functions, e.g.~to calculate \(e_1 \mathbin{\diamond} e_2\), \(e_1\) and \(e_2\) are separately evaluated in the dependence context, then the operator \(\diamond\) is applied to the resulting values.\footnote{This makes variable types with a dependence qualifier other than \lit{const} specializations of \emph{Reader} applicative functors \todo*{cite}.}
 
-The \(\textabbr{CTL}^*\) operators, which explicitly require \lit{prop} and \lit{path} dependence contexts, are excepted from pointwise evaluation. A \lit{prop} expression is treated as a state predicate over markings \(m\) after plugging the parameter binding \(\vec{\uptheta}\) and the \textabbr{CTMC} into the interpretation function. Similarly, \lit{path} expressions are treated as predicates over paths \(\Pi\) and are composed by the operators according to \(\textabbr{CTL}^*\) semantics (see e.g.~\todo*{Cite}).
+The \(\textabbr{CTL}^*\) operators, which explicitly require \lit{prop} and \lit{path} dependence contexts, are excepted from pointwise evaluation. A \lit{prop} expression is treated as a state predicate over markings \(m\) after plugging the parameter binding \(\vec{\uptheta}\) and the \textabbr{CTMC} into the interpretation function. Similarly, \lit{path} expressions are treated as predicates over paths \(\Pi\) and are composed by the operators according to \(\textabbr{CTL}^*\) semantics [see e.g.~\todo*{Cite}].
+
+\subsubsection{Stochastic queries}
 
 \todo*{The sections below should go to the transformation chapter.}
 
