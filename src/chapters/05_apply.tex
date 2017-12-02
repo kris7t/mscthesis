@@ -19,9 +19,9 @@ As the literature pertaining the optimization of stochastic models was already r
 \end{inparaenum}
 The approaches and representations used for \textabbr{DSE} in the context of model-driven engineering were further classified by \citet{Vanherpen14patterns}. They have identified the following \emph{\textabbr{DSE} patterns} of exploration methods:
 \begin{itemize*}
-\item The \emph{Model Generation Pattern} synthesizes design candidates that satisfy a set of constraints, which are imposed based on the metamodel and in addition by the designer. During the exploration, design candidates are represented as solutions of a constraint satisfaction problem.
-\item The \emph{Model Adaptation Pattern} constructs an exploration representation, such as a string of genes in genetic algorithms~\todo*{cite}, from an initial model provided by the designer. Based on the guidance of a goal function further design candidates are devised in this intermediate form using (meta-)heuristic search.
-\item The \emph{Model Transformation Pattern} directly represents the design candidates as an instance model. Model transformation rules that yield alternative models are scheduled using (meta-)heuristics to optimize a goal function.
+\item The \emph{Model Generation Pattern} synthesizes design candidates that satisfy a set of constraints, which are imposed based on the metamodel and in addition by the designer. During the exploration, design candidates are represented as solutions of a constraint satisfaction problem. Tools based on this pattern include \textabbr{FORMULA}~\citep{Kang10effective} and Alloy Analyzer~\citep{Jackson11abstractions}.
+\item The \emph{Model Adaptation Pattern} constructs an exploration representation, such as a string of genes in genetic algorithms~\citepeg{Ferrandi08multiobjective} from an initial model provided by the designer. Based on the guidance of a goal function further design candidates are devised in this intermediate form using (meta-)heuristic search.
+\item The \emph{Model Transformation Pattern} directly represents the design candidates as an instance model. Model transformation rules that yield alternative models are scheduled using (meta-)heuristics to optimize a goal function. An example of this approach is \textabbr{VIATRA-DSE}~\citep{Hegedus13guided,Abdeen14multiobjective}.
 \item The \emph{Exploration Chaining Pattern} adds multiple abstraction layers to \textabbr{DSE} to prune the space of alternative solutions. At each abstraction layer, an exploration pattern is used to prune non-feasible solutions while selecting feasible solutions to be refined in the next layer. Domain knowledge is used to define abstraction layers. Costly evaluation of design candidates is usually deferred to the lower layers.
 \end{itemize*}
 
@@ -100,25 +100,64 @@ As the structure of the derived Petri net model may constantly change during exp
 
 Another setting which may dramatically impact the solution time and accuracy of stochastic models is the choice of the numerical algorithms.
 
-In stead-state and mean time to state partition analysis, solving the \textabbr{CTMC} reduces to a system of linear equations, where the number of variables and equations equal to the size of the reachable state space of the model. The matrix of this system of linear equations is the \emph{infinitesimal generator matrix} of the \textabbr{CTMC}, which is sparse and often amenable to decomposed storage~\citep{}. Due to the size of the systems direct solution methods are infeasible and iterative numerical methods are employed instead.
+In stead-state and mean time to state partition analysis, solving the \textabbr{CTMC} reduces to a system of linear equations, where the number of variables and equations equal to the size of the reachable state space of the model. The matrix of this system of linear equations is the \emph{infinitesimal generator matrix} of the \textabbr{CTMC}, which is sparse and often amenable to decomposed storage~\citep{Buchholz99hierarchical}.
 
-\todo*{}
+Due to the size of the systems direct solution methods are infeasible and iterative numerical methods are employed instead. However, the choice the iterative linear equations solver method and its parameters determines the run time and convergence of the solution; moreover, no numerical method was found to be suitable for all classes of models~\citep{Buchholz99structured,Marussy16configurable,Buccholz17compact}.
+
+In transient analysis, transitions with orders of magnitude timing difference cause \emph{stiffness} the system of differential equations associated with the \textabbr{CTMC}. Stiff Markov chains may be handled by numerical differential equation solver algorithms especially tailored to such situations~\citep{Reibman89transient} or by adaptive variants of the \emph{uniformization} algorithm~\citep{Moorsel97uniformization,Dijk17uniformization}.
+
+To our best knowledge, no method was proposed in the literature to automatically select a suitable numeric algorithm for stochastic analyses. An analysis tool may offer a default selection; however, for ill-conditioned problems, the user should override it before starting design-space exploration. Alternatively, a portfolio of algorithms may be specified that are tried sequentially or in parallel until one of them converges successfully.
+
+\begin{remark}
+  Deeper, change-driven integration between external analysis tools and model transformation toolchains has been suggested recently by \citet{Molnar16componentwise} and \citet[Section~2.8]{Meyers16thesis} inspired by incremental approaches in the evaluation of expensive model queries~\citep{Ujhelyi15incquery}. Such integration might allow solvers to receive model changes and compute the analysis result incrementally by reusing parts of the previous solution.
+  
+  Since our \textabbr{RGSPN} transformation is engine is fully change-driven it is able to translate engineering model changes to analysis model changes, which could be sent directly to the solver. Moreover, in the numeric analysis of \textAbbr{CTMC}s it is sometimes possible to reuse the previous solution vector as an initial approximation. However, no existing analysis tool is in our knowledge that is able to take advantage of model change information; therefore extending change-driven execution throughout the analysis remains in the scope of future work.
+\end{remark}
 
 \section{Software implementation}
 
-A software tool for the development of transformation specifications and their execution was implemented as a plug-in for the Eclipse Oxygen.1 Integrated Development Environment~(\textabbr{IDE}). The plug-in is based on open source technologies from the Eclipse Modeling Project: the \emph{Eclipse Modeling Foundation}~(\textabbr{EMF}), the \emph{XText} framework for language engineering and \emph{\textabbr{VIATRA}} scalable reactive model queries and transformations.\todo{Cite the relevant technologies, or use \textabbr{URL} footnotes?}
+A software tool for the development of transformation specifications and their execution was implemented as a plug-in for the Eclipse Oxygen.1 Integrated Development Environment\footnoteurl{http://www.eclipse.org/downloads/packages/release/Oxygen/1}~(\textabbr{IDE}). The plug-in is based on open source technologies from the Eclipse Modeling Project: the \emph{Eclipse Modeling Foundation}~(\textabbr{EMF})~\citep{Steinberg09emf}, the \emph{XText}\footnoteurl{https://www.eclipse.org/Xtext/} framework for language engineering and \emph{\textabbr{VIATRA}} scalable reactive model queries and transformations.
 
-The software consists of two major components. Both \textabbr{RGSPN} modules and model transformations from arbitrary \textabbr{EMF}-based \textAbbr{DSL}s to \textAbbr{RGSPN}s can be developed in the transformation specification environment. The transformation can be executed either inside the \textabbr{IDE} for testing or inside a \textabbr{DSE} program after Java code generation. Together with a runtime library implementing the transformation engine, the generated Java code provides incremental transformation from the engineering \textAbbr{DSL}s to stochastic Petri nets.
-
-\todo*{}
+The software consists of two major components. Both \textabbr{RGSPN} modules and model transformations from arbitrary \textabbr{EMF}-based \textAbbr{DSL}s to \textAbbr{RGSPN}s can be developed in the transformation specification environment. The transformation can be executed either inside the \textabbr{IDE} for testing or inside a \textabbr{DSE} program after Java code generation. Together with a runtime library implementing the transformation engine, the generated Java code provides incremental transformation to stochastic Petri nets from \textAbbr{DSL}s defined with \emph{Ecore} metamodels, the metamodeling core of \textabbr{EMF}.
 
 \subsection{Specification environment}
 
+\begin{figure}
+  \centering
+  \includegraphics[width={\dimexpr\textwidth-2\fboxrule},frame]{figures/annotated_screenshot}
+  \caption{Sreenshot of the transformation specification environment. The showcased features include \circled{1}~the transformation description editor with syntax highlighting, \circled{2}~the outline view for transformations, \circled{3}~the \emph{Ecore2Pn Transformation} execution and traceability viewer and \circled{4}~the \textabbr{RGSPN} graph \emph{Petri Net} visualizer.}
+  \label{fig:apply:screenshot}
+\end{figure}
+
+A specification development environment named \emph{Ecore2Pn} (Ecore to Petri net transformation) was implemented for \textabbr{RGSPN}-based transformation development.\footnote{The specification development environment was implemented by the author during his summer internship at \emph{ThyssenKrupp Presta Hungary Kft.}} A screenshot of the tool is shown in \vref{fig:apply:screenshot}.
+
+The plug-in suite contains concrete textual syntaxes for \textabbr{RGSPN} modules and transformation descriptions based on the Xtext language engineering framework. Integrated devlopment environment (\textabbr{IDE}) features, such as semantics-aware syntax highlighting, content assist for code completion, jump-to-definition and outline view are available. The definition of model queries as preconditions for the \textabbr{RGSPN} transformation rules is possible with the \textabbr{VIATRA} Query \textabbr{EMF} query definition editor~\citep{Ujhelyi15incquery}.
+
+Similarly to the \textabbr{VIATRA} query editor, integration is offered with the modeling services of the Eclipse \textabbr{IDE} to try out and debug transformation descriptions. The transformation may be executed live on models loaded as \textabbr{XMI}~\citep{OMG15xmi} files or with graphical concrete syntax as Sirius\footnoteurl{http://www.eclipse.org/sirius/} diagrams. Modification of the model triggers change-based synchronization of the \textabbr{RGSPN}. A listing of instantiated \textabbr{RGSPN} modules symbols along with traceability links is displayed in the \emph{Ecore2Pn Transformation} view. Moreover, a graphical view of the \textabbr{RGSPN} is available in the \emph{Petri Net} view.
+
 \subsubsection{Model export}
+
+In addition to transformation development and execution, \emph{Ecore2Pn} offers export facilities for model interchange. These features are part of the transformation engine runtime; therefore they are also available for developers who wish to integrate \textAbbr{RGSPN}s into \textabbr{DSE} toolchains. \emph{Ecore2Pn} merely provides a convenient user interface for exporting single models.
+
+Serialization in \textabbr{ISO}/\textabbr{IEC}~15909-2:\citeyear{ISO1590922011} \textabbr{PNML} format allows model interchange with external analysis tools. The exporter also supports the \emph{state reward configuration} and \emph{fault configuration} facilities of PetriDotNet~\citep[Section~4.2]{Voros17pdnmanual} for Markovian steady-state, transient and mean time to state partition analysis. Symbols marked with the \texttt{@Reward\-Conf{}iguration} and \texttt{@Fault\-Conf{}iguration} annotations in the \textabbr{RGSPN} textual editor get translated into reward and fault configurations, respectively, and are available for analysis once the exported \textabbr{PNML} is opened with PetriDotNet.
+
+An additional export facility is available targeting the \texttt{dot} format compatible with the \emph{Graphviz}\footnoteurl{https://www.graphviz.org/} graph visualization software. The \texttt{dot} utility provides automatic layouting and drawing for directed graphs, which allows visual inspection of \textabbr{RGSPN} models. This exporter is also employed along with a Java port\footnoteurl{https://github.com/nidi3/graphviz-java} of Graphviz by the \emph{Petri Net} view of the specification environment to display the results of the currently running \textabbr{RGSPN} transformation.
 
 \subsubsection{Code generation}
 
+Code generation is used throughout the specification development environment to ensure that the transformation specification can be ran in a wide variety of environments, such as within and Eclipse plugin-in or as a standalone Java application.
+
+The \textabbr{RGSPN} modules and the transformation description defined by the user are turned into Java code for compilation. In this way the transformation description can be passed to the execution engine by just instantiating a class, just like how \textabbr{VIATRA} Query generates pattern-specific matcher code from graph patterns for type-safe consumption~\citep[Section~2.3]{Ujhelyi15incquery}. Moreover, as model queries, \textabbr{RGSPN} modules and transformations become Java classes, their dependencies can be managed by the Java \textabbr{CLASSPATH} mechanism. For example, and \textabbr{RGSPN} module can be seamlessly upgraded by replacing its containing archive on the \textabbr{CLASSPATH} without breaking compatibility with transformation definitions in other archives that refer to the module.
+
+Additional helper code is generated for derived features defined in transformations. The helper enables simulates derived features in code written in the \emph{Xtend}\footnoteurl{https://www.eclipse.org/xtend/} programming language. The \emph{extension methods} feature allows traversal of the traceability relations created by the \textabbr{RGSPN} transformation engine to obtain derived feature symbols as if they were true properties of the domain model elements.
+
 \subsection{Transformation execution}
+
+The transformation execution engine is a Java library than can be used either as an Eclipse plug-in or in standalone applications. The transformation engine can be instantiated with an existing \textabbr{VIATRA} Incremental Query engine over an \textit{\textabbr{EMF} scope} which contains the intended source model. The other argument required for the transformation is the generated transformation specification object, which refers to the \textabbr{VIATRA} model queries and \textabbr{RGSPN} modules involved in the transformation. Once instantiated, the engine executes in an incremental fashion and reacts to changes in the source model.
+
+It is possible to only execute the view transformation, which yields an abstract \textabbr{RGSPN} with collections and references, or both the view and the concretizer transformation, which also yields a concrete \textabbr{RGSPN} that can be exported to external analysis tools. The engine can be customized by overriding \emph{Google Guice}\footnoteurl{https://github.com/google/guice} dependency injections.
+
+Traceability relations can be traversed either by explicitly reading them, or by the derived features helper classes generated for Xtend programming. In addition, extra \emph{annotations} specified in the \textabbr{RGSPN} modules and the transformation description are also propagate through the transformation chain, which may influence the behavior of \textabbr{RGSPN} exporters.
 
 \section{Evaluation of incremental transformations}
 
@@ -204,7 +243,7 @@ The minimum and maximum execution times of each scenario and model size, which a
 
 In order to study the source of bimodality in the execution times, a further experiment was conducted. The batch transformations, which had the most striking bimodality, was executed with further instrumentation on the source model containing \(N = 128\) philosophers. Four stages of the transformation were distinguished:
 \begin{enumerate*}
-\item The \emph{view query} phase prepares the model queries that are the preconditions of the view transformation. In \textabbr{VIATRA} Query, this corresponds to the construction of an appropriate \textabbr{RETE} net~\todo*{cite?} and the traversal of the source model to populate the base relations.
+\item The \emph{view query} phase prepares the model queries that are the preconditions of the view transformation. In \textabbr{VIATRA} Query, this corresponds to query optimization, as well as the traversal of the source model to populate the various base relations and caches for incremental query evaluation.
 \item The \emph{view transformation} phase fires the transformation rules on the \textabbr{VIATRA} Event-driven Virtual Machine (\textabbr{EVM}) to construct the abstract \textabbr{RGSPN} model with references.
 \item The \emph{concretizer query} phase traverses the abstract net to prepare the precondition queries of the concretizer transformation.
 \item The \emph{concretizer transformation} phase is ran on the \textabbr{EVM} to resolve references and inline expression in the abstract net to construct the concrete \textabbr{RGSPN} target model.

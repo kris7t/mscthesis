@@ -27,7 +27,7 @@ We opt for modularity instead of compositionality to avoid restricting the model
 
 \subsection{Modeling formalisms}
 
-Continuous-time Markov chains (\textAbbr{CTMC}s) are common tools for the reliability and performability prediction of critical systems~\citepeg{Reibman89markov}. However, instead of modeling with \textAbbr{CTMC}s directly, usually higher-level formalisms are used to obtain more compact models. The semantics of these models are defined in terms of \textAbbr{CTMC}s or related stochastic processes, such as Markov regenerative processes~\citep{Logothetis95mrm,Telek96mrm}. Usually the higher-level formalism belongs to one of these three classes:
+Continuous-time Markov chains (\textAbbr{CTMC}s) are common tools for the reliability and performability prediction of critical systems~\citepeg{Reibman89transient}. However, instead of modeling with \textAbbr{CTMC}s directly, usually higher-level formalisms are used to obtain more compact models. The semantics of these models are defined in terms of \textAbbr{CTMC}s or related stochastic processes, such as Markov regenerative processes~\citep{Logothetis95mrm,Telek96mrm}. Usually the higher-level formalism belongs to one of these three classes:
 
 \newpara \textbf{Queuing networks} (\textAbbr{QN}s) describe the routing of \emph{customers} or \emph{work items} between \emph{queues}. The times spent in queues are described by random variables. \todo{Should we cite a review about \textAbbr{QN}s?}
 
@@ -261,7 +261,6 @@ The \emph{typing relation} \({\_} \vdash {\_} \oftype {\_}\) assigns types to ex
 
 In well-typed \textAbbr{RGSPN}s, where expressions and edges respect strong typing to ensure context-appropriate use of symbols and expressions within both the structural part of the net and its queries. Below we propose some typing requirements that make analysis tractable without greatly restricting the modeler.
 
-\todo{Should we split the formal stuff and the discussion?}
 \begin{dfn}
   An \textabbr{RGSPN} is well-typed if it has the following properties:
   \begin{compactitem}

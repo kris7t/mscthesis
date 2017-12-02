@@ -14,7 +14,7 @@
 \newcommand*{\vecarrow}{}\let\vecarrow\vec
 \renewcommand*{\vec}[1]{\bm{\mathrm{#1}}}
 
-\newcommand*\circled[1]{\smash{\tikz[baseline=(char.base)]{
+\DeclareRobustCommand{\circled}[1]{\smash{\tikz[baseline=(char.base)]{
             \node[shape=circle,draw,inner sep=1pt] (char) {\(\mathsmaller{#1}\)};}}}
 % Tuples
 \newcommand*{\ltup}{\langle}
