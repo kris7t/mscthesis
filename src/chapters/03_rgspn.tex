@@ -451,11 +451,53 @@ Variable types \(\vartype{\delta}{\rho}\) can be viewed as functions from some \
 
 Type coercion from \lit{int} to \lit{double} act in the obvious way. Dependence coercion along the partial order from \vref{eq:rgspn:partial-order} introduces arguments to the interpretation functions that are ignored. For example, coercing \(\lit{const}\) to \(\lit{weight}\) results in a function that ignores its \(\vec{\uptheta}\) and \(m\) arguments while returning a constant value. The only non-straightforward coercion is from \lit{prop} to \lit{path}. In order to be consistent with \(\textabbr{CTL}^*\) formulas this conversion is defined such that the first marking \(m_1\) of the path \(\Pi = m_1 \to m_2 \to \ldots\) serves as the current marking argument \(m\) of the \lit{prop} computation when it is treated as a \lit{path} property.
 
-\subsubsection{Operators}
+\subsubsection{Operators and mentioned symbols}
+
+Now we will clarify the semantics \(\llbracket \_ \rrbracket\) of the expressions \(\Expr_\Sigma\) themselves. The intepretations of expressions conform with the types, i.e.~if \(\Sigma \vdash e \oftype \tau\), then we have \(\llbracket e \rrbracket \in \llbracket \tau \rrbracket\).
 
 Operators from \vref{eq:rgspn:expression} act pointwise on the interpretation functions, e.g.~to calculate \(e_1 \mathbin{\diamond} e_2\), \(e_1\) and \(e_2\) are separately evaluated in the dependence context, then the operator \(\diamond\) is applied to the resulting values.\footnote{This makes variable types with a dependence qualifier other than \lit{const} specializations of \emph{Reader} applicative functors \todo*{cite}.}
 
 The \(\textabbr{CTL}^*\) operators, which explicitly require \lit{prop} and \lit{path} dependence contexts, are excepted from pointwise evaluation. A \lit{prop} expression is treated as a state predicate over markings \(m\) after plugging the parameter binding \(\vec{\uptheta}\) and the \textabbr{CTMC} into the interpretation function. Similarly, \lit{path} expressions are treated as predicates over paths \(\Pi\) and are composed by the operators according to \(\textabbr{CTL}^*\) semantics [see e.g.~\todo*{Cite}].
+
+To interpret variables mentioned inside expressions, we introduce \emph{reference resolution}. A reference symbol \(r \in R\) may point at some concrete \(s \in \Sigma \setminus R\) or at another references \(r' \in R\). We say that \(r\) \emph{resolves to} \(s \in \Sigma \setminus R\), written as \(r \leadsto s\), if there is a unique, non-cyclic chain of reference assignments from \(r\) to \(s\). In addition, every concrete symbol resolves to itself, \(s \leadsto s\) for all \(s \in \Sigma \setminus R\). Formally, let \({\assign^*} \subseteq \Sigma \times \Sigma\) be the reflexive transitive closure of the relation \(\assign\), i.e.
+\begin{equation}
+  s_1 \mathbin{\assign^*} s_2 \Longleftrightarrow \text{\(\exists\, k \ge 0\), \(s_1 = r_0, r_1, \ldots, r_k = s_2 \in \Sigma\) such that \(r_i \assign r_{i - 1}\) for all \(i = 1, \ldots, k\)}
+\end{equation}
+and write \(s_1 \leadsto s_2\) if \(s_2 \in \Sigma \setminus R\) is the unique symbol for which \(s_1 \mathbin{\assign^*} s_2\) holds.
+
+If a symbol \(v\) of variable type is mentioned in an expression, we simply substitute it with its \rel{value}. However, if \(v\) actually refers to a parameter symbol---or is actually parameter symbol---it is instead interpreted to refer to the corresponding element of the parameter vector \(\vec{\uptheta}\). Formally,
+\begin{equation}
+  \llbracket v \rrbracket = \begin{cases}
+    \llbracket \rel{value}(v') \rrbracket \text, & \text{if \(v \leadsto v'\) and \(v' \in V\),} \\
+    \vec{\uptheta} \mapsto \theta[\rel{par}] \text, & \text{if \(v \leadsto \rel{par}\) and \(\rel{par} \in \Par\),} \\
+    {\perp} \text, & \text{otherwise.}
+  \end{cases}
+\end{equation}
+Note that if the reference \(v\) cannot be resolved or it points to an invalid symbol the interpretation is not defined.
+
+Mentioning the marking of place simply refers to the number of tokens of the place (after resolving references),
+\begin{equation}
+  \llbracket \lit\# p \rrbracket = \begin{cases}
+    m \mapsto m(p')\text, & \text{if \(p \leadsto p'\) and \(p' \in P\),} \\
+    {\perp} \text, & \text{otherwise.}
+  \end{cases}
+\end{equation}
+
+Collection aggregations are defined with \enquote{big operator} semantics. An aggregation operator is equipped with a monoid \(\ltup \diamond, n \rtup\), where \(\diamond\) is an associative binary operator and \(n\) is a the neutral element of the operator. The \(\diamond\) operator joins the elements of the collection, whereas for empty collections, \(n\) is returned instead. The monoid \(\ltup \lit+, 0\rutp\) is associated with the aggregation operator \lit{sum}, \(\ltup \lit*, 1\rtup\) with \lit{prod}, \(\ltup \lit{\&\&}, \lit{true}\rtup\) with \lit{all} and \(\ltup \lit{||}, 1\rtup\) with \lit{any}, respectively.
+
+The \emph{resolved elements} of a collection \(c \in C\) are
+\begin{equation}
+  \emph{resolved}(c) = \Lbag s \mid \exists\, r_1, r_2 \in \Sigma \text{ such that } r_1 \leadsto c, r_1 \member r_2, r_2 \leadsto s \Rbag \text,
+\end{equation}
+where the multiset-builder notation respects the multiplicities in the relation \(\assign\). Note that both ends of a collection membership edge \(r_1 \member r_2\) may be references, which resolve as \(r_1 \leadsto c\) on the collection end and \(r_2 \leadsto s\) on the member end, respectively. The aggregation \rel{agg} is interpreted as
+\begin{equation}
+  \llbracket \rel{agg} \lit( c \lit) \rrbracket = \begin{cases}
+    \bigDiamond_{s \in \rel{resolved}(c')} \llbracket s \rrbracket \text, & \text{if \(c \leadsto c'\), \(c' \in C\) and \(\lvert \rel{resolved}(c') \rvert \ge 1\),} \\
+    n \text, & \text{if \(c \leadsto c'\), \(c' \in C\) and \(\lvert \rel{resolved}(c') \rvert = 0\),} \\
+    {\perp} \text, & \text{otherwise,}
+  \end{cases}
+\end{equation}
+where the operatior \(\diamond\) acts over the interpretation functions \(\llbracket s \rrbracket\) as discussed above while respecting multiplicity and the constant \(n\) is type coerced as needed.
 
 \subsubsection{Stochastic queries}
 

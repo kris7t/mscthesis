@@ -24,6 +24,16 @@
 \newcommand*{\djcup}{\sqcup}
 \newcommand*{\bigdjcup}{\bigsqcup}
 
+% https://tex.stackexchange.com/a/196791/8744
+\makeatletter
+\newcommand{\bigDiamond}{\mathop{\mathpalette\bigDi@mond\relax}}
+\newcommand{\bigDi@mond}[2]{%
+  \vcenter{\hbox{\m@th
+    \scalebox{\ifx#1\displaystyle 2\else1.2\fi}{$#1\Diamond$}%
+  }}%
+}
+\makeatother
+
 %
 % Numbers
 %
