@@ -439,7 +439,7 @@ Values of pretypes \lit{boolean}, \lit{int} and \lit{double} can be interpreted 
 
 Variable types \(\vartype{\delta}{\rho}\) can be viewed as functions from some \emph{context} determined by the dependence qualifier \(\delta\) to the set \(\llbracket \rho \rrbracket\). In the case \(\delta = \lit{const}\), the context is empty, so \(\llbracket \vartype{\lit{const}}{\rho} \rrbracket\) is isomorphic to \(\llbracket \rho \rrbracket\). For other qualifiers, the context may be comprised of a vector \(\vec{\uptheta} \in \mathbb{R}^{\lvert \Par \rvert}\) of parameter values and the current marking of the Petri net \(m\). Queries with \lit{prop} and \lit{path} dependence may also require the entire \textabbr{CTMC} that describes the logical and stochastic behavior of the \textabbr{RGSPN} for evaluation. Finally, \lit{path} properties are evaluated on an execution path \(\Pi = m_1 \to m_2 \to \ldots\) of markings (or equivalently, \textabbr{CTMC} states). The interpretations of variable types can be summarized as
 \begin{equation}
-  \begin{array}{@{}r@{\,}c@{\,}c@{\,}c@{\,}c@{\,}l@{\,}c@{}}
+  \begin{array}{@{}r@{\,}l@{\,}l@{\,}l@{\,}l@{\,}l@{\,}c@{}}
     \llbracket \vartype{\lit{const}}{\rho} \rrbracket \colon& & & & & &p \in \llbracket \rho \rrbracket \text, \\
     \llbracket \vartype{\lit{param}}{\rho} \rrbracket \colon& \vec{\uptheta} & & & & \mapsto &p \in \llbracket \rho \rrbracket \text, \\
     \llbracket \vartype{\lit{marking}}{\rho} \rrbracket \colon& & m & & & \mapsto &p \in \llbracket \rho \rrbracket \text, \\
@@ -465,7 +465,7 @@ To interpret variables mentioned inside expressions, we introduce \emph{referenc
 \end{equation}
 and write \(s_1 \leadsto s_2\) if \(s_2 \in \Sigma \setminus R\) is the unique symbol for which \(s_1 \mathbin{\assign^*} s_2\) holds.
 
-If a symbol \(v\) of variable type is mentioned in an expression, we simply substitute it with its \rel{value}. However, if \(v\) actually refers to a parameter symbol---or is actually parameter symbol---it is instead interpreted to refer to the corresponding element of the parameter vector \(\vec{\uptheta}\). Formally,
+If a symbol \(v\) of variable type is mentioned in an expression, we simply substitute it with its \rel{value}. However, if \(v\) refers to a parameter symbol---or is actually parameter symbol---it is instead interpreted to refer to the corresponding element of the parameter vector \(\vec{\uptheta}\). Formally,
 \begin{equation}
   \llbracket v \rrbracket = \begin{cases}
     \llbracket \rel{value}(v') \rrbracket \text, & \text{if \(v \leadsto v'\) and \(v' \in V\),} \\
@@ -483,7 +483,7 @@ Mentioning the marking of place simply refers to the number of tokens of the pla
   \end{cases}
 \end{equation}
 
-Collection aggregations are defined with \enquote{big operator} semantics. An aggregation operator is equipped with a monoid \(\ltup \diamond, n \rtup\), where \(\diamond\) is an associative binary operator and \(n\) is a the neutral element of the operator. The \(\diamond\) operator joins the elements of the collection, whereas for empty collections, \(n\) is returned instead. The monoid \(\ltup \lit+, 0\rutp\) is associated with the aggregation operator \lit{sum}, \(\ltup \lit*, 1\rtup\) with \lit{prod}, \(\ltup \lit{\&\&}, \lit{true}\rtup\) with \lit{all} and \(\ltup \lit{||}, 1\rtup\) with \lit{any}, respectively.
+Collection aggregations are defined with \enquote{big operator} semantics. An aggregation operator is equipped with a monoid \(\ltup \diamond, n \rtup\), where \(\diamond\) is an associative binary operator and \(n\) is a the neutral element of the operator. The \(\diamond\) operator joins the elements of the collection, whereas for empty collections, \(n\) is returned instead. The monoid \(\ltup \lit+, 0\rtup\) is associated with the aggregation operator \lit{sum}, \(\ltup \lit*, 1\rtup\) with \lit{prod}, \(\ltup \lit{\&\&}, \lit{true}\rtup\) with \lit{all} and \(\ltup \lit{||}, 1\rtup\) with \lit{any}.
 
 The \emph{resolved elements} of a collection \(c \in C\) are
 \begin{equation}

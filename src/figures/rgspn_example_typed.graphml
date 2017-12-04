@@ -16,7 +16,6 @@
     <data key="d0"/>
     <node id="n0" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -24,7 +23,7 @@
               <y:Geometry height="284.805726699219" width="287.43092116210926" x="483.35072" y="251.26883330078113"/>
               <y:Fill color="#FFFFFF" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#B3CBFF" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="287.43092116210926" x="0.0" y="0.0">philosopher1</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#99CCFF" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="287.43092116210926" x="0.0" y="0.0">philosopher1</y:NodeLabel>
               <y:Shape type="roundrectangle"/>
               <y:State closed="false" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
               <y:Insets bottom="1" bottomF="1.0" left="1" leftF="1.0" right="1" rightF="1.0" top="1" topF="1.0"/>
@@ -45,7 +44,6 @@
       </data>
       <graph edgedefault="directed" id="n0:">
         <node id="n0::n0">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="622.4031999999997" y="291.69599999999997"/>
@@ -63,7 +61,6 @@
           </data>
         </node>
         <node id="n0::n1">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="622.4031999999997" y="374.8124000000001"/>
@@ -81,7 +78,6 @@
           </data>
         </node>
         <node id="n0::n2">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="622.4031999999997" y="450.2980000000001"/>
@@ -100,7 +96,6 @@
           </data>
         </node>
         <node id="n0::n3">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="15.0" width="30.0" x="622.4031999999997" y="341.06960000000004"/>
@@ -120,7 +115,6 @@
           </data>
         </node>
         <node id="n0::n4">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="8.0" width="30.0" x="622.4031999999997" y="423.5552000000001"/>
@@ -140,7 +134,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n0::n5">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="15.0" width="30.0" x="622.4031999999997" y="499.0408000000001"/>
@@ -154,18 +147,17 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n0::n6">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="721.068" y="421.0125516799999"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#404040" raised="false" type="dashed" width="1.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="4.0" x="13.0" y="13.0"/>
               <y:Shape type="ellipse"/>
             </y:ShapeNode>
           </data>
         </node>
         <node id="n0::n7">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="523.7383999999996" y="420.9275033599996"/>
@@ -177,7 +169,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n0::n8">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="491.31391999999994" y="280.2271999999999"/>
@@ -197,7 +188,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n0::n9">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="491.31391999999994" y="323.710304"/>
@@ -217,7 +207,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n0::n10">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="491.6903999999996" y="367.1934080000001"/>
@@ -237,7 +226,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n0::n11">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="10.0" width="10.0" x="632.4031999999997" y="301.69599999999997"/>
@@ -256,7 +244,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n0::n12">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="10.0" width="10.0" x="533.7383999999996" y="431.0125516799999"/>
@@ -278,7 +265,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
     </node>
     <node id="n1" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -286,7 +272,7 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
               <y:Geometry height="284.805726699219" width="287.43092116210926" x="788.340812672" y="251.26883330078113"/>
               <y:Fill color="#FFFFFF" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#B3CBFF" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="287.43092116210926" x="0.0" y="0.0">philosopher2</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#99CCFF" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="287.43092116210926" x="0.0" y="0.0">philosopher2</y:NodeLabel>
               <y:Shape type="roundrectangle"/>
               <y:State closed="false" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
               <y:Insets bottom="1" bottomF="1.0" left="1" leftF="1.0" right="1" rightF="1.0" top="1" topF="1.0"/>
@@ -307,7 +293,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
       <graph edgedefault="directed" id="n1:">
         <node id="n1::n0">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="927.3932926719997" y="291.69599999999997"/>
@@ -325,7 +310,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n1::n1">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="927.3932926719997" y="374.8124"/>
@@ -343,7 +327,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n1::n2">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="927.3932926719997" y="450.2980000000001"/>
@@ -362,7 +345,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n1::n3">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="15.0" width="30.0" x="927.3932926719997" y="341.06960000000004"/>
@@ -382,7 +364,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n1::n4">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="8.0" width="30.0" x="927.3932926719997" y="423.5552000000001"/>
@@ -402,7 +383,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n1::n5">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="15.0" width="30.0" x="927.3932926719997" y="499.0408000000001"/>
@@ -416,7 +396,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n1::n6">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="1026.058092672" y="421.0125516799999"/>
@@ -428,7 +407,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n1::n7">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="828.7284926719996" y="421.0125516799999"/>
@@ -440,7 +418,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n1::n8">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="796.3040126719999" y="280.2271999999999"/>
@@ -460,7 +437,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n1::n9">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="796.3040126719999" y="323.710304"/>
@@ -480,7 +456,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n1::n10">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="796.6804926719996" y="367.1934080000001"/>
@@ -500,7 +475,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n1::n11">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="10.0" width="10.0" x="937.3932926719997" y="301.69599999999997"/>
@@ -519,7 +493,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n1::n12">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="10.0" width="10.0" x="838.7284926719996" y="431.0125516799999"/>
@@ -541,7 +514,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
     </node>
     <node id="n2" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -549,7 +521,7 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
               <y:Geometry height="76.78137387082512" width="304.39552633599965" x="627.3634637490549" y="163.3093846331543"/>
               <y:Fill color="#FFFFFF" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#FFE1B3" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="304.39552633599965" x="0.0" y="0.0">table</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#FFCC99" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="304.39552633599965" x="0.0" y="0.0">table</y:NodeLabel>
               <y:Shape type="roundrectangle"/>
               <y:State closed="false" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
               <y:Insets bottom="1" bottomF="1.0" left="1" leftF="1.0" right="1" rightF="1.0" top="1" topF="1.0"/>
@@ -570,7 +542,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
       <graph edgedefault="directed" id="n2:">
         <node id="n2::n0">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="767.6042438450565" y="189.9887209679811"/>
@@ -590,7 +561,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
           </data>
         </node>
         <node id="n2::n1">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="637.3609706290556" y="189.9887209679811"/>
@@ -612,7 +582,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </graph>
     </node>
     <edge id="n0::e0" source="n0::n0" target="n0::n3">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -623,7 +592,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="n0::e1" source="n0::n3" target="n0::n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -634,7 +602,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="n0::e2" source="n0::n1" target="n0::n4">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -645,7 +612,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="n0::e3" source="n0::n4" target="n0::n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -656,7 +622,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="n0::e4" source="n0::n2" target="n0::n5">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -667,7 +632,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="n0::e5" source="n0::n5" target="n0::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -683,7 +647,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="n0::e6" source="n0::n5" target="n0::n6">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -707,7 +670,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="n0::e7" source="n0::n6" target="n0::n4">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -721,7 +683,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="n0::e8" source="n0::n7" target="n0::n4">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -735,7 +696,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="n0::e9" source="n0::n5" target="n0::n7">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -751,7 +711,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="n1::e0" source="n1::n0" target="n1::n3">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -762,7 +721,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="n1::e1" source="n1::n3" target="n1::n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -773,7 +731,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="n1::e2" source="n1::n1" target="n1::n4">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -784,7 +741,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="n1::e3" source="n1::n4" target="n1::n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -795,7 +751,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="n1::e4" source="n1::n2" target="n1::n5">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -806,7 +761,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="n1::e5" source="n1::n5" target="n1::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -822,7 +776,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="n1::e6" source="n1::n5" target="n1::n6">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -840,7 +793,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="n1::e7" source="n1::n6" target="n1::n4">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -854,7 +806,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="n1::e8" source="n1::n7" target="n1::n4">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -868,7 +819,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="n1::e9" source="n1::n5" target="n1::n7">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -890,7 +840,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="e0" source="n0::n6" target="n1::n7">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -910,7 +859,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="e1" source="n1::n6" target="n0::n7">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -935,7 +883,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="e2" source="n2::n1" target="n0::n8">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-5.126691399551305" sy="15.019433494656909" tx="3.5413212160007674" ty="-5.47069846400143">
@@ -958,7 +905,6 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
       </data>
     </edge>
     <edge id="e3" source="n2::n1" target="n1::n8">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="7.476361447125214" sy="15.018287300823573" tx="0.0" ty="0.0">
