@@ -72,7 +72,8 @@
     </g>
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-448,-494)" stroke-linecap="butt">
       <rect fill="none" x="483.3507" width="93.2" height="41.2" y="601.138" clip-path="url(#clipPath2)"/>
-      <text x="486.7145" xml:space="preserve" y="625.1801" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none">1. Source model</text>
+      <text x="505.5861" xml:space="preserve" y="619.4053" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none">1. Source</text>
+      <text x="512.6682" xml:space="preserve" y="630.955" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none">model</text>
     </g>
     <g fill="white" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-448,-494)" stroke="white">
       <rect x="609.0814" width="93.2" height="41.2" y="675.0047" clip-path="url(#clipPath2)" stroke="none"/>
@@ -135,7 +136,7 @@
     </g>
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-448,-494)" stroke-linecap="butt">
       <rect fill="none" x="1021.3738" width="28.464" height="14.64" y="528.7687" clip-path="url(#clipPath2)"/>
-      <text x="809.8427" xml:space="preserve" y="539.5308" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none">Part of our framework transformation</text>
+      <text x="809.8427" xml:space="preserve" y="539.5308" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none">Part of our transformation framework</text>
     </g>
     <g fill="silver" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-448,-494)" stroke="silver">
       <rect x="1021.3738" width="28.464" height="14.64" y="551.0874" clip-path="url(#clipPath2)" stroke="none"/>
@@ -167,21 +168,26 @@
       <path stroke-dasharray="6,2" d="M1008.1965 642.338 L1003.1965 654.338 L1008.1965 651.338 L1013.1965 654.338 Z" clip-path="url(#clipPath2)" stroke="none"/>
       <path fill="none" d="M655.6813 547.65 L655.6813 593.154" clip-path="url(#clipPath2)"/>
       <path d="M655.6813 601.154 L660.6813 589.154 L655.6813 592.154 L650.6813 589.154 Z" clip-path="url(#clipPath2)" stroke="none"/>
-      <rect x="633.0105" y="559.8697" clip-path="url(#clipPath2)" fill="white" width="45.3418" height="11.6406" stroke="none"/>
-      <text x="633.0104" font-size="10px" y="569.1519" clip-path="url(#clipPath2)" font-family="sans-serif" stroke="none" xml:space="preserve">executes</text>
+      <rect x="635.5774" y="560.3267" clip-path="url(#clipPath2)" fill="white" width="40.2079" height="9.6247" stroke="none"/>
+      <text x="635.5774" font-size="10px" y="568.0074" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none" xml:space="preserve">executes</text>
       <path fill="none" d="M580.0942 547.65 L628.9492 595.536" clip-path="url(#clipPath2)"/>
       <path d="M634.6624 601.1359 L629.5925 589.1653 L628.235 594.8361 L622.5926 596.3068 Z" clip-path="url(#clipPath2)" stroke="none"/>
-      <rect x="549.7947" y="551.9554" clip-path="url(#clipPath2)" fill="white" width="76.8164" height="23.2812" stroke="none"/>
-      <text x="560.1902" font-size="10px" y="561.2376" clip-path="url(#clipPath2)" font-family="sans-serif" stroke="none" xml:space="preserve">subscribes to</text>
-      <text x="549.7947" font-size="10px" y="572.8782" clip-path="url(#clipPath2)" font-family="sans-serif" stroke="none" xml:space="preserve">match changes</text>
+      <rect x="554.1116" y="553.9713" clip-path="url(#clipPath2)" fill="white" width="68.1825" height="19.2494" stroke="none"/>
+      <text x="561.5576" font-size="10px" y="561.6521" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none" xml:space="preserve">subscribes to</text>
+      <text x="554.1116" font-size="10px" y="571.2768" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none" xml:space="preserve">match changes</text>
       <path fill="none" d="M542.3005 527.05 L510.4887 527.05 L510.4887 583.5764" clip-path="url(#clipPath2)"/>
       <path d="M510.4887 591.5764 L515.4887 579.5764 L510.4887 582.5764 L505.4887 579.5764 Z" clip-path="url(#clipPath2)" stroke="none"/>
-      <rect x="485.8178" y="545.0885" clip-path="url(#clipPath2)" fill="white" width="49.3418" height="15.6406" stroke="none"/>
-      <text x="487.8178" font-size="10px" y="556.3707" clip-path="url(#clipPath2)" font-family="sans-serif" stroke="none" xml:space="preserve">executes</text>
+      <rect x="488.3848" y="546.6005" clip-path="url(#clipPath2)" fill="white" width="44.2079" height="13.6247" stroke="none"/>
+      <text x="490.3848" font-size="10px" y="556.2812" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none" xml:space="preserve">executes</text>
       <path fill="none" d="M731.2686 547.65 L682.4136 595.536" clip-path="url(#clipPath2)"/>
       <path d="M676.7003 601.1359 L688.7701 596.3068 L683.1277 594.8361 L681.7703 589.1653 Z" clip-path="url(#clipPath2)" stroke="none"/>
-      <rect x="689.8467" y="555.1684" clip-path="url(#clipPath2)" fill="white" width="58.8232" height="11.6406" stroke="none"/>
-      <text x="689.8467" font-size="10px" y="564.4506" clip-path="url(#clipPath2)" font-family="sans-serif" stroke="none" xml:space="preserve">instantiates</text>
+      <rect x="692.3182" y="556.1763" clip-path="url(#clipPath2)" fill="white" width="53.8804" height="9.6247" stroke="none"/>
+      <text x="692.3182" font-size="10px" y="563.8571" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none" xml:space="preserve">instantiates</text>
+      <path fill="none" d="M769.0621 527.05 L789.6647 527.05 L789.6647 593.1149" clip-path="url(#clipPath2)"/>
+      <path d="M789.6647 601.1149 L794.6647 589.1149 L789.6647 592.1149 L784.6647 589.1149 Z" clip-path="url(#clipPath2)" stroke="none"/>
+      <rect x="762.1461" y="551.0393" clip-path="url(#clipPath2)" fill="white" width="55.0198" height="19.2494" stroke="none"/>
+      <text x="770.2267" font-size="10px" y="558.72" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none" xml:space="preserve">contains</text>
+      <text x="762.1461" font-size="10px" y="568.3448" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none" xml:space="preserve">instances of</text>
     </g>
   </g>
 </svg>

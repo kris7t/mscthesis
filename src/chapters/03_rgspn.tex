@@ -261,7 +261,7 @@ The \emph{typing relation} \({\_} \vdash {\_} \oftype {\_}\) assigns types to ex
 
 In well-typed \textAbbr{RGSPN}s, where expressions and edges respect strong typing to ensure context-appropriate use of symbols and expressions within both the structural part of the net and its queries. Below we propose some typing requirements that make analysis tractable without greatly restricting the modeler.
 
-\begin{dfn}
+\begin{dfn}\label{dfn:rgspn:well-typed}
   An \textabbr{RGSPN} is well-typed if it has the following properties:
   \begin{compactitem}
   \item For all \(p \in P\) the initial marking is an integer constant, \(\Sigma \vdash m_0(p) \oftype \vartype{\lit{const}}{\lit{int}}\).

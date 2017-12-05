@@ -85,6 +85,21 @@
 \newcommand*{\ebnfV}[1]{\ensuremath{\mathopen{\text\guilsinglleft}#1\mathclose{\text\guilsinglright}}}
 \newcommand*{\ebnfVar}[1]{\ebnfV{\rel{#1}}}
 
+%
+% Listings
+%
+
+\lstdefinelanguage{ecore2pn}{
+  morekeywords={acc,all,annotation,any,as,boolean,case,catch,const,default,derived,do,double,e,else,epackage,exp,extends,extension,false,features,finally,first,for,if,immediate,import,instanceof,int,lookup,mapping,marking,module,new,null,optional,package,param,path,place,priority,product,prop,ref,retention,return,static,steadystate,sum,super,switch,synchronized,throw,tran,transformation,true,try,typeof,until,val,var,weight,while},
+  morekeywords={[2]A,AF,AG,AX,ABSTRACT_NET,CONCRETE_NET,E,EF,EG,EX,Ex,F,G,Mttf,Pr,SOURCE,U,W,X},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]",
+  morestring=[b]',
+  moredelim=[is][\color{black!60}]{^}{^}
+}
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../main"

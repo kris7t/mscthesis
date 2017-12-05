@@ -474,17 +474,21 @@
 \RequirePackage{listings}
 \lstset{
   basicstyle=\ttfamily,columns=fullflexible,
-  captionpos=t,belowcaptionskip=0.7\baselineskip,
-  frame=lines,framerule=\heavyrulewidth,
-  numberbychapter=true,
-  showspaces=false,showtabs=false,tabsize=4,
+  showspaces=false,showtabs=false,tabsize=2,
   breaklines=true,breakatwhitespace=true,
   numbers=left,numberstyle=\scriptsize,numberblanklines=false,
-  xleftmargin=2em,framexleftmargin=2em,
-  commentstyle=\thinfont,
-  stringstyle=\color{black!75},
-  language=[Sharp]C,morekeywords={var,yield,get,set}
+  commentstyle=\rmfamily,
+  stringstyle=\color{black!75}
 }
+
+\lstnewenvironment{ruledlisting}{
+  \lstset{
+    captionpos=t,belowcaptionskip=0.7\baselineskip,
+    frame=lines,framerule=\heavyrulewidth,
+    numberbychapter=true,
+    xleftmargin=2em,framexleftmargin=2em
+  }
+}{}
 
 % http://tex.stackexchange.com/a/47694
 \crefname{lstlisting}{Listing}{Listings}

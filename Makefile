@@ -6,6 +6,8 @@ CONVERT_SVG := $(patsubst src/figures/%.svg,out/figures/%.pdf,$(wildcard src/fig
 
 CONVERT_PDF := $(patsubst src/figures/%.pdf,out/figures/%.pdf,$(wildcard src/figures/*.pdf))
 
+OPTIMIZE_FIGURE := gs -sDEVICE=pdfwrite -q -P- -dNOPAUSE -dBATCH -dCompatibilityLevel=1.4 -dOPM=0 -dColorConversionStrategy=/RGB -sProcessColorModel=DeviceRGB -dPDFSETTINGS=/prepress -dOptimize=true -dEmbedAllFonts=true -dSubsetFonts=true -dCompressFonts=true -dCompressPages=true -dCannotEmbedFontPolicy=/Warning -sDEVICE=pdfwrite
+
 all: latex docs/$(PROJECTNAME).pdf
 
 docs/$(PROJECTNAME).pdf: src/PDFA_def.ps out/$(PROJECTNAME).pdf
@@ -15,10 +17,11 @@ figures: $(CONVERT_SVG) $(CONVERT_PDF)
 	@true
 
 $(CONVERT_SVG): out/figures/%.pdf: src/figures/%.svg
-	inkscape --file=$< --export-area=drawing --without-gui --export-pdf=$@
+	inkscape --file=$< --export-area=drawing --without-gui --export-pdf=$@.inkscape_export
+	$(OPTIMIZE_FIGURE) -sOutputFile=$@ $@.inkscape_export
 
 $(CONVERT_PDF): out/figures/%.pdf: src/figures/%.pdf
-	gs -sDEVICE=pdfwrite -q -P- -dNOPAUSE -dBATCH -dCompatibilityLevel=1.4 -dOPM=0 -dColorConversionStrategy=/RGB -sProcessColorModel=DeviceRGB -dPDFSETTINGS=/prepress -dOptimize=true -dEmbedAllFonts=true -dSubsetFonts=true -dCompressFonts=true -dCompressPages=true -dCannotEmbedFontPolicy=/Warning -sDEVICE=pdfwrite -sOutputFile=$@ $^
+	$(OPTIMIZE_FIGURE) -sOutputFile=$@ $^
 
 latex:
 	@if [ -a out/run2.pid ]; then rm -rf out; echo "============"; echo "PREVIOUS RUN WAS UNEXPECTEDLY INTERRUPTED, CLEANING OUTPUT DIRECTORY!"; echo "============"; fi
