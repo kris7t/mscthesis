@@ -18,6 +18,7 @@ After briefly reviewing related work we describe the proposed transformation cha
 \section{Related work: view synchronization for formal models}
 \label{chap:transform:relwork}
 
+
 \subsection{Incremental transformation languages}
 
 \todo*{}
@@ -36,10 +37,60 @@ After briefly reviewing related work we describe the proposed transformation cha
   \label{fig:transform:overview}
 \end{figure}
 
-\subsection{Transformation specifications}
+The transformation chain from engineering models to analyzable \textAbbr{RGSPN}s is shown in \vref{fig:transform:overview}. The architecture is divided into three parts: \begin{inparaenum}
+\item the \emph{parameters} of the transformation, which constitute the transformation specification provided by the user,
+\item the \emph{models} and model transformations participating in the chain and
+\item the \emph{trace} models providing end-to-end traceability.
+\end{inparaenum}
+
+\subsection{Transformation specification}
+
+The transformation description contains the \emph{precondition queries}, which are executed on an incremental model query engine. For each query match the \emph{transformation rules} specify which \emph{\textabbr{RGSPN}} module should be instantiated.
+
+In addition, the user is able to reuse quantitative aspects of the engineering model in the analysis model and define new quantitative aspects to be evaluated as stochastic queries. These \emph{associated symbols}, along with their traceability information play roles similar to the parameters (prefixed with \enquote{\$}), stochastic metrics (\enquote{/}) and queries (\enquote{/\$}) introduced as an extension to \textabbr{UML} diagrams by \citet{Bernardi03building}.
+
+Transformation rules can govern the mapping of numeric attributes from the domain model to the variable symbols of the \textabbr{RGSPN}. Attributes may be marked as parameters, which are retained as parameters symbols in \textabbr{RGSPN} and when the analysis model is exported to external solvers. Therefore the parameter mapping relates domain attributes to sensitivity analysis~\citep{Blake88sensitivity}, parametric solution of Markov chains~\citep{Hahn11parametric} and parameter synthesis \citep{Quatmann16mdp,Molnar17optimization}, letting users perform the aforementioned tasks directly on the domain model.
+
+Moreover, \emph{derived} features may also be specified that associate \textabbr{RGSPN} symbols with domain model elements. In contrast with model query based approaches for the creation of derived feature~\citep{Rath12derived} the domain model is not modified to incorporate the derived features. However, code generation and the \emph{extension methods} feature of \emph{Xtend}\footnoteurl{https://www.eclipse.org/xtend/} are utilized in \vref{sec:apply:environment} to emulate derived features syntactically in a general purpose programming language.
+
+\subsection{Transformation chain}
+
+As it is shown in \vref{fig:transform:overview} the construction of \textabbr{RGSPN} analysis models is realized as a \emph{chain} of two model transformations.
+
+The precondition queries of transformation rules are ran on the 1.~\emph{source model} by an \emph{incremental query engine}. The 2.~\emph{view transformation} maintains a 3.~\emph{abstract analysis model} based on the query matches of the precondition queries and instantiates the \textabbr{RGSPN} modules according to the transformation rules. In addition, the associated symbols relating to the quantitative aspects of the source model elements are instantiated. A \emph{view trace model} links the elements and query matches of the source model to the symbols of the abstract \textabbr{RGSPN}.
+
+The abstract \textabbr{RGSPN} contains reference symbols, variables and collections that are not directly exportable to analysis tools. Therefore the 4.~\emph{concretizer transformation} is needed to \emph{inline} these features and obtain a 5.~\emph{concrete analysis model}, which is an \textabbr{RGSPN} without advanced features. The concrete model can be exported as a \textabbr{GSPN} possibly parameter- and marking-dependent transition rates for analysis with external tools. Furthermore, the value expressions of the retained variable symbols, which refer to elements of the concrete model, can serve as stochastic metrics and queries to be analyzed.
+
+If the abstract analysis model is inconsistent, e.g.~it contains unassigned references or circular references, concretization is delayed and \emph{error} markers are generated until the inconsistency is resolved. The \emph{concretizer trace model} links the abstract analysis model to the concrete one; moreover, it also allows the interpretation of error markers.
+
+Both the concrete and abstract \textAbbr{RGSPN}s are fully materialized as instance models so that they can be freely inspected and exported. It is also possible to subscribe to change notification of either of the models, for example, to incorporate our transformation chain into a larger chain.
+
+\subsection{End-to-end traceability}
+
+Fully traversing the view and concretizer trace models allows the association of concrete \textabbr{RGSPN} symbols with source model elements. Thus when an external solver is interfaced with the transformation, it is sufficient to provide traceability between the concrete analysis model and the external solver so that the analysis results remain interpretable in the context of the source domain model.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.9]{figures/derived_feature_traceability}
+  \caption{Traceability for associated symbols.}
+  \label{fig:transform:derived}
+\end{figure}
+
+\begin{runningExample}
+  \Vref{fig:transform:derived} shows the trace links for an \textabbr{RGSPN} symbol derived feature \lit{total\-Thinking\-Time} of the domain class \lit{Table}.
+
+  The first trace link is the view trace model associates the domain object \lit{T} with the reference symbol \lit{T.total\-Thinking\-Time} in the abstract analysis model. A variable symbol is assigned to the reference.
+
+  The concretization transformation resolves and inlines all references, therefore both trace links from the reference symbol and the concrete symbol in the concretization trace model point at the same variable symbol in the concrete analysis model. As result of the inlining, the aggregation operator in value expression of the variable is replaced with the sum of the member variables. In the example, these members are token count expressions \lit{\#thinking1} and \lit{\#thinking2}.
+
+  If the concrete analysis model is exported to an external analysis tool, such as PetriDotNet~\citep{Voros17pdn}, the \textabbr{PNML} serializer may also output traceability information. In the example, the value expression of \lit{T.total\-Thinking\-Time} is turned into a reward configuration for PetriDotNet. The end-to-end trace links associate the exported reward configuration with the derived feature, hence the results of stochastic analysis can be interpreted in the context of the domain model and its derived features.
+\end{runningExample}
+
+\section{Transformation specification language}
 
 \begin{table}%
-  \caption{Transformation specification for dining philosophers domain models.}%
+  \caption{Feature rules for dining philosophers transformation specification.}%
+  \label{tbl:transform:feature}
   \lstset{
     basicstyle={\ttfamily\small},
     columns=fixed,numbers=none,
@@ -49,8 +100,8 @@ After briefly reviewing related work we describe the proposed transformation cha
   \centering
   \begin{tabular}{@{}>{\centering\arraybackslash}m{0.20\textwidth}@{}m{0.42\textwidth}@{}>{\centering\arraybackslash}m{0.38\textwidth}@{}}
     \toprule
-    \multicolumn{1}{@{}c}{Precondition} & \multicolumn{1}{c}{Transformation rule} &
-    \multicolumn{1}{c@{}}{\textabbr{RGSPN} module} \\
+    \multicolumn{1}{@{}c}{Domain class} & \multicolumn{1}{c}{Transformation rule} &
+    \multicolumn{1}{c@{}}{Associated symbols} \\
     \midrule
     & \begin{lstlisting}
 features {
@@ -68,8 +119,27 @@ features {
 \end{lstlisting} &\includegraphics[scale=0.8]{figures/table_features}\\
   & \begin{lstlisting}
 }
-\end{lstlisting} & \\
-  \includegraphics[scale=0.8]{figures/q_table_pattern}& \begin{lstlisting}
+\end{lstlisting} &\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+    
+\begin{table}%
+  \caption{Mapping rules for dining philosophers transformation specification.}%
+  \label{tbl:transform:mapping}
+  \lstset{
+    basicstyle={\ttfamily\small},
+    columns=fixed,numbers=none,
+    aboveskip=0pt,belowskip=-1.2\baselineskip,
+    language=ecore2pn
+  }%
+  \centering
+  \begin{tabular}{@{}>{\centering\arraybackslash}m{0.20\textwidth}@{}m{0.42\textwidth}@{}>{\centering\arraybackslash}m{0.38\textwidth}@{}}
+    \toprule
+    \multicolumn{1}{@{}c}{Precondition} & \multicolumn{1}{c}{Transformation rule} &
+    \multicolumn{1}{c@{}}{\textabbr{RGSPN} module} \\
+    \midrule
+    \includegraphics[scale=0.8]{figures/q_table_pattern}& \begin{lstlisting}
 mapping qTable(T)
     => TableMod TM {
   T.^totalThinkingTime^
@@ -96,6 +166,58 @@ mapping qAdjacent(T, L, R) {
     \bottomrule
   \end{tabular}
 \end{table}
+
+We present the transformation specification language trough a running example. \Cref{tbl:transform:feature,tbl:transform:mapping} show an example transformation description for the dining philosophers domain. On the left graph patterns are displayed as subgraphs, while the \textabbr{RGSPN} modules on the right also use graphical concrete syntax. In the middle column, the textual concrete syntax of transformation descriptions is shown.
+
+\subsection{Feature rules}
+
+The first section of the transformation specification contains \emph{feature rules} that describe the associated symbols relating to the \emph{features} (\emph{attributes}) of the domain model elements. The feature rule section is introduced by the \lit{features} keyword. Each domain class may have a sub-section describing the mapping of its features.
+
+By default, each \lit{int}, \lit{double} and \lit{boolean} attribute of a domain class is mapped to a \lit{const} variable symbol in the abstract \textabbr{RGSPN}. The value expression of the variable symbol is a literal that equals to the value of the domain attribute.
+
+Users may override the attribute mapping of \lit{double} features by specifying \lit{param} mapping instead. Attributes marked as \lit{param} are turned into parameter symbols instead.
+
+Lastly, feature rules may specify \texttt{derived} features. An \textabbr{RGSPN} reference symbol with the given type and name is created and is associated with the domain element.
+
+\begin{runningExample}
+  The metamodel for the dining philosophers domain contains the classes \lit{Philosopher} and \lit{Table}. The two attributes of type \lit{double} of \lit{Philosopher} are \lit{eating\-Rate} and \lit{hungry\-Rate}, while \lit{Table} has no attributes.
+
+  For \lit{Philosopher} the feature rule in \vref{tbl:transform:feature} marks the attribute \lit{eating\-Rate} as a parameter. Hence \lit{eating\-Rate} is mapped to the \textabbr{RGSPN} as a parameter symbol, while \lit{const} variable symbol is created for \lit{hungry\-Rate}.
+
+  The \lit{Table} feature rule prescribes a derived feature \lit{total\-Thinking\-Time} of type \(\vartype{\lit{prop}}{\lit{double}}\). Hence a reference symbol with the same name and type is associated with \lit{Table} objects.
+\end{runningExample}
+
+\subsection{Mapping rules}
+
+A \emph{mapping} rule associates a \emph{precondition} model query with a set of \emph{lookup declarations}, assignments and collections membership declarations, as well as optionally a \emph{postcondition} \textabbr{RGSPN} module. Thus the abstract analysis modules is weaved from \textabbr{RGSPN} module instances and the edges added between them by the mappings.
+
+For every tuple of match arguments in the match set of the precondition query instances of the assignments, collections memberships and the \textabbr{RGSPN} module are added to the abstract analysis model. The match argument tuple serves as the source of traceability links to the instantiated objects.
+
+After the keyword \lit{mapping} the precondition graph pattern is named, followed by its list of parameters. The associated symbols of match arguments are accessible in the body of the mapping rule by mentioning the name of the match argument, followed by the dot operator and the name of the associated symbol.
+
+The name of the \textabbr{RGSPN} module to instantiate and a \emph{local name} for the module instance may be specified after the \lit{=>} operator. If the module instantiation clause is present symbols inside the module instance can be referred to using the local name of the instance and the dot operator similarly to associated symbol references.
+
+\subsubsection{Lookup declarations}
+
+The view trace model can be traversed during the view transformation by \emph{lookup declarations}, analogously to the \texttt{@Lookup} annotation introduced by \citet{Debreceni14viewmodel} for the traversal of traceability relations in view maintenance. Introduced by the keywords \lit{lookup} they name a precondition pattern and provide a list of match arguments. The match arguments must be a subset of the parameters of the containing mapping rule and a pattern match of the specified pattern must exist.
+
+After the operator \lit{=>} a local name may be given to the module instance created by the lookup up mapping rule. Hence it is possible to refer to symbols instantiated by other mapping rules in order to connect them with the rest of the analysis model. The execution of the view transformation, which is described in \vref{chap:transform:view}, ensures that the modules can be instantiated in any order and allows cyclic lookups between mapping rules.
+
+\subsubsection{Edge declarations}
+
+Edges between different \textabbr{RGSPN} module instances and symbols associated with domain objects are also supported. The \lit{:=} and \lit{+=} operators may add reference assignments and collection membership edges, respectively. Typing rules in \vref{dfn:rgspn:well-typed} are checked in mapping rules as well as in \textabbr{RGSPN} modules. Thus the abstract \textabbr{RGSPN} output by the view transformation is ensured to be well-typed.
+
+\begin{runningExample}
+  In \vref{tbl:transform:mapping} three mapping rules are given for the dining philosophers domain. The feature rules in \vref{tbl:transform:feature} are assumed for the mappings.
+
+  The pattern \lit{qTable} matches for all instances \lit{T} of the class \lit{Table}. An instance of the module \lit{TableMod} is created with the local name \lit{TM}. The symbol \lit{total\-Thinking\-Time} of \lit{TM} is assigned to the derived symbol with the same name of the domain object \lit{T}.
+
+  The pattern \lit{qPhil} matches each philosopher \lit{P} sitting around a table \lit{T}. The corresponding mapping instantiates \lit{PhilMod} with the local name \lit{PM}. The table \lit{T} is included in the match parameter list such that the module \lit{TM} created by the mapping \lit{qTable} for \lit{T} can be looked up. The references \lit{hungry\-Rate} and \lit{eating\-Rate} inside \lit{PM} are assigned to the symbols constructed from the attributes of \lit{P}. The variable symbol \lit{thinking\-Time} of \lit{PM} is added to the collection \lit{thinking\-Times} of \lit{PM}.
+
+  The interaction between the instances of \lit{TableMod} and \lit{PhilMod} showcases the advantages of collection symbols in \textAbbr{RGSPN}. The individual performance measures \lit{thinking\-Time} of philosophers are added to a collection, such that the aggregate performance measure \lit{total\-Thinking\-Time} can be computed.
+
+  Lastly, \lit{qAdjacent} find philosophers \lit{L} and \lit{R} sitting next to each other around the table \lit{T}. While the corresponding mapping has no \textabbr{RGSPN} module to instantiate, it looks up the modules instances \lit{PM1} and \lit{PM2}, respectively. The reference to the left fork of the right philosopher is assigned to the right for of the left philosopher, which completes the dining philosophers model.
+\end{runningExample}
 
 \section{Generic view transformation to stochastic Petri nets}
 \label{chap:transform:view}
