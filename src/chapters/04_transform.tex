@@ -51,7 +51,7 @@ In addition, the user is able to reuse quantitative aspects of the engineering m
 
 Transformation rules can govern the mapping of numeric attributes from the domain model to the variable symbols of the \textabbr{RGSPN}. Attributes may be marked as parameters, which are retained as parameters symbols in \textabbr{RGSPN} and when the analysis model is exported to external solvers. Therefore the parameter mapping relates domain attributes to sensitivity analysis~\citep{Blake88sensitivity}, parametric solution of Markov chains~\citep{Hahn11parametric} and parameter synthesis \citep{Quatmann16mdp,Molnar17optimization}, letting users perform the aforementioned tasks directly on the domain model.
 
-Moreover, \emph{derived} features may also be specified that associate \textabbr{RGSPN} symbols with domain model elements. In contrast with model query based approaches for the creation of derived feature~\citep{Rath12derived} the domain model is not modified to incorporate the derived features. However, code generation and the \emph{extension methods} feature of \emph{Xtend}\footnoteurl{https://www.eclipse.org/xtend/} are utilized in \vref{sec:apply:environment} to emulate derived features syntactically in a general purpose programming language.
+Moreover, \emph{derived} features may also be specified that associate \textabbr{RGSPN} symbols with domain model elements. In contrast with model query based approaches for the creation of derived features~\citep{Rath12derived} the domain model is not modified to incorporate the features. However, code generation and the \emph{extension methods} feature of \emph{Xtend}\footnoteurl{https://www.eclipse.org/xtend/} are utilized in \vref{sec:apply:environment} to emulate derived features syntactically in a general purpose programming language.
 
 \subsection{Transformation chain}
 
@@ -191,7 +191,7 @@ Lastly, feature rules may specify \texttt{derived} features. An \textabbr{RGSPN}
 
 A \emph{mapping} rule associates a \emph{precondition} model query with a set of \emph{lookup declarations}, assignments and collections membership declarations, as well as optionally a \emph{postcondition} \textabbr{RGSPN} module. Thus the abstract analysis modules is weaved from \textabbr{RGSPN} module instances and the edges added between them by the mappings.
 
-For every tuple of match arguments in the match set of the precondition query instances of the assignments, collections memberships and the \textabbr{RGSPN} module are added to the abstract analysis model. The match argument tuple serves as the source of traceability links to the instantiated objects.
+For every tuple of match arguments in the match set of the precondition query instances of the assignments, collections memberships and the \textabbr{RGSPN} module are added to the abstract analysis model. The instantiation of the \textabbr{RGSPN} modules is perfomed by copying their contents to the abstract analysis model after renaming their symbols to avoid collisions. The match argument tuple serves as the source of traceability links to the instantiated objects.
 
 After the keyword \lit{mapping} the precondition graph pattern is named, followed by its list of parameters. The associated symbols of match arguments are accessible in the body of the mapping rule by mentioning the name of the match argument, followed by the dot operator and the name of the associated symbol.
 
@@ -221,6 +221,27 @@ Edges between different \textabbr{RGSPN} module instances and symbols associated
 
 \section{Generic view transformation to stochastic Petri nets}
 \label{chap:transform:view}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.9]{figures/view_transformation_example_initial}
+  \caption{Initial setup for the example view transformation.}
+  \label{fig:transform:view-1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.9]{figures/view_transformation_example_2}
+  \caption{State of the example view transformation after modifying \lit{P1.eatingRate}.}
+  \label{fig:transform:view-1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.9]{figures/view_transformation_example}
+  \caption{State of the example view transformation after adding a new philosopher \lit{P2}.}
+  \label{fig:transform:view-3}
+\end{figure}
 
 \section{Stochastic Petri net concretization}
 \label{chap:transform:concretizer}

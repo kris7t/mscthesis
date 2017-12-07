@@ -32,7 +32,7 @@
       <text x="487.3507" y="681.7162" clip-path="url(#clipPath2)" fill="rgb(64,64,64)" font-family="'Fira Sans'" stroke="none" xml:space="preserve">: prop double</text>
     </g>
     <g stroke-linecap="butt" transform="matrix(1,0,0,1,-478,-549)" fill="rgb(64,64,64)" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" stroke-dasharray="6,2" stroke="rgb(64,64,64)" stroke-miterlimit="1.45">
-      <path fill="none" d="M693.3819 637.4 L708.3819 667.4 L678.3819 667.4 Z" fill-rule="evenodd" clip-path="url(#clipPath2)"/>
+      <path fill="none" d="M693.3818 637.4 L708.3818 667.4 L678.3818 667.4 Z" fill-rule="evenodd" clip-path="url(#clipPath2)"/>
     </g>
     <g stroke-linecap="butt" transform="matrix(1,0,0,1,-478,-549)" fill="rgb(64,64,64)" text-rendering="geometricPrecision" font-family="'Fira Sans'" shape-rendering="geometricPrecision" font-style="italic" stroke="rgb(64,64,64)" stroke-miterlimit="1.45">
       <text x="639.4655" xml:space="preserve" y="631.0133" clip-path="url(#clipPath2)" stroke="none">T.totalThinkingTime</text>
@@ -91,19 +91,17 @@
       <rect stroke-linecap="butt" x="612.413" y="554.8514" clip-path="url(#clipPath2)" fill="none" width="1" height="158.9755" stroke-miterlimit="1.45"/>
     </g>
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-478,-549)" stroke-linecap="butt">
-      <path fill="none" d="M743.7953 678.2653 L758.7953 708.2653 L728.7953 708.2653 Z" fill-rule="evenodd" clip-path="url(#clipPath2)"/>
+      <path fill="none" d="M743.7952 678.2653 L758.7952 708.2653 L728.7952 708.2653 Z" fill-rule="evenodd" clip-path="url(#clipPath2)"/>
       <text x="620.9" xml:space="preserve" y="696.7074" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none">sum(thingingTimes)</text>
-    </g>
-    <g stroke-linecap="round" transform="matrix(1,0,0,1,-478,-549)" fill="blue" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" stroke-dasharray="4,3,0,3" stroke="blue" stroke-miterlimit="1.45">
-      <path fill="none" d="M596.0778 670.119 L631.4111 670.119 L631.4111 652.4 L677.9078 652.4" clip-path="url(#clipPath2)"/>
-      <path d="M685.9078 652.4 L673.9078 647.4 L676.9078 652.4 L673.9078 657.4 Z" clip-path="url(#clipPath2)" stroke="none"/>
-      <text stroke-linecap="butt" x="619.6432" y="647.0681" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke-dasharray="none" stroke="none" xml:space="preserve">&lt;&lt;trace&gt;&gt;</text>
-      <path fill="none" d="M700.8833 652.4 L835.44 652.4" clip-path="url(#clipPath2)"/>
-      <path d="M843.44 652.4 L831.44 647.4 L834.44 652.4 L831.44 657.4 Z" clip-path="url(#clipPath2)" stroke="none"/>
-      <text stroke-linecap="butt" x="777.5357" y="646.9734" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke-dasharray="none" stroke="none" xml:space="preserve">&lt;&lt;trace&gt;&gt;</text>
-      <path fill="none" d="M858.4876 652.4 L938.8236 652.4" clip-path="url(#clipPath2)"/>
-      <path d="M946.8236 652.4 L934.8236 647.4 L937.8236 652.4 L934.8236 657.4 Z" clip-path="url(#clipPath2)" stroke="none"/>
-      <text stroke-linecap="butt" x="867.5357" y="646.9734" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke-dasharray="none" stroke="none" xml:space="preserve">&lt;&lt;trace&gt;&gt;</text>
+      <path fill="none" stroke-dasharray="6,2" d="M596.0778 670.119 L631.4111 670.119 L631.4111 652.4 L677.9078 652.4" clip-path="url(#clipPath2)" stroke="blue"/>
+      <path fill="blue" stroke-dasharray="6,2" d="M685.9078 652.4 L673.9078 647.4 L676.9078 652.4 L673.9078 657.4 Z" clip-path="url(#clipPath2)" stroke="none"/>
+      <text x="619.6432" y="647.0681" clip-path="url(#clipPath2)" fill="blue" font-family="'Fira Sans'" stroke="none" xml:space="preserve">&lt;&lt;trace&gt;&gt;</text>
+      <path fill="none" stroke-dasharray="6,2" d="M700.8833 652.4 L835.44 652.4" clip-path="url(#clipPath2)" stroke="blue"/>
+      <path fill="blue" stroke-dasharray="6,2" d="M843.44 652.4 L831.44 647.4 L834.44 652.4 L831.44 657.4 Z" clip-path="url(#clipPath2)" stroke="none"/>
+      <text x="777.5357" y="646.9734" clip-path="url(#clipPath2)" fill="blue" font-family="'Fira Sans'" stroke="none" xml:space="preserve">&lt;&lt;trace&gt;&gt;</text>
+      <path fill="none" stroke-dasharray="6,2" d="M858.4876 652.4 L938.8236 652.4" clip-path="url(#clipPath2)" stroke="blue"/>
+      <path fill="blue" stroke-dasharray="6,2" d="M946.8236 652.4 L934.8236 647.4 L937.8236 652.4 L934.8236 657.4 Z" clip-path="url(#clipPath2)" stroke="none"/>
+      <text x="867.5357" y="646.9734" clip-path="url(#clipPath2)" fill="blue" font-family="'Fira Sans'" stroke="none" xml:space="preserve">&lt;&lt;trace&gt;&gt;</text>
     </g>
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-478,-549)" stroke-linecap="butt">
       <path fill="none" d="M631.7819 576.7014 L634.6318 581.4514 L586.3019 581.4514 L586.3019 584.4514 L634.6318 584.4514 L631.7819 589.2014 L646.7819 582.9514 L631.7819 576.7014 Z" clip-path="url(#clipPath2)"/>
@@ -118,11 +116,11 @@
       <path fill="none" d="M703.845 658.2653 L723.4355 658.2653 L732.2167 673.361" clip-path="url(#clipPath2)"/>
       <path fill="white" d="M739.759 686.3268 L736.9002 669.4797 L726.5275 675.5135 Z" clip-path="url(#clipPath2)" stroke="none"/>
       <path fill="none" stroke-dasharray="none" d="M739.759 686.3268 L736.9002 669.4797 L726.5275 675.5135 Z" clip-path="url(#clipPath2)"/>
+      <path fill="none" d="M751.3033 693.2653 L850.9507 693.2653 L850.9507 675.3653" clip-path="url(#clipPath2)" stroke="blue"/>
+      <path fill="blue" d="M850.9507 667.3653 L845.9507 679.3653 L850.9507 676.3653 L855.9507 679.3653 Z" clip-path="url(#clipPath2)" stroke="none"/>
     </g>
-    <g stroke-linecap="round" transform="matrix(1,0,0,1,-478,-549)" fill="blue" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" stroke-dasharray="4,3,0,3" stroke="blue" stroke-miterlimit="1.45">
-      <path fill="none" d="M751.3033 693.2653 L850.9507 693.2653 L850.9507 675.3653" clip-path="url(#clipPath2)"/>
-      <path d="M850.9507 667.3653 L845.9507 679.3653 L850.9507 676.3653 L855.9507 679.3653 Z" clip-path="url(#clipPath2)" stroke="none"/>
-      <text stroke-linecap="butt" x="857.5357" y="692.529" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke-dasharray="none" stroke="none" xml:space="preserve">&lt;&lt;trace&gt;&gt;</text>
+    <g stroke-linecap="butt" transform="matrix(1,0,0,1,-478,-549)" fill="blue" text-rendering="geometricPrecision" font-family="'Fira Sans'" shape-rendering="geometricPrecision" stroke="blue" stroke-miterlimit="1.45">
+      <text x="857.5357" xml:space="preserve" y="692.529" clip-path="url(#clipPath2)" stroke="none">&lt;&lt;trace&gt;&gt;</text>
     </g>
   </g>
 </svg>
