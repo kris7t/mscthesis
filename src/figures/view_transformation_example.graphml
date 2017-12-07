@@ -703,7 +703,7 @@ thinkingTimes<y:LabelModel>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#666600" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="white_delta"/>
-          <y:EdgeLabel alignment="center" backgroundColor="#F1F1B0" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="10" fontStyle="plain" hasLineColor="false" height="23.249420166015625" horizontalTextPosition="center" iconTextGap="4" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#666600" underlinedText="true" verticalTextPosition="bottom" visible="true" width="49.60493469238281" x="0.8060537236302707" y="5.045600870368503">qAdjacent
+          <y:EdgeLabel alignment="center" backgroundColor="#F1F1B0" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="10" fontStyle="plain" hasLineColor="false" height="23.249420166015625" horizontalTextPosition="center" iconTextGap="4" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#666600" underlinedText="true" verticalTextPosition="bottom" visible="true" width="53.992523193359375" x="3.819581814757612" y="9.290051977492112">qAdjacent*
 (T, P2, P1)<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
@@ -716,7 +716,7 @@ thinkingTimes<y:LabelModel>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#006633" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="white_delta"/>
-          <y:EdgeLabel alignment="center" backgroundColor="#AEEECE" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="10" fontStyle="plain" hasLineColor="false" height="23.249420166015625" horizontalTextPosition="center" iconTextGap="4" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#006633" underlinedText="true" verticalTextPosition="bottom" visible="true" width="49.60493469238281" x="-51.04298418652536" y="4.15573401880647">qAdjacent
+          <y:EdgeLabel alignment="center" backgroundColor="#AEEECE" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="10" fontStyle="plain" hasLineColor="false" height="23.249420166015625" horizontalTextPosition="center" iconTextGap="4" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#006633" underlinedText="true" verticalTextPosition="bottom" visible="true" width="53.992523193359375" x="-58.406032223398824" y="8.23649859792954">qAdjacent*
 (T, P1, P2)<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
@@ -732,7 +732,7 @@ thinkingTimes<y:LabelModel>
           </y:Path>
           <y:LineStyle color="#003366" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="white_delta"/>
-          <y:EdgeLabel alignment="center" backgroundColor="#B7DBFF" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="10" fontStyle="plain" hasLineColor="false" height="13.624710083007812" horizontalTextPosition="center" iconTextGap="4" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#003366" underlinedText="true" verticalTextPosition="bottom" visible="true" width="54.16242980957031" x="-9.26356094145251" y="50.6214071309397">qPhil(T, P1)<y:LabelModel>
+          <y:EdgeLabel alignment="center" backgroundColor="#B7DBFF" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="10" fontStyle="plain" hasLineColor="false" height="13.624710083007812" horizontalTextPosition="center" iconTextGap="4" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#003366" underlinedText="true" verticalTextPosition="bottom" visible="true" width="58.550018310546875" x="-11.080852115881498" y="49.79423380129958">qPhil*(T, P1)<y:LabelModel>
               <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -753,7 +753,7 @@ thinkingTimes<y:LabelModel>
           </y:Path>
           <y:LineStyle color="#003366" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="white_delta"/>
-          <y:EdgeLabel alignment="center" backgroundColor="#B7DBFF" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="10" fontStyle="plain" hasLineColor="false" height="13.624710083007812" horizontalTextPosition="center" iconTextGap="4" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#003366" underlinedText="true" verticalTextPosition="bottom" visible="true" width="54.16242980957031" x="39.050374656632016" y="49.861879207587776">qPhil(T, P1)<y:LabelModel>
+          <y:EdgeLabel alignment="center" backgroundColor="#B7DBFF" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="10" fontStyle="plain" hasLineColor="false" height="13.624710083007812" horizontalTextPosition="center" iconTextGap="4" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#003366" underlinedText="true" verticalTextPosition="bottom" visible="true" width="58.550018310546875" x="36.856580406143735" y="49.861879207587776">qPhil*(T, P1)<y:LabelModel>
               <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -774,7 +774,7 @@ thinkingTimes<y:LabelModel>
           </y:Path>
           <y:LineStyle color="#000080" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="white_delta"/>
-          <y:EdgeLabel alignment="center" backgroundColor="#E1D7FD" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="10" fontStyle="plain" hasLineColor="false" height="13.624710083007812" horizontalTextPosition="center" iconTextGap="4" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000080" underlinedText="true" verticalTextPosition="bottom" visible="true" width="54.78208923339844" x="-19.665612798229176" y="51.36212907719664">qPhil(T, P2)<y:LabelModel>
+          <y:EdgeLabel alignment="center" backgroundColor="#E1D7FD" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="10" fontStyle="plain" hasLineColor="false" height="13.624710083007812" horizontalTextPosition="center" iconTextGap="4" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000080" underlinedText="true" verticalTextPosition="bottom" visible="true" width="59.169677734375" x="-21.859407048717458" y="51.36212907719664">qPhil*(T, P2)<y:LabelModel>
               <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -796,7 +796,7 @@ thinkingTimes<y:LabelModel>
           </y:Path>
           <y:LineStyle color="#000080" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="white_delta"/>
-          <y:EdgeLabel alignment="center" backgroundColor="#E1D7FD" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="10" fontStyle="plain" hasLineColor="false" height="13.624710083007812" horizontalTextPosition="center" iconTextGap="4" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000080" underlinedText="true" verticalTextPosition="bottom" visible="true" width="54.78208923339844" x="-35.49461953125285" y="61.02178671265301">qPhil(T, P2)<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" backgroundColor="#E1D7FD" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="10" fontStyle="plain" hasLineColor="false" height="13.624710083007812" horizontalTextPosition="center" iconTextGap="4" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000080" underlinedText="true" verticalTextPosition="bottom" visible="true" width="59.169677734375" x="-37.68841378174113" y="61.02178671265301">qPhil*(T, P2)<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
@@ -811,7 +811,7 @@ thinkingTimes<y:LabelModel>
           </y:Path>
           <y:LineStyle color="#993300" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="white_delta"/>
-          <y:EdgeLabel alignment="center" backgroundColor="#F4BA9E" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="10" fontStyle="plain" hasLineColor="false" height="13.624710083007812" horizontalTextPosition="center" iconTextGap="4" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#993300" underlinedText="true" verticalTextPosition="bottom" visible="true" width="46.53662109375" x="-51.30216224506967" y="-18.184621518514632">qTable(T)<y:LabelModel>
+          <y:EdgeLabel alignment="center" backgroundColor="#F4BA9E" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="10" fontStyle="plain" hasLineColor="false" height="13.624710083007812" horizontalTextPosition="center" iconTextGap="4" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#993300" underlinedText="true" verticalTextPosition="bottom" visible="true" width="50.92420959472656" x="-55.68975074604623" y="-18.184621518514632">qTable*(T)<y:LabelModel>
               <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -848,7 +848,7 @@ thinkingTimes<y:LabelModel>
             </y:ModelParameter>
             <y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
-          <y:EdgeLabel alignment="center" backgroundColor="#B7DBFF" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="10" fontStyle="plain" hasLineColor="false" height="13.624710083007812" horizontalTextPosition="center" iconTextGap="4" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#003366" underlinedText="true" verticalTextPosition="bottom" visible="true" width="54.16242980957031" x="4.522622432223898" y="20.176887068988776">qPhil(T, P1)<y:LabelModel>
+          <y:EdgeLabel alignment="center" backgroundColor="#B7DBFF" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="10" fontStyle="plain" hasLineColor="false" height="13.624710083007812" horizontalTextPosition="center" iconTextGap="4" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#003366" underlinedText="true" verticalTextPosition="bottom" visible="true" width="58.550018310546875" x="2.3288281817356165" y="20.176887068988776">qPhil*(T, P1)<y:LabelModel>
               <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -878,7 +878,7 @@ thinkingTimes<y:LabelModel>
             </y:ModelParameter>
             <y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
-          <y:EdgeLabel alignment="center" backgroundColor="#E1D7FD" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="10" fontStyle="plain" hasLineColor="false" height="13.624710083007812" horizontalTextPosition="center" iconTextGap="4" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000080" underlinedText="true" verticalTextPosition="bottom" visible="true" width="54.78208923339844" x="306.3337670418571" y="19.44476888805673">qPhil(T, P2)<y:LabelModel>
+          <y:EdgeLabel alignment="center" backgroundColor="#E1D7FD" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Fira Sans" fontSize="10" fontStyle="plain" hasLineColor="false" height="13.624710083007812" horizontalTextPosition="center" iconTextGap="4" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000080" underlinedText="true" verticalTextPosition="bottom" visible="true" width="59.169677734375" x="304.1399727913688" y="19.44476888805673">qPhil*(T, P2)<y:LabelModel>
               <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
             </y:LabelModel>
             <y:ModelParameter>

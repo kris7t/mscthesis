@@ -88,6 +88,10 @@ Fully traversing the view and concretizer trace models allows the association of
 
 \section{Transformation specification language}
 
+We present the transformation specification language trough a running example. \Cref{tbl:transform:feature,tbl:transform:mapping} show an example transformation description for the dining philosophers domain. On the left graph patterns are displayed as subgraphs, while the \textabbr{RGSPN} modules on the right also use graphical concrete syntax. In the middle column, the textual concrete syntax of transformation descriptions is shown.
+
+\subsection{Feature rules}
+
 \begin{table}%
   \caption{Feature rules for dining philosophers transformation specification.}%
   \label{tbl:transform:feature}
@@ -122,8 +126,26 @@ features {
 \end{lstlisting} &\\
     \bottomrule
   \end{tabular}
-\end{table}
-    
+\end{table}    
+
+The first section of the transformation specification contains \emph{feature rules} that describe the associated symbols relating to the \emph{features} (\emph{attributes}) of the domain model elements. The feature rule section is introduced by the \lit{features} keyword. Each domain class may have a sub-section describing the mapping of its features.
+
+By default, each \lit{int}, \lit{double} and \lit{boolean} attribute of a domain class is mapped to a \lit{const} variable symbol in the abstract \textabbr{RGSPN}. The value expression of the variable symbol is a literal that equals to the value of the domain attribute.
+
+Users may override the attribute mapping of \lit{double} features by specifying \lit{param} mapping instead. Attributes marked as \lit{param} are turned into parameter symbols instead.
+
+Lastly, feature rules may specify \texttt{derived} features. An \textabbr{RGSPN} reference symbol with the given type and name is created and is associated with the domain element.
+
+\begin{runningExample}
+  The metamodel for the dining philosophers domain contains the classes \lit{Philosopher} and \lit{Table}. The two attributes of type \lit{double} of \lit{Philosopher} are \lit{eating\-Rate} and \lit{hungry\-Rate}, while \lit{Table} has no attributes.
+
+  For \lit{Philosopher} the feature rule in \vref{tbl:transform:feature} marks the attribute \lit{eating\-Rate} as a parameter. Hence \lit{eating\-Rate} is mapped to the \textabbr{RGSPN} as a parameter symbol, while \lit{const} variable symbol is created for \lit{hungry\-Rate}.
+
+  The \lit{Table} feature rule prescribes a derived feature \lit{total\-Thinking\-Time} of type \(\vartype{\lit{prop}}{\lit{double}}\). Hence a reference symbol with the same name and type is associated with \lit{Table} objects.
+\end{runningExample}
+
+\subsection{Mapping rules}
+
 \begin{table}%
   \caption{Mapping rules for dining philosophers transformation specification.}%
   \label{tbl:transform:mapping}
@@ -167,31 +189,9 @@ mapping qAdjacent(T, L, R) {
   \end{tabular}
 \end{table}
 
-We present the transformation specification language trough a running example. \Cref{tbl:transform:feature,tbl:transform:mapping} show an example transformation description for the dining philosophers domain. On the left graph patterns are displayed as subgraphs, while the \textabbr{RGSPN} modules on the right also use graphical concrete syntax. In the middle column, the textual concrete syntax of transformation descriptions is shown.
-
-\subsection{Feature rules}
-
-The first section of the transformation specification contains \emph{feature rules} that describe the associated symbols relating to the \emph{features} (\emph{attributes}) of the domain model elements. The feature rule section is introduced by the \lit{features} keyword. Each domain class may have a sub-section describing the mapping of its features.
-
-By default, each \lit{int}, \lit{double} and \lit{boolean} attribute of a domain class is mapped to a \lit{const} variable symbol in the abstract \textabbr{RGSPN}. The value expression of the variable symbol is a literal that equals to the value of the domain attribute.
-
-Users may override the attribute mapping of \lit{double} features by specifying \lit{param} mapping instead. Attributes marked as \lit{param} are turned into parameter symbols instead.
-
-Lastly, feature rules may specify \texttt{derived} features. An \textabbr{RGSPN} reference symbol with the given type and name is created and is associated with the domain element.
-
-\begin{runningExample}
-  The metamodel for the dining philosophers domain contains the classes \lit{Philosopher} and \lit{Table}. The two attributes of type \lit{double} of \lit{Philosopher} are \lit{eating\-Rate} and \lit{hungry\-Rate}, while \lit{Table} has no attributes.
-
-  For \lit{Philosopher} the feature rule in \vref{tbl:transform:feature} marks the attribute \lit{eating\-Rate} as a parameter. Hence \lit{eating\-Rate} is mapped to the \textabbr{RGSPN} as a parameter symbol, while \lit{const} variable symbol is created for \lit{hungry\-Rate}.
-
-  The \lit{Table} feature rule prescribes a derived feature \lit{total\-Thinking\-Time} of type \(\vartype{\lit{prop}}{\lit{double}}\). Hence a reference symbol with the same name and type is associated with \lit{Table} objects.
-\end{runningExample}
-
-\subsection{Mapping rules}
-
 A \emph{mapping} rule associates a \emph{precondition} model query with a set of \emph{lookup declarations}, assignments and collections membership declarations, as well as optionally a \emph{postcondition} \textabbr{RGSPN} module. Thus the abstract analysis modules is weaved from \textabbr{RGSPN} module instances and the edges added between them by the mappings.
 
-For every tuple of match arguments in the match set of the precondition query instances of the assignments, collections memberships and the \textabbr{RGSPN} module are added to the abstract analysis model. The instantiation of the \textabbr{RGSPN} modules is perfomed by copying their contents to the abstract analysis model after renaming their symbols to avoid collisions. The match argument tuple serves as the source of traceability links to the instantiated objects.
+For every tuple of match arguments in the match set of the precondition query instances of the assignments, collections memberships and the \textabbr{RGSPN} module are added to the abstract analysis model. The instantiation of modules is perfomed by copying their contents to the abstract analysis model after renaming their symbols to avoid collisions. The match argument tuple serves as the source of traceability links to the instantiated objects.
 
 After the keyword \lit{mapping} the precondition graph pattern is named, followed by its list of parameters. The associated symbols of match arguments are accessible in the body of the mapping rule by mentioning the name of the match argument, followed by the dot operator and the name of the associated symbol.
 
@@ -222,9 +222,37 @@ Edges between different \textabbr{RGSPN} module instances and symbols associated
 \section{Generic view transformation to stochastic Petri nets}
 \label{chap:transform:view}
 
+The first transformation in our transformation chain is the view transformation that derives abstract \textabbr{RGSPN} analysis models from engineering model. Its four main objectives are
+\begin{itemize*}
+\item the instantiation of associated symbols for domain objects,
+\item the instantiation of \textabbr{RGSPN} modules for mapping rule precondition matches,
+\item the instantiation of additional assignment and collection membership edges according to lookup specifications and
+\item the synchronization of the value expressions of associated attribute symbols with the values of domain attributes.
+\end{itemize*}
+
+The creation and removel of associated symbols, as well as \textabbr{RGSPN} modules and edges follows the strategy for incremental view maintenance by graph queries proposed by \citet{Debreceni14viewmodel}. Analysis model elements are created for precondition pattern matches with missing traceability links, while analysis model elements with dangling traceability links are deleted. Hence the style of instantiation is small-step \emph{incrementality by traceability}~\citep{Varro15styles}. The trace model is \emph{implicit}, i.e.~users do not need to define a metamodel for traceability links themselves. The transformation engine maintains the view trace model automatically instead.
+
+Edges defined inside mapping rules are only instantiated when there is a traceability link for the abstract \textabbr{RGSPN} symbols on both ends of the edge and the precondition of the mapping rule matches. To this end a \emph{connection} graph pattern is generated which incorporates the precondition pattern and  also matches the traceability links for the looked up \textabbr{RGSPN} modules and associated symbols of the mapping rule. By evaluating the generated pattern over the source model and the view trace model jointly the set of edges that can be added to the abstract analysis model are determined. Dedicated traceability links are also added between the matches of the generated patterns and the inserted edges; therefore the edges can be removed when their corresponding match of the connection pattern disappears and the traceability link becomes dangling.
+
+Symbols associated with numerical attributes of domain objects are synchronized with the values of the attributes. The transformation engine subscribes to change notifications from the source model and updates values of the symbols associated with the changed object. Hence the attribute synchronization is \emph{reactive source incremental}.
+
+\begin{runningExample}
+  \Cref{fig:transform:view-1,fig:transform:view-2,fig:transform:view-3} show an example transformation of a dining philosophers domain model according to the feature rules in \vref{tbl:transform:feature} and the mapping rules in \vref{tbl:transform:mapping}. Symbols inside module instances with no adjacent edges between modules were suppressed for clarity. Trace links are indicated by writing the names of the linked pattern matches in the analysis model, as well as the coloring of pattern matches and model elements.
+
+  The initial model in \vref{fig:transform:view-1} contains a \lit{Table} \lit{T} and a \lit{Philosopher} \lit{P1}. The precondition query \lit{qTable} has a single match \(\ltup \lit{T} \rtup\) and \lit{qPhil} has a single match \(\ltup \lit{T}, \lit{P1} \rtup\).
+
+  The associated symbols \lit{P1.eatingRate} and \lit{P1.hungryRate} were created for \lit{P1}. The derived feature symbol \lit{T.totalThinkingTime} is associated with \lit{T}. Module instances \lit{TM} of \lit{TableMod} and \lit{PM1} of \lit{PhilMod} were also added to the abstract analysis model for the precondition matches \(\lit{qTable}\ltup \lit{T} \rtup\) and \(\lit{qPhil}\ltup \lit{T}, \lit{P1} \rtup\), respectively. The connection patterns \(\lit{qTable}^*\) generated from the \lit{qTable} mapping rule and \(\lit{qPhil}^*\) generated from the \lit{qPhil} mapping rule govern the insertion of \textabbr{RGSPN} edges between modules. The connection match \(\lit{qTable}^*\ltup \lit{T} \rtup\) assigns the variable \lit{TM.totalThinkingTime} to the derived reference \lit{T.totalThinkingTime}. In addition, \(\lit{qPhil}^*\ltup \lit{T}, \lit{P1} \rtup\) adds \lit{PM1.thinkingTime} to the collection \lit{TM.thinkingTimes} and assigns the features symbols associated with \lit{T} to the respective reference symbols in the module \lit{PM1} such that they can be mentioned in the expressions inside the implementation of \lit{PhilMod}.
+
+  In \vref{fig:transform:view-2} the attribute \lit{hungryRate} of \lit{P1} was changed. Therefore the transformation synchronized the literal in the value expression of the feature symbol \lit{P1.hungryRate} in the abstract analysis model.
+
+  In \vref{fig:transform:view-3} a new \lit{Philosopher} \lit{P2} was created, which sits both on the left and right of \lit{P1} around the circular table \lit{T}. New precondition matches \(\lit{qPhil}\ltup \lit{T}, \lit{P} \rtup\), \(\lit{qAdjacent}\ltup \lit{T}, \lit{P1}, \lit{P2} \rtup\) and \(\lit{qAdjacent}\ltup \lit{T}, \lit{P2}, \lit{P1} \rtup\) appeared, which lead to the instantiation of a new \lit{PhilMod} \lit{PM2}. The symbols inside the \lit{PM2} are connected to the rest of the analysis model with edges due to the connection match \(\lit{qPhil}^*\ltup \lit{T}, \lit{P} \rtup\). Furthermore, matches \(\lit{qAdjacent}^*\ltup \lit{T}, \lit{P1}, \lit{P2} \rtup\) and \(\lit{qAdjacent}^*\ltup \lit{T}, \lit{P2}, \lit{P1} \rtup\) of the connection query generated from the mapping rule \lit{qAdjacent} caused the assignments of \lit{PM1.leftFork} to \lit{PM2.rightFork} and \lit{PM2.leftFork} to \lit{PM2.rightFork}.
+
+  Because analysis model elements with dangling trace links are removed the deletion of \lit{P2} from the source model would cause the view transformation to restore the analysis model to the state shown in \cref{fig:transform:view-2}.
+\end{runningExample}
+
 \begin{figure}
   \centering
-  \includegraphics[scale=0.9]{figures/view_transformation_example_initial}
+  \includegraphics[scale=0.9]{figures/view_transformation_example_initial} 
   \caption{Initial setup for the example view transformation.}
   \label{fig:transform:view-1}
 \end{figure}
@@ -233,7 +261,7 @@ Edges between different \textabbr{RGSPN} module instances and symbols associated
   \centering
   \includegraphics[scale=0.9]{figures/view_transformation_example_2}
   \caption{State of the example view transformation after modifying \lit{P1.eatingRate}.}
-  \label{fig:transform:view-1}
+  \label{fig:transform:view-2}
 \end{figure}
 
 \begin{figure}
