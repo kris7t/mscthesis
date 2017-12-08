@@ -23,7 +23,7 @@
               <y:Geometry height="64.23924215188407" width="171.1422298046873" x="239.0544589843753" y="290.55937231338135"/>
               <y:Fill color="#FFFFFF" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#C0C0C0" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="171.1422298046873" x="0.0" y="0.0">TM</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#EBEBEB" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" underlinedText="true" verticalTextPosition="bottom" visible="true" width="171.1422298046873" x="0.0" y="0.0">TM</y:NodeLabel>
               <y:Shape type="roundrectangle"/>
               <y:State closed="false" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
               <y:Insets bottom="1" bottomF="1.0" left="1" leftF="1.0" right="1" rightF="1.0" top="1" topF="1.0"/>
@@ -110,7 +110,7 @@ eatingRate
               <y:Geometry height="264.0088218831382" width="224.26222980468717" x="239.05445898437532" y="368.55609094021946"/>
               <y:Fill color="#FFFFFF" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#C0C0C0" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="224.26222980468717" x="0.0" y="0.0">PM1</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#EBEBEB" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" underlinedText="true" verticalTextPosition="bottom" visible="true" width="224.26222980468717" x="0.0" y="0.0">PM1</y:NodeLabel>
               <y:Shape type="roundrectangle"/>
               <y:State closed="false" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
               <y:Insets bottom="1" bottomF="1.0" left="1" leftF="1.0" right="1" rightF="1.0" top="1" topF="1.0"/>

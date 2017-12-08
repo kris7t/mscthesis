@@ -194,7 +194,7 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
               <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="85.0" x="32.0" y="-6.5">&lt;html&gt;hungryRate1&lt;br&gt;
-= 3.0&lt;br&gt;
+= 0.5&lt;br&gt;
 &lt;font color="#0000ff"&gt;: const double&lt;/font&gt;&lt;font size=1&gt;&lt;tt&gt;  &lt;/tt&gt;&lt;/font&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
@@ -213,7 +213,7 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
               <y:Fill color="#999999" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
               <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="89.0" x="32.0" y="-6.5">&lt;html&gt;eatingRate1&lt;br&gt;
-= 0.5&lt;br&gt;
+= 3.0&lt;br&gt;
 &lt;font color="#0000ff"&gt;: param double&lt;/font&gt;&lt;font size=1&gt;&lt;tt&gt;  &lt;/tt&gt;&lt;/font&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
@@ -443,7 +443,7 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
               <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="85.0" x="32.0" y="-6.5">&lt;html&gt;hungryRate2&lt;br&gt;
-= 2.8&lt;br&gt;
+= 0.45&lt;br&gt;
 &lt;font color="#0000ff"&gt;: const double&lt;/font&gt;&lt;font size=1&gt;&lt;tt&gt;  &lt;/tt&gt;&lt;/font&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
@@ -462,7 +462,7 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;br&gt;
               <y:Fill color="#999999" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
               <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="89.0" x="32.0" y="-6.5">&lt;html&gt;eatingRate2&lt;br&gt;
-= 0.45&lt;br&gt;
+= 2.8&lt;br&gt;
 &lt;font color="#0000ff"&gt;: param double&lt;/font&gt;&lt;font size=1&gt;&lt;tt&gt;  &lt;/tt&gt;&lt;/font&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>

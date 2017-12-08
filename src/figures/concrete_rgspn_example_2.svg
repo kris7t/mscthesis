@@ -27,10 +27,11 @@
     </g>
     <g fill="white" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-208,-251)" stroke="white">
       <rect x="213.5272" y="260.7797" clip-path="url(#clipPath2)" width="171.1422" rx="4" ry="4" height="64.2392" stroke="none"/>
-      <rect x="213.5272" y="260.7797" clip-path="url(#clipPath2)" fill="silver" width="171.1422" height="15.5497" stroke="none"/>
+      <rect x="213.5272" y="260.7797" clip-path="url(#clipPath2)" fill="rgb(235,235,235)" width="171.1422" height="15.5497" stroke="none"/>
     </g>
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" font-family="'Fira Sans'" transform="matrix(1,0,0,1,-208,-251)" stroke-linecap="butt">
       <text x="291.2247" xml:space="preserve" y="271.9966" clip-path="url(#clipPath2)" stroke="none">TM</text>
+      <line y2="274.3293" fill="none" x1="215.5272" clip-path="url(#clipPath2)" x2="382.6695" y1="274.3293"/>
       <rect x="213.5272" y="260.7797" clip-path="url(#clipPath2)" fill="none" width="171.1422" rx="4" ry="4" height="64.2392"/>
       <path fill="none" d="M238.3691 284.0801 L253.3691 314.0801 L223.3691 314.0801 Z" clip-path="url(#clipPath2)" fill-rule="evenodd"/>
       <text x="257.369" xml:space="preserve" y="296.7474" clip-path="url(#clipPath2)" stroke="none">TM.totalThinkingTime</text>
@@ -51,10 +52,11 @@
     </g>
     <g fill="white" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-208,-251)" stroke="white">
       <rect x="213.5272" y="338.7764" clip-path="url(#clipPath2)" width="224.2622" rx="4" ry="4" height="264.0088" stroke="none"/>
-      <rect x="213.5272" y="338.7764" clip-path="url(#clipPath2)" fill="silver" width="224.2622" height="15.5497" stroke="none"/>
+      <rect x="213.5272" y="338.7764" clip-path="url(#clipPath2)" fill="rgb(235,235,235)" width="224.2622" height="15.5497" stroke="none"/>
     </g>
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" font-family="'Fira Sans'" transform="matrix(1,0,0,1,-208,-251)" stroke-linecap="butt">
       <text x="314.8043" xml:space="preserve" y="349.9933" clip-path="url(#clipPath2)" stroke="none">PM1</text>
+      <line y2="352.3261" fill="none" x1="215.5272" clip-path="url(#clipPath2)" x2="435.7895" y1="352.3261"/>
       <rect x="213.5272" y="338.7764" clip-path="url(#clipPath2)" fill="none" width="224.2622" rx="4" ry="4" height="264.0088"/>
       <circle fill="none" r="15" clip-path="url(#clipPath2)" cx="238.369" cy="562.2852"/>
       <text x="240.2086" xml:space="preserve" y="544.9645" clip-path="url(#clipPath2)" stroke="none">PM1.thinking</text>

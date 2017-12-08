@@ -20,14 +20,14 @@
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
             <y:GroupNode>
-              <y:Geometry height="64.23924215188407" width="171.1422298046873" x="213.52722949218764" y="260.7796861566907"/>
+              <y:Geometry height="64.23924215188407" width="224.2622298046872" x="213.52722949218764" y="260.7796861566907"/>
               <y:Fill color="#FFFFFF" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#C0C0C0" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="171.1422298046873" x="0.0" y="0.0">TM</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#EBEBEB" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" underlinedText="true" verticalTextPosition="bottom" visible="true" width="224.2622298046872" x="0.0" y="0.0">TM</y:NodeLabel>
               <y:Shape type="roundrectangle"/>
               <y:State closed="false" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
               <y:Insets bottom="1" bottomF="1.0" left="1" leftF="1.0" right="1" rightF="1.0" top="1" topF="1.0"/>
-              <y:BorderInsets bottom="10" bottomF="9.938846935412585" left="9" leftF="8.841804999999738" right="7" rightF="7.088846435546941" top="7" topF="6.750743116862111"/>
+              <y:BorderInsets bottom="10" bottomF="9.938846935412585" left="9" leftF="8.841804999999738" right="1" rightF="1.2372583007812068" top="7" topF="6.750743116862111"/>
             </y:GroupNode>
             <y:GroupNode>
               <y:Geometry height="50.0" width="50.0" x="841.0" y="361.0"/>
@@ -49,8 +49,8 @@
               <y:Geometry height="30.0" width="30.0" x="223.36903449218738" y="284.08008137316216"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="27.09930419921875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="121.21157836914062" x="32.0" y="1.450347900390625">TM.totalThinkingTime
-= #PM1.thinking<y:LabelModel>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="27.53106689453125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="180.18316650390625" x="32.0" y="1.234466552734375">TM.totalThinkingTime
+= #PM1.thinking + #PM2.thinking<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -66,12 +66,12 @@
     <node id="n1">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="30.0" width="30.0" x="402.82503449218734" y="260.7796861566907"/>
+          <y:Geometry height="30.0" width="30.0" x="480.2347842968745" y="260.7796861566907"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="38.648956298828125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="66.5096435546875" x="32.0" y="-4.3244781494140625">P1.
 hungryRate
-= 3.0<y:LabelModel>
+= 0.75<y:LabelModel>
               <y:SmartNodeLabelModel distance="2.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -85,12 +85,12 @@ hungryRate
     <node id="n2">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="30.0" width="30.0" x="402.82503449218734" y="299.77804547010976"/>
+          <y:Geometry height="30.0" width="30.0" x="480.2347842968745" y="299.77804547010976"/>
           <y:Fill color="#999999" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="38.648956298828125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="62.803680419921875" x="32.0" y="-4.3244781494140625">P1.
 eatingRate
-= 0.5<y:LabelModel>
+= 3.0<y:LabelModel>
               <y:SmartNodeLabelModel distance="2.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -110,11 +110,11 @@ eatingRate
               <y:Geometry height="264.0088218831383" width="224.26222980468717" x="213.52722949218767" y="338.7764047835288"/>
               <y:Fill color="#FFFFFF" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#C0C0C0" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="224.26222980468717" x="0.0" y="0.0">PM1</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#EBEBEB" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" underlinedText="true" verticalTextPosition="bottom" visible="true" width="224.26222980468717" x="0.0" y="0.0">PM1</y:NodeLabel>
               <y:Shape type="roundrectangle"/>
               <y:State closed="false" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
               <y:Insets bottom="1" bottomF="1.0" left="1" leftF="1.0" right="1" rightF="1.0" top="1" topF="1.0"/>
-              <y:BorderInsets bottom="0" bottomF="0.0" left="9" leftF="8.84180499999971" right="16" rightF="15.740424804687507" top="7" topF="6.750743116862111"/>
+              <y:BorderInsets bottom="0" bottomF="0.0" left="9" leftF="8.84180499999971" right="12" rightF="12.135944804687483" top="7" topF="6.750743116862111"/>
             </y:GroupNode>
             <y:GroupNode>
               <y:Geometry height="50.0" width="50.0" x="841.0" y="361.0"/>
@@ -188,7 +188,7 @@ eatingRate
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
               <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="59.0" x="32.0" y="-6.5">&lt;html&gt;PM1.&lt;br&gt;getHungry&lt;br&gt;
-&lt;font family="DejaVu Sans"&gt;λ&lt;/font&gt; = 3.0&lt;font size=0&gt;&lt;tt&gt; &lt;/tt&gt;&lt;/font&gt;<y:LabelModel>
+&lt;font family="DejaVu Sans"&gt;λ&lt;/font&gt; = 0.75&lt;font size=0&gt;&lt;tt&gt; &lt;/tt&gt;&lt;/ont&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -238,11 +238,11 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1&lt;/p&gt;<y:LabelMod
         <node id="n3::n6">
           <data key="d6">
             <y:ShapeNode>
-              <y:Geometry height="30.0" width="30.0" x="391.04903449218733" y="495.9573783466667"/>
+              <y:Geometry height="30.0" width="30.0" x="394.65351449218736" y="495.9573783466667"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="right" autoSizePolicy="content" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="27.09930419921875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="46.120849609375" x="-45.237459296874704" y="1.450347900390625">PM1.
-leftFork<y:LabelModel>
+              <y:NodeLabel alignment="right" autoSizePolicy="content" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="27.09930419921875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="53.2689208984375" x="-52.24861773668789" y="1.450347900390625">PM1.
+rightFork<y:LabelModel>
                   <y:SmartNodeLabelModel distance="4.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -292,7 +292,7 @@ leftFork<y:LabelModel>
         <node id="n3::n9">
           <data key="d6">
             <y:ShapeNode>
-              <y:Geometry height="10.0" width="10.0" x="401.04903449218733" y="506.042426666667"/>
+              <y:Geometry height="10.0" width="10.0" x="404.65351449218736" y="506.042426666667"/>
               <y:Fill color="#000000" transparent="false"/>
               <y:BorderStyle hasColor="false" raised="false" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="4.0" x="3.0" y="3.0">
@@ -309,22 +309,250 @@ leftFork<y:LabelModel>
         </node>
       </graph>
     </node>
-    <node id="n4">
+    <node id="n4" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
-        <y:UMLNoteNode>
-          <y:Geometry height="40.82844799999992" width="155.57951616210948" x="345.3786344921875" y="433.70255466666697"/>
-          <y:Fill color="#FFFFFF" transparent="false"/>
-          <y:BorderStyle color="#800000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#800000" verticalTextPosition="bottom" visible="true" width="149.0" x="3.2897580810547424" y="-1.0857760000000667">&lt;html&gt;&lt;center&gt;&lt;b&gt;Error:&lt;/b&gt; reference&lt;br&gt;&lt;i&gt;PM1.rightFork&lt;/i&gt; does not&lt;br&gt;point at a concrete symbol.&lt;/center&gt;<y:LabelModel>
-              <y:SmartNodeLabelModel distance="4.0"/>
+        <y:ProxyAutoBoundsNode>
+          <y:Realizers active="0">
+            <y:GroupNode>
+              <y:Geometry height="263.923773563138" width="224.2622298046872" x="467.78945929687484" y="338.7764047835288"/>
+              <y:Fill color="#FFFFFF" transparent="false"/>
+              <y:BorderStyle color="#000000" type="line" width="1.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#EBEBEB" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" underlinedText="true" verticalTextPosition="bottom" visible="true" width="224.2622298046872" x="0.0" y="0.0">PM2</y:NodeLabel>
+              <y:Shape type="roundrectangle"/>
+              <y:State closed="false" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
+              <y:Insets bottom="1" bottomF="1.0" left="1" leftF="1.0" right="1" rightF="1.0" top="1" topF="1.0"/>
+              <y:BorderInsets bottom="0" bottomF="1.1368683772161603E-13" left="11" leftF="11.445324999999684" right="10" rightF="10.153963319027184" top="7" topF="6.6656947968617715"/>
+            </y:GroupNode>
+            <y:GroupNode>
+              <y:Geometry height="50.0" width="50.0" x="841.0" y="361.0"/>
+              <y:Fill color="#F5F5F5" transparent="false"/>
+              <y:BorderStyle color="#000000" type="dashed" width="1.0"/>
+              <y:NodeLabel alignment="right" autoSizePolicy="node_width" backgroundColor="#EBEBEB" borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasLineColor="false" height="21.4609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="50.0" x="0.0" y="0.0">1</y:NodeLabel>
+              <y:Shape type="roundrectangle"/>
+              <y:State closed="true" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
+              <y:Insets bottom="5" bottomF="5.0" left="5" leftF="5.0" right="5" rightF="5.0" top="5" topF="5.0"/>
+              <y:BorderInsets bottom="0" bottomF="0.0" left="0" leftF="0.0" right="0" rightF="0.0" top="0" topF="0.0"/>
+            </y:GroupNode>
+          </y:Realizers>
+        </y:ProxyAutoBoundsNode>
+      </data>
+      <graph edgedefault="directed" id="n4:">
+        <node id="n4::n0">
+          <data key="d6">
+            <y:ShapeNode>
+              <y:Geometry height="30.0" width="30.0" x="650.8977257825348" y="547.2001783466667"/>
+              <y:Fill hasColor="false" transparent="false"/>
+              <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="73.88558959960938" x="-62.15383255736958" y="-13.537626049804771">PM2.thinking<y:LabelModel>
+                  <y:SmartNodeLabelModel distance="2.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="0.34121725080878496" labelRatioY="0.3706063623214343" nodeRatioX="-0.5" nodeRatioY="-0.5" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:Shape type="ellipse"/>
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="n4::n1">
+          <data key="d6">
+            <y:ShapeNode>
+              <y:Geometry height="30.0" width="30.0" x="563.2952642968745" y="430.47177834666667"/>
+              <y:Fill hasColor="false" transparent="false"/>
+              <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="68.8123779296875" x="32.0" y="7.2251739501953125">PM2.waiting<y:LabelModel>
+                  <y:SmartNodeLabelModel distance="2.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="-0.5" labelRatioY="0.0" nodeRatioX="0.5" nodeRatioY="0.0" offsetX="2.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:Shape type="ellipse"/>
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="n4::n2">
+          <data key="d6">
+            <y:ShapeNode>
+              <y:Geometry height="30.0" width="30.0" x="563.2952642968745" y="505.95737834666664"/>
+              <y:Fill hasColor="false" transparent="false"/>
+              <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="63.427337646484375" x="32.0" y="7.2251739501953125">PM2.eating<y:LabelModel>
+                  <y:SmartNodeLabelModel distance="2.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="-0.5" labelRatioY="0.0" nodeRatioX="0.5" nodeRatioY="0.0" offsetX="2.0000000000000284" offsetY="0.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:Shape type="ellipse"/>
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="n4::n3">
+          <data key="d6">
+            <y:ShapeNode>
+              <y:Geometry height="15.0" width="30.0" x="563.2952642968745" y="396.72897834666657"/>
+              <y:Fill hasColor="false" transparent="false"/>
+              <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="59.0" x="-61.0" y="-6.5">&lt;html&gt;&lt;p align="right"&gt;PM2&lt;br&gt;getHungry&lt;br&gt;
+&lt;font family="DejaVu Sans"&gt;λ&lt;/font&gt; = 0.45&lt;font size=0&gt;&lt;tt&gt; &lt;/tt&gt;&lt;/font&gt;&lt;p&gt;<y:LabelModel>
+                  <y:SmartNodeLabelModel distance="2.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="0.5" labelRatioY="0.0" nodeRatioX="-0.5" nodeRatioY="0.5" offsetX="-2.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:Shape type="rectangle"/>
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="n4::n4">
+          <data key="d6">
+            <y:ShapeNode>
+              <y:Geometry height="8.0" width="30.0" x="563.2952642968745" y="479.21457834666666"/>
+              <y:Fill color="#999999" transparent="false"/>
+              <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+              <y:NodeLabel alignment="right" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="43.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="64.0" x="32.0" y="-13.5">&lt;html&gt;PM2.&lt;br&gt;startEating&lt;font size=0&gt;&lt;tt&gt; &lt;/tt&gt;&lt;/font&gt;&lt;br&gt;
+w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
+                  <y:SmartNodeLabelModel distance="2.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="-0.5" labelRatioY="0.0" nodeRatioX="0.5" nodeRatioY="0.5" offsetX="2.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:Shape type="rectangle"/>
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="n4::n5">
+          <data key="d6">
+            <y:ShapeNode>
+              <y:Geometry height="15.0" width="30.0" x="563.2952642968745" y="554.7001783466667"/>
+              <y:Fill hasColor="false" transparent="false"/>
+              <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="30.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="100.0" x="-35.0" y="17.0">&lt;html&gt;PM2.finishEating&lt;br&gt;
+&lt;font family="Fira Sans"&gt;λ&lt;/font&gt; = P2.eatingRate&lt;font size=0&gt;&lt;tt&gt;  &lt;/tt&gt;&lt;/font&gt;<y:LabelModel>
+                  <y:SmartNodeLabelModel distance="2.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="-0.5" nodeRatioX="0.0" nodeRatioY="0.5" offsetX="0.0" offsetY="2.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:Shape type="rectangle"/>
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="n4::n6">
+          <data key="d6">
+            <y:ShapeNode>
+              <y:Geometry height="30.0" width="30.0" x="480.2347842968745" y="495.87233002666636"/>
+              <y:Fill hasColor="false" transparent="false"/>
+              <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="27.09930419921875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="53.2689208984375" x="30.751169460920437" y="1.450347900390625">PM2.
+rightFork<y:LabelModel>
+                  <y:SmartNodeLabelModel distance="4.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="-0.5" labelRatioY="0.0" nodeRatioX="0.5" nodeRatioY="0.0" offsetX="0.7511694609204653" offsetY="0.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:Shape type="ellipse"/>
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="n4::n7">
+          <data key="d6">
+            <y:ShapeNode>
+              <y:Geometry height="30.0" width="30.0" x="480.2347842968745" y="361.99175167999994"/>
+              <y:Fill hasColor="false" transparent="false"/>
+              <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="27.09930419921875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="100.34304809570312" x="38.36603787860713" y="2.0">PM2.thinkingTime
+= #PM2.thinking<y:LabelModel>
+                  <y:SmartNodeLabelModel distance="2.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="-0.5" labelRatioY="-0.5" nodeRatioX="0.5" nodeRatioY="-0.5" offsetX="8.36603787860713" offsetY="2.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:Shape type="triangle"/>
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="n4::n8">
+          <data key="d6">
+            <y:ShapeNode>
+              <y:Geometry height="10.0" width="10.0" x="660.8977257825348" y="557.2001783466667"/>
+              <y:Fill color="#000000" transparent="false"/>
+              <y:BorderStyle hasColor="false" raised="false" type="line" width="1.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="4.0" x="3.0" y="3.0">
+                <y:LabelModel>
+                  <y:SmartNodeLabelModel distance="4.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:Shape type="ellipse"/>
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="n4::n9">
+          <data key="d6">
+            <y:ShapeNode>
+              <y:Geometry height="10.0" width="10.0" x="490.2347842968745" y="505.95737834666664"/>
+              <y:Fill color="#000000" transparent="false"/>
+              <y:BorderStyle hasColor="false" raised="false" type="line" width="1.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="4.0" x="3.0" y="3.0">
+                <y:LabelModel>
+                  <y:SmartNodeLabelModel distance="4.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:Shape type="ellipse"/>
+            </y:ShapeNode>
+          </data>
+        </node>
+      </graph>
+    </node>
+    <node id="n5">
+      <data key="d6">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="30.0" x="587.9789185937497" y="260.7796861566907"/>
+          <y:Fill hasColor="false" transparent="false"/>
+          <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+          <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="38.648956298828125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="66.5096435546875" x="32.0" y="-4.3244781494140625">P2.
+hungryRate
+= 0.45<y:LabelModel>
+              <y:SmartNodeLabelModel distance="2.0"/>
             </y:LabelModel>
             <y:ModelParameter>
-              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+              <y:SmartNodeLabelModelParameter labelRatioX="-0.5" labelRatioY="0.0" nodeRatioX="0.5" nodeRatioY="0.0" offsetX="2.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
             </y:ModelParameter>
           </y:NodeLabel>
-        </y:UMLNoteNode>
+          <y:Shape type="triangle"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n6">
+      <data key="d6">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="30.0" x="587.9789185937497" y="299.77804547010976"/>
+          <y:Fill color="#999999" transparent="false"/>
+          <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+          <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="38.648956298828125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="62.803680419921875" x="32.0" y="-4.3244781494140625">P2.
+eatingRate
+= 2.8<y:LabelModel>
+              <y:SmartNodeLabelModel distance="2.0"/>
+            </y:LabelModel>
+            <y:ModelParameter>
+              <y:SmartNodeLabelModelParameter labelRatioX="-0.5" labelRatioY="0.0" nodeRatioX="0.5" nodeRatioY="0.0" offsetX="2.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+            </y:ModelParameter>
+          </y:NodeLabel>
+          <y:Shape type="triangle"/>
+        </y:ShapeNode>
       </data>
     </node>
     <edge id="n3::e0" source="n3::n0" target="n3::n3">
@@ -393,7 +621,7 @@ leftFork<y:LabelModel>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="406.04903449218733" y="483.299626666667"/>
+            <y:Point x="409.65351449218736" y="483.299626666667"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -406,7 +634,7 @@ leftFork<y:LabelModel>
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
             <y:Point x="345.34046386818784" y="542.8922456746666"/>
-            <y:Point x="406.04903449218733" y="542.8922456746666"/>
+            <y:Point x="409.65351449218736" y="542.8922456746666"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -414,16 +642,144 @@ leftFork<y:LabelModel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e0" source="n4" target="n3">
+    <edge id="n4::e0" source="n4::n0" target="n4::n3">
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="665.8977257825348" y="404.22897834666657"/>
+          </y:Path>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="true"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="n4::e1" source="n4::n3" target="n4::n1">
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="n4::e2" source="n4::n1" target="n4::n4">
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="n4::e3" source="n4::n4" target="n4::n2">
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="n4::e4" source="n4::n2" target="n4::n5">
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="n4::e5" source="n4::n5" target="n4::n0">
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="true"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="n4::e6" source="n4::n6" target="n4::n4">
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="495.2347842968745" y="483.21457834666666"/>
+          </y:Path>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="true"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="n4::e7" source="n4::n5" target="n4::n6">
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="561.842693672875" y="542.8071973546662"/>
+            <y:Point x="495.2347842968745" y="542.8071973546662"/>
+          </y:Path>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="true"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e0" source="n4::n5" target="n3::n6">
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="37.98846348144622" sy="-20.404543026041722" tx="112.12976166015721" ty="-78.66233008447261">
-            <y:Point x="461.15685605468843" y="392.1184856406253"/>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="495.2347842968745" y="562.2001783466667"/>
           </y:Path>
-          <y:LineStyle color="#800000" type="dashed" width="1.0"/>
-          <y:Arrows source="none" target="none"/>
-          <y:BendStyle smoothed="false"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="true"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e1" source="n3::n5" target="n4::n6">
+      <data key="d9"/>
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="409.65351449218736" y="562.285226666667"/>
+          </y:Path>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="true"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e2" source="n3::n6" target="n4::n4">
+      <data key="d9"/>
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="495.2347842968745" y="466.0602980631251"/>
+            <y:Point x="561.8428842968744" y="466.0602980631251"/>
+          </y:Path>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="true"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e3" source="n4::n6" target="n3::n4">
+      <data key="d9"/>
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="409.65351449218736" y="465.8011339031257"/>
+            <y:Point x="350.94562291666637" y="465.8011339031257"/>
+          </y:Path>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="true"/>
         </y:PolyLineEdge>
       </data>
     </edge>

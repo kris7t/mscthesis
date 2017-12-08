@@ -515,6 +515,7 @@
   natbib=true,
   hyperref=true,
   autolang=hyphen,
+  block=ragged,
   language=english,
   backend=biber
 ]{biblatex}
@@ -619,6 +620,10 @@
   \printfield[parens]{number}%
   \setunit{\addcomma\space}%
   \printfield{eid}}
+
+% Non-breaking space before year
+% https://tex.stackexchange.com/a/312565/8744
+\DeclareDelimFormat[cbx@textcite,biblist,bib]{nameyeardelim}{\addnbspace}
 
 \newcommand*{\citepeg}[2][]{\citep[see e.g.\@][#1]{#2}}
 

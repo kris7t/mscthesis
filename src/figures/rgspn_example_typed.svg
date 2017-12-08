@@ -156,7 +156,7 @@
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" font-family="'Fira Sans'" transform="matrix(1,0,0,1,-478,-158) translate(525,319)" stroke-linecap="butt">
       <text x="0" xml:space="preserve" y="10" clip-path="url(#clipPath9)" stroke="none">hungryRate1</text>
       <text x="66" xml:space="preserve" y="10" clip-path="url(#clipPath9)" stroke="none"> </text>
-      <text x="0" xml:space="preserve" y="23" clip-path="url(#clipPath9)" stroke="none">= 3.0</text>
+      <text x="0" xml:space="preserve" y="23" clip-path="url(#clipPath9)" stroke="none">= 0.5</text>
       <text x="26" xml:space="preserve" y="23" clip-path="url(#clipPath9)" stroke="none"> </text>
       <text fill="blue" x="0" xml:space="preserve" y="36" clip-path="url(#clipPath9)" stroke="none">: const double</text>
       <text x="76" font-size="8px" y="36" clip-path="url(#clipPath9)" font-family="monospace" stroke="none" xml:space="preserve"> </text>
@@ -170,7 +170,7 @@
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" font-family="'Fira Sans'" transform="matrix(1,0,0,1,-478,-158) translate(525,362)" stroke-linecap="butt">
       <text x="0" xml:space="preserve" y="10" clip-path="url(#clipPath10)" stroke="none">eatingRate1</text>
       <text x="62" xml:space="preserve" y="10" clip-path="url(#clipPath10)" stroke="none"> </text>
-      <text x="0" xml:space="preserve" y="23" clip-path="url(#clipPath10)" stroke="none">= 0.5</text>
+      <text x="0" xml:space="preserve" y="23" clip-path="url(#clipPath10)" stroke="none">= 3.0</text>
       <text x="26" xml:space="preserve" y="23" clip-path="url(#clipPath10)" stroke="none"> </text>
       <text fill="blue" x="0" xml:space="preserve" y="36" clip-path="url(#clipPath10)" stroke="none">: param double</text>
       <text x="80" font-size="8px" y="36" clip-path="url(#clipPath10)" font-family="monospace" stroke="none" xml:space="preserve"> </text>
@@ -306,8 +306,8 @@
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" font-family="'Fira Sans'" transform="matrix(1,0,0,1,-478,-158) translate(830,319)" stroke-linecap="butt">
       <text x="0" xml:space="preserve" y="10" clip-path="url(#clipPath9)" stroke="none">hungryRate2</text>
       <text x="67" xml:space="preserve" y="10" clip-path="url(#clipPath9)" stroke="none"> </text>
-      <text x="0" xml:space="preserve" y="23" clip-path="url(#clipPath9)" stroke="none">= 2.8</text>
-      <text x="26" xml:space="preserve" y="23" clip-path="url(#clipPath9)" stroke="none"> </text>
+      <text x="0" xml:space="preserve" y="23" clip-path="url(#clipPath9)" stroke="none">= 0.45</text>
+      <text x="32" xml:space="preserve" y="23" clip-path="url(#clipPath9)" stroke="none"> </text>
       <text fill="blue" x="0" xml:space="preserve" y="36" clip-path="url(#clipPath9)" stroke="none">: const double</text>
       <text x="76" font-size="8px" y="36" clip-path="url(#clipPath9)" font-family="monospace" stroke="none" xml:space="preserve"> </text>
     </g>
@@ -320,8 +320,8 @@
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" font-family="'Fira Sans'" transform="matrix(1,0,0,1,-478,-158) translate(830,362)" stroke-linecap="butt">
       <text x="0" xml:space="preserve" y="10" clip-path="url(#clipPath10)" stroke="none">eatingRate2</text>
       <text x="63" xml:space="preserve" y="10" clip-path="url(#clipPath10)" stroke="none"> </text>
-      <text x="0" xml:space="preserve" y="23" clip-path="url(#clipPath10)" stroke="none">= 0.45</text>
-      <text x="32" xml:space="preserve" y="23" clip-path="url(#clipPath10)" stroke="none"> </text>
+      <text x="0" xml:space="preserve" y="23" clip-path="url(#clipPath10)" stroke="none">= 2.8</text>
+      <text x="26" xml:space="preserve" y="23" clip-path="url(#clipPath10)" stroke="none"> </text>
       <text fill="blue" x="0" xml:space="preserve" y="36" clip-path="url(#clipPath10)" stroke="none">: param double</text>
       <text x="80" font-size="8px" y="36" clip-path="url(#clipPath10)" font-family="monospace" stroke="none" xml:space="preserve"> </text>
     </g>

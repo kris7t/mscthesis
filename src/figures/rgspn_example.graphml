@@ -195,7 +195,7 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
               <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="27.09930419921875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="71.70278930664062" x="32.0" y="1.450347900390625">hungryRate1
-= 3.0<y:LabelModel>
+= 0.5<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -213,7 +213,7 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
               <y:Fill color="#999999" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
               <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="27.09930419921875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="67.996826171875" x="32.0" y="1.450347900390625">eatingRate1
-= 0.5<y:LabelModel>
+= 3.0<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -443,7 +443,7 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
               <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="27.09930419921875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="72.44638061523438" x="32.0" y="1.450347900390625">hungryRate2
-= 2.8<y:LabelModel>
+= 0.45<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -461,7 +461,7 @@ w = 1, &lt;font family="DejaVu Sans"&gt;π&lt;/font&gt; = 1<y:LabelModel>
               <y:Fill color="#999999" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
               <y:NodeLabel alignment="left" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="27.09930419921875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="68.74041748046875" x="32.0" y="1.450347900390625">eatingRate2
-= 0.45<y:LabelModel>
+= 2.8<y:LabelModel>
                   <y:SmartNodeLabelModel distance="2.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>

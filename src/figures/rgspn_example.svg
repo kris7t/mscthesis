@@ -87,7 +87,7 @@
       <text x="525.3139" xml:space="preserve" y="304.4441" clip-path="url(#clipPath2)" stroke="none">= #thinking1</text>
       <path fill="none" d="M506.3139 326.0696 L521.3139 356.0696 L491.3139 356.0696 Z" clip-path="url(#clipPath2)" fill-rule="evenodd"/>
       <text x="525.3139" xml:space="preserve" y="338.7369" clip-path="url(#clipPath2)" stroke="none">hungryRate1</text>
-      <text x="525.3139" xml:space="preserve" y="350.2865" clip-path="url(#clipPath2)" stroke="none">= 3.0</text>
+      <text x="525.3139" xml:space="preserve" y="350.2865" clip-path="url(#clipPath2)" stroke="none">= 0.5</text>
     </g>
     <g fill="rgb(153,153,153)" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-478,-158)" stroke="rgb(153,153,153)">
       <path d="M506.6904 371.912 L521.6904 401.912 L491.6904 401.912 Z" fill-rule="evenodd" clip-path="url(#clipPath2)" stroke="none"/>
@@ -95,7 +95,7 @@
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-478,-158)" stroke-linecap="butt">
       <path fill="none" d="M506.6904 371.912 L521.6904 401.912 L491.6904 401.912 Z" fill-rule="evenodd" clip-path="url(#clipPath2)"/>
       <text x="525.6904" xml:space="preserve" y="384.5793" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none">eatingRate1</text>
-      <text x="525.6904" xml:space="preserve" y="396.1289" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none">= 0.5</text>
+      <text x="525.6904" xml:space="preserve" y="396.1289" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none">= 3.0</text>
       <circle stroke-linecap="square" clip-path="url(#clipPath2)" r="5" cx="637.4032" cy="306.696" stroke="none" stroke-miterlimit="10"/>
       <circle stroke-linecap="square" clip-path="url(#clipPath2)" r="5" cx="538.7384" cy="436.0126" stroke="none" stroke-miterlimit="10"/>
       <path fill="none" d="M637.4032 321.696 L637.4032 333.0696" clip-path="url(#clipPath2)"/>
@@ -183,7 +183,7 @@
       <text x="830.304" xml:space="preserve" y="304.4441" clip-path="url(#clipPath2)" stroke="none">= #thinking2</text>
       <path fill="none" d="M811.304 326.0696 L826.304 356.0696 L796.304 356.0696 Z" clip-path="url(#clipPath2)" fill-rule="evenodd"/>
       <text x="830.304" xml:space="preserve" y="338.7369" clip-path="url(#clipPath2)" stroke="none">hungryRate2</text>
-      <text x="830.304" xml:space="preserve" y="350.2865" clip-path="url(#clipPath2)" stroke="none">= 2.8</text>
+      <text x="830.304" xml:space="preserve" y="350.2865" clip-path="url(#clipPath2)" stroke="none">= 0.45</text>
     </g>
     <g fill="rgb(153,153,153)" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-478,-158)" stroke="rgb(153,153,153)">
       <path d="M811.6805 371.912 L826.6805 401.912 L796.6805 401.912 Z" fill-rule="evenodd" clip-path="url(#clipPath2)" stroke="none"/>
@@ -191,7 +191,7 @@
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-478,-158)" stroke-linecap="butt">
       <path fill="none" d="M811.6805 371.912 L826.6805 401.912 L796.6805 401.912 Z" fill-rule="evenodd" clip-path="url(#clipPath2)"/>
       <text x="830.6805" xml:space="preserve" y="384.5793" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none">eatingRate2</text>
-      <text x="830.6805" xml:space="preserve" y="396.1289" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none">= 0.45</text>
+      <text x="830.6805" xml:space="preserve" y="396.1289" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none">= 2.8</text>
       <circle stroke-linecap="square" clip-path="url(#clipPath2)" r="5" cx="942.3933" cy="306.696" stroke="none" stroke-miterlimit="10"/>
       <circle stroke-linecap="square" clip-path="url(#clipPath2)" r="5" cx="843.7285" cy="436.0126" stroke="none" stroke-miterlimit="10"/>
       <path fill="none" d="M942.3933 321.696 L942.3933 333.0696" clip-path="url(#clipPath2)"/>

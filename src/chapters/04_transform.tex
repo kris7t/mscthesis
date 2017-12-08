@@ -277,3 +277,60 @@ Symbols associated with numerical attributes of domain objects are synchronized 
 
 \section{Stochastic Petri net concretization}
 \label{chap:transform:concretizer}
+
+The second step in our transformation chain is the concretization with derives a \textabbr{RGSPN} containing only concrete symbols from the abstract analysis model. The resulting concrete analysis model can be readily exported as a parametric \textabbr{GSPN} to external solvers. In addition, variable symbols are preserved in the concrete analysis model so that they can serve as stochastic metrics and queries to be evaluated.
+
+The three main responsibilities of the concretization transformation are
+\begin{itemize*}
+\item the copying of concrete place, transition, variable and parameter symbols from the abstract analysis model to the concrete analysis model,
+\item the resolution of reference symbols and
+\item the inlining of the variables and collection aggregations into \textabbr{RGSPN} expressions.
+\end{itemize*}
+
+The execution of the the aforementioned transformations may be prevented by errors and inconsistencies of the abstract analysis model. Inconsistency may be caused by a reference symbol having no resolution to a concrete symbol, reference resolution leading to parallel arcs or cyclic dependencies of expression. Robust inconsistency handling is especially important in change-driven incremental transformation chains, as a sequence of modifications of the source model may induce inconsistency in the abstract analysis model during execution even if the abstract analysis model becomes consistent at the end of the sequence. Our handling delays parts of the concretization until the inconsistency is resolved, while an error marker is generated to alert the user. The list of error markers can be checked at the end of source model modification sequences to ensure that the transformation chain fully synchronized the analysis models without hampering the execution of individual modification operations in the sequence.
+
+\begin{figure}%
+  \begin{minipage}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[scale=0.9]{figures/concrete_rgspn_example_initial}
+    \caption{\protect\RaggedRight Concretization of the initial \textabbr{RGSPN} from \vref{fig:transform:view-1}.}
+    \label{fig:transform:concrete-1}
+  \end{minipage}%
+  \begin{minipage}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[scale=0.9]{figures/concrete_rgspn_example_2}
+    \caption{\protect\RaggedRight Concretization of the \textabbr{RGSPN} from \vref{fig:transform:view-2} after changing \lit{P1.eatingRate}.}
+    \label{fig:transform:concrete-2}
+  \end{minipage}%
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.9]{figures/concrete_rgspn_example}
+  \caption{Concretization of the \textabbr{RGSPN} from \vref{fig:transform:view-3}.}
+  \label{fig:transform:concrete-3}
+\end{figure}
+
+\begin{runningExample}
+  \Vref{fig:transform:concrete-1,fig:transform:concrete-2,fig:transform:concrete-3} show the concretizations of the abstract analysis models from \vref{fig:transform:view-1,fig:transform:view-2,fig:transform:view-3}. Traceability links are indicated by identical names of symbols in the abstract and concrete analysis models.
+
+  \Vref{fig:transform:concrete-1} shows the initial concrete analysis model. Reference and collections symbols have been eliminated from the model. The mentioned reference symbol \lit{PM1.eatingRate} in  \(\lambda(\)\lit{PM1.finishEating}\()\) was replaced with the parameter symbol \lit{P1.eatingRate} by reference resolution. The value of the variable symbol \lit{P1.hugryRate} was inlined into \(\lambda(\)\lit{PM1.getHungry}\()\). The aggregation expression in \lit{TM.totalThinkingTime} was expanded into \lit{\#PM1.thinking}.
+
+  All expressions in the conrete model are \enquote{flat}, i.e.~they contain no mentions of variables or collection aggregations. The only non-constant expressions are direct parameter and marking dependencies. While variable symbols are not mentioned in expressions of the Petri net, they remain in the model so that they can be exported as metrics and queries to external analysis tools.
+
+  In \vref{fig:transform:view-1} the referenced \lit{PM1.leftFork} in the abstract analysis model did not point at any (concrete) symbol. Therefore the reference could not be resolved in \vref{fig:transform:concrete-1}. Creation of the arcs between \lit{PM1.startEating}, \lit{PM1.finishEating} and \lit{PM1.leftFork} in the concrete analysis model is \emph{delayed}. An error marker is generated indicating that the concretization was not fully completed.
+
+  In \vref{fig:transform:view-2} the modification of the \lit{eatingRate} of \lit{P1} is propagated to the concrete \textabbr{RGSPN}. In contrast with \vref{fig:transform:view-2} not only the value expression of the variable symbol \lit{P1.eatingRate} is synchronized but also \(\lambda(\)\lit{PM1.finishEating}\()\) is updated. Because the reference \lit{PM1.leftFork} is still unresolved the error marker is preserved; however, the rest of the transformation could be executed.
+
+  The addition of the \lit{Philosopher} \lit{P2} lead to a new \lit{PhilMod} instance \lit{PM2} in \vref{fig:transform:view-3}, which was copied into \vref{fig:transform:concrete-3}. Due to the reference resolutions \lit{PM1.leftFork} \(\leadsto\) \lit{PM2.rightFork} and \lit{PM2.leftFork} \(\leadsto\) \lit{PM1.rightFork} all symbols and arcs could be concretized successfully. In the concrete \textabbr{RGSPN} the \lit{rightFork} symbols stand for the \lit{leftFork} symbols of the abstract \textabbr{RGSPN}. Moreover, the value expression of \lit{TM.totalThinkingTime} was update to accommodate the new element \lit{PM2.thinkingTime} \(=\) \lit{\#PM2.thinking} of the aggregated collection \lit{TM.thinkingTimes} in the abstract analysis model.
+\end{runningExample}
+
+\subsection{Transformation execution}
+
+The copying of place, transition, variable and parameter symbols is performed in a \emph{trace incremental} style, similarly to the instantiation of the abstract analysis model. The symbol in the abstract analysis model is connected to its copy in the concrete analysis model with a traceability link.
+
+Resolution of references during copying is also trace incremental. To copy Petri net arcs \(s_1 \overset{e}{\inarc} s_2\) (or \(s_1 \overset{e}{\outarc} s_2\), \(s_1 \overset{e}{\inharc} s_2\), respectively) the symbols at both ends of the arc are resolved to concrete places and transitions first, \(s_1 \leadsto p\) and \(s_2 \leadsto t\). Since \(p\) and \(t\) are located in the abstract analysis model, traceability links must be traversed to locate their copies \(p'\) and \(t'\) in the concrete analysis model. Then the arc of the form \(p' \overset{e}{\inarc} t'\) can be added to the concrete analysis model and connected to \(s_1 \overset{e}{\inarc} s_2\) with a traceability link. The concretized arc is removed when any of its traceability links become dangling. 
+
+\subsection{Expression dependencies}
+
+\subsection{Handling of inconsistencies}
