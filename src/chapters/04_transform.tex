@@ -240,20 +240,6 @@ Edges defined inside mapping rules are only instantiated when there is a traceab
 
 Symbols associated with numerical attributes of domain objects are synchronized with the values of the attributes. The transformation engine subscribes to change notifications from the source model and updates values of the symbols associated with the changed object. Hence the attribute synchronization is \emph{reactive source incremental}.
 
-\begin{runningExample}
-  \Cref{fig:transform:view-1,fig:transform:view-2,fig:transform:view-3} show an example transformation of a dining philosophers domain model according to the feature rules in \vref{tbl:transform:feature} and the mapping rules in \vref{tbl:transform:mapping}. Symbols inside module instances with no adjacent edges between modules were suppressed for clarity. Trace links are indicated by writing the names of the linked pattern matches in the analysis model, as well as the coloring of pattern matches and model elements.
-
-  The initial model in \vref{fig:transform:view-1} contains a \lit{Table} \lit{T} and a \lit{Philosopher} \lit{P1}. The precondition query \lit{qTable} has a single match \(\ltup \lit{T} \rtup\) and \lit{qPhil} has a single match \(\ltup \lit{T}, \lit{P1} \rtup\).
-
-  The associated symbols \lit{P1.eatingRate} and \lit{P1.hungryRate} were created for \lit{P1}. The derived feature symbol \lit{T.totalThinkingTime} is associated with \lit{T}. Module instances \lit{TM} of \lit{TableMod} and \lit{PM1} of \lit{PhilMod} were also added to the abstract analysis model for the precondition matches \(\lit{qTable}\ltup \lit{T} \rtup\) and \(\lit{qPhil}\ltup \lit{T}, \lit{P1} \rtup\), respectively. The connection patterns \(\lit{qTable}^*\) generated from the \lit{qTable} mapping rule and \(\lit{qPhil}^*\) generated from the \lit{qPhil} mapping rule govern the insertion of \textabbr{RGSPN} edges between modules. The connection match \(\lit{qTable}^*\ltup \lit{T} \rtup\) assigns the variable \lit{TM.totalThinkingTime} to the derived reference \lit{T.totalThinkingTime}. In addition, \(\lit{qPhil}^*\ltup \lit{T}, \lit{P1} \rtup\) adds \lit{PM1.thinkingTime} to the collection \lit{TM.thinkingTimes} and assigns the features symbols associated with \lit{T} to the respective reference symbols in the module \lit{PM1} such that they can be mentioned in the expressions inside the implementation of \lit{PhilMod}.
-
-  In \vref{fig:transform:view-2} the attribute \lit{hungryRate} of \lit{P1} was changed. Therefore the transformation synchronized the literal in the value expression of the feature symbol \lit{P1.hungryRate} in the abstract analysis model.
-
-  In \vref{fig:transform:view-3} a new \lit{Philosopher} \lit{P2} was created, which sits both on the left and right of \lit{P1} around the circular table \lit{T}. New precondition matches \(\lit{qPhil}\ltup \lit{T}, \lit{P} \rtup\), \(\lit{qAdjacent}\ltup \lit{T}, \lit{P1}, \lit{P2} \rtup\) and \(\lit{qAdjacent}\ltup \lit{T}, \lit{P2}, \lit{P1} \rtup\) appeared, which lead to the instantiation of a new \lit{PhilMod} \lit{PM2}. The symbols inside the \lit{PM2} are connected to the rest of the analysis model with edges due to the connection match \(\lit{qPhil}^*\ltup \lit{T}, \lit{P} \rtup\). Furthermore, matches \(\lit{qAdjacent}^*\ltup \lit{T}, \lit{P1}, \lit{P2} \rtup\) and \(\lit{qAdjacent}^*\ltup \lit{T}, \lit{P2}, \lit{P1} \rtup\) of the connection query generated from the mapping rule \lit{qAdjacent} caused the assignments of \lit{PM1.leftFork} to \lit{PM2.rightFork} and \lit{PM2.leftFork} to \lit{PM2.rightFork}.
-
-  Because analysis model elements with dangling trace links are removed the deletion of \lit{P2} from the source model would cause the view transformation to restore the analysis model to the state shown in \cref{fig:transform:view-2}.
-\end{runningExample}
-
 \begin{figure}
   \centering
   \includegraphics[scale=0.9]{figures/view_transformation_example_initial} 
@@ -274,6 +260,20 @@ Symbols associated with numerical attributes of domain objects are synchronized 
   \caption{State of the example view transformation after adding a new philosopher \lit{P2}.}
   \label{fig:transform:view-3}
 \end{figure}
+
+\begin{runningExample}
+  \Cref{fig:transform:view-1,fig:transform:view-2,fig:transform:view-3} show an example transformation of a dining philosophers domain model according to the feature rules in \vref{tbl:transform:feature} and the mapping rules in \vref{tbl:transform:mapping}. Symbols inside module instances with no adjacent edges between modules were suppressed for clarity. Trace links are indicated by writing the names of the linked pattern matches in the analysis model, as well as the coloring of pattern matches and model elements.
+
+  The initial model in \vref{fig:transform:view-1} contains a \lit{Table} \lit{T} and a \lit{Philosopher} \lit{P1}. The precondition query \lit{qTable} has a single match \(\ltup \lit{T} \rtup\) and \lit{qPhil} has a single match \(\ltup \lit{T}, \lit{P1} \rtup\).
+
+  The associated symbols \lit{P1.eatingRate} and \lit{P1.hungryRate} were created for \lit{P1}. The derived feature symbol \lit{T.totalThinkingTime} is associated with \lit{T}. Module instances \lit{TM} of \lit{TableMod} and \lit{PM1} of \lit{PhilMod} were also added to the abstract analysis model for the precondition matches \(\lit{qTable}\ltup \lit{T} \rtup\) and \(\lit{qPhil}\ltup \lit{T}, \lit{P1} \rtup\), respectively. The connection patterns \(\lit{qTable}^*\) generated from the \lit{qTable} mapping rule and \(\lit{qPhil}^*\) generated from the \lit{qPhil} mapping rule govern the insertion of \textabbr{RGSPN} edges between modules. The connection match \(\lit{qTable}^*\ltup \lit{T} \rtup\) assigns the variable \lit{TM.totalThinkingTime} to the derived reference \lit{T.totalThinkingTime}. In addition, \(\lit{qPhil}^*\ltup \lit{T}, \lit{P1} \rtup\) adds \lit{PM1.thinkingTime} to the collection \lit{TM.thinkingTimes} and assigns the features symbols associated with \lit{T} to the respective reference symbols in the module \lit{PM1} such that they can be mentioned in the expressions inside the implementation of \lit{PhilMod}.
+
+  In \vref{fig:transform:view-2} the attribute \lit{hungryRate} of \lit{P1} was changed. Therefore the transformation synchronized the literal in the value expression of the feature symbol \lit{P1.hungryRate} in the abstract analysis model.
+
+  In \vref{fig:transform:view-3} a new \lit{Philosopher} \lit{P2} was created, which sits both on the left and right of \lit{P1} around the circular table \lit{T}. New precondition matches \(\lit{qPhil}\ltup \lit{T}, \lit{P} \rtup\), \(\lit{qAdjacent}\ltup \lit{T}, \lit{P1}, \lit{P2} \rtup\) and \(\lit{qAdjacent}\ltup \lit{T}, \lit{P2}, \lit{P1} \rtup\) appeared, which lead to the instantiation of a new \lit{PhilMod} \lit{PM2}. The symbols inside the \lit{PM2} are connected to the rest of the analysis model with edges due to the connection match \(\lit{qPhil}^*\ltup \lit{T}, \lit{P} \rtup\). Furthermore, matches \(\lit{qAdjacent}^*\ltup \lit{T}, \lit{P1}, \lit{P2} \rtup\) and \(\lit{qAdjacent}^*\ltup \lit{T}, \lit{P2}, \lit{P1} \rtup\) of the connection query generated from the mapping rule \lit{qAdjacent} caused the assignments of \lit{PM1.leftFork} to \lit{PM2.rightFork} and \lit{PM2.leftFork} to \lit{PM2.rightFork}.
+
+  Because analysis model elements with dangling trace links are removed the deletion of \lit{P2} from the source model would cause the view transformation to restore the analysis model to the state shown in \cref{fig:transform:view-2}.
+\end{runningExample}
 
 \section{Stochastic Petri net concretization}
 \label{chap:transform:concretizer}

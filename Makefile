@@ -1,27 +1,57 @@
 PROJECTNAME=MScThesis
 
+LATEXMK:=latexmk
+
+PDFLATEX_COMMAND:=pdflatex
+
+TEXFOT:=texfot
+
+TEXFOT_OPTS:=--quiet
+
+PDFLATEX=$(TEXFOT) $(TEXFOT_OPTS) $(PDFLATEX_COMMAND)
+
+PDFLATEX_OPTS:=--file-line-error --shell-escape
+
+LATEXMK_OPTS=-pdf -pdflatex="$(PDFLATEX) $(PDFLATEX_OPTS)" -interaction=nonstopmode
+
+INKSCAPE:=inkscape
+
+INKSCAPE_OPTS:=--without-gui
+
+INKSCAPE_EXPORT_PDF_OPTS=$(INKSCAPE_OPTS) --export-area=drawing
+
+GS:=gs
+
+GS_OPTS:=-sDEVICE=pdfwrite -q -P- -dNOPAUSE -dBATCH -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite -dOPM=0 -dColorConversionStrategy=/RGB -sProcessColorModel=DeviceRGB -dPDFSETTINGS=/prepress -dOptimize=true -dEmbedAllFonts=true -dSubsetFonts=true -dCompressFonts=true -dCompressPages=true -dCannotEmbedFaontPolicy=/Warning
+
+GS_OPTIMIZE_FIGURE_OPTS=$(GS_OPTS)
+
+GS_CREATE_PDFA_OPTS=-dPDFA=2 -dPDFACompatibilityPolicy=1 $(GS_OPTS)
+
 .PHONY: all latex figures clean
 
-CONVERT_SVG := $(patsubst src/figures/%.svg,out/figures/%.pdf,$(wildcard src/figures/*.svg))
+CONVERT_SVG:=$(patsubst src/figures/%.svg,out/figures/%.pdf,$(wildcard src/figures/*.svg))
 
-CONVERT_PDF := $(patsubst src/figures/%.pdf,out/figures/%.pdf,$(wildcard src/figures/*.pdf))
-
-OPTIMIZE_FIGURE := gs -sDEVICE=pdfwrite -q -P- -dNOPAUSE -dBATCH -dCompatibilityLevel=1.4 -dOPM=0 -dColorConversionStrategy=/RGB -sProcessColorModel=DeviceRGB -dPDFSETTINGS=/prepress -dOptimize=true -dEmbedAllFonts=true -dSubsetFonts=true -dCompressFonts=true -dCompressPages=true -dCannotEmbedFontPolicy=/Warning -sDEVICE=pdfwrite
+CONVERT_PDF:=$(patsubst src/figures/%.pdf,out/figures/%.pdf,$(wildcard src/figures/*.pdf))
 
 all: latex docs/$(PROJECTNAME).pdf
 
 docs/$(PROJECTNAME).pdf: src/PDFA_def.ps out/$(PROJECTNAME).pdf
-	gs -sDEVICE=pdfwrite -q -P- -dNOPAUSE -dBATCH -dCompatibilityLevel=1.4 -dPDFA=2 -dPDFACompatibilityPolicy=1 -dOPM=0 -dColorConversionStrategy=/RGB -sProcessColorModel=DeviceRGB -dPDFSETTINGS=/prepress -dOptimize=true -dEmbedAllFonts=true -dSubsetFonts=true -dCompressFonts=true -dCompressPages=true -dCannotEmbedFontPolicy=/Warning -sDEVICE=pdfwrite -sOutputFile=$@ $^
+	@echo "Creating PDF/A-2b: $(PROJECTNAME).pdf"
+	@$(GS) $(GS_CREATE_PDFA_OPTS) -sOutputFile=$@ $^
 
 figures: $(CONVERT_SVG) $(CONVERT_PDF)
 	@true
 
 $(CONVERT_SVG): out/figures/%.pdf: src/figures/%.svg
-	inkscape --file=$< --export-area=drawing --without-gui --export-pdf=$@.inkscape_export
-	$(OPTIMIZE_FIGURE) -sOutputFile=$@ $@.inkscape_export
+	@echo "Processing SVG figure: $<"
+	@$(INKSCAPE) $(INKSCAPE_EXPORT_PDF_OPTS) --file=$< --export-pdf=$@.inkscape_export
+	@$(GS) $(GS_OPTIMIZE_FIGURE_OPTS) -sOutputFile=$@ $@.inkscape_export
+	@rm $@.inkscape_export
 
 $(CONVERT_PDF): out/figures/%.pdf: src/figures/%.pdf
-	$(OPTIMIZE_FIGURE) -sOutputFile=$@ $^
+	@echo "Processing PDF figure: $<"
+	@$(GS) $(GS_OPTIMIZE_FIGURE_OPTS) -sOutputFile=$@ $^
 
 latex:
 	@if [ -a out/run2.pid ]; then rm -rf out; echo "============"; echo "PREVIOUS RUN WAS UNEXPECTEDLY INTERRUPTED, CLEANING OUTPUT DIRECTORY!"; echo "============"; fi
@@ -30,7 +60,7 @@ latex:
 	@touch out/run1.pid
 	@mkdir -p out/include out/figures out/chapters docs
 	@$(MAKE) --no-print-directory figures
-	@cd src; latexmk -pdf -pdflatex="texfot --quiet pdflatex --file-line-error --shell-escape" -outdir=../out -jobname=$(PROJECTNAME) -interaction=nonstopmode main; echo $?
+	@cd src; $(LATEXMK) $(LATEXMK_OPTS) -outdir=../out -jobname=$(PROJECTNAME) main; echo $?
 	@rm  out/run*.pid
 
 jenkins: clean all
