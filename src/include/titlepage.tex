@@ -2,7 +2,7 @@
 \thispagestyle{empty}
 
 \begin{tikzpicture}[overlay,remember picture]
-  \node at (current page.center) [yshift=1cm] {%
+  \node at (current page.center) [yshift=1cm,xshift=\binding] {%
     \begin{minipage}{\textwidth}
 
       \centering
@@ -34,8 +34,6 @@
 
     \end{minipage}};
 \end{tikzpicture}
-
-\cleardoublepage
 
 %%% Local Variables:
 %%% mode: latex

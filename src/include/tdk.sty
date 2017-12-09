@@ -697,6 +697,80 @@
 \patchcmd{\MFL@processpara}{\unhbox\@tempboxa\unskip}{\RaggedRight\unhbox\@tempboxa\unskip}
 
 %
+% Counting pages
+%
+
+\newcounter{tdk@pagecnt}
+\newcounter{tdk@appendixcnt}
+\newtoggle{tdk@hasappendix}
+\newcommand*{\tdk@allpages}{0}
+\newcommand*{\tdk@mainmatterpages}{0}
+\newcommand*{\tdk@setallpages}[1]{\global\def\tdk@allpages{#1}}
+\newcommand*{\tdk@setmainmatterpages}[1]{%
+  \global\def\tdk@mainmatterpages{#1}%
+  \toggletrue{tdk@hasappendix}%
+}
+
+\newcommand*{\FirstFrontMatterPage}{\pageref{tdk@firstFrontMatterPage}}
+\newcommand*{\LastFrontMatterPage}{\pageref{tdk@lastFrontMatterPage}}
+\newcommand*{\FirstMainMatterPage}{\pageref{tdk@firstMainMatterPage}}
+\newcommand*{\LastMainMatterPage}{%
+  \iftoggle{tdk@hasappendix}{\pageref{tdk@lastMainMatterPage}}{%
+    \pageref{tdk@lastDocumentPage}}}
+\newcommand*{\FirstAppendixPage}{\pageref{tdk@firstAppendixPage}}
+\newcommand*{\LastAppendixPage}{\pageref{tdk@lastDocumentPage}}
+\newcommand*{\PagesWithoutAppendix}{%
+  \iftoggle{tdk@hasappendix}{\tdk@mainmatterpages}{\tdk@allpages}}
+\newcommand*{\IfHasAppendix}[1]{%
+  \iftoggle{tdk@hasappendix}{#1}{}}
+\newcommand*{\PagesAppendix}{%
+  \iftoggle{tdk@hasappendix}{%
+    \setcounter{tdk@appendixcnt}{\tdk@allpages}%
+    \addtocounter{tdk@appendixcnt}{-\tdk@mainmatterpages}%
+    \arabic{tdk@appendixcnt}%
+  }{0}}
+
+\newcommand*{\tdk@addcontentsline@hook}{}
+\let\tdk@addcontentsline@hook\relax
+\newcommand*{\tdk@orig@addcontentsline}{}
+\let\tdk@orig@addcontentsline\addcontentsline
+\newcommand*{\tdk@hooked@addcontentsline}[3]{%
+  \tdk@orig@addcontentsline{#1}{#2}{#3}%
+  \tdk@addcontentsline@hook
+  \global\let\tdk@addcontentsline@hook\relax
+  \global\let\addcontentsline\tdk@orig@addcontentsline
+}
+\newcommand*{\AtNextContentsLine}[1]{%
+  \global\def\tdk@addcontentsline@hook{#1}%
+  \global\let\addcontentsline\tdk@hooked@addcontentsline
+}
+
+\AtBeginDocument{%
+  \label{tdk@firstFrontMatterPage}%
+}
+
+\AtBeginShipout{%
+  \stepcounter{tdk@pagecnt}%
+}
+
+\AtEndDocument{%
+  \phantomsection
+  \label{tdk@lastDocumentPage}%
+  \write\@auxout{\noexpand\tdk@setallpages{\arabic{tdk@pagecnt}}}%
+}
+
+\xpretocmd{\mainmatter}{%
+  \label{tdk@lastFrontMatterPage}%
+  \AtNextContentsLine{\label{tdk@firstMainMatterPage}}
+}{}{}
+
+\xpretocmd{\appendix}{%
+  \label{tdk@lastMainMatterPage}%
+  \write\@auxout{\noexpand\tdk@setmainmatterpages{\arabic{tdk@pagecnt}}}%
+  \AtNextContentsLine{\label{tdk@firstAppendixPage}}%
+}{}{}
+
+%
 % Miscellaneous
 %
 
