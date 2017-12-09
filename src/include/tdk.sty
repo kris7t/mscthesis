@@ -647,7 +647,8 @@
 
 % Non-breaking space before year
 % https://tex.stackexchange.com/a/312565/8744
-\DeclareDelimFormat[cbx@textcite,biblist,bib]{nameyeardelim}{\addnbspace}
+\DeclareDelimFormat[textcite,biblist,bib]{nameyeardelim}{\addnbspace}
+\DeclareDelimFormat[textcite,biblist,bib]{nonameyeardelim}{\addnbspace}
 
 \newcommand*{\citepeg}[2][]{\citep[see e.g.\@][#1]{#2}}
 
@@ -681,9 +682,9 @@
 \RequirePackage{perpage}
 
 % No * in footnotes, because it is easily confused with superscript * in math.
-\def\@fnsymbol#1{\ensuremath{\ifcase#1\or \triangle\or \lozenge\or
+\def\@fnsymbol#1{\ensuremath{\ifcase#1\or \triangle\or \#\or
    \mathsection\or \mathparagraph\or \|\or \triangle\triange
-   \or \lozenge\lozenge \else\@ctrerr\fi}}
+   \or \#\# \else\@ctrerr\fi}}
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}
 \footmarkstyle{\hfill\textsuperscript{#1}\,}
 \MakePerPage{footnote}
