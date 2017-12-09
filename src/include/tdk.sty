@@ -33,7 +33,23 @@
 \let\mathcal\mathscr
 \RequirePackage{stmaryrd}
 \newcommand*{\thinfont}{\firalight\color{black!75}}
+
+% Lining figures (mostly for URLs).
 \newcommand*{\LFfont}{\lfstyle}
+% Silence font shape warning by substitution.
+% First we must load the font family before we can declare font shapes
+% https://tex.stackexchange.com/a/96012/8744
+\input{OT1XCharter-TLF.fd}
+\DeclareFontShape{OT1}{XCharter-TLF}{sb}{n}{<->ssub * XCharter-TLF/b/n}{}
+
+% Declare additional sizes for stmry to silence more warnings.
+\DeclareFontFamily{U}{stmry}{}
+\DeclareFontShape{U}{stmry}{m}{n}
+   {  <5> <6> <7> <8> <9> <10> gen * stmary
+      <10.95><12><14.4><17.28><20.74><24.88>stmary10
+      <5.5> <4.01501>stmary5%
+    }{}
+\DeclareFontShape{U}{stmry}{b}{n}{<->ssub * stmry/m/n}{}
 
 % Improve microtypography
 \RequirePackage[final,babel,kerning,stretch=10,shrink=10]{microtype}
@@ -69,6 +85,8 @@
 \setparaheadstyle{\normalsize\bfseries}
 \setsubparaheadstyle{\normalsize\scshape}
 
+\vfuzz=2pt
+\afterchapskip=40pt plus 12pt
 \setbeforeparaskip{11pt plus 3pt minus 6pt}
 \setbeforesubparaskip{11pt plus 3pt minus 6pt}
 
@@ -310,10 +328,14 @@
 
 % HACK Do not do this at home
 % https://tex.stackechange.com/a/220277/8744
-\let\etoolboxforlistloop\forlistloop 
+\let\etoolboxforlistloop\forlistloop
+% We must emulate etex to avoid "extended allocation already in use" warnings.
+% https://tex.stackexchange.com/a/285953/8744
+\expandafter\def\csname ver@etex.sty\endcsname{3000/12/31}
+\let\globcount\newcount
 \RequirePackage{autonum}
 \let\forlistloop\etoolboxforlistloop
-% biblatex check whether etextools is loaded and emits an error.
+% biblatex checks whether etextools is loaded and emits an error.
 % We fool \@ifpackageloaded by removing the macro \ver@etextools.sty
 \expandafter\let\csname ver@etextools.sty\endcsname\relax
 
@@ -331,6 +353,8 @@
 \renewcommand*{\reftextfaraway}[1]{on~\cpageref{#1}}
 
 % Do not print anything if the referred label is near.
+% HACK this break vref with multiple references if only
+% one of the references is on a nearby page.
 \renewcommand*{\reftextfaceafter}{}
 \renewcommand*{\reftextfacebefore}{}
 \renewcommand*{\reftextbefore}{}
@@ -518,7 +542,7 @@
   block=ragged,
   language=english,
   backend=biber
-]{biblatex}
+  ]{biblatex}
 
 % Remove unneccessary data from references at runtime rather than
 % editing the .bib file
@@ -694,23 +718,14 @@
 \newcommand*{\verythinspace}{\hspace*{0.05556em}}
 
 % https://tex.stackexchange.com/a/234724/8744
-\DeclareRobustCommand{\SMC}{%
-  \ifx\@currsize\normalsize\small\else
-   \ifx\@currsize\small\footnotesize\else
-    \ifx\@currsize\footnotesize\scriptsize\else
-     \ifx\@currsize\large\normalsize\else
-      \ifx\@currsize\Large\large\else
-       \ifx\@currsize\LARGE\Large\else
-        \ifx\@currsize\scriptsize\tiny\else
-         \ifx\@currsize\tiny\tiny\else
-          \ifx\@currsize\huge\LARGE\else
-           \ifx\@currsize\Huge\huge\else
-            \small\SMC@unknown@warning
- \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
-}
-\newcommand*{\SMC@unknown@warning}{\TBWarning{\string\SMC: nonstandard
-    text font size command -- using \string\small}}
+\DeclareRobustCommand{\SMC}{\smaller}
 \newcommand*{\textSMC}[1]{{\SMC #1}}
 \newcommand*{\mixedabbr}[1]{\textSMC{\textls[40]{#1}}}
+
+% Silence mysterious "Overfull hbox (1.91011pt) too wide" warning.
+% Probably and invisible box is trying to be too wide,
+% has no effect on the appearance of the document.
+\hfuzz=1.91011pt
+\AtBeginDocument{\hfuzz=0pt}
 
 \endinput

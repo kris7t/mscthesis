@@ -1,0 +1,52 @@
+% $Id: magyar.lbx,v 0.01 $
+
+% From http://r.snowl.net/harvard-style-citation-in-hungarian-language-hun/
+% by Daróczi Gergely and Hunyadi Mátyás.
+% Only used to silence the BibLaTeX unsupported language warnings.
+
+\ProvidesFile{magyar.lbx}
+\InheritBibliographyExtras{english}
+\InheritBibliographyStrings{english}
+[\abx@lbxid $Id: magyar.lbx,v 0.01 2011/01/12 19:18 dg testing $]
+
+% STATUS OF THIS FILE
+% * testing
+
+\DeclareRedundantLanguages{magyar}{magyar,
+hungarian}
+
+\DeclareBibliographyExtras{%
+\protected\def\nameprint#1#2{#1\space#2}
+}
+
+\DeclareBibliographyStrings{%
+bibliography = {{Felhasznált\addspace{}irodalom}{Felhasznált\addspace{}irodalom}},
+references = {{Hivatkozások}{Hivatkozások}},
+editor = {{szerk\addot}{szerk\adddot}},
+byeditor = {{szerk\addot}{szerk\adddot}},
+in = {{}{}},
+page = {{old\addot}{old\adddot}},
+pages = {{old\addot}{old\adddot}},
+and = {{és}{és}},
+andothers = {{et\addabbrvspace al\adddot}{et\addabbrvspace al\adddot}},
+andmore = {{et\addabbrvspace al\adddot}{et\addabbrvspace al\adddot}},
+phdthesis = {{PhD\addspace{}disszertáció}{PhD\addspace{}dissz\adddot}},
+see = {{lásd}{ld\adddot}},
+seealso = {{lásd még}{ld\adddot}},
+backrefpage = {{hivatkozási\addspace{}oldal}{hiv\adddotspace old\adddot}},
+backrefpages = {{hivatkozási\addspace{}oldalak}{hiv\adddotspace old\adddot}},
+january = {{január}{jan\adddot}},
+february = {{február}{febr\adddot}},
+march = {{március}{márc\adddot}},
+april = {{április}{árp\adddot}},
+may = {{május}{máj\adddot}},
+june = {{június}{jún\adddot}},
+july = {{július}{júl\adddot}},
+august = {{augusztus}{aug\adddot}},
+september = {{szeptember}{szept\adddot}},
+october = {{október}{okt\adddot}},
+november = {{november}{nov\adddot}},
+december = {{december}{dec\adddot}},
+}
+
+\endinput

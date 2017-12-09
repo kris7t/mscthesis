@@ -48,12 +48,12 @@
       <rect fill="none" x="488.1211" width="116.7171" height="173.4739" y="628.3562" clip-path="url(#clipPath2)"/>
     </g>
     <g fill="rgb(225,215,253)" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-478,-561)" stroke="rgb(225,215,253)">
-      <rect x="552.157" width="52.6812" height="15.5497" y="895.5089" clip-path="url(#clipPath2)" stroke="none"/>
+      <rect x="548.8802" width="52.6812" height="15.5497" y="895.5089" clip-path="url(#clipPath2)" stroke="none"/>
     </g>
     <g stroke-linecap="butt" transform="matrix(1,0,0,1,-478,-561)" fill="navy" text-rendering="geometricPrecision" font-family="'Fira Sans'" shape-rendering="geometricPrecision" stroke="navy" stroke-miterlimit="1.45">
-      <text x="554.157" xml:space="preserve" y="906.7259" clip-path="url(#clipPath2)" stroke="none">qPhil(P2)</text>
-      <line y2="909.0586" fill="none" x1="554.157" clip-path="url(#clipPath2)" x2="602.8382" y1="909.0586"/>
-      <rect fill="none" x="488.1211" width="116.7171" height="102.96" y="808.0986" clip-path="url(#clipPath2)"/>
+      <text x="550.8801" xml:space="preserve" y="906.7259" clip-path="url(#clipPath2)" stroke="none">qPhil(P2)</text>
+      <line y2="909.0586" fill="none" x1="550.8802" clip-path="url(#clipPath2)" x2="599.5614" y1="909.0586"/>
+      <rect fill="none" x="491.3979" width="110.1635" height="178.3264" y="732.7322" clip-path="url(#clipPath2)"/>
     </g>
     <g fill="rgb(255,170,127)" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-478,-561)" stroke="rgb(255,170,127)">
       <rect x="510.95" y="757.4762" clip-path="url(#clipPath2)" width="58.6938" rx="4" ry="4" height="30" stroke="none"/>
@@ -126,9 +126,9 @@
       <path fill="black" d="M569.6469 772.4762 L576.6469 767.4762 L583.6469 772.4762 L576.6469 777.4762 Z" clip-path="url(#clipPath2)" stroke="none"/>
       <path fill="none" d="M540.2969 794.4574 L540.2969 811.9149" clip-path="url(#clipPath2)" stroke="black"/>
       <path fill="black" d="M540.2969 787.4574 L545.2969 794.4574 L540.2969 801.4574 L535.2969 794.4574 Z" clip-path="url(#clipPath2)" stroke="none"/>
-      <path fill="none" d="M592.9014 680.7239 L598.8045 680.7239 L598.8045 851.7564 L592.8918 851.7564" clip-path="url(#clipPath2)" stroke="black"/>
-      <path fill="black" d="M584.9014 680.7239 L596.9014 685.7239 L593.9014 680.7239 L596.9014 675.7239 Z" clip-path="url(#clipPath2)" stroke="none"/>
-      <path fill="black" d="M584.8918 851.7564 L596.8918 856.7564 L593.8918 851.7564 L596.8918 846.7564 Z" clip-path="url(#clipPath2)" stroke="none"/>
+      <path fill="none" d="M591.2525 685.5884 L597.8215 690.6199 L597.8215 833.4719 L590.918 839.5415" clip-path="url(#clipPath2)" stroke="black"/>
+      <path fill="black" d="M584.9014 680.7239 L591.3878 691.9901 L592.0464 686.1965 L597.4684 684.0512 Z" clip-path="url(#clipPath2)" stroke="none"/>
+      <path fill="black" d="M584.9099 844.8239 L597.2234 840.6553 L591.669 838.8812 L590.6205 833.1453 Z" clip-path="url(#clipPath2)" stroke="none"/>
       <path fill="none" d="M501.3519 735.4871 L501.3519 803.8738" clip-path="url(#clipPath2)" stroke="black"/>
       <path fill="black" d="M501.3519 727.4871 L496.3519 739.4871 L501.3519 736.4871 L506.3519 739.4871 Z" clip-path="url(#clipPath2)" stroke="none"/>
       <path fill="black" d="M501.3519 811.8738 L506.3519 799.8738 L501.3519 802.8738 L496.3519 799.8738 Z" clip-path="url(#clipPath2)" stroke="none"/>

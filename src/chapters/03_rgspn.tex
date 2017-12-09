@@ -5,7 +5,7 @@ In our current work we aim to propose an approach for the construction of stocha
 
 The proposed transformation process should be flexible in the sense that---instead of basing our approach on a single engineering modeling language such as \textabbr{UML}~\citep{Rumbaugh04uml}, Sys\mixedabbr{ML}~\citep{Friedenthal16sysml}, \textabbr{AADL}~\citep{Feiler12aadl} or Palladio~\citep{Becker08palladio}---the creation of transformations for new architectural domain-specific languages (\textAbbr{DSL}s) in new problem domains should be supported and should not demand additional specialized knowledge from the users. Therefore the formal models should be based on a stochastic formalism that has sufficient descriptive power to support engineering practice. In addition, compatibility of the derived models with existing stochastic verification tools should be ensured so that recent developments in formal methods may be leveraged for high-performance analysis. Hence reusing an existing formalism is dictated by both \circled{1}~ease of use and \circled{2}~portability.
 
-Analysis tools separate the input formal model and the \emph{query} to be answered \todo*{cite}, which is usually a performance metric to be calculated or a logical requirement to be verified. Therefore, when stochastic models are automatically derived for design-space exploration, \circled{3}~the appropriate queries must also be generated. The queries, which may depend on the structure of the engineering model in the same way as the derived stochastic model, serve as the objective functions and constraints of the exploration strategy.
+Analysis tools usually separate the input formal model and the \emph{query} to be answered~\citepeg[Section~4.2]{Voros17pdnmanual}, which is a performance metric to be calculated or a logical requirement to be verified. Therefore, when stochastic models are automatically derived for design-space exploration, \circled{3}~the appropriate queries must also be generated. The queries, which may depend on the structure of the engineering model in the same way as the derived stochastic model, serve as the objective functions and constraints of the exploration strategy.
 
 To achieve these three objectives, in this chapter we turn to stochastic modeling approaches with modules to propose a formalism for the \emph{modules} (or \emph{fragments}) of the stochastic model corresponding to the analyzed aspects of the engineering model. The transformation, which is discussed in \cref{chap:transform}, will instantiate the modules specified by the user to automatically derive the analysis model.
 
@@ -459,11 +459,14 @@ Operators from \vref{eq:rgspn:expression} act pointwise on the interpretation fu
 
 The \(\textabbr{CTL}^*\) operators, which explicitly require \lit{prop} and \lit{path} dependence contexts, are excepted from pointwise evaluation. A \lit{prop} expression is treated as a state predicate over markings \(m\) after plugging the parameter binding \(\vec{\uptheta}\) and the \textabbr{CTMC} into the interpretation function. Similarly, \lit{path} expressions are treated as predicates over paths \(\Pi\) and are composed by the operators according to \(\textabbr{CTL}^*\) semantics [see e.g.~\todo*{Cite}].
 
-To interpret variables mentioned inside expressions, we introduce \emph{reference resolution}. A reference symbol \(r \in R\) may point at some concrete \(s \in \Sigma \setminus R\) or at another references \(r' \in R\). We say that \(r\) \emph{resolves to} \(s \in \Sigma \setminus R\), written as \(r \leadsto s\), if there is a unique, non-cyclic chain of reference assignments from \(r\) to \(s\). In addition, every concrete symbol resolves to itself, \(s \leadsto s\) for all \(s \in \Sigma \setminus R\). Formally, let \({\assign^*} \subseteq \Sigma \times \Sigma\) be the reflexive transitive closure of the relation \(\assign\), i.e.
-\begin{equation}
-  s_1 \mathbin{\assign^*} s_2 \Longleftrightarrow \text{\(\exists\, k \ge 0\), \(s_1 = r_0, r_1, \ldots, r_k = s_2 \in \Sigma\) such that \(r_i \assign r_{i - 1}\) for all \(i = 1, \ldots, k\)}
-\end{equation}
-and write \(s_1 \leadsto s_2\) if \(s_2 \in \Sigma \setminus R\) is the unique symbol for which \(s_1 \mathbin{\assign^*} s_2\) holds.
+To interpret variables mentioned inside expressions, we introduce \emph{reference resolution}. A reference symbol \(r \in R\) may point at some concrete \(s \in \Sigma \setminus R\) or at another references \(r' \in R\). We say that \(r\) \emph{resolves to} \(s \in \Sigma \setminus R\), written as \(r \leadsto s\), if \(s\) is the unique concrete symbol with a chain of reference assignments from \(r\) to \(s\). In addition, every concrete symbol resolves to itself, \(s \leadsto s\) for all \(s \in \Sigma \setminus R\). This notion is formalized as follows:
+\begin{dfn}
+  Let \({\assign^*} \subseteq \Sigma \times \Sigma\) be the reflexive transitive closure of the relation \(\assign\), i.e. \(s_1 \mathbin{\assign^*} s_2\) if and only if
+  \begin{equation}
+    \text{\(\exists\, k \ge 0\), \(s_1 = r_0, r_1, \ldots, r_k = s_2 \in \Sigma\) such that \(r_i \assign r_{i - 1}\) for all \(i = 1, \ldots, k\).}
+  \end{equation}
+  The symbol \(s_1\) \emph{resolves to} \(s_2\), written as \(s_1 \leadsto s_2\), if \(s_2 \in \Sigma \setminus R\) is the \emph{unique} concrete symbol for which \(s_1 \mathbin{\assign^*} s_2\) holds.
+\end{dfn}
 
 If a symbol \(v\) of variable type is mentioned in an expression, we simply substitute it with its \rel{value}. However, if \(v\) refers to a parameter symbol---or is actually parameter symbol---it is instead interpreted to refer to the corresponding element of the parameter vector \(\vec{\uptheta}\). Formally,
 \begin{equation}
@@ -485,11 +488,15 @@ Mentioning the marking of place simply refers to the number of tokens of the pla
 
 Collection aggregations are defined with \enquote{big operator} semantics. An aggregation operator is equipped with a monoid \(\ltup \diamond, n \rtup\), where \(\diamond\) is an associative binary operator and \(n\) is a the neutral element of the operator. The \(\diamond\) operator joins the elements of the collection, whereas for empty collections, \(n\) is returned instead. The monoid \(\ltup \lit+, 0\rtup\) is associated with the aggregation operator \lit{sum}, \(\ltup \lit*, 1\rtup\) with \lit{prod}, \(\ltup \lit{\&\&}, \lit{true}\rtup\) with \lit{all} and \(\ltup \lit{||}, 1\rtup\) with \lit{any}.
 
-The \emph{resolved elements} of a collection \(c \in C\) are
-\begin{equation}
-  \emph{resolved}(c) = \Lbag s \mid \exists\, r_1, r_2 \in \Sigma \text{ such that } r_1 \leadsto c, r_1 \member r_2, r_2 \leadsto s \Rbag \text,
-\end{equation}
-where the multiset-builder notation respects the multiplicities in the relation \(\assign\). Note that both ends of a collection membership edge \(r_1 \member r_2\) may be references, which resolve as \(r_1 \leadsto c\) on the collection end and \(r_2 \leadsto s\) on the member end, respectively. The aggregation \rel{agg} is interpreted as
+\begin{dfn}
+  The \emph{resolved elements} of a collection \(c \in C\) are
+  \begin{equation}
+    \emph{resolved}(c) = \Lbag s \mid \exists\, r_1, r_2 \in \Sigma \text{ such that } r_1 \leadsto c, r_1 \member r_2, r_2 \leadsto s \Rbag \text,
+  \end{equation}
+  where the multiset-builder notation respects the multiplicities in the relation \(\assign\). Note that both ends of a collection membership edge \(r_1 \member r_2\) may be references, which resolve as \(r_1 \leadsto c\) on the collection end and \(r_2 \leadsto s\) on the member end, respectively.
+\end{dfn}
+
+The aggregation \rel{agg} is interpreted as
 \begin{equation}
   \llbracket \rel{agg} \lit( c \lit) \rrbracket = \begin{cases}
     \bigDiamond_{s \in \rel{resolved}(c')} \llbracket s \rrbracket \text, & \text{if \(c \leadsto c'\), \(c' \in C\) and \(\lvert \rel{resolved}(c') \rvert \ge 1\),} \\
@@ -497,7 +504,7 @@ where the multiset-builder notation respects the multiplicities in the relation 
     {\perp} \text, & \text{otherwise,}
   \end{cases}
 \end{equation}
-where the operatior \(\diamond\) acts over the interpretation functions \(\llbracket s \rrbracket\) as discussed above while respecting multiplicity and the constant \(n\) is type coerced as needed.
+where the operator \(\diamond\) acts over the interpretation functions \(\llbracket s \rrbracket\) as discussed above while respecting multiplicity and the constant \(n\) is type coerced as needed.
 
 \subsubsection{Stochastic queries}
 

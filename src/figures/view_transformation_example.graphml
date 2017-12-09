@@ -58,10 +58,10 @@
         <node id="n0::n1">
           <data key="d6">
             <y:ShapeNode>
-              <y:Geometry height="102.95999999999992" width="116.71706666666634" x="488.1211302186638" y="808.0985873774652"/>
+              <y:Geometry height="178.32639999999992" width="110.16346666666632" x="491.3979302186638" y="732.7321873774652"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000080" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#E1D7FD" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="br" textColor="#000080" underlinedText="true" verticalTextPosition="bottom" visible="true" width="52.681243896484375" x="64.035822770182" y="87.41034790039055">qPhil(P2)</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#E1D7FD" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="br" textColor="#000080" underlinedText="true" verticalTextPosition="bottom" visible="true" width="52.681243896484375" x="57.48222277018198" y="162.77674790039055">qPhil(P2)</y:NodeLabel>
               <y:Shape type="rectangle"/>
             </y:ShapeNode>
           </data>
@@ -911,9 +911,9 @@ thinkingTimes<y:LabelModel>
     <edge id="n0::e2" source="n0::n3" target="n0::n4">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="44.6045288609152" sy="-6.902171238215146" tx="0.0" ty="0.0">
-            <y:Point x="598.8045330196269" y="680.7239125422184"/>
-            <y:Point x="598.8045330196269" y="851.7563877804337"/>
+          <y:Path sx="44.6045288609152" sy="-6.902171238215146" tx="44.58779574278333" ty="-6.910290391384024">
+            <y:Point x="597.821493019627" y="690.6198485422185"/>
+            <y:Point x="597.821493019627" y="833.4718437804336"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="standard" target="standard"/>
