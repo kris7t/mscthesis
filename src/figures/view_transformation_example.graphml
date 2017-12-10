@@ -50,7 +50,7 @@
               <y:Geometry height="173.4738625700196" width="116.71706666666634" x="488.12113021866384" y="628.3562171137665"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#003366" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7DBFF" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="tl" textColor="#003366" underlinedText="true" verticalTextPosition="bottom" visible="true" width="51.937652587890625" x="0.0" y="0.0">qPhil(P1)</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7DBFF" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="tl" textColor="#003366" underlinedText="true" verticalTextPosition="bottom" visible="true" width="64.19491577148438" x="0.0" y="0.0">qPhil(T, P1)</y:NodeLabel>
               <y:Shape type="rectangle"/>
             </y:ShapeNode>
           </data>
@@ -61,7 +61,7 @@
               <y:Geometry height="178.32639999999992" width="110.16346666666632" x="491.3979302186638" y="732.7321873774652"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000080" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#E1D7FD" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="br" textColor="#000080" underlinedText="true" verticalTextPosition="bottom" visible="true" width="52.681243896484375" x="57.48222277018198" y="162.77674790039055">qPhil(P2)</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#E1D7FD" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="br" textColor="#000080" underlinedText="true" verticalTextPosition="bottom" visible="true" width="64.93850708007812" x="45.22495958658823" y="162.77674790039055">qPhil(T, P2)</y:NodeLabel>
               <y:Shape type="rectangle"/>
             </y:ShapeNode>
           </data>

@@ -163,6 +163,7 @@ It is possible to only execute the view transformation, which yields an abstract
 Traceability relations can be traversed either by explicitly reading them, or by the derived features helper classes generated for Xtend programming. In addition, extra \emph{annotations} specified in the \textabbr{RGSPN} modules and the transformation description are also propagate through the transformation chain, which may influence the behavior of \textabbr{RGSPN} exporters.
 
 \section{Evaluation of incremental transformations}
+\label{sec:apply:eval}
 
 We carried out preliminary scalability evaluation of our transformation runtime in order to study the overhead the imposed on transformation imposes on design-space exploration. Both \emph{batch execution}---where the transformation engine is initially instantiated and the intermediate and target \textabbr{RGSPN} models are materialized according to the engineering models---and \emph{incremental execution}---where each source model change is immediately translated into intermediate and target model changes---were studied. More specifically, we carried out the evaluation in the \emph{dining philosophers} domain to address the following three research questions:
 \paragraph{\textabbr{RQ1}} How does the initial batch transformation from the engineering \textabbr{DSL} to the formal stochastic model (\textabbr{GSPN}) scale with respect to size of the input model?

@@ -50,7 +50,7 @@
               <y:Geometry height="173.4738625700196" width="116.71706666666634" x="488.12113021866384" y="628.3562171137665"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#003366" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7DBFF" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="tl" textColor="#003366" underlinedText="true" verticalTextPosition="bottom" visible="true" width="51.937652587890625" x="0.0" y="0.0">qPhil(P1)</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7DBFF" borderDistance="0.0" fontFamily="Fira Sans" fontSize="12" fontStyle="plain" hasLineColor="false" height="15.549652099609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="tl" textColor="#003366" underlinedText="true" verticalTextPosition="bottom" visible="true" width="64.19491577148438" x="0.0" y="0.0">qPhil(T, P1)</y:NodeLabel>
               <y:Shape type="rectangle"/>
             </y:ShapeNode>
           </data>
@@ -208,7 +208,7 @@ hungryRate<y:LabelModel>
                   <y:Geometry height="30.0" width="30.0" x="1011.839091277406" y="658.5330301201992"/>
                   <y:Fill hasColor="false" transparent="false"/>
                   <y:BorderStyle color="#404040" raised="false" type="dashed" width="1.0"/>
-                  <y:NodeLabel alignment="center" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="italic" hasBackgroundColor="false" hasLineColor="false" height="27.1712646484375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#404040" verticalTextPosition="bottom" visible="true" width="63.12750244140625" x="-16.563751220703125" y="32.0">PM1.
+                  <y:NodeLabel alignment="center" autoSizePolicy="content" borderDistance="2.0" fontFamily="Fira Sans" fontSize="12" fontStyle="italic" hasBackgroundColor="false" hasLineColor="false" height="27.1712646484375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#404040" verticalTextPosition="bottom" visible="true" width="63.12750244140625" x="-16.56375122070301" y="32.0">PM1.
 eatingRate<y:LabelModel>
                       <y:SmartNodeLabelModel distance="2.0"/>
                     </y:LabelModel>

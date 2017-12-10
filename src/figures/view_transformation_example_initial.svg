@@ -34,11 +34,11 @@
       <rect fill="none" x="483.3507" width="127.0124" height="200.2359" y="607.5304" clip-path="url(#clipPath2)"/>
     </g>
     <g fill="rgb(183,219,255)" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-478,-602)" stroke="rgb(183,219,255)">
-      <rect x="488.1211" width="51.9377" height="15.5497" y="628.3562" clip-path="url(#clipPath2)" stroke="none"/>
+      <rect x="488.1211" width="64.1949" height="15.5497" y="628.3562" clip-path="url(#clipPath2)" stroke="none"/>
     </g>
     <g stroke-linecap="butt" transform="matrix(1,0,0,1,-478,-602)" fill="rgb(0,51,102)" text-rendering="geometricPrecision" font-family="'Fira Sans'" shape-rendering="geometricPrecision" stroke="rgb(0,51,102)" stroke-miterlimit="1.45">
-      <text x="490.1211" xml:space="preserve" y="639.5732" clip-path="url(#clipPath2)" stroke="none">qPhil(P1)</text>
-      <line y2="641.9059" fill="none" x1="490.1211" clip-path="url(#clipPath2)" x2="538.0588" y1="641.9059"/>
+      <text x="490.1211" xml:space="preserve" y="639.5732" clip-path="url(#clipPath2)" stroke="none">qPhil(T, P1)</text>
+      <line y2="641.9059" fill="none" x1="490.1211" clip-path="url(#clipPath2)" x2="550.316" y1="641.9059"/>
       <rect fill="none" x="488.1211" width="116.7171" height="173.4739" y="628.3562" clip-path="url(#clipPath2)"/>
     </g>
     <g fill="rgb(255,170,127)" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-478,-602)" stroke="rgb(255,170,127)">

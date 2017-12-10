@@ -64,7 +64,7 @@ Several logics have been developed to study temporal and stochastic properties. 
 
 \subsubsection{Queries for component-based models}
 
-An extension for \textabbr{UML} class diagrams was proposed by \citet{Bernardi03building} to construct stochastic metrics and property specifications for software models. Special derived features are added to model parameters, metrics and dependability requirements (prefixed with \enquote{/}, \enquote{\$} and \enquote{/\$}, respectively). \citet{Bernardi04trio} also incorporated \textabbr{TRIO} language for temporal property specification.
+An extension for \textabbr{UML} class diagrams was proposed by \citet{Bernardi03building} to construct stochastic metrics and property specifications for software models. Special derived features are added to represent model parameters, metrics and dependability requirements (prefixed with \enquote{/}, \enquote{\$} and \enquote{/\$}, respectively). \citet{Bernardi04trio} also incorporated \textabbr{TRIO} language for temporal property specification.
 
 Measure Specification Language (\textabbr{MSL}) uses first-order logic to specify reward structures for component-based stochastic models~\citep{Aldini07msl}. \citet{Aldini11combining} combined \textabbr{MSL} with \textabbr{CSRL} to extend its expressive power to temporal properties.
 
@@ -228,9 +228,9 @@ Collection types are covariant in their member types; therefore \(\tau \subtype 
 In this section we first define \textabbr{RGSPN} signatures as set of symbols of various kinds.\todo{Change \emph{kinds}.} Then the definition of an \textabbr{RGSPN} on a given signature is elaborated, which extends the signature with the properties of the symbols and the edges of the net. This separation allows deferring the details of the \emph{expressions} of a signature to \vref{sec:rgspn:expression} even though expression will serves as the properties of symbols in the definition of \textAbbr{RGSPN}s.
 
 \begin{dfn}\label{dfn:rgspn:rgspn}
-  An \emph{\textabbr{RGSPN} signatrue} is a 12-tuple
+  An \emph{\textabbr{RGSPN} signatrue} is a 11-tuple
   \begin{equation}
-    \Sigma = \ltup P, T_T, T_i, V, \Par, R, C, \rel{dep}, \rel{pretype}, \rel{value}, \rel{target}, \rel{member}\rtup \text,
+    \Sigma = \ltup P, T_T, T_i, V, \Par, R, C, \rel{dep}, \rel{pretype}, \rel{target}, \rel{member}\rtup \text,
   \end{equation}
   where the sets \(P, T_t, T_i, V, \Par, R, C,\) are disjoint and
   \begin{compactitem}
@@ -242,7 +242,6 @@ In this section we first define \textabbr{RGSPN} signatures as set of symbols of
   \item \(C\) is a set of \emph{collections};
   \item \(\rel{dep}\colon V \to \rel{Dependence}\) is the \emph{variable dependence} function;
   \item \(\rel{pretype}\colon V \to \rel{Pretype}\) is the \emph{variable pretype} function;
-  \item \(\rel{value}\colon V \cup \Par \to \Expr_\Sigma \cup \mathbb{R}\) is a function, such that \(\rel{value}(v) \in \Expr_\Sigma\) for all \(v \in V\) and \(\rel{value}(\theta) \in \mathbb{R}\) for all \(\theta \in \Par\);
   \item \(\rel{target}\colon R \to \rel{Type}\) is the \emph{reference target type} function;
   \item \(\rel{member}\colon C \to \rel{Type}\) is the \emph{collection member type} function.
   \end{compactitem}
@@ -250,14 +249,15 @@ In this section we first define \textabbr{RGSPN} signatures as set of symbols of
 
 We will abuse notation such that \(\Sigma\) also stands for the set \(P \cup T_t \cup T_i \cup V \cup \Par \cup R \cup C\) of all symbols. Furthermore, \(\Expr_\Sigma\) will denote the set of all algebraic expressions that may mention symbols of \(\Sigma\).
 
-\begin{dfn}
-  An \emph{\textabbr{RGSPN}} is a 10-tuple \(N = \ltup \Sigma, m_0, \lambda, w, \pi, {\outarc}, {\inarc}, {\inharc}, {\assign}, {\member} \rtup\), where
+\begin{dfn}\label{dfn:rgspn:impl}
+  An \emph{\textabbr{RGSPN}} is a 11-tuple \(N = \ltup \Sigma, m_0, \lambda, w, \pi, \rel{value}, {\outarc}, {\inarc}, {\inharc}, {\assign}, {\member} \rtup\), where
   \begin{compactitem}
   \item \(\Sigma = \ltup P, T_T, T_i, V, \Par, R, C, \ldots\rtup\) is an \textabbr{RGSPN} signature;
   \item \(m_0 \colon P \to \Expr_\Sigma\) is the \emph{initial marking} function;
   \item \(\lambda \colon T_T \to \Expr_\Sigma\) is the \emph{timed transition rate} function;
   \item \(w\colon T_i \to \Expr_\Sigma\) is the \emph{immediate transition weight} function;
   \item \(\pi\colon T_i \to \Expr_\Sigma\) is the \emph{immediate transition priority} function;
+  \item \(\rel{value}\colon V \cup \Par \to \Expr_\Sigma \cup \mathbb{R}\) is a function, such that \(\rel{value}(v) \in \Expr_\Sigma\) for all \(v \in V\) and \(\rel{value}(\theta) \in \mathbb{R}\) for all \(\theta \in \Par\);
   \item \({\outarc}, {\inarc}, {\inharc} \subseteq \Sigma \times \Expr_\Sigma \times \Sigma\) are the relations of \emph{output, input} and \emph{inhibitor arcs}, respectively, which are free of parallel arcs, i.e.~\(\ltup p, e_1, t \rtup, \ltup p, e_2, t \rtup \in {\outarc}\) implies \(e_1 = e_2\) and this property holds also for \(\inarc\) and \(\inharc\);
   \item \({\assign} \subseteq R \times \Sigma\) is the relation of \emph{reference assignments};
   \item \({\member} \in \rel{Multiset}(\Sigma \times \Sigma)\) is the multiset relation of \emph{collection memberships}.
@@ -496,7 +496,7 @@ Operators from \vref{eq:rgspn:expression} act pointwise on the interpretation fu
 The \(\textabbr{CTL}^*\) operators, which explicitly require \lit{prop} and \lit{path} dependence contexts, are excepted from pointwise evaluation. A \lit{prop} expression is treated as a state predicate over markings \(m\) after plugging the parameter binding \(\vec{\uptheta}\) and the \textabbr{CTMC} into the interpretation function. Similarly, \lit{path} expressions are treated as predicates over paths \(\Pi\) composed by the operators according to \(\textabbr{CTL}^*\) semantics~\citepeg{Emerson86ctlstar}.
 
 To interpret variables mentioned inside expressions, we introduce \emph{reference resolution}. A reference symbol \(r \in R\) may point at some concrete \(s \in \Sigma \setminus R\) or at another references \(r' \in R\). We say that \(r\) \emph{resolves to} \(s \in \Sigma \setminus R\), written as \(r \leadsto s\), if \(s\) is the unique concrete symbol with a chain of reference assignments from \(r\) to \(s\). In addition, every concrete symbol resolves to itself, \(s \leadsto s\) for all \(s \in \Sigma \setminus R\). This notion is formalized as follows:
-\begin{dfn}
+\begin{dfn}\label{dfn:rgspn:resolution}
   Let \({\assign^*} \subseteq \Sigma \times \Sigma\) be the reflexive transitive closure of the relation \(\assign\), i.e. \(s_1 \mathbin{\assign^*} s_2\) if and only if
   \begin{equation}
     \text{\(\exists\, k \ge 0\), \(s_1 = r_0, r_1, \ldots, r_k = s_2 \in \Sigma\) such that \(r_i \assign r_{i - 1}\) for all \(i = 1, \ldots, k\).}

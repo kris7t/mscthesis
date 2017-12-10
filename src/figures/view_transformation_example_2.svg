@@ -34,11 +34,11 @@
       <rect fill="none" x="483.3507" width="127.0124" height="200.2359" y="607.5304" clip-path="url(#clipPath2)"/>
     </g>
     <g fill="rgb(183,219,255)" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-478,-602)" stroke="rgb(183,219,255)">
-      <rect x="488.1211" width="51.9377" height="15.5497" y="628.3562" clip-path="url(#clipPath2)" stroke="none"/>
+      <rect x="488.1211" width="64.1949" height="15.5497" y="628.3562" clip-path="url(#clipPath2)" stroke="none"/>
     </g>
     <g stroke-linecap="butt" transform="matrix(1,0,0,1,-478,-602)" fill="rgb(0,51,102)" text-rendering="geometricPrecision" font-family="'Fira Sans'" shape-rendering="geometricPrecision" stroke="rgb(0,51,102)" stroke-miterlimit="1.45">
-      <text x="490.1211" xml:space="preserve" y="639.5732" clip-path="url(#clipPath2)" stroke="none">qPhil(P1)</text>
-      <line y2="641.9059" fill="none" x1="490.1211" clip-path="url(#clipPath2)" x2="538.0588" y1="641.9059"/>
+      <text x="490.1211" xml:space="preserve" y="639.5732" clip-path="url(#clipPath2)" stroke="none">qPhil(T, P1)</text>
+      <line y2="641.9059" fill="none" x1="490.1211" clip-path="url(#clipPath2)" x2="550.316" y1="641.9059"/>
       <rect fill="none" x="488.1211" width="116.7171" height="173.4739" y="628.3562" clip-path="url(#clipPath2)"/>
     </g>
     <g fill="rgb(255,170,127)" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-478,-602)" stroke="rgb(255,170,127)">
@@ -92,15 +92,15 @@
       <text x="875.9156" xml:space="preserve" y="646.1216" clip-path="url(#clipPath2)" stroke="none">qPhil(T, P1) =&gt; PM1: PhilMod</text>
       <line y2="648.4544" fill="none" x1="839.7583" clip-path="url(#clipPath2)" x2="1062.998" y1="648.4544"/>
       <rect x="837.7583" y="634.9047" clip-path="url(#clipPath2)" fill="none" width="227.2397" rx="4" ry="4" height="84.4076"/>
-      <path fill="none" d="M877.2258 658.5331 L892.2258 688.5331 L862.2258 688.5331 Z" fill-rule="evenodd" clip-path="url(#clipPath2)" stroke="black"/>
+      <path fill="none" d="M877.2258 658.533 L892.2258 688.533 L862.2258 688.533 Z" fill-rule="evenodd" clip-path="url(#clipPath2)" stroke="black"/>
       <text fill="black" x="864.9326" xml:space="preserve" y="701.7499" clip-path="url(#clipPath2)" stroke="none">PM1.</text>
       <text fill="black" x="841.7193" xml:space="preserve" y="713.2996" clip-path="url(#clipPath2)" stroke="none">thinkingTime</text>
     </g>
     <g stroke-linecap="butt" transform="matrix(1,0,0,1,-478,-602)" fill="rgb(64,64,64)" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" stroke-dasharray="6,2" stroke="rgb(64,64,64)" stroke-miterlimit="1.45">
-      <path fill="none" d="M952.0325 658.5331 L967.0325 688.5331 L937.0325 688.5331 Z" fill-rule="evenodd" clip-path="url(#clipPath2)"/>
+      <path fill="none" d="M952.0324 658.533 L967.0324 688.533 L937.0324 688.533 Z" fill-rule="evenodd" clip-path="url(#clipPath2)"/>
       <text x="939.8471" y="701.732" clip-path="url(#clipPath2)" font-family="'Fira Sans'" font-style="italic" stroke-dasharray="none" stroke="none" xml:space="preserve">PM1.</text>
       <text x="920.6757" y="713.3176" clip-path="url(#clipPath2)" font-family="'Fira Sans'" font-style="italic" stroke-dasharray="none" stroke="none" xml:space="preserve">hungryRate</text>
-      <path fill="none" d="M1026.8394 658.5331 L1041.8394 688.5331 L1011.8393 688.5331 Z" clip-path="url(#clipPath2)" fill-rule="evenodd"/>
+      <path fill="none" d="M1026.8391 658.533 L1041.8391 688.533 L1011.8391 688.533 Z" clip-path="url(#clipPath2)" fill-rule="evenodd"/>
       <text x="1014.6538" y="701.732" clip-path="url(#clipPath2)" font-family="'Fira Sans'" font-style="italic" stroke-dasharray="none" stroke="none" xml:space="preserve">PM1.</text>
       <text x="997.2753" y="713.3176" clip-path="url(#clipPath2)" font-family="'Fira Sans'" font-style="italic" stroke-dasharray="none" stroke="none" xml:space="preserve">eatingRate</text>
       <path fill="none" stroke-dasharray="none" d="M862.2465 759.936 L877.2465 789.936 L847.2465 789.936 Z" clip-path="url(#clipPath2)" fill-rule="evenodd" stroke="black"/>
@@ -111,10 +111,10 @@
       <text x="881.2465" xml:space="preserve" y="790.0356" clip-path="url(#clipPath2)" stroke="none">= 0.75</text>
     </g>
     <g fill="rgb(153,153,153)" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-478,-602)" stroke="rgb(153,153,153)">
-      <path d="M961.6934 759.9363 L976.6934 789.9363 L946.6934 789.9363 Z" fill-rule="evenodd" clip-path="url(#clipPath2)" stroke="none"/>
+      <path d="M961.6932 759.936 L976.6932 789.936 L946.6932 789.936 Z" fill-rule="evenodd" clip-path="url(#clipPath2)" stroke="none"/>
     </g>
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-478,-602)" stroke-linecap="butt">
-      <path fill="none" d="M961.6934 759.9363 L976.6934 789.9363 L946.6934 789.9363 Z" fill-rule="evenodd" clip-path="url(#clipPath2)"/>
+      <path fill="none" d="M961.6932 759.936 L976.6932 789.936 L946.6932 789.936 Z" fill-rule="evenodd" clip-path="url(#clipPath2)"/>
       <text x="980.6932" xml:space="preserve" y="766.8284" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none">P1.</text>
       <text x="980.6932" xml:space="preserve" y="778.3781" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none">eatingRate</text>
       <text x="980.6932" xml:space="preserve" y="789.9277" clip-path="url(#clipPath2)" font-family="'Fira Sans'" stroke="none">= 3</text>
@@ -144,21 +144,21 @@
       <text x="646.7246" xml:space="preserve" y="646.1216" clip-path="url(#clipPath2)" stroke="none">qTable(T) =&gt; TM: TableMod</text>
       <line y2="648.4544" fill="none" x1="632.5712" clip-path="url(#clipPath2)" x2="805.7583" y1="648.4544"/>
       <rect x="630.5712" y="634.9047" clip-path="url(#clipPath2)" fill="none" width="177.1871" rx="4" ry="4" height="113.3356"/>
-      <path fill="none" d="M655.3633 706.4363 L670.3633 736.4363 L640.3631 736.4363 Z" fill-rule="evenodd" clip-path="url(#clipPath2)" stroke="black"/>
+      <path fill="none" d="M655.3632 706.4362 L670.3632 736.4362 L640.3632 736.4362 Z" fill-rule="evenodd" clip-path="url(#clipPath2)" stroke="black"/>
       <text fill="black" x="681.236" xml:space="preserve" y="719.6531" clip-path="url(#clipPath2)" stroke="none">TM.totalThinkingTime</text>
       <text fill="black" x="681.236" xml:space="preserve" y="731.2028" clip-path="url(#clipPath2)" stroke="none">= sum(thinkingTimes)</text>
     </g>
     <g fill="rgb(153,153,153)" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-478,-602) translate(6,4)" stroke="rgb(153,153,153)">
-      <path d="M655.5685 661.0518 L670.5685 691.0518 L640.5685 691.0518 Z" fill-rule="evenodd" clip-path="url(#clipPath6)" stroke="none"/>
+      <path d="M655.5687 661.0516 L670.5687 691.0516 L640.5687 691.0516 Z" fill-rule="evenodd" clip-path="url(#clipPath6)" stroke="none"/>
     </g>
     <g fill="white" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-478,-602)" stroke="white">
-      <path d="M655.5685 661.0518 L670.5685 691.0518 L640.5685 691.0518 Z" fill-rule="evenodd" clip-path="url(#clipPath2)" stroke="none"/>
+      <path d="M655.5687 661.0516 L670.5687 691.0516 L640.5687 691.0516 Z" fill-rule="evenodd" clip-path="url(#clipPath2)" stroke="none"/>
     </g>
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-478,-602)" stroke-linecap="butt">
-      <path fill="none" d="M655.5685 661.0518 L670.5685 691.0518 L640.5685 691.0518 Z" fill-rule="evenodd" clip-path="url(#clipPath2)"/>
+      <path fill="none" d="M655.5687 661.0516 L670.5687 691.0516 L640.5687 691.0516 Z" fill-rule="evenodd" clip-path="url(#clipPath2)"/>
       <text x="674.5687" y="673.6649" clip-path="url(#clipPath2)" font-family="'Fira Sans'" font-style="italic" stroke="none" xml:space="preserve">TM.</text>
       <text x="674.5687" y="685.2505" clip-path="url(#clipPath2)" font-family="'Fira Sans'" font-style="italic" stroke="none" xml:space="preserve">thinkingTimes</text>
-      <path fill="none" stroke-dasharray="6,2" d="M703.6718 759.9363 L718.6721 789.9362 L688.6718 789.9362 Z" clip-path="url(#clipPath2)" fill-rule="evenodd" stroke="rgb(64,64,64)"/>
+      <path fill="none" stroke-dasharray="6,2" d="M703.6711 759.936 L718.6711 789.936 L688.6711 789.936 Z" clip-path="url(#clipPath2)" fill-rule="evenodd" stroke="rgb(64,64,64)"/>
     </g>
     <g stroke-linecap="butt" transform="matrix(1,0,0,1,-478,-602)" fill="rgb(64,64,64)" text-rendering="geometricPrecision" font-family="'Fira Sans'" shape-rendering="geometricPrecision" font-style="italic" stroke="rgb(64,64,64)" stroke-miterlimit="1.45">
       <text x="718.3492" xml:space="preserve" y="778.3421" clip-path="url(#clipPath2)" stroke="none">T.totalThinkingTime</text>

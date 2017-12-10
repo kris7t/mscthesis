@@ -92,6 +92,14 @@ We present the transformation specification language trough a running example. \
 
 \subsection{Feature rules}
 
+The first section of the transformation specification contains \emph{feature rules} that describe the associated symbols relating to the \emph{features} (\emph{attributes}) of the domain model elements. The feature rule section is introduced by the \lit{features} keyword. Each domain class may have a sub-section describing the mapping of its features.
+
+By default, each \lit{int}, \lit{double} and \lit{boolean} attribute of a domain class is mapped to a \lit{const} variable symbol in the abstract \textabbr{RGSPN}. The value expression of the variable symbol is a literal that equals to the value of the domain attribute.
+
+Users may override the attribute mapping of \lit{double} features by specifying \lit{param} mapping instead. Attributes marked as \lit{param} are turned into parameter symbols instead.
+
+Lastly, feature rules may specify \texttt{derived} features. An \textabbr{RGSPN} reference symbol with the given type and name is created and is associated with the domain element.
+
 \begin{table}%
   \caption{Feature rules for dining philosophers transformation specification.}%
   \label{tbl:transform:feature}
@@ -126,15 +134,7 @@ features {
 \end{lstlisting} &\\
     \bottomrule
   \end{tabular}
-\end{table}    
-
-The first section of the transformation specification contains \emph{feature rules} that describe the associated symbols relating to the \emph{features} (\emph{attributes}) of the domain model elements. The feature rule section is introduced by the \lit{features} keyword. Each domain class may have a sub-section describing the mapping of its features.
-
-By default, each \lit{int}, \lit{double} and \lit{boolean} attribute of a domain class is mapped to a \lit{const} variable symbol in the abstract \textabbr{RGSPN}. The value expression of the variable symbol is a literal that equals to the value of the domain attribute.
-
-Users may override the attribute mapping of \lit{double} features by specifying \lit{param} mapping instead. Attributes marked as \lit{param} are turned into parameter symbols instead.
-
-Lastly, feature rules may specify \texttt{derived} features. An \textabbr{RGSPN} reference symbol with the given type and name is created and is associated with the domain element.
+\end{table}
 
 \begin{runningExample}
   The metamodel for the dining philosophers domain contains the classes \lit{Philosopher} and \lit{Table}. The two attributes of type \lit{double} of \lit{Philosopher} are \lit{eating\-Rate} and \lit{hungry\-Rate}, while \lit{Table} has no attributes.
@@ -145,6 +145,24 @@ Lastly, feature rules may specify \texttt{derived} features. An \textabbr{RGSPN}
 \end{runningExample}
 
 \subsection{Mapping rules}
+
+A \emph{mapping} rule associates a \emph{precondition} model query with a set of \emph{lookup declarations}, assignments and collections membership declarations, as well as optionally a \emph{postcondition} \textabbr{RGSPN} module. Thus the abstract analysis modules is weaved from \textabbr{RGSPN} module instances and the edges added between them by the mappings.
+
+For every tuple of match arguments in the match set of the precondition query instances of the assignments, collections memberships and the \textabbr{RGSPN} module are added to the abstract analysis model. The instantiation of modules is perfomed by copying their contents to the abstract analysis model after renaming their symbols to avoid collisions. The match argument tuple serves as the source of traceability links to the instantiated objects.
+
+After the keyword \lit{mapping} the precondition graph pattern is named, followed by its list of parameters. The associated symbols of match arguments are accessible in the body of the mapping rule by mentioning the name of the match argument, followed by the dot operator and the name of the associated symbol.
+
+The name of the \textabbr{RGSPN} module to instantiate and a \emph{local name} for the module instance may be specified after the \lit{=>} operator. If the module instantiation clause is present symbols inside the module instance can be referred to using the local name of the instance and the dot operator similarly to associated symbol references.
+
+\subsubsection{Lookup declarations}
+
+The view trace model can be traversed during the view transformation by \emph{lookup declarations}, analogously to the \texttt{@Lookup} annotation introduced by \citet{Debreceni14viewmodel} for the traversal of traceability relations in view maintenance. Introduced by the keywords \lit{lookup} they name a precondition pattern and provide a list of match arguments. The match arguments must be a subset of the parameters of the containing mapping rule and a pattern match of the specified pattern must exist.
+
+After the operator \lit{=>} a local name may be given to the module instance created by the lookup up mapping rule. Hence it is possible to refer to symbols instantiated by other mapping rules in order to connect them with the rest of the analysis model. The execution of the view transformation, which is described in \vref{chap:transform:view}, ensures that the modules can be instantiated in any order and allows cyclic lookups between mapping rules.
+
+\subsubsection{Edge declarations}
+
+Edges between different \textabbr{RGSPN} module instances and symbols associated with domain objects are also supported. The \lit{:=} and \lit{+=} operators may add reference assignments and collection membership edges, respectively. Typing rules in \vref{dfn:rgspn:well-typed} are checked in mapping rules as well as in \textabbr{RGSPN} modules. Thus the abstract \textabbr{RGSPN} output by the view transformation is ensured to be well-typed.
 
 \begin{table}%
   \caption{Mapping rules for dining philosophers transformation specification.}%
@@ -188,24 +206,6 @@ mapping qAdjacent(T, L, R) {
     \bottomrule
   \end{tabular}
 \end{table}
-
-A \emph{mapping} rule associates a \emph{precondition} model query with a set of \emph{lookup declarations}, assignments and collections membership declarations, as well as optionally a \emph{postcondition} \textabbr{RGSPN} module. Thus the abstract analysis modules is weaved from \textabbr{RGSPN} module instances and the edges added between them by the mappings.
-
-For every tuple of match arguments in the match set of the precondition query instances of the assignments, collections memberships and the \textabbr{RGSPN} module are added to the abstract analysis model. The instantiation of modules is perfomed by copying their contents to the abstract analysis model after renaming their symbols to avoid collisions. The match argument tuple serves as the source of traceability links to the instantiated objects.
-
-After the keyword \lit{mapping} the precondition graph pattern is named, followed by its list of parameters. The associated symbols of match arguments are accessible in the body of the mapping rule by mentioning the name of the match argument, followed by the dot operator and the name of the associated symbol.
-
-The name of the \textabbr{RGSPN} module to instantiate and a \emph{local name} for the module instance may be specified after the \lit{=>} operator. If the module instantiation clause is present symbols inside the module instance can be referred to using the local name of the instance and the dot operator similarly to associated symbol references.
-
-\subsubsection{Lookup declarations}
-
-The view trace model can be traversed during the view transformation by \emph{lookup declarations}, analogously to the \texttt{@Lookup} annotation introduced by \citet{Debreceni14viewmodel} for the traversal of traceability relations in view maintenance. Introduced by the keywords \lit{lookup} they name a precondition pattern and provide a list of match arguments. The match arguments must be a subset of the parameters of the containing mapping rule and a pattern match of the specified pattern must exist.
-
-After the operator \lit{=>} a local name may be given to the module instance created by the lookup up mapping rule. Hence it is possible to refer to symbols instantiated by other mapping rules in order to connect them with the rest of the analysis model. The execution of the view transformation, which is described in \vref{chap:transform:view}, ensures that the modules can be instantiated in any order and allows cyclic lookups between mapping rules.
-
-\subsubsection{Edge declarations}
-
-Edges between different \textabbr{RGSPN} module instances and symbols associated with domain objects are also supported. The \lit{:=} and \lit{+=} operators may add reference assignments and collection membership edges, respectively. Typing rules in \vref{dfn:rgspn:well-typed} are checked in mapping rules as well as in \textabbr{RGSPN} modules. Thus the abstract \textabbr{RGSPN} output by the view transformation is ensured to be well-typed.
 
 \begin{runningExample}
   In \vref{tbl:transform:mapping} three mapping rules are given for the dining philosophers domain. The feature rules in \vref{tbl:transform:feature} are assumed for the mappings.
@@ -322,17 +322,112 @@ The execution of the the aforementioned transformations may be prevented by erro
 
   In \vref{fig:transform:view-2} the modification of the \lit{eatingRate} of \lit{P1} is propagated to the concrete \textabbr{RGSPN}. In contrast with \vref{fig:transform:view-2} not only the value expression of the variable symbol \lit{P1.eatingRate} is synchronized but also \(\lambda(\)\lit{PM1.finishEating}\()\) is updated. Because the reference \lit{PM1.leftFork} is still unresolved the error marker is preserved; however, the rest of the transformation could be executed.
 
-  The addition of the \lit{Philosopher} \lit{P2} lead to a new \lit{PhilMod} instance \lit{PM2} in \vref{fig:transform:view-3}, which was copied into \vref{fig:transform:concrete-3}. Due to the reference resolutions \lit{PM1.leftFork} \(\leadsto\) \lit{PM2.rightFork} and \lit{PM2.leftFork} \(\leadsto\) \lit{PM1.rightFork} all symbols and arcs could be concretized successfully. In the concrete \textabbr{RGSPN} the \lit{rightFork} symbols stand for the \lit{leftFork} symbols of the abstract \textabbr{RGSPN}. Moreover, the value expression of \lit{TM.totalThinkingTime} was update to accommodate the new element \lit{PM2.thinkingTime} \(=\) \lit{\#PM2.thinking} of the aggregated collection \lit{TM.thinkingTimes} in the abstract analysis model.
+  The addition of the \lit{Philosopher} \lit{P2} lead to a new \lit{PhilMod} instance \lit{PM2} in \vref{fig:transform:view-3}, which was copied into \vref{fig:transform:concrete-3}. Due to the reference resolutions~(see \vref{dfn:rgspn:resolution}) \lit{PM1.leftFork} \(\leadsto\) \lit{PM2.rightFork} and \lit{PM2.leftFork} \(\leadsto\) \lit{PM1.rightFork} all symbols and arcs could be concretized successfully. In the concrete \textabbr{RGSPN} the \lit{rightFork} symbols stand for the \lit{leftFork} symbols of the abstract \textabbr{RGSPN}. Moreover, the value expression of \lit{TM.totalThinkingTime} was update to accommodate the new element \lit{PM2.thinkingTime} \(=\) \lit{\#PM2.thinking} of the aggregated collection \lit{TM.thinkingTimes} in the abstract analysis model.
 \end{runningExample}
 
 \subsection{Transformation execution}
 \label{sec:transform:execution}
 
-The copying of place, transition, variable and parameter symbols is performed in a \emph{trace incremental} style, similarly to the instantiation of the abstract analysis model. The symbol in the abstract analysis model is connected to its copy in the concrete analysis model with a traceability link.
+The copying of place, transition, variable and parameter symbols is performed in a \emph{trace incremental} style, similarly to the instantiation of the abstract analysis model. The symbol in the abstract analysis model is connected to its \emph{image} in the concrete analysis model with a traceability link.
 
-Resolution of references during copying is also trace incremental. To copy Petri net arcs \(s_1 \overset{e}{\inarc} s_2\) (or \(s_1 \overset{e}{\outarc} s_2\), \(s_1 \overset{e}{\inharc} s_2\), respectively) the symbols at both ends of the arc are resolved to concrete places and transitions first, such that we have \(s_1 \leadsto p\) and \(s_2 \leadsto t\) for some transition \(t\) and place \(p\). Since \(p\) and \(t\) are located in the abstract analysis model, traceability links must be traversed to locate their copies \(p'\) and \(t'\) in the concrete analysis model. Then the arc of the form \(p' \overset{e}{\inarc} t'\) can be added to the concrete analysis model and connected to \(s_1 \overset{e}{\inarc} s_2\) with a traceability link. The concretized arc is removed when any of its traceability links become dangling. 
+Resolution of references during copying is also trace incremental. To copy Petri net arcs \(s_1 \overset{e}{\inarc} s_2\) (or \(s_1 \overset{e}{\outarc} s_2\), \(s_1 \overset{e}{\inharc} s_2\), respectively) the symbols at both ends of the arc are resolved to concrete places and transitions according to \vref{dfn:rgspn:resolution} first, such that we have \(s_1 \leadsto p\) and \(s_2 \leadsto t\) for some transition \(t\) and place \(p\). Since \(p\) and \(t\) are located in the abstract analysis model, traceability links must be traversed to locate their images \(p'\) and \(t'\) in the concrete analysis model. Then the arc of the form \(p' \overset{e}{\inarc} t'\) can be added to the concrete analysis model and connected to \(s_1 \overset{e}{\inarc} s_2\) with a traceability link. The concretized arc is removed when any of its traceability links become dangling. 
+
+In contrast, the inlining of expressions is not trace incremental, as the value of an expression may change even if no objects are added or removed in the abstract analysis model. A purely notification driven approach is also unsuitable, as an abstract analysis model change requires updating not only the image of the affected symbol in the concrete analysis model, but also the images of any expressions referring to the symbol, possibly through a chain of references or collection aggregations. A \emph{dirty incrementality} is employed instead, where symbols depending on changed source model elements are marked as dirty when the change notification is received. After the rest of the transformation rules have been processed the \emph{cleanup} rule is fired, which re-evaluates any expressions connected to dirty symbols without unnecessary duplication of computations.
 
 \subsection{Expression dependencies}
 
+In this section we describe the algorithm used for dirty marking and re-evaluation of expressions. The algorithm works on the level of symbols and arcs and re-evaluates any expressions connected to a symbol when cleaning up dirty marks. Although expression-level granularity could prevent event more re-evaluations compared to symbol-level dirty marking, in our evaluation \vref{sec:apply:eval} we found the scalability of the current approach acceptable.
+
+Re-evaluation of the image of an expression may be required
+\begin{itemize*}
+\item when the value of a variable mentioned directly in the expression or indirectly through variable, references and collection aggregations changes,
+\item when a reference assignment \(r \assign s\) of a directly or indirectly mentioned reference symbol \(r\) is created or removed,
+\item when a collection membership edge \(c \member s\) of a directly or indirectly mentioned collection symbol \(c\) is created or removed.
+\end{itemize*}
+
+We formalize these notion as follows by mutually recursively defining the \(\rel{support}\colon \Sigma \cup \Expr_\Sigma \cup ({\inarc}) \cup ({\outarc}) \cup ({\inharc}) \to 2^\Sigma\) of expressions, symbols and arcs of an \textabbr{RGSPN} over the signature signature \(\Sigma\), as well as \emph{touching} of symbols:
+
+\begin{dfn}
+  The \emph{support} of an expression is the union of the supports of the symbols mentioned directly,
+  \begin{equation}
+    \rel{support}(e) = \quad\bigcup_{\hsmash{\text{\(s\) is mentioned in \(e\)}}}\quad \rel{support}(e) \text.
+  \end{equation}
+  
+  The \emph{support} of a symbol contains itself, the supports of any expressions associated with the symbol, its pointed symbols and its collection members,
+  \begin{multline}
+    \rel{support}(s) = \{s\} \cup \rel{support}(m_0(s)) \cup \rel{support}(\lambda(s)) \cup \rel{support}(w(s))\\\cup \rel{support}(\pi(s)) \cup \rel{support}(\rel{value}(s)) \cup \bigcup_{s \assign s'} \rel{support}(s') \cup \bigcup_{s \member s'} \rel{support}(s')
+  \end{multline}
+  where \(P, T_T, T_i, V, \Par, R, C\) are the sets of places, timed transitions, immediate transitions, variables, parameters, references as collections of \(\Sigma\) according to \vref{dfn:rgspn:rgspn}.
+
+  The \emph{support} of an arc \(\ltup p, e, t\rtup \in ({\inarc}) \cup ({\outarc}) \cup ({\inharc})\) is the support of its inscription,
+  \begin{equation}
+    \rel{support}(\ltup p, e, t \rtup) = \rel{support}(e) \text.
+  \end{equation}
+
+  The \(\rel{cone}\colon \Sigma \to 2^{\Sigma \cup (\inarc) \cup (\outarc) \cup (\inharc)}\) of a symbol is the set of symbols and arcs that contain it in their supports, which is the set of \textabbr{RGSPN} elements the symbol can affect,
+  \begin{equation}
+    \rel{cone}(s) = \{x \in \Sigma \cup (\inarc) \cup (\outarc) \cup (\inharc) \mid s \in \rel{support}(x)\} \text.
+  \end{equation}
+\end{dfn}
+
+\begin{example}
+  In \vref{fig:transform:view-3} the \rel{support} of \lit{T.to\-tal\-Think\-ing\-Time} is \(\{\)\lit{T.to\-tal\-Think\-ing\-Time}, \lit{TM.to\-tal\-Think\-ing\-Time}, \lit{TM.think\-ing\-Times}, \lit{PM1.think\-ing\-Time}, \lit{PM1.think\-ing}, \lit{PM2.think\-ing\-Time}, \lit{PM2.think\-ing}\(\}\). The \rel{cone} of \lit{P1.hung\-ry\-Rate} is \(\{\)\lit{P1.hung\-ry\-Rate, PM1.hung\-ry\-Rate, PM1.get\-Hung\-ry}\(\}\).
+\end{example}
+
+Note that \(r \assign^* s\) (and thus \(r \leadsto s\)) implies \(s \in \rel{support}(r)\) and \(r \in \rel{cone}(s)\).
+
+\begin{dfn}
+  A change of the abstract analysis model \emph{touches} a symbol \(s\) if
+  \begin{compactitem}
+  \item it changes the value of \(m_0(s)\), \(\lambda(s)\), \(w(s)\), \(\pi(s)\) of \(\rel{value}(s)\),
+  \item it creates or removes an assignment edge of the form \(s \assign s'\),
+  \item it creates or removes a collection membership edge of the form \(s \member s'\).
+  \end{compactitem}
+\end{dfn}
+
+\begin{example}
+  Changing \lit{P1.hung\-ry\-Rate} in \vref{fig:transform:view-2} touched \lit{P1.hung\-ry\-Rate}, because \(\lit{value}(\)\lit{P1.hung\-ry\-Rate}\()\) was modified. Adding a new philosopher \lit{P2} and its \textabbr{RGSPN} module \lit{PM2} in \vref{fig:transform:view-3} touched \lit{TM.think\-ing\-Times}, because the membership edge \lit{TM.think\-ing\-Times} \(\member\) \lit{PM2.think\-ing\-Time} was added.
+\end{example}
+
+When a change is to be propagated from the abstract analysis model to the conrete \textabbr{RGSPN}, the cones of any touched symbols are inspected. The images of symbols and arcs in the touched cones (if any) are marked as dirty in the concrete \textabbr{RGSPN}. Moreover, any symbol copied from the abstract analysis model starts as dirty. Dirtyness is tracked in the concretizer trace model.
+
+After synchronizing any other change, such as the copying of concrete symbols and the removal of symbols with dangling traceability edges, the cleanup of dirty symbols and arcs proceeds. Symbols are cleaned up in the order of their dependencies. Lastly, dirty arcs are cleaned up by re-evaluating their inscriptions.
+
+\begin{dfn}
+  A symbol \(s_1'\) of the concrete analysis model \emph{precedes} \(s_2'\), written as \(s_1' \preceq s_2'\) if \(s_1'\) and \(s_2'\) are the images of \(s_1\) and \(s_2\) from the abstract analysis model, respectively, and \(s_1 \in \rel{support}(s_2)\).
+\end{dfn}
+
+Symbols \(s_1\) and \(s_2\) such that \(s_1 \neq s_2\), but both \(s_1 \in \rel{support}(s_2)\) and \(s_2 \in \rel{support}(s_1)\) constitute a \emph{circular dependency}, which will be identified as a source of inconsistency of the abstract analysis model in \vref{ssec:transform:inconsistent}. If there are no cicrular dependencies \(\preceq\) forms a partial order over the symbols of the concrete \textabbr{RGSPN}.
+
+Symbol cleanup processes dirty symbols in nondecreasing order according to \(\preceq\). Each expression associated with a symbol is re-evaluated by inlining the values of mentioned variables, unfolding collection aggregations, as well as replacing mentioned places and parameter symbols by their images. These operations produce expressions equivalent to the originals according to the semantics described in \vref{ssec:rgspn:semantics}.
+
+As the symbols are ordered by their dependencies upon traversal, there is no need to recursively process the value expressions of mentioned variable symbols. The variable symbol was already processed, because any mentioned variable is in the support of the expression; hence the image of the variable already has a re-evaluated value expression that was simplified as much as possible. Moreover, basic constant propagation arithmetic is performed if the result of evaluation is a Boolean or numerical constant.
+
+After processing all the dirty symbols the inscriptions of dirty arcs are similarly re-evaluated. Because variables cannot depend on arc inscriptions the dependency order is not violated and variables can be inlined as above.
+
+The concretizer transformation is aided by incremental model queries over the abstract \textabbr{RGSPN} and the concretizer trace model. The reflexive transitive closure of the assignment relation \(\assign^*\), the reference resolution relation \(\leadsto\) and supports of symbols in the abstract analysis model, as well as the dependency order \(\preceq\) on the concrete analysis model is maintained by incremental transitive closure computation~\citep{Bergmann12incscc}.
+
 \subsection{Handling of inconsistencies}
 \label{ssec:transform:inconsistent}
+
+Inconsistencies in the abstract \textabbr{RGSPN} analysis model refer to constraint violations that prevent the model from being concretized. While type checking for \textAbbr{RGSPN}s as defined in \vref{dfn:rgspn:well-typed} can prevent some problems at design time, other violations arise from the mapping rules the structure of the dsource model of the view transformation.
+
+View transformation specification developers should strive for creating concretizable analysis models from valid source models. However, a sequence of source model modifications may produce inconsistent analysis models event if the source model becomes valid at the end of the sequence. For example, if a source model object is replaced with another, there may an instant when an \textabbr{RGSPN} reference has no assignments or there are multiple contradictory assignments, depending on whether the replacement first removes the old object or inserts the new one. Hence the concretization must be robust in face of inconsistent abstract \textAbbr{RGSPN}s and can resume transformation when the consistency is restored.
+
+Inconsistency may appear in the abstract analysis model due to three main reasons:
+
+\begin{itemize*}
+\item Reference assignments may be missing or contradictory. If a reference \(r\) has no assignments, or any assigned symbol \(s\) (i.e.~\(r \assign^* s\)) is itself a reference \(r\) cannot be concretized. Moreover, if there are multiple concrete symbols \(s_1, s_2\) such that \(s_1 \ne s_2\)  but \(r \assign^* s_1\) and \(r \assign^* s_2\), there is no unambiguous concretization of \(r\).
+\item There may be circular dependencies among symbols which prevent expression inlining. Possible circular dependencies include
+  \begin{compactitem}
+  \item simple circularly mentioned variables, \(\rel{value}(v_1) = v_2\), \(\rel{value}(v_2) = v_1\),
+  \item circular mentioning through a reference, \(\rel{value}(v_1) = r\), \(r \assign v_2\), \(\rel{value}(v_2) = v_1\),
+  \item circular mentioning through a collection, \(\rel{value}(v) = \lit{sum(}c\lit)\), \(c \assign v\) 
+  \end{compactitem}
+  and many variations thereof. We decided to disallow any form of circular dependency to avoid confusion. Only one of \(s_1 \in \rel{support}(s_2)\) and \(s_2 \in \rel{support}(s_1)\) may hold if \(s_1 \ne s_2\). This always makes \(\preceq\) a preorder on the concrete analysis model.
+\item Concretization may lead to disallowed parallel arcs. For example, if \(p \overset{e_1}{\inarc} t\),\(p \overset{e_2}{\inarc} r\) and \(r \assign t\) hold in the abstract analysis model there would be two parallel arcs \(p' \xrightarrow{e_1, e_2} t\) in the concrete \textabbr{RGSPN}. This is forbidden by \vref{dfn:rgspn:impl}.
+\end{itemize*}
+
+Inconsistencies are tracked by the incremental model query engine during the concretization transformation in the same way as reference resolutions and the dependency order. The cleanup transformation is prevented from traversing symbols and arcs depending on inconsistent parts of the model even if they were marked dirty; thus the concretization is \emph{delayed} until consistency is restored. Changes restoring consistency touch the delayed symbols, hence the cleanup transformation can handle them properly again.
+
+The match sets model queries tracking inconsistencies can be retrieved from the transformation engine. Therefore if the analysis model is presumed to be consistent after a valid sequence of source model changes this fact can be verified. In addition, the error markers generated by inconsistencies can serve as a tool for transformation specification debugging.
