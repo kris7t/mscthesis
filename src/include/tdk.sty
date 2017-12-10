@@ -533,13 +533,13 @@
   uniquename=init,
   uniquelist=false,
   backref=false,
+  block=ragged,
   doi=true,
   isbn=true,
   eprint=true,
   natbib=true,
   hyperref=true,
   autolang=hyphen,
-  block=ragged,
   language=english,
   backend=biber
   ]{biblatex}
@@ -623,27 +623,35 @@
   \let\bibopenparen=\bibopenbracket%
   \let\bibcloseparen=\bibclosebracket}
 
-% Bibmacro patching tools courtesy of Enrico Gregorio (egreg).
-% https://tex.stackexchange.com/a/41867/8744
-\def\act@on@bibmacro#1#2{%
-  \expandafter#1\csname abx@macro@\detokenize{#2}\endcsname
-}
-\def\patchbibmacro{\act@on@bibmacro\patchcmd}
-\def\pretobibmacro{\act@on@bibmacro\pretocmd}
-\def\apptobibmacro{\act@on@bibmacro\apptocmd}
-\def\showbibmacro{\act@on@bibmacro\show}
-
 % Patch bibliography to also use brackets.
 % https://tex.stackexchange.com/a/41867/8744
-\patchbibmacro{date+extradate}{\printtext[parens]}{\printtext[brackets]}{}{}
+\xpatchbibmacro{date+extradate}{\printtext[parens]}{\printtext[brackets]}{}{}
 
 % Issue number in parentheses.
 % https://tex.stackexchange.com/a/238211/8744
 \renewbibmacro*{volume+number+eid}{%
   \printfield{volume}%
-  \printfield[parens]{number}%
+  \setunit*{\addnbspace}%
+  \printfield{number}%
   \setunit{\addcomma\space}%
   \printfield{eid}}
+\DeclareFieldFormat[article]{volume}{\textbf{#1}}
+\DeclareFieldFormat[article]{number}{\mkbibparens{#1}}
+\DeclareFieldFormat[article]{pages}{#1}
+\renewcommand\bibpagespunct{\ifentrytype{article}{\addcolon}{\addcomma}\space}
+\DeclareFieldFormat[article,inbook,incollection,inproceedings]{citetitle}{#1}
+\DeclareFieldFormat[article,inbook,incollection,inproceedings]{title}{#1}
+\DeclareFieldFormat[thesis,patent,unpublished]{citetitle}{\mkbibemph{#1}}
+\DeclareFieldFormat[thesis,patent,unpublished]{title}{\mkbibemph{#1}}
+\DeclareFieldFormat{journaltitle}{\mkbibemph{#1}\isdot}
+\xpatchbibmacro{journal+issuetitle}{%
+  \setunit*{\addspace}%
+  \iffieldundef{series}}
+  {%
+  \setunit*{\addcomma\space}%
+  \iffieldundef{series}}{}{}
+\renewbibmacro{in:}{%
+  \ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
 
 % Non-breaking space before year
 % https://tex.stackexchange.com/a/312565/8744

@@ -60,7 +60,24 @@ Logical properties of complex asynchronous systems may be captured by temporal l
 
 Markov reward models are the principal tools for defining performance metrics for \textAbbr{CTMC}s. They associate a stochastic process \(\{R(t) : t \ge 0\}\) with the \textAbbr{CTMC}, which may depend on the active state of the \textabbr{CTMC}~(state rewards) or on the state transitions~(transition rewards). A wide variety of analyses are possible, such as the computation of the expected steady-state reward \(\mathbb{E} R(\infty)\), the expected transient reward \(\mathbb{E} R(t)\) or the expected accumulated reward \(\mathbb{E} \int_{0}^t R(\tau)\, d\tau\)~\citepeg{Reibman89transient}. The results are interpreted as the expected values of the measures of interest. Sensitivity analysis~\citepeg{Blake88sensitivity} can determine the rate of change in a metric caused by changing model parameters. Reward analysis can be generalized to Markov decision processes to study the effects of external control in stochastic systems~\citep{Baier17maximizing}.
 
-Several logics have been developed to study temporal and stochastic properties. Probabilistic computation tree logic (\textabbr{PCTL}) was developed by \citet{Hansson94pctl} for discrete-time systems, while \todo*{CSL, CSLTA, CSRL, GCSRL}.
+Several logics have been developed to study temporal and stochastic properties. Probabilistic computation tree logic (\textabbr{PCTL}) was proposed by \citet{Hansson94pctl} for discrete-time systems, while continuous stochastic logic~(\textabbr{CSL})~\citep{Aziz96csl} and \textabbr{CSL} with timed automata~(\(\textabbr{CSL}^{\textabbr{TA}}\))~\citep{Donatelli09cslta} can describe properties of continuous-time systems. Cntinuous stochastic reward logic~(\textabbr{CSRL}) to incorporates reward analysis into \textabbr{CSL}~\citep{Kwiatkowska06csrl}. A generalized version of \textabbr{CSRL}~(\textabbr{GCSRL}) was developed by~\citet{Kuntz07gcsrl} for \textAbbr{GSPN}s and other systems with both timed and untimed stochastic behavior.
+
+\subsubsection{Queries for component-based models}
+
+An extension for \textabbr{UML} class diagrams was proposed by \citet{Bernardi03building} to construct stochastic metrics and property specifications for software models. Special derived features are added to model parameters, metrics and dependability requirements (prefixed with \enquote{/}, \enquote{\$} and \enquote{/\$}, respectively). \citet{Bernardi04trio} also incorporated \textabbr{TRIO} language for temporal property specification.
+
+Measure Specification Language (\textabbr{MSL}) uses first-order logic to specify reward structures for component-based stochastic models~\citep{Aldini07msl}. \citet{Aldini11combining} combined \textabbr{MSL} with \textabbr{CSRL} to extend its expressive power to temporal properties.
+
+A temporal extension to Object Constraint Language~(\textabbr{OCL})~\citep{OMG14ocl} was proposed by~\citet{Ziemann03temporal} to formulate temporal constraints on \textabbr{UML} models. \citet{Zalila13integration} integrated temporal \textabbr{OCL} and bidirectional model transformations for the formal verification of domain-specific modeling languages.
+
+The \mixedabbr{P}ro\mixedabbr{M}o\mixedabbr{B}ox framework was developed by \citet{Meyers14promobox} for the generation of domain-specific property specification languages. The input of \mixedabbr{P}ro\mixedabbr{M}o\mixedabbr{B}ox is an engineering \textabbr{DSL} based on which it specializes generic built-in sublanguages for \begin{inparaenum}
+\item structural design,
+\item run time state representation,
+\item property specification,
+\item input sequences and
+\item output traces.
+\end{inparaenum}
+The property specification sublanguage contains templates with expressive power equivalent to \textabbr{LTL}. To our best knowledge, there was no attempt to incorporate stochastic properties into the framework.
 
 \section{Generalized stochastic Petri net modules}
 
@@ -94,7 +111,7 @@ The \textabbr{RGSPN} formalism has six symbol kinds:
 
 \newpara \textbf{References} can stand for other symbols from foreign \textabbr{RSGPN} fragments. A reference has a \emph{reference type}, which is the type of the symbol at which it may be \emph{assigned} to point. A reference may only point at a single symbol at a time; however, references may be chain, as long as some concrete symbol can be resolved at the end of the chain. Graphical representation of references is derived from the pointed symbols but uses dashed lines.
 
-References allow assembling different Petri net modules by merely adding reference assignments. As it will be shown in \vref{sec:rgspn:inlining}, setting a single reference can correspond to redirecting many arcs in the net. Hence references help exploiting the modularity already present in the graph structure of Petri nets.
+References allow assembling different Petri net modules by merely adding reference assignments. As it will be shown in \vref{sec:transform:execution}, setting a single reference can correspond to redirecting many arcs in the net. Hence references help exploiting the modularity already present in the graph structure of Petri nets.
 
 \newpara \textbf{Collections,} similarly to references, point to other symbols. A collection may point to multiple symbols at one is their type is consistent with the \emph{member type} of the collection. The graphical notation is derived from the member type by adding a drop shadow.
 
@@ -108,7 +125,7 @@ Any relation between two \textabbr{RGSPN} symbol will be called an \emph{edge}. 
 
 Petri net arcs between transitions and places may be \emph{output}, \emph{input} or \emph{inhibitor} arcs. Either end may be a reference to an appropriate place or transition instead of a concrete symbol. Arcs are equipped with possibly marking-dependent \emph{inscription}, which is the number of tokens moved by the transition. If the inscription is the constant \(1\), we will omit it. Parallel arcs between the same symbols and with the same arc kind are forbidden.
 
-Reference assignments connect references to the symbol at which they point. Indirect references, i.e.~\(r_1 \assign r_2\), \(r_2 \assign s\) are possible and arbitrary chains of references may be built. In particular, an \textabbr{RGSPN} may even contain reference cycles (\(r_1 \assign r_2\), \(r_2 \assign r_1\)), or multiple, contradictory assignments (\(r \assign s_1\), \(r \assign s_2\), \(s_1 \ne s_2\)). However, \emph{inconsistent} \textAbbr{RGSPN}s cannot be transformed into \textAbbr{GSPN}s for analysis. Inconsistency handling is discussed in detail in \vref{ssec:rgspn:inconsistent}.
+Reference assignments connect references to the symbol at which they point. Indirect references, i.e.~\(r_1 \assign r_2\), \(r_2 \assign s\) are possible and arbitrary chains of references may be built. In particular, an \textabbr{RGSPN} may even contain reference cycles (\(r_1 \assign r_2\), \(r_2 \assign r_1\)), or multiple, contradictory assignments (\(r \assign s_1\), \(r \assign s_2\), \(s_1 \ne s_2\)). However, \emph{inconsistent} \textAbbr{RGSPN}s cannot be transformed into \textAbbr{GSPN}s for analysis. Inconsistency handling is discussed in detail in \vref{ssec:transform:inconsistent}.
 
 Collection memberships connect collections to their member symbols. Either end of the membership edge may be a reference to a collection or an appropriate member symbol, respectively. In contrast with arcs, parallel membership edges are possible in order to express positive integer-weighted aggregations.
 
@@ -272,7 +289,7 @@ Types for the symbols of the net are synthesized by the function \(\rel{type}\co
 \end{equation}
 The types of places and transitions match their kinds, while variables have a variable type according to their dependence and pretype. The types of parameters are fixed to \(\vartype{\lit{param}}{\lit{double}}\), as they are continuous and parameter dependent by definition. References always have the type of the symbol they may point at; therefore they may stand for the pointed symbol. Collections append a collection type qualifier to the type of their members.
 
-The \emph{typing relation} \({\_} \vdash {\_} \oftype {\_}\) assigns types to expressions \(e \in \Expr_\Sigma\). We write \(\Sigma \vdash e \oftype \tau\) if \(e\) is of type \(\tau\) in the context of the \textabbr{RGSPN} signature \(\Sigma\). As it will be seen in \vref{sec:rgspn:expression} the typing relation respects subtyping, i.e.
+The \emph{typing relation} \({\_} \vdash {\_} \oftype {\_}\) assigns types to expressions \(e \in \Expr_\Sigma\). We write \(\Sigma \vdash e \oftype \tau\) if \(e\) is of type \(\tau\) in the context of the \textabbr{RGSPN} signature \(\Sigma\). As it will be seen in \vref{sec:transform:execution} the typing relation respects subtyping, i.e.
 \begin{equation}
   \frac{\Sigma \vdash e \oftype \tau \quad \tau \subtype \tau'}{%
     \Sigma \vdash e \oftype \tau'} \Tag{T-Sub} \,\text.
@@ -346,7 +363,7 @@ Note that marking expressions and collection aggregations directly take a symbol
 
 \subsection{Typing}
 
-\begin{table}
+\begin{table}[b!]
   \caption{Typing rules for expressions.}
   \label{fig:rgspn:typing}
   \begin{tabu}{@{}X[c]r@{}}
@@ -355,68 +372,68 @@ Note that marking expressions and collection aggregations directly take a symbol
       \quad \rho \in \{\lit{int}, \lit{double}\}
       \quad \Sigma \vdash e \oftype \delta\,\rho
     }{\Sigma \vdash \mathop{\diamond} e \oftype \delta\,\rho}\),
-    & \Tagstyle{T-Unary\(\pm\)} \\[1.2ex]
+    & \Tagstyle{T-Unary\(\pm\)} \\[1ex]
     \(\dfrac{\Sigma \vdash e \oftype \delta\,\lit{boolean}
     }{\Sigma \vdash \lit{!} e \oftype \delta\,\lit{boolean}}\),
-    & \Tagstyle{T-UnaryNot} \\[1.2ex]
+    & \Tagstyle{T-UnaryNot} \\[1ex]
     \(\dfrac{{\diamond} \in \{\lit{A}, \lit{U}\}
       \quad \Sigma \vdash e \oftype \vartype{\lit{path}}{\lit{boolean}}
     }{\Sigma \vdash \mathop{\diamond} e \oftype \vartype{\lit{prop}}{\lit{boolean}}}\),
-    & \Tagstyle{T-UnaryState} \\[1.2ex]
+    & \Tagstyle{T-UnaryState} \\[1ex]
     \(\dfrac{{\diamond} \in \{\lit{X}, \lit{F}, \lit{G}\}
       \quad \Sigma \vdash e \oftype \vartype{\lit{path}}{\lit{boolean}}
     }{\Sigma \vdash \mathop{\diamond} e \oftype \vartype{\lit{path}}{\lit{boolean}}}\),
-    & \Tagstyle{T-UnaryPath} \\[1.2ex]
+    & \Tagstyle{T-UnaryPath} \\[1ex]
     \(\dfrac{{\diamond} \in \{\lit{+}, \lit{-}, \lit{*}\}
       \quad \rho \in \{\lit{int}, \lit{double}\}
       \quad \Sigma \vdash e_1 \oftype \delta\,\rho
       \quad \Sigma \vdash e_2 \oftype \delta\,\rho
     }{\Sigma \vdash e_1 \mathbin{\diamond} e_2 \oftype \delta \,\rho}\),
-    & \Tagstyle{T-BinNumeric} \\[1.2ex]
+    & \Tagstyle{T-BinNumeric} \\[1ex]
     \(\dfrac{\Sigma \vdash e_1 \oftype \delta\,\lit{double}
       \quad \Sigma \vdash e_2 \oftype \delta\,\lit{double}
     }{\Sigma \vdash e_1 \mathbin{\lit/} e_2 \oftype \delta \,\lit{double}}\),
-    & \Tagstyle{T-BinDiv} \\[1.2ex]
+    & \Tagstyle{T-BinDiv} \\[1ex]
     \(\dfrac{\Sigma \vdash e_1 \oftype \vartype{\lit{path}}{\lit{boolean}}
       \quad \Sigma \vdash e_2 \oftype \vartype{\lit{path}}{\lit{boolean}}
     }{\Sigma \vdash e_1 \mathbin{\lit{U}} e_2 \oftype \vartype{\lit{path}}{\lit{boolean}}}\),
-    & \Tagstyle{T-BinUntil} \\[1.2ex]
+    & \Tagstyle{T-BinUntil} \\[1ex]
     \(\dfrac{{\diamond} \in \{\lit{==}, \lit{!=}\}
       \quad \Sigma \vdash e_1 \oftype \delta\,\rho
       \quad \Sigma \vdash e_2 \oftype \delta\,\rho
     }{\Sigma \vdash e_1 \mathbin{\diamond} e_2 \oftype \delta\,\lit{boolean}}\),
-    & \Tagstyle{T-BinEq} \\[1.2ex]
+    & \Tagstyle{T-BinEq} \\[1ex]
     \(\dfrac{{\diamond} \in \{\lit{<}, \lit{<=}, \lit{>}, \lit{>=}\}
       \quad \Sigma \vdash e_1 \oftype \delta\,\lit{double}
       \quad \Sigma \vdash e_2 \oftype \delta\,\lit{double}
     }{\Sigma \vdash e_1 \mathbin{\diamond} e_2 \oftype \delta\,\lit{boolean}}\),
-    & \Tagstyle{T-BinCompare} \\[1.2ex]
+    & \Tagstyle{T-BinCompare} \\[1ex]
     \(\dfrac{{\diamond} \in \{\lit{\&\&}, \lit{||}\}
       \quad \Sigma \vdash e_1 \oftype \delta\,\lit{boolean}
       \quad \Sigma \vdash e_2 \oftype \delta\,\lit{boolean}
     }{\Sigma \vdash e_1 \mathbin{\diamond} e_2 \oftype \delta\,\lit{boolean}}\),
-    & \Tagstyle{T-BinLogical} \\[1.2ex]
+    & \Tagstyle{T-BinLogical} \\[1ex]
     \(\dfrac{\Sigma \vdash e_1 \oftype \delta\,\lit{boolean}
       \quad \Sigma \vdash e_2 \oftype \delta\,\rho
       \quad \Sigma \vdash e_3 \oftype \delta\,\rho
     }{\Sigma \vdash \lit{if}\ \lit(e_1\lit)\ e_2\ \lit{else}\ e_3 \oftype \delta\,\rho}\), &
-    \Tagstyle{T-If} \\[1.2ex]
+    \Tagstyle{T-If} \\[1ex]
     \(\dfrac{\rel{agg} \in \{\lit{sum}\mkern1mu, \lit{prod}\}
       \quad \rho \in \{\lit{int}, \lit{double}\}
       \quad \rel{type}(b) = \bagtype{\delta\,\rho}
     }{\Sigma \vdash \rel{agg}\lit(b\lit) \oftype \delta\,\rho}\),
-    & \Tagstyle{T-AggNumeric} \\[1.2ex]
+    & \Tagstyle{T-AggNumeric} \\[1ex]
     \(\dfrac{\rel{agg} \in \{\lit{all}, \lit{any}\}
       \quad \rel{type}(b) = \bagtype{\delta\,\lit{boolean}}
     }{\Sigma \vdash \rel{agg}\lit(b\lit) \oftype \delta\,\lit{boolean}}\),
-    & \Tagstyle{T-AggLogical} \\[1.2ex]
+    & \Tagstyle{T-AggLogical} \\[1ex]
     \multicolumn{2}{@{}p{\linewidth}@{}}{
       \begin{tabu}{@{}X[c]rX[c]r@{}}
         \(v \oftype \rel{type}(v)\),
         & \Tagstyle{T-Var}
         & \(\dfrac{\rel{type}(p) \subtype \lit{place}
         }{\lit{\#} p \oftype \vartype{\lit{marking}}{\lit{int}}}\),
-        & \Tagstyle{T-Marking} \\[1.2ex]
+        & \Tagstyle{T-Marking} \\[1ex]
         \(\dfrac{\ell \in \llbracket\rho\rrbracket
         }{\Sigma \vdash \ell \oftype \lit{const}\,\rho}\),
         & \Tagstyle{T-Literal}
@@ -438,7 +455,7 @@ A complete set of typing rules for \(\Expr_\Sigma\) is presented in~\vref{fig:rg
 
 The types of unary operators, binary operators, conditional and aggregate expressions are captured by the rules \textsc{T-Unary}, \textsc{T-Bin}, \textsc{T-If} and \textsc{T-Agg}. Instead of introducing types for operators and typing rules for operator application, typing rules for all operators are written out explicitly. While this approach increases the number of typing rules considerably, the lack of function types and polymorphic types allows the syntax of \(\rel{Type}\) to remain simple. If more generality is desired, the type system may be extended to support user-defined operators and operator types as described in \vref{rem:rgspn:colored}.
 
-In spite of being handled only in the type derivation rules, several operators are polymorphic in the types of the arguments. However, \textsc{T-BinaryDiv} forces both arguments of the division operator be be real numbers, so that ambiguities concerning integer division are avoided. Most compound expressions are \emph{dependency polymorphic}, that is, the types of their arguments may have any dependency qualifier \(\delta\), which will be inherited by the type of the whole expression. The exception are the \(\textabbr{CTL}^*\) operators, which operate on \lit{path} formulas and produce \lit{path} or \lit{prop} state formulas. 
+In spite of being handled only in the type derivation rules, several operators are polymorphic in the types of the arguments. However, \textsc{T-BinaryDiv} forces both arguments of the division operator be be real numbers, so that ambiguities concerning integer division are avoided. Most compound expressions are \emph{dependency polymorphic}, that is, the types of their arguments may have any dependency qualifier \(\delta\), which will be inherited by the type of the whole expression. The exceptions are the \(\textabbr{CTL}^*\) operators, which operate on \lit{path} formulas and produce \lit{path} or \lit{prop} state formulas. 
 
 Variable and marking references are handled by \textsc{T-Var} and \textsc{T-Marking}. Referring to markings of places always produces a \lit{marking} dependent \lit{int}. \textsc{T-Literal} assigns \lit{const} types to literal constants. Lastly, \textsc{T-Sub} allows the use of subtyping in type derivations.
 
@@ -476,7 +493,7 @@ Now we will clarify the semantics \(\llbracket \_ \rrbracket\) of the expression
 
 Operators from \vref{eq:rgspn:expression} act pointwise on the interpretation functions, e.g.~to calculate \(e_1 \mathbin{\diamond} e_2\), \(e_1\) and \(e_2\) are separately evaluated in the dependence context, then the operator \(\diamond\) is applied to the resulting values.\footnote{This makes variable types with a dependence qualifier other than \lit{const} specializations of \emph{Reader} (also known as \emph{Environment}) applicative functors~\citep[Section~8]{McBride08applicative}.}
 
-The \(\textabbr{CTL}^*\) operators, which explicitly require \lit{prop} and \lit{path} dependence contexts, are excepted from pointwise evaluation. A \lit{prop} expression is treated as a state predicate over markings \(m\) after plugging the parameter binding \(\vec{\uptheta}\) and the \textabbr{CTMC} into the interpretation function. Similarly, \lit{path} expressions are treated as predicates over paths \(\Pi\) and are composed by the operators according to \(\textabbr{CTL}^*\) semantics [see e.g.~\todo*{Cite}].
+The \(\textabbr{CTL}^*\) operators, which explicitly require \lit{prop} and \lit{path} dependence contexts, are excepted from pointwise evaluation. A \lit{prop} expression is treated as a state predicate over markings \(m\) after plugging the parameter binding \(\vec{\uptheta}\) and the \textabbr{CTMC} into the interpretation function. Similarly, \lit{path} expressions are treated as predicates over paths \(\Pi\) composed by the operators according to \(\textabbr{CTL}^*\) semantics~\citepeg{Emerson86ctlstar}.
 
 To interpret variables mentioned inside expressions, we introduce \emph{reference resolution}. A reference symbol \(r \in R\) may point at some concrete \(s \in \Sigma \setminus R\) or at another references \(r' \in R\). We say that \(r\) \emph{resolves to} \(s \in \Sigma \setminus R\), written as \(r \leadsto s\), if \(s\) is the unique concrete symbol with a chain of reference assignments from \(r\) to \(s\). In addition, every concrete symbol resolves to itself, \(s \leadsto s\) for all \(s \in \Sigma \setminus R\). This notion is formalized as follows:
 \begin{dfn}
@@ -497,7 +514,7 @@ If a symbol \(v\) of variable type is mentioned in an expression, we simply subs
 \end{equation}
 Note that if the reference \(v\) cannot be resolved or it points to an invalid symbol the interpretation is not defined.
 
-Mentioning the marking of place simply refers to the number of tokens of the place (after resolving references),
+Mentioning the marking of place simply refers to the number of tokens of the place after resolving references,
 \begin{equation}
   \llbracket \lit\# p \rrbracket = \begin{cases}
     m \mapsto m(p')\text, & \text{if \(p \leadsto p'\) and \(p' \in P\),} \\
@@ -525,16 +542,7 @@ The aggregation \rel{agg} is interpreted as
 \end{equation}
 where the operator \(\diamond\) acts over the interpretation functions \(\llbracket s \rrbracket\) as discussed above while respecting multiplicity and the constant \(n\) is type coerced as needed.
 
-\subsubsection{Stochastic queries}
-
-\todo*{The sections below should go to the transformation chapter.}
-
-\section{Reference inlining}
-\label{sec:rgspn:inlining}
-
-\subsection{Handling inconsistent models}
-\label{ssec:rgspn:inconsistent}
-
+The interpretations given above for mentioned symbols, token counts and collection aggregation in expressions are exploited in \vref{sec:transform:execution} for \emph{inlining}. The inlining process transforms expressions into expressions with equivalent semantics that can be exported to analysis tools without special support for \textAbbr{RGSPN}s.
 
 %%% Local Variables:
 %%% mode: latex
