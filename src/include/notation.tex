@@ -57,6 +57,18 @@
 \newcommand*{\Par}{\rel{Par}}
 \newcommand*{\Expr}{\rel{Expr}}
 \newcommand*{\Type}{\rel{Type}}
+\newcommand*{\tranto}[1]{\mathbin{\begin{tikzpicture}[baseline]
+      \node (n) [anchor=base,inner xsep=1pt,inner ysep=1pt] {\mathstrut\kern1pt\ensuremath{#1}};
+      \draw (n.north west) -- (n.south west) -- (n.south east) -- ($(n.east)+(3pt,0)$) -- (n.north east) -- cycle;
+    \end{tikzpicture}}}
+\newcommand*{\tranenabled}[2]{#1\,{\tranto{#2}}}
+\newcommand*{\reachto}{\mathbin{\begin{tikzpicture}[baseline]
+      \node (n) [anchor=base,inner xsep=1pt,inner ysep=1pt] {\mathstrut\kern1pt\ensuremath{\ast}};
+      \draw (n.north west) -- (n.south west) -- (n.south east) -- ($(n.east)+(3pt,0)$) -- (n.north east) -- cycle;
+      \draw ($(n.south east)+(2pt,0)$) -- ($(n.east)+(5pt,0)$) -- ($(n.north east)+(2pt,0)$);
+      \draw ($(n.south east)+(4pt,0)$) -- ($(n.east)+(7pt,0)$) -- ($(n.north east)+(4pt,0)$);
+    \end{tikzpicture}}}
+\newcommand*{\RS}{\textit{RS}}
 
 %
 % Probability

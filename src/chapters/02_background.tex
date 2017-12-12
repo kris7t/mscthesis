@@ -1,4 +1,200 @@
 \chapter{Background}
+\label{chap:background}
+
+\section{Metamodeling and modeling}
+
+\todo*{}
+
+\section{Formal models for stochastic analysis}
+
+In this section we recall some of the basic formalisms involved in our work. Petri nets are introduced firsty, which serve as the basis in our framework to express stochastic models. Then we move to the background in stochastic modeling and analysis methods. Portions of this section were adapted from previous work by \citet[Chapter~2]{Klenik15configurable}.
+
+Throughout this section and the rest of this work \(\NN\), \(\NNpos\), \(\RR\), \(\RRpos\) will refer to the sets of natural numbers including zero \(\NN = \{0, 1, 2, \ldots\}\), the set of positive natural numbers \(\NNpos = \NN \setminus \{0\}\), the set of real numbers and the set of positive real numbers, respectively.
+
+\subsection{Petri nets}
+\label{ssec:background:petri-nets}
+
+Petri nets are a widely used graphical and mathematical modeling tool for systems which are concurrent, asynchronous, distributed, parallel or nondeterministic~\citep{Murata89petri}.
+
+\begin{dfn}
+  A \emph{Petri net with inhibitor arcs and priorities} is a 7-tuple
+  \begin{equation}
+    \textit{PN} = \ltup P, T, m_0, \pi, {\inarc}, {\outarc}, {\inharc} \rtup \text,
+  \end{equation}
+  where the sets \(P\) and \(T\) are disjoint and
+  \begin{compactitem}
+  \item \(P\) is a finite set of \emph{places};
+  \item \(T\) is a finite set of \emph{transitions};
+  \item \(m_0 \colon P \to \NN\) is the \emph{initial marking function};
+  \item \(\pi \colon T \to \NN\) is the \emph{transition priority function};
+  \item \({\outarc}, {\inarc}, {\inharc} \subseteq \Sigma \times \NNpos \times \Sigma\) are the relations of \emph{output, input} and \emph{inhibitor arcs}, respectively, which are free of parallel arcs, i.e.~\(\ltup p, n_1, t \rtup, \ltup p, n_2, t \rtup \in {\outarc}\) implies \(n_1 = n_2\) and this property holds also for \(\inarc\) and \(\inharc\).
+  \end{compactitem}
+\end{dfn}
+
+We will write \(p \overset{n}{\outarc} t\), \(p \overset{n}{\inarc} t\) and \(p \overset{n}{\inharc} t\) for \(\ltup p, n, t \rtup \in {\outarc}\), \(\ltup p, n, t \rtup \in {\inarc}\) and \(\ltup p, n, t \rtup \in {\inharc}\), respectively. The arc \emph{inscriptions} are omitted in the case \(n = 1\).
+
+Petri nets are graphically represented as edge weighted directed bipartite graphs. Places are drawn as circles, while transitions are drawn as bars or rectangles. The arc inscriptions are shown as edge weights.
+
+A \emph{marking} \(m: P \to \NN\) assigns a number of \emph{tokens} to each place.
+The transition \(t\) is \emph{enabled} in the marking \(m\) if \(m(p) \ge n\) for all \(p \overset{n}{\outarc} t\) and \(m(p) < n\) for all \(p \overset{n}{\inharc} t\).
+
+An enabled transition is \emph{fireable}, written as \(\tranenabled{m}{t}\), if no enabled transition has higher priority, i.e.~\(\pi(t') \le \pi(t)\) for all enabled transitions \(t'\).
+
+A fireable transition \(t\) can be \emph{fired} to yield a marking \(m'\), written as \(m \tranto{t} m'\), where \(m'(p) = m(p) - n_{\textrm{in}}+ n_{\textrm{out}}\) if \(p \xrightarrow{n_{\textrm{in}}} t\) and \(p \xleftarrow{n_{\textrm{out}}} t\). In only an input or output arc is present between \(t\) and \(p\), the token count of \(p\) is only decreased or increased, respectively. Places not connected to \(t\) by an arc have their token count unchanged.
+
+A marking \(m'\) is \emph{reachable} from \(m\), written as \(m \reachto m'\), if there is a sequence of markings and transitions such that \(m = m_1 \tranto{t_1} m_2 \tranto{t_2} \cdots \tranto{t_{k - 1}} m_k = m'\). The \emph{reachable state space} \(\RS\) of a Petri net is the set of markings reachable from its initial marking,
+\begin{equation}
+  \RS = \{m\colon P \to \NN \mid m_0 \reachto m \} \text.
+\end{equation}
+
+The Petri net is \emph{bounded} is there is an upper bound \(K \in \NN\) such that \(m(p) \le K\) for all \(p \in P\) and \(m \in \RS\). The reachable state space \(RS\) is finite if and only if the net is bounded.
+
+The state space of a bounded Petri net can be determined efficiently by the \emph{saturation} algorithm~\citep{Ciardo01saturation,Ciardo12tenyears}. Extensions have been proposed to the  algorithm to handle transition priorities effectively~\citep{Miner06saturation,Marussy17priorities}.
+
+The arc inscriptions of Petri net may depend on the current marking by replacing the positive integers \(\NNpos\) with a set of algebraic expressions \(\Expr_P\) over the token counts of places. In the marking dependent setting \({\outarc}, {\inarc}, {\inharc} \subseteq \Sigma \times \Expr_P \times \Sigma\) and the inscription expressions are evaluated according to the marking \(m\) when firing transitions \(m \tranto{t} m'\). Such \emph{Petri nets with marking-dependent arcs} can simplify formal modeling \citep{Ciardo93decomposition}; however, they may preclude the use of some analysis techniques.
+
+\begin{runningExample}
+  \todo*{Dining philosophers example Petri net.}
+\end{runningExample}
+
+\subsection{Continuous-time Markov chains}
+
+Continuous-time Markov chains (\textAbbr{CTMC}s) are mathematical tools for describing the behavior of systems in countinous time where the stochastic behavior of the system only depends on its current state~\citepeg{Reibman89transient}. This assumptions is reasonable in a wide class of modeling tasks; hence \textAbbr{CTMC}s are commonly used in the reliability and performability prediction of critical systems.
+
+\begin{dfn}
+  A \emph{continuous-time Markov chain} (\textabbr{CTMC})
+  \(X = \{ X(t) \in S \mid t \ge 0 \}\) over the finite state
+  space $S = \{0, 1, \ldots, n - 1\}$ is a continuous-time random
+  process with the \emph{Markovian} or memoryless property:
+  \begin{multline}\allowdisplaybreaks[0]
+    \Pr(X(t_k) = x_k \mid X(t_{k - 1}) = x_{k - 1}, X(t_{k -
+      2}) = x_{k - 2}, \ldots, X(t_{0}) = x_{0}) \\
+    = \Pr(X(t_k) = x_k \mid X(t_{k - 1}) = x_{k - 1}) \text,
+  \end{multline}
+  where $t_0 \le t_1 \le \cdots \le t_k$ and $X(t_k)$ is a random variable denoting the state of the \textabbr{CTMC} at time $t_k$. A \textabbr{CTMC} is said to be
+  \emph{time-homogenous} if it also satisfies
+  \begin{equation}
+    \Pr(X(t_k) = x_k \mid X(t_{k - 1}) = x_{k - 1}) = \Pr(X(t_k - t_{k -
+      1}) = x_k \mid X(0) = x_{k - 1}) \text,
+  \end{equation}
+  i.e.~it is invariant to time shifting. In this work we will restrict our attention to time-homogenous \textAbbr{CTMC}s over finite state spaces.
+\end{dfn}
+
+The \emph{state probabilities} at time $t$ form a finite-dimensional vector \(\vec{\uppi}(t) \in \RR^n\), where \(\pi(t)[x] = \Pr(X(t) = x)\). Following the convention from \textabbr{CTMC} literature all vectors considered will be row vectors, i.e.~\(n\) element vectors are equivalent to matrices with a single row and \(n\) columns. Moreover, the \(i\)th element of the vector \(\vec{v}\) will be written as \(v[i]\).
+
+The vectors \(\vec{\uppi}(t)\) satisfy the differential equation
+\begin{equation}
+  \label{eq:background:ctmc-diffeq}
+  \frac{\dd \vec{\uppi}(t)}{\dd t} = \vec{\uppi}(t) \, Q
+\end{equation}
+for some square matrix $Q$. The matrix $Q$ is called the \emph{infinitesimal generator matrix} of the \textabbr{CTMC} and satisfies \(Q \vec{1}^T = \vec{0}^T\), where \(\vec{1}\) and \(\vec{0}\) are \(n\)-element vectors of ones and zeroes.
+
+The diagonal elements \(q[x, x] < 0\) of \(Q\) describe the holding times of the \textabbr{CTMC}. If \(X(t) = x\), the \emph{holding time} \(h_x = \inf \{ h > 0 \mid X(t) = x, X(t + h) \ne x \}\) spent in state \(x\) is exponentially distributed with rate \(\lambda_x = -q[x, x]\). If \(q[x, x] = 0\) then no transitions are possible from the state $x$ and it is said to be \emph{absorbing}.
+
+The off-diagonal elements \(q[x, y] \ge 0\) of \(Q\) describe state transitions of the \textabbr{CTMC}. The \textabbr{CTMC} while being in state \(X(t) = x\) will jump to state~\(y\) at the next state transition with probability \(-q[x, y] / q[x, x]\). Equivalently, there is an expontentially distributed countdown in the state \(x\) for each \(y\) that satisfies \(q[x, y] > 0\) with \emph{transition rate} $\lambda_{xy} = q[x, y]$. The first countdown to finish will trigger a state change to the corresponding state \(y\). Therefore the \textabbr{CTMC} is a transition system with exponentially distributed timed transitions.
+
+\begin{figure}%
+  \begin{minipage}{.5\textwidth}
+    \centering
+    \begin{tikzpicture}
+      \matrix [column sep=1.5cm, every node/.style={inner
+        sep=0pt,minimum size=.85cm, draw,circle}] {
+        \node (s0) {\(0\)}; & \node (s1) {\(1\)}; & \node (s2) {\(2\)}; \\
+      };
+      \draw [every edge/.append style={-Latex,bend left}, every node/.append style={above}]
+      (s0) edge node {$\lambda_1$} (s1)
+      (s1) edge node {$\lambda_2$} (s2) (s2) edge node {$\mu_2$} (s1)
+      (s1) edge node {$\mu_1$} (s0) (s2) edge [bend left=45] node {$\mu_3$} (s0);
+    \end{tikzpicture}
+  \end{minipage}%
+  \begin{minipage}{.5\textwidth}
+    \centering
+    \(\begin{blockarray}{rccc}
+      & 0 & 1 & 2 \\
+      \begin{block}{r(ccc)}
+        0 & -\lambda_1 & \lambda_1 & 0 \\
+        Q = 1 & \mu_1 & -\lambda_2 - \mu_1 & \lambda_2 \\
+        2 & \mu_3 & \mu_2 & -\mu_2 - \mu_3 \\
+      \end{block}
+    \end{blockarray}\)
+    \vspace{0.5cm}
+  \end{minipage}
+  \caption{Example \textabbr{CTMC} with 3 states and its generator matrix.}
+  \label{fig:background:ctmc-repair}
+\end{figure}
+
+\begin{example}
+  \Cref{fig:background:ctmc-repair} shows a \textabbr{CTMC} with $3$ states. The transitions from the state $0$ to $1$ and from $1$ to $2$ are associated with exponentially distributed countdowns with rates $\lambda_1$ and $\lambda_2$ respectively, while transitions in the reverse direction have rates $\mu_1$ and $\mu_2$. The transition form state $2$ to $0$ is also possible with rate $\mu_3$.
+  
+  The rows \paren{corresponding to source states} and columns \paren{destination states} of the infinitesimal generator matrix $Q$ are labeled with the state numbers. The diagonal element $q[1, 1]$ is $-\lambda_2 - \mu_1$, hence the holding time in state $1$ is exponentially distributed with rate $\lambda_2 + \mu_1$. The transition from state $1$ to $0$ is taken with probability $-q[1, 0] / q[1, 1] = \mu_1 / (\lambda_2 + \mu_1)$, while the transition to $2$ is taken with probability $\lambda_2 / (\lambda_2 + \mu_1)$.
+\end{example}
+
+\subsubsection{Steady-state probabilities}
+
+A state \(y\) is \emph{reachable} from the state \(x\), written as \(x \reachto y\), if there exists a sequence of states \(x = z_1, z_2, z_3, \ldots, z_{k - 1}, z_k = y\), such that \(q[z_i, z_{i + 1}] > 0\) for all \(i = 1, 2, \ldots, k - 1\). If \(x \reachto y\) for all pairs of states \(x, y \in S\) the Markov chain is \emph{irreducible}.
+
+The \emph{steady-state probability distribution} \(\vec{\uppi} = \lim_{t \to \infty} \vec{\uppi}(t)\) exists and is independent from the \emph{initial distribution} \(\vec{\uppi}(0) = \vec{\uppi}_0\) if and only if the \textabbr{CTMC} is irreducible. The steady-state distribution satisfies the system of linear equations
+\begin{equation}
+  \label{eq:background:ctmc-steadystate}
+  \frac{\dd \vec{\uppi}}{\dd t} = \vec{\uppi} \, Q = \vec{0},
+  \quad \vec{\uppi} \vec{1}^\T = 1 \text.
+\end{equation}
+
+The matrix \(Q\) is sparse and is often amenable to decomposed storage~\citep{Buchholz99hierarchical}.
+However, solving the system of linear equations~\cref{eq:background:ctmc-steadystate} requires iterative linear equation solver algorithms, which can have varying convergence and running time characteristics~\citep{Buchholz99structured,Marussy16configurable,Buccholz17compact}.
+
+Selection of numerical solver backends and their parameters in the context of design-space exploration toolchains are discussed in \vref{ssec:apply:integration-solver}.
+
+\subsubsection{Parametric models}
+
+The infinitesimal generator matrix of \emph{parametric \textabbr{CTMC}} depends on a vector of \emph{parameters} \(\vec{\uptheta} \in A \subseteq \RR^k\), where \(A\) is the \emph{feasible region} of parameter values. The parameters represent unknown or uncertain attributes of the system under study, while the feasible region describes realizable or plausible parameter values. \emph{Parameter optimization} refers to selection of feasible parameter values \(\vec{\uptheta} \in A\) such that some \emph{goal function} is maximized.
+
+Analysis methods for parametric Markov chains include sensitivity analysis~\citep{Blake88sensitivity}, parametric steady-state solution~\citep{Hahn11parametric,Voros17pdn} and parameter synthesis~\citep{Quatmann16mdp}. Some analysis methods only allow specific kinds of parameter-dependence in the infinitesimal matrix elements \(\vec{\uptheta} \mapsto q(\vec{\uptheta})[x, y]\), such as \(C^1\) differentiable expressions~\citep{Blake88sensitivity} or rational functions~\citep{Hahn11parametric}.
+
+\subsubsection{Markov reward models}
+
+Continuous-time Markov chains may be employed in the estimation of performance measures of models by defining \emph{rewards} that associate \emph{reward rates} with the states of a \textabbr{CTMC}. The reward rate random variable $R(t)$ can describe performance measures defined at a single point of time, such as resource utilization or probability of failure, while the \emph{accumulated reward} random variable $Y(t)$ may correspond to performance measures associated with intervals of time, such as total downtime.
+
+\begin{dfn}
+  A \emph{Continuous-time Markov reward process} over a finite state space \(S = \{0, 1, \ldots, n - 1\}\) is a pair \(\ltup X, \vec{r} \rtup\), where \(X\) is a \textabbr{CTMC} over \(S\) and \(\vec{r} \in \RR^n\) is a \emph{reward rate vector}. The reward rate stochastic process \(R = \{ R(t) = r[X(t)] \mid t \ge 0 \}\) describes the momentary \emph{reward rate} associated with the active state of the \textabbr{CTMC}.
+
+  The \emph{accumulated reward} until time \(t\) is defined as the time integral of \(R\),
+  \begin{equation}
+    Y = \biggl\{ Y(t) = \int_{0}^t R(\tau) \,\dd \tau \biggm\vert t \ge 0 \biggr\}\text.
+  \end{equation}
+\end{dfn}
+
+\begin{example}
+  Let \(c_0\), \(c_1\) and \(c_2\) denote operating costs per unit time associated with the states of the \textabbr{CTMC} \(X\) in \vref{fig:background:ctmc-repair}. Consider the Markov reward process \(\ltup X, \vec{r} \rtup\) with the reward rate vector
+  \begin{equation}
+    \vec{r} = \begin{pmatrix} c_0 & c_1 & c_2 \end{pmatrix} \text.
+  \end{equation}
+  The random variable \(R(t)\) describes the momentary operating cost, while $Y(t)$ is the total operating expenditure until time \(t\). The steady-state expectation $\lim_{t \to \infty} \Ex R(t)$ is the average maintenance cost per unit time of the long-running system.
+\end{example}
+
+In parameter-dependent reward models not only does the infinitesimal generator matrix \(Q\colon A \to \RR^{n \times n}\) depend on the parameter vector \(\vec{\uptheta} \in A\) but also can the reward rate vector \(\vec{r}\colon A \to \RR^n\) be parameter-dependent.
+
+\subsection{Stochastic analysis tasks}
+
+Various analysis tasks concerning \textAbbr{CTMC}s and Markov reward models are performed to calculate stochastic metrics or determine whether the system satisfies a reliability or performability requirement. We will refer to such problems as \emph{queries} concerning a stochastic model. Below we attempt to give a short summary of the most basic analyses and computational methods.
+
+\newpara \textbf{Steady-state analysis} refers to the calculation of the steady-state expectation \(\Ex R(\infty) = \lim_{t \to \infty} \Ex R(t)\) to characterize the values of reliability or performability metrics during long-term system operation. Because the steady state expectation is calculated according to the formula \(\Ex R(\infty) = \vec{\uppi} \, \vec{r}^T\), where \(\vec{\uppi}\) is the steady-state probability vector form \vref{eq:background:ctmc-steadystate}, this form of analysis is tantamount to the solution of \cref{eq:background:ctmc-steadystate}.
+
+\newpara \textbf{Transient and accumulated analysis} is concerned with the transient behavior of the modeled system when it is started from an initial probability distribution \(\vec{\uppi}\). An initial problem with \vref{eq:background:ctmc-diffeq} is solved subject to the initial condition \(\vec{\uppi}(0) = \vec{\uppi}_0\). Then the expected transient reward value \(\Ex R(t) = \vec{\uppi}(t) \, \vec{r}^T\) can be calculated.
+
+Variations of the \emph{uniformization} algorithm~\citepeg{Moorsel97uniformization,Dijk17uniformization} can solve \cref{eq:background:ctmc-diffeq} efficiently. Moreover, \(\vec{L}(t) = \int_{0}^{t} \vec{\pi}(\tau) \,\dd\tau\) can also be obtained by uniformization in order to calculate \(\Ex Y(t) = \vec{L}(t) \, \vec{r}^T\) for the analysis of accumulated metrics.
+
+\newpara \textbf{Mean-time-to-state-partition} analysis determines the expected time taken to reach a set of states \(D \subsetneq S\) from an initial distribution \(\vec{\uppi}_0\). The calculation of the \emph{mean time to first failure}, which is the mean time to reach the state partition \(D\) of failed states, has many applications in reliability engineering. Other tasks, such as the determination of the mean time between failures or the time taken to successfully complete a request can also be formalized as mean-time-to-state-partition problems.
+
+These problems can be solved by the analysis of phase-type distributions~\citep{Neuts75phasetype} derived from the \textabbr{CTMC} and the state partitions \(D\) of interest by linear equations solvers, analogously to the calculation of steady-state expectations.
+
+\newpara \textbf{Sensitivity analysis} concerns the rates of change in stochastic metrics due to changes in parameter values of a parametric \textabbr{CTMC} or reward model. The model reacts to changes of parameters with high absolute sensitivity  more prominently; therefore, they can be promising directions of system optimization. The partial derivatives of the expectation describe above can be computed with respect to the elements of the parameter vector~\citep{Blake88sensitivity,Ramesh93sensitivity}.
+
+\newpara \textbf{Stochastic model checking} consists of decision procedures to determine whether the system under consideration satisfies requirements formalized in stochastic logics. Often stochastic model checking involves the analysis tasks outlined above as subroutines. Logics suitable for continuous-time models include continuous stochastic logic~(\textabbr{CSL})~\citep{Aziz96csl} and continuous stochastic reward logic~(\textabbr{CSRL})~\citep{Kwiatkowska06csrl}. Further approaches to specifying stochastic properties and queries are surveyed in~\vref{ssec:rgspn:relwork-query}.
+
+\subsection{Generalized stochastic Petri nets}
+
+\todo*{}
 
 %%% Local Variables:
 %%% mode: latex
