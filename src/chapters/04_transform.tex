@@ -15,20 +15,30 @@ The \circled{4}~incremental execution of the transformation is ensured by the us
 
 After briefly reviewing related work we describe the proposed transformation chains, as well as its specification language and semantics. Then the instantiation of \textabbr{RGSPN} modules is discussed, finally followed by the details of the concretization transformation and its handling of inconsistencies by the means of delayed execution.
 
-\section{Related work: view synchronization for formal models}
+\section{Related work: view synchronization approaches}
 \label{chap:transform:relwork}
 
+Now we briefly review some approaches for synchronizing view models for engineering \textAbbr{DSL}s with a focus on approaches supporting incremental synchronization and the creation of complex formal modes.
 
-\subsection{Incremental transformation languages}
+Model transformations are a pervasive concept in model-driven engineering (\textabbr{MDE}) where they are employed to modify a model \emph{in place} or convert between different representations and abstraction levels of models by either creating a \emph{new target} model or \emph{updating} an existing one~\citep{Czarnecki06survey}. For transformations with separate source and targets, \emph{tracing} connects related source and target objects. The traceability model may be maintained \emph{manually} (\emph{explicitly}), or the transformation engine may provide \emph{automatic} (\emph{implicit}) traceability. \emph{Batch} execution re-evaluates the whole transformation when the source model changes to create a new version of the target. In contrast, \emph{target incrementality} (\emph{change propagation}) only performs necessary changes on the target model. \emph{Source incremental} transformations also attempt to minimize the re-examined portion of the source model, for example, by subscribing to change notifications.
 
-\todo*{}
+\citet{Varro15styles} categorized the styles of change-driven model transformations as follows:
+\begin{inparaenum}
+\item Transformations with \emph{no incrementality} only execute in batch mode.
+\item \emph{Dirty incrementality} marks target models or elements to be recomputed as dirty upon source changes and re-runs the transformation for the dirty portions.
+\item \emph{Incrementality by traceability} relies of missing or dangling traceability links to determine the target elements that are created or removed.
+\item \emph{Reactive source incrementality} triggers transformation rules by change notifications without relying on traceability links.
+\end{inparaenum}
 
-\subsection{Transformation languages for stochastic models}
+View transformations are specific models transformations that aim to create target models that describe the source from a specific viewpoint. \citet{Bruneliere17survey} has surveyed view transformation tools, including incremental approaches.
 
-\todo*{}
+The \textabbr{ATL} transformation language is a domain-specific language for describing model-to-model transformations with implicit traceability~\citep{Jouault08atl}. Algorithms for trace-based incremental \textabbr{ATL} execution were proposed by \citet{Xiong07incremental}, as well as by \citet{Jouault10incremental}.
 
-\section{Overview of the transformation engine}
-\label{chap:transfrom:specify}
+The Query-View-Transformation (\textabbr{QVT}) family of languages were also developed for describing model-to-model transformations~\citep{OMG16qvt}. The \emph{relation} \mixedabbr{QVT}r sublanguage is a declarative language for the correspondences between the source and target models with implicit traceability, which is compiled to the simple \emph{core} \mixedabbr{QVT}c sublanguage. The \emph{operational} \mixedabbr{QVT}o sublanguage provides imperative transformations. \citet{Song11incremental} proposed trace based incremental transformation for a subset of \mixedabbr{QVT}r suitable for deriving runtime models.
+
+Triple grammars grammars (\textabbr{TGG}) can describe model transformations by employing and explicit trace model called the \emph{correspondence} model~\citep{Schurr94tgg}. Restrictions of \textAbbr{TGG}s~(view \textAbbr{TGG}s) have been proposed for incremental view synchronization~\citep{Jakob06nonmaterialized,Anjorin14materialized}. \citet{Greenyer11advanced} proposed extension for \textAbbr{TGG}s so that they could derive formal models from sequence diagram specifications. However, their approach does not support incremental execution.
+
+The \textabbr{VIATRA} reactive model transformation platform provides a framework for change-driven model transformations with optional manual traceability~\citep{Bergmann15viatra}. \citet{Debreceni14viewmodel} proposed \textabbr{VIATRA} Views as a declarative, incremental view transformation engine built on incremental model queries~\citep{Ujhelyi15incquery} and \textabbr{VIATRA}.
 
 \begin{figure}
   \centering
@@ -36,6 +46,16 @@ After briefly reviewing related work we describe the proposed transformation cha
   \caption{Overview of the transformation chain.}
   \label{fig:transform:overview}
 \end{figure}
+
+\citet{Mosteller16semantics} proposed an approach to define semantics of domain-specific modeling languages by Petri nets in the Renew meta-modeling and transformation framework. A specialized modeling tool is generated based on a mapping from \textabbr{DSL} elements to Petri net fragments. The user can manipulate the concrete syntax of the \textabbr{DSL} while a Petri net is assembled from the fragments by the tool for analysis and code generation.
+
+The ability to reference target objects created by different transformation rules is especially important in incremental transformation languages, because the developer of the transformations cannot rely on the order of rule executions. Hence transformation rules must be able to share target objects regardless their execution order.
+
+In \textabbr{ATL} model elements generated by rules can be resolved at any time by the built-in \lit{resolveTemp} operation. In \mixedabbr{QVT}r relations between source and target elements can be joined by \lit{when} clauses. In \textAbbr{TGG}s target object sharing is implicitly present in the correspondence parts of the rule triples. \citet{Greenyer11advanced} introduced \emph{reusable patterns} to \textAbbr{TGG}s to further refine object sharing. \textabbr{VIATRA} Views support referencing objects produces by other rules with the \lit{@Lookup} annotation. In contrast, modular Petri nets~\citep{Kindler09modular} and thus our \textAbbr{RGSPN} fragments model importing symbols explicitly by reference symbols and reference assignments.
+
+
+\section{Overview of the transformation engine}
+\label{chap:transfrom:specify}
 
 The transformation chain from engineering models to analyzable \textAbbr{RGSPN}s is shown in \vref{fig:transform:overview}. The architecture is divided into three parts: \begin{inparaenum}
 \item the \emph{parameters} of the transformation, which constitute the transformation specification provided by the user,
@@ -289,7 +309,7 @@ The three main responsibilities of the concretization transformation are
 
 The execution of the the aforementioned transformations may be prevented by errors and inconsistencies of the abstract analysis model. Inconsistency may be caused by a reference symbol having no resolution to a concrete symbol, reference resolution leading to parallel arcs or cyclic dependencies of expression. Robust inconsistency handling is especially important in change-driven incremental transformation chains, as a sequence of modifications of the source model may induce inconsistency in the abstract analysis model during execution even if the abstract analysis model becomes consistent at the end of the sequence. Our handling delays parts of the concretization until the inconsistency is resolved, while an error marker is generated to alert the user. The list of error markers can be checked at the end of source model modification sequences to ensure that the transformation chain fully synchronized the analysis models without hampering the execution of individual modification operations in the sequence.
 
-\begin{figure}%
+\begin{figure}[p]%
   \begin{minipage}[t]{0.5\textwidth}
     \centering
     \includegraphics[scale=0.9]{figures/concrete_rgspn_example_initial}
@@ -304,7 +324,7 @@ The execution of the the aforementioned transformations may be prevented by erro
   \end{minipage}%
 \end{figure}
 
-\begin{figure}
+\begin{figure}[p]
   \centering
   \includegraphics[scale=0.9]{figures/concrete_rgspn_example}
   \caption{Concretization of the \textabbr{RGSPN} from \vref{fig:transform:view-3}.}
@@ -407,6 +427,10 @@ After processing all the dirty symbols the inscriptions of dirty arcs are simila
 
 The concretizer transformation is aided by incremental model queries over the abstract \textabbr{RGSPN} and the concretizer trace model. The reflexive transitive closure of the assignment relation \(\assign^*\), the reference resolution relation \(\leadsto\) and supports of symbols in the abstract analysis model, as well as the dependency order \(\preceq\) on the concrete analysis model is maintained by incremental transitive closure computation~\citep{Bergmann12incscc}.
 
+\begin{remark}
+  Petri net \emph{slicing}~\citepeg{Llorens17slicing} uses tools closely related to our dependency tracking mechanism to extracts parts of a Petri net influencing the satisfaction of a property. Slicing could be incorporated in the future into the concretization transformation to avoid copying symbols to the concrete analysis model that are irrelevant to the (stochastic) properties of interest. Alternatively, the external analysis tools can slice their input Petri nets to reduce computational burden.
+\end{remark}
+
 \subsection{Handling of inconsistencies}
 \label{ssec:transform:inconsistent}
 
@@ -425,7 +449,7 @@ Inconsistency may appear in the abstract analysis model due to three main reason
   \item circular mentioning through a collection, \(\rel{value}(v) = \lit{sum(}c\lit)\), \(c \assign v\) 
   \end{compactitem}
   and many variations thereof. We decided to disallow any form of circular dependency to avoid confusion. Only one of \(s_1 \in \rel{support}(s_2)\) and \(s_2 \in \rel{support}(s_1)\) may hold if \(s_1 \ne s_2\). This always makes \(\preceq\) a preorder on the concrete analysis model.
-\item Concretization may lead to disallowed parallel arcs. For example, if \(p \overset{e_1}{\inarc} t\),\(p \overset{e_2}{\inarc} r\) and \(r \assign t\) hold in the abstract analysis model there would be two parallel arcs \(p' \xrightarrow{e_1, e_2} t\) in the concrete \textabbr{RGSPN}. This is forbidden by \vref{dfn:rgspn:impl}.
+\item Concretization may lead to disallowed parallel arcs. For example, if \(p \overset{e_1}{\inarc} t\),\(p \overset{e_2}{\inarc} r\) and \(r \assign t\) hold in the abstract analysis model there would be two parallel arcs \(p' \xrightarrow{e_1, e_2} t'\) in the concrete \textabbr{RGSPN}. This is forbidden by \vref{dfn:rgspn:impl}.
 \end{itemize*}
 
 Inconsistencies are tracked by the incremental model query engine during the concretization transformation in the same way as reference resolutions and the dependency order. The cleanup transformation is prevented from traversing symbols and arcs depending on inconsistent parts of the model even if they were marked dirty; thus the concretization is \emph{delayed} until consistency is restored. Changes restoring consistency touch the delayed symbols, hence the cleanup transformation can handle them properly again.
