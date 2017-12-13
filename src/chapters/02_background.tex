@@ -53,8 +53,15 @@ The state space of a bounded Petri net can be determined efficiently by the \emp
 
 The arc inscriptions of Petri net may depend on the current marking by replacing the positive integers \(\NNpos\) with a set of algebraic expressions \(\Expr_P\) over the token counts of places. In the marking dependent setting \({\outarc}, {\inarc}, {\inharc} \subseteq \Sigma \times \Expr_P \times \Sigma\) and the inscription expressions are evaluated according to the marking \(m\) when firing transitions \(m \tranto{t} m'\). Such \emph{Petri nets with marking-dependent arcs} can simplify formal modeling \citep{Ciardo93decomposition}; however, they may preclude the use of some analysis techniques.
 
-\begin{runningExample}
-  \todo*{Dining philosophers example Petri net.}
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.9]{figures/pn_example}
+  \caption{Example Petri net with two deadlock-free dining philosophers.}
+  \label{fig:background:pn-example}
+\end{figure}
+
+\begin{runningExample}\label{ex:background:pn}
+  \Vref{fig:background:pn-example} shows an example Petri net modeling the dining philosophers problem with two philosophers. The philosophers \(i = 1, 2\) are modeled by the places \lit{thinking}\(i\), \lit{waiting}\(i\) and \lit{eating}\(i\). In the initial marking both philosophers are \lit{thinking}. Upon firing \lit{getHungry}\(i\) a philosopher may get hungry and gets to be \lit{waiting} for forks to eat with. If both \lit{fork1} and \lit{fork2} is available, he may then \lit{startEating}\(i\) by picking up both forks. The forks are picked up as a single atomic action, which avoids a possible case for deadlock when both philosophers pick up single forks but are unable to get the other fork to start eating. Therefore this model is the deadlock-free version of the dining philosophers problem. Upon finishing eating, the philosophers put the forks down by firing \lit{finishEating}\(i\) and returning to the \lit{thinking} state.
 \end{runningExample}
 
 \subsection{Continuous-time Markov chains}
@@ -80,7 +87,7 @@ Continuous-time Markov chains (\textAbbr{CTMC}s) are mathematical tools for desc
   i.e.~it is invariant to time shifting. In this work we will restrict our attention to time-homogenous \textAbbr{CTMC}s over finite state spaces.
 \end{dfn}
 
-The \emph{state probabilities} at time $t$ form a finite-dimensional vector \(\vec{\uppi}(t) \in \RR^n\), where \(\pi(t)[x] = \Pr(X(t) = x)\). Following the convention from \textabbr{CTMC} literature all vectors considered will be row vectors, i.e.~\(n\) element vectors are equivalent to matrices with a single row and \(n\) columns. Moreover, the \(i\)th element of the vector \(\vec{v}\) will be written as \(v[i]\).
+The \emph{state probabilities} at time $t$ form a finite-dimensional vector \(\vec{\uppi}(t) \in \RR^n\), where \(\pi(t)[x] = \Pr(X(t) = x)\). Following the convention from \textabbr{CTMC} literature all vectors considered will be row vectors, i.e.~\(n\) element vectors are equivalent to matrices with a single row and \(n\) columns. Moreover, the \(i\)th element of the vector \(\vec{v}\) will be written as \(v[i]\), where indexing is zero-based (\(i = 0, 1, \ldots, n - 1\)).
 
 The vectors \(\vec{\uppi}(t)\) satisfy the differential equation
 \begin{equation}
@@ -102,9 +109,9 @@ The off-diagonal elements \(q[x, y] \ge 0\) of \(Q\) describe state transitions 
         \node (s0) {\(0\)}; & \node (s1) {\(1\)}; & \node (s2) {\(2\)}; \\
       };
       \draw [every edge/.append style={-Latex,bend left}, every node/.append style={above}]
-      (s0) edge node {$\lambda_1$} (s1)
-      (s1) edge node {$\lambda_2$} (s2) (s2) edge node {$\mu_2$} (s1)
-      (s1) edge node {$\mu_1$} (s0) (s2) edge [bend left=45] node {$\mu_3$} (s0);
+      (s0) edge node {\(\lambda_1\)} (s1)
+      (s1) edge node {\(\lambda_2\)} (s2) (s2) edge node {\(\mu_2\)} (s1)
+      (s1) edge node {\(\mu_1\)} (s0) (s2) edge [bend left=45] node {\(\mu_3\)} (s0);
     \end{tikzpicture}
   \end{minipage}%
   \begin{minipage}{.5\textwidth}
@@ -117,16 +124,15 @@ The off-diagonal elements \(q[x, y] \ge 0\) of \(Q\) describe state transitions 
         2 & \mu_3 & \mu_2 & -\mu_2 - \mu_3 \\
       \end{block}
     \end{blockarray}\)
-    \vspace{0.5cm}
   \end{minipage}
   \caption{Example \textabbr{CTMC} with 3 states and its generator matrix.}
   \label{fig:background:ctmc-repair}
 \end{figure}
 
 \begin{example}
-  \Cref{fig:background:ctmc-repair} shows a \textabbr{CTMC} with $3$ states. The transitions from the state $0$ to $1$ and from $1$ to $2$ are associated with exponentially distributed countdowns with rates $\lambda_1$ and $\lambda_2$ respectively, while transitions in the reverse direction have rates $\mu_1$ and $\mu_2$. The transition form state $2$ to $0$ is also possible with rate $\mu_3$.
+  \Vref{fig:background:ctmc-repair} shows a \textabbr{CTMC} with 3 states. The transitions from the state \(0\) to \(1\) and from \(1\) to \(2\) are associated with exponentially distributed countdowns with rates \(\lambda_1\) and \(\lambda_2\) respectively, while transitions in the reverse direction have rates \(\mu_1\) and \(\mu_2\). The transition form state \(2\) to \(0\) is also possible with rate $\mu_3$.
   
-  The rows \paren{corresponding to source states} and columns \paren{destination states} of the infinitesimal generator matrix $Q$ are labeled with the state numbers. The diagonal element $q[1, 1]$ is $-\lambda_2 - \mu_1$, hence the holding time in state $1$ is exponentially distributed with rate $\lambda_2 + \mu_1$. The transition from state $1$ to $0$ is taken with probability $-q[1, 0] / q[1, 1] = \mu_1 / (\lambda_2 + \mu_1)$, while the transition to $2$ is taken with probability $\lambda_2 / (\lambda_2 + \mu_1)$.
+  The rows \paren{corresponding to source states} and columns \paren{destination states} of the infinitesimal generator matrix \(Q\) are labeled with the state numbers. The diagonal element \(q[1, 1]\) is \(-\lambda_2 - \mu_1\), hence the holding time in state \(1\) is exponentially distributed with rate \(\lambda_2 + \mu_1\). The transition from state \(1\) to \(0\) is taken with probability \(-q[1, 0] / q[1, 1] = \mu_1 / (\lambda_2 + \mu_1)\), while the transition to \(2\) is taken with probability \(\lambda_2 / (\lambda_2 + \mu_1)\).
 \end{example}
 
 \subsubsection{Steady-state probabilities}
@@ -156,7 +162,7 @@ Analysis methods for parametric Markov chains include sensitivity analysis~\cite
 Continuous-time Markov chains may be employed in the estimation of performance measures of models by defining \emph{rewards} that associate \emph{reward rates} with the states of a \textabbr{CTMC}. The reward rate random variable $R(t)$ can describe performance measures defined at a single point of time, such as resource utilization or probability of failure, while the \emph{accumulated reward} random variable $Y(t)$ may correspond to performance measures associated with intervals of time, such as total downtime.
 
 \begin{dfn}
-  A \emph{Continuous-time Markov reward process} over a finite state space \(S = \{0, 1, \ldots, n - 1\}\) is a pair \(\ltup X, \vec{r} \rtup\), where \(X\) is a \textabbr{CTMC} over \(S\) and \(\vec{r} \in \RR^n\) is a \emph{reward rate vector}. The reward rate stochastic process \(R = \{ R(t) = r[X(t)] \mid t \ge 0 \}\) describes the momentary \emph{reward rate} associated with the active state of the \textabbr{CTMC}.
+  A \emph{continuous-time Markov reward process} over a finite state space \(S = \{0, 1, \ldots, n - 1\}\) is a pair \(\ltup X, \vec{r} \rtup\), where \(X\) is a \textabbr{CTMC} over \(S\) and \(\vec{r} \in \RR^n\) is a \emph{reward rate vector}. The reward rate stochastic process \(R = \{ R(t) = r[X(t)] \mid t \ge 0 \}\) describes the momentary \emph{reward rate} associated with the active state of the \textabbr{CTMC}.
 
   The \emph{accumulated reward} until time \(t\) is defined as the time integral of \(R\),
   \begin{equation}
@@ -169,7 +175,7 @@ Continuous-time Markov chains may be employed in the estimation of performance m
   \begin{equation}
     \vec{r} = \begin{pmatrix} c_0 & c_1 & c_2 \end{pmatrix} \text.
   \end{equation}
-  The random variable \(R(t)\) describes the momentary operating cost, while $Y(t)$ is the total operating expenditure until time \(t\). The steady-state expectation $\lim_{t \to \infty} \Ex R(t)$ is the average maintenance cost per unit time of the long-running system.
+  The random variable \(R(t)\) describes the momentary operating cost, while \(Y(t)\) is the total operating expenditure until time \(t\). The steady-state expectation \(\lim_{t \to \infty} \Ex R(t)\) is the average maintenance cost per unit time of the long-running system.
 \end{example}
 
 In parameter-dependent reward models not only does the infinitesimal generator matrix \(Q\colon A \to \RR^{n \times n}\) depend on the parameter vector \(\vec{\uptheta} \in A\) but also can the reward rate vector \(\vec{r}\colon A \to \RR^n\) be parameter-dependent.
@@ -182,7 +188,7 @@ Various analysis tasks concerning \textAbbr{CTMC}s and Markov reward models are 
 
 \newpara \textbf{Transient and accumulated analysis} is concerned with the transient behavior of the modeled system when it is started from an initial probability distribution \(\vec{\uppi}\). An initial problem with \vref{eq:background:ctmc-diffeq} is solved subject to the initial condition \(\vec{\uppi}(0) = \vec{\uppi}_0\). Then the expected transient reward value \(\Ex R(t) = \vec{\uppi}(t) \, \vec{r}^T\) can be calculated.
 
-Variations of the \emph{uniformization} algorithm~\citepeg{Moorsel97uniformization,Dijk17uniformization} can solve \cref{eq:background:ctmc-diffeq} efficiently. Moreover, \(\vec{L}(t) = \int_{0}^{t} \vec{\pi}(\tau) \,\dd\tau\) can also be obtained by uniformization in order to calculate \(\Ex Y(t) = \vec{L}(t) \, \vec{r}^T\) for the analysis of accumulated metrics.
+Variations of the \emph{uniformization} algorithm~\citepeg{Moorsel97uniformization,Dijk17uniformization} can solve \cref{eq:background:ctmc-diffeq} efficiently. Moreover, \(\vec{L}(t) = \int_{0}^{t} \vec{\uppi}(\tau) \,\dd\tau\) can also be obtained by uniformization in order to calculate \(\Ex Y(t) = \vec{L}(t) \, \vec{r}^T\) for the analysis of accumulated metrics.
 
 \newpara \textbf{Mean-time-to-state-partition} analysis determines the expected time taken to reach a set of states \(D \subsetneq S\) from an initial distribution \(\vec{\uppi}_0\). The calculation of the \emph{mean time to first failure}, which is the mean time to reach the state partition \(D\) of failed states, has many applications in reliability engineering. Other tasks, such as the determination of the mean time between failures or the time taken to successfully complete a request can also be formalized as mean-time-to-state-partition problems.
 
@@ -194,7 +200,76 @@ These problems can be solved by the analysis of phase-type distributions~\citep{
 
 \subsection{Generalized stochastic Petri nets}
 
-\todo*{}
+Although continuous-time Markov chains and reward processes base on \textAbbr{CTMC}s allow the study of dependability or reliability, the explicit specification of stochastic processes and rewards is often cumbersome. Generalized stochastic Petri Nets extend Petri nets by assigning exponentially distributed random delays to some transitions and instantaneous random firing to others~\citep{Marsan84gspn}. After the delay associated with an enabled transition is elapsed the transition fires \emph{atomically} and transitions delays are reset.
+
+\begin{dfn}
+  A \emph{generalized stochastic Petri net} (\textabbr{GSPN}) is an 8-tuple
+  \begin{equation}
+    \textit{GSPN} = \ltup P, T, m_0, \pi, \lambda, {\inarc}, {\outarc}, {\inharc} \rtup \text,
+  \end{equation}
+  where
+  \begin{compactitem}
+  \item \(\ltup P, T, m_0, \pi, {\inarc}, {\outarc}, {\inharc} \rtup\) is a Petri net with priorities and inhibitor arcs,
+  \item \(\lambda\colon T \to \RRpos\) is a \emph{transition rate and weight function}.
+  \end{compactitem}
+\end{dfn}
+
+Transitions \(t \in T\) satisfying \(\pi(t) = 0\) are called \emph{timed transitions} and \(\lambda(t)\) is the \emph{rate} of such transitions. In contrast, transitions with higher priority are called \emph{immediate} and \(\lambda(t)\) is their \emph{probability weight}. Timed transitions are usually depicted as rectangles, while immediate transitions are black bars.
+
+Markings in which an immediate transitions is fireable are \emph{vanishing}, while markings where only timed transitions are fireable are \emph{tangible}. Reachable tangible markings form the \emph{tangible state space}
+\begin{equation}
+  \textit{TRS} = \{ m \in \textit{RS} \mid \pi(t) = 0 \text{ for all } \tranenabled{m}{t}\} \text.
+\end{equation}
+
+
+Timed transitions \(t\) have an associated exponentially distributed countdown with rate parameter \(\lambda(t)\). The fireable timed transitions is fired when the countdown expires, which resets the countdown. In contrast, immediate transitions are fires as soon as they become fireable. If multiple immediate transitions are fireable a single transition is picked randomly to be fired. The probability of an immediate transition \(t\) being picked is proportional to its probability weight \(\lambda(t)\). Immediate transitions are fired until a tangible marking is reached.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.9]{figures/gspn_example}
+  \caption{Example \textabbr{GSPN} for the dining philosophers problem.}
+  \label{fig:background:gspn-example}
+\end{figure}
+
+\begin{runningExample}\label{ex:background:gspn}
+  \Vref{fig:background:gspn-example} shows a \textabbr{GSPN} version of the dining philosophers model form \vref{ex:background:pn}. The timed transitions \lit{getHungry1}, \lit{getHungry2}, \lit{finishEating1} and \lit{finishEating2} have rates \(0.5\), \(0.45\), \(3.0\) and \(2.8\), respectively.
+
+  The transitions \lit{startEating1} and \lit{startEating2} are immediate with equal priority and weight. Hence philosophers start eating as soon as they become hungry and there are forks available.
+\end{runningExample}
+
+\subsubsection{Stochastic Petri nets}
+
+A \emph{stochastic Petri net} (\textabbr{SPN}) is a \textabbr{GSPN} with no immediate transitions, i.e.~\(\pi(t) \equiv 0\) for all \(t \in T\). For such nets all reachable states are tangible, \(\textit{TRS} = \textit{RS}\).
+
+Bounded \textAbbr{SPN}s can be transformed into \textAbbr{CTMC}s in a straightforward way. The state space of the \textabbr{CTMC} is the set \(S = \{0, 1, \ldots, \lvert \textit{TRS} \rvert - 1\}\) and let \(\iota\colon \textit{TRS} \to S\) be a bijection. The off-diagonal elements of the infinitesimal generator matrix \(Q \in \RR^{\lvert \textit{TRS} \rvert \times \lvert \textit{TRS} \rvert}\) can be computed by summing the rates of transitions between states, while diagonal elements are set such that \(Q \vec{1}^T = \vec{0}^T\) is satisfied. Formally, we have
+\begin{align}
+  q[\iota(m), \iota(m')] &= \sum_{\mathclap{m \tranto{\scriptstyle t} m'}} \lambda(t) \quad\text{if \(m \ne m'\),}
+  & q[x, x] &= - \sum_{y \ne x} q[x, y] \text.
+\end{align}
+
+This simple translation makes \textAbbr{SPN}s especially amenable to analysis. For \textAbbr{GSPNS} with immediate transitions the reachable vanishing markings must be \emph{eliminated} before a \textabbr{CTMC} can be formed~\citep{Marsan84gspn}.
+
+\subsubsection{Marking- and parameter-dependent models}
+
+The arc inscriptions of \textAbbr{GSPN}s can be made marking-dependent similarly to Petri nets, such that the arcs \({\outarc}, {\inarc}, {\inharc} \subseteq \Sigma \times \Expr_P \times \Sigma\) contain algebraic expressions of the token counts of the places \(P\). Moreover, the transition rates and weights can be made marking dependent, such that we have \(\lambda\colon T \to \Expr_P\).
+
+Dependence on a set of parameters \(\Par\) may also be introduced. In this case \(\lambda\colon T \to \Expr_{P, \Par}\), where \(\Expr_{P, \Par}\) is the set of algebraic expressions depending on token counts of \(P\) and the values of the parameters in \(\Par\). Parameter-dependent \textAbbr{GSPN}s are translated into parametric \textAbbr{CTMC}s, where the values of \(Par\) are encoded as the parameter vector \(\vec{\uptheta} \in A \subseteq \RR^{\lvert \Par \rvert}\) and the feasible region \(A\) of parameter values is determined according to domain requirements.
+
+\subsubsection{Reward nets}
+
+Generalized stochastic Petri nets can specify Markov reward models are well as \textAbbr{CTMC}s. The \emph{reward expression} \(r \in \Expr_P\) is an algebraic expression which may refer to token counts of places. The reward expression \(r\) is translated into a reward vector \(\vec{r}\) upon analysis in order to calculate expectations and answer queries regarding the reward value.
+
+In the case of parameter-dependent \textAbbr{GSPN}s the reward expression may depend on the values of the parameters, such that we have \(r \in \Expr_{P, \Par}\).
+
+\begin{runningExample}
+  Consider the dining philosophers \textabbr{GSPN} from \vref{ex:background:gspn} along with the reward expression
+  \begin{equation}
+    r = \#\lit{thinking1} + \#\lit{thinking2} \text,
+  \end{equation}
+  which sums the token counts of the places \lit{thinking1} and \lit{thinking2}.
+
+  The expected transient reward rate \(\Ex R(t)\) is the expected number of philosophers thinking at time \(t\) after starting from the initial marking. The expected steady-state reward rate \(\Ex R(\infty)\) is the mean number of thinking philosophers during long-term operation. The expected accumulated reward \(\Ex Y(t)\) is the total time spent thinking by philosophers until time \(t\) after starting.
+\end{runningExample}
 
 %%% Local Variables:
 %%% mode: latex

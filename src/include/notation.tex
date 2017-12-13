@@ -58,7 +58,7 @@
 \newcommand*{\Expr}{\rel{Expr}}
 \newcommand*{\Type}{\rel{Type}}
 \newcommand*{\tranto}[1]{\mathbin{\begin{tikzpicture}[baseline]
-      \node (n) [anchor=base,inner xsep=1pt,inner ysep=1pt] {\mathstrut\kern1pt\ensuremath{#1}};
+      \node (n) [anchor=base,inner xsep=1pt,inner ysep=1pt] {\kern1pt\ensuremath{#1\mathstrut}};
       \draw (n.north west) -- (n.south west) -- (n.south east) -- ($(n.east)+(3pt,0)$) -- (n.north east) -- cycle;
     \end{tikzpicture}}}
 \newcommand*{\tranenabled}[2]{#1\,{\tranto{#2}}}
