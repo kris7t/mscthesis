@@ -29,8 +29,7 @@
 \RequirePackage[scaled=0.91,lining]{FiraMono}
 \RequirePackage[scaled=0.98,osf]{XCharter}
 \RequirePackage[libertine,vvarbb,scaled=1.07]{newtxmath}
-\RequirePackage[cal=boondoxo]{mathalfa}
-\let\mathcal\mathscr
+\RequirePackage[cal=boondox]{mathalfa}
 \RequirePackage{stmaryrd}
 \newcommand*{\thinfont}{\firalight\color{black!75}}
 
@@ -175,27 +174,8 @@
 % Mathematics I
 %
 
+\newcommand\bmmax{2}
 \RequirePackage{amsmath,relsize,stackengine,mleftright,mathtools,upgreek,nicefrac,bm,blkarray}
-
-% Set the math font to XCharter instead of Fourier.
-%\RequirePackage[defaultmathsizes,italic]{mathastext}
-
-% % Use the Computer Modern arrows for better readability.
-% % http://tex.stackexchange.com/a/136339/8744
-% % load the CM symbol font
-% \DeclareSymbolFont{arrows}{OMS}{cmsy}{m}{n}
-% % change the arrows to be taken from the CM symbol font
-% \DeclareMathSymbol{\leftrightarrow}{\mathrel}{arrows}{"24}
-% \DeclareMathSymbol{\leftarrow}{\mathrel}{arrows}{"20}
-%    \let\gets=\leftarrow
-% \DeclareMathSymbol{\rightarrow}{\mathrel}{arrows}{"21}
-%    \let\to=\rightarrow
-% \DeclareMathSymbol{\mapstochar}{\mathrel}{arrows}{"37}
-% % the bar for making longer arrows
-% \DeclareMathSymbol{\relbardash}{\mathbin}{arrows}{"00}
-% \DeclareRobustCommand\relbar{%
-%   \mathrel{\smash\relbardash}% \smash, because - has the same height as +
-% }
 
 \allowdisplaybreaks
 

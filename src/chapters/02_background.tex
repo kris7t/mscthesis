@@ -1,9 +1,123 @@
 \chapter{Background}
 \label{chap:background}
 
-\section{Metamodeling and modeling}
+The purpose of this chapter is to briefly recall some preliminaries related to our work, including concepts from model-driven engineering, as well as formal and stochastic modeling. As our work attempts to aid the calculation of stochastic metrics based on engineering models, we describe the stochastic analysis tasks that we are aiming to support.
 
-\todo*{}
+\Cref{chap:rgspn} builds on generalized stochastic Petri nets, which are described in \vref{ssec:background:gspn}, in order to define a formalism suitable for analysis model fragments. \Cref{chap:transform} uses incremental query execution of graph patterns, which are describen in \vref{ssec:background:patterns}, to instantiate the analysis model fragments according to a changing domain model. Lastly, \cref{chap:apply} discusses the application of the transformation toolchain to aid proposing and solving stochastic analysis task from \vref{ssec:background:analysis} in design-space exploration for the calculation of stochastic metrics on engineering models.
+
+Furthermore, \vref{ex:background:running} introduces the \emph{dining philosophers} problem, which is used as a running example throughout this thesis.
+
+\section{Modeling and metamodeling}
+
+In model-driven engineering \emph{models} provide abstractions of reality, including the structure and the behavior of systems we wish to analyze or design~\citep{Giese06multiparadigm}. The models are described in some \emph{formalism} or \emph{modeling language}.
+
+The syntax of modeling languages is traditionally partitioned into \emph{abstract} and \emph{concrete syntax}. Concrete syntax provides a textual or graphical representation of the modeling language. Abstract syntax is endowed with meaning by mapping into a \emph{semantic domain}, which is another modeling language on a lower abstraction level.
+
+\subsection{Metamodels and instance models}
+
+Metamodels explicitly describe the abstract syntax of modeling languages. We will adopt the formal description of metamodels and first-order logical structures from the work of \citet{Varro17generation} and extend them to support primitive-valued attributes. Metamodels are regarded as first-order signatures:
+
+\begin{dfn}
+  A \emph{metamodel} is a first-order two-sorted logical signature
+  \begin{equation}
+    \Sigma = \{\lit C_1, \lit C_2, \ldots, \lit C_n; \lit R_1, \lit R_2, \ldots, \lit R_m; \lit A_1, \lit A_2, \ldots, A_k\} \text,
+  \end{equation}
+  where
+  \begin{compactitem}
+  \item \OBJsort\ and \PRIMsort\ are the sorts of objects and primitives, respectively;
+  \item \(\lit C_1, \lit C_2, \ldots, \lit C_{\mathrlap{n}\phantom{m}} \ofkind \OBJsort\) are unary relation symbols called \emph{classes};
+  \item \(\lit R_1, \lit R_2, \ldots, \lit R_m \ofkind \OBJsort \times \OBJsort\) are binary relation symbols called \emph{references} (or \emph{edges});
+  \item \(\lit A_1, \lit A_2, \ldots, \lit A_{\mathrlap{k}\phantom{m}} \ofkind \OBJsort \times \PRIMsort\) are binary relation symbols called \emph{attributes}.
+  \end{compactitem}
+\end{dfn}
+
+Instances of metamodels are regarded as first-order structures:
+
+\begin{dfn}
+  An \emph{instance model} \(M = \ltup \Obj, \Prim; \II \rtup\) of the metamodel \(\Sigma\) is a first-order two-sorted structure, where
+  \begin{compactitem}
+  \item \(\Obj = \{o_1, o_2, \ldots, o_N\}\) is a finite set of \emph{objects} (or \emph{individuals});
+  \item \(\Prim\) is a set of possible primitive values of attributes, for example, \(\Prim = \RR \cup \BB\), where \(\RR\) is the set of real numbers and \(\BB = \{\lit{true}, \lit{false}\}\);
+  \item \(\II\colon \Sigma \to \Obj \cup (\Obj \times \Obj) \cup (\Obj \times \Prim)\) is the \emph{interpretation function}, such that
+    \begin{compactitem}
+    \item \(\II(\lit C_i) = \lit C_i^M \subseteq \Obj\) for all classes \(\lit C_i \in \Sigma\);
+    \item \(\II(\lit R_i) = \lit R_i^M \subseteq \Obj \times \Obj\) for all references \(\lit R_i \in \Sigma\);
+    \item \(\II(\lit A_i) = \lit A_i^M \subseteq \Obj \times \Prim\) for all attributes \(\lit A_i \in \Sigma\).
+    \end{compactitem}
+  \end{compactitem}
+\end{dfn}
+
+Existing metamodeling technologies, such as the Ecore metamodeling langauge from the Eclipse Modeling Framework (\textabbr{EMF})~\citep{Steinberg09emf} often allow the designer of modeling languages to impose additional constraints on instances models. Some possible restrictions are listed below: 
+\begin{itemize*}
+\item \emph{Class inheritance} may specify that instances of a class must be instances of another.
+\item \emph{Abstract classes} and \emph{interfaces} can have no direct instances.
+\item \emph{Type constraints} on references and attributes restrict the class of the object originating the reference or attribute and the class of the object at the end of the reference, as well as the type of the primitive attribute value.
+\item \emph{Multiplicity constraints} place lower or upper bounds on the number of references or attributes from an object.
+\item Objects may be organized into a \emph{containment hierarchy}, in which and object is either a \emph{containment root}, or is connected to its \emph{container} in the hierarchy with exactly one \emph{containment} reference. The containment hierarchy forms a forest of containment roots, which is traversed when the object graph is serialized.
+\item \emph{Opposite constants} require some references to always go in a direction opposite to another, i.e.~\(\lit{R}(o_i, o_j)\) should hold if and only if we have \(\lit{R}^{\textrm{op}}(o_j, o_i)\).
+\end{itemize*}
+
+Further \emph{well-formedness constraints} may be specified with \emph{constraint languages}, such as the object constraint language~(\textabbr{OCL})~\citep{OMG14ocl} or with graph patterns~\citep{Bergmann11validation}.
+
+\begin{figure}%
+  \begin{minipage}[t]{0.3333\textwidth}
+    \centering
+    \includegraphics[scale=0.9]{figures/phil_cd}
+    \caption{\protect\RaggedRight Class diagram for the dining philosophers metamodel.}
+    \label{fig:background:metamodel}
+  \end{minipage}%
+  \begin{minipage}[t]{0.3333\textwidth}
+    \centering
+    \includegraphics[scale=0.9]{figures/phil_instance}
+    \caption{\protect\RaggedRight Instance model with two philosophers.}
+    \label{fig:background:instance}
+  \end{minipage}%
+  \begin{minipage}[t]{0.3333\textwidth}
+    \centering
+    \includegraphics[scale=0.9]{figures/q_phil_pattern}
+    \caption{\protect\RaggedRight Example graph query matching a philosopher at a table.}
+    \label{fig:background:pattern}
+  \end{minipage}%
+\end{figure}
+
+\begin{runningExample}\label{ex:background:running}
+  We now introduce the \emph{dining philosophers} domain, which will be used as a running example throughout this thesis. A number of philosophers sit around a circular table, such that each philosopher has someone on her left and also on her right. Each philosopher has a single fork. The forks are places between philosophers so that adjacent philosophers must share a fork. A philosopher can only think if she is not hungry and can only eat if she is holding both forks from her left and right.
+
+  Philosophers have an \emph{hungry rate}, which determines how often the get hungry and a \emph{eating rate} which determines how fast they eat. We are interested in evaluating seating plans (arrangements) of philosophers to determine the total amount of philosophical knowledge produced, i.e.~the time the philosophers spent thinking. By swapping philosophers around the table we can avoid seating two gluttonous philosophers or two slow eaters next to each other; thus we can minimize the contentions for forks that prevent philosophers from satiating their hunger before they can resume thinking.
+
+  \Vref{fig:background:metamodel} shows a class diagram for the metamodel of the dining philosophers problem. It contains two classes, \lit{Table} and \lit{Philosopher}, three relations, \lit{philosophers}, \lit{left}, \lit{right}, as well as two attributes, \lit{eat\-ing\-Rate} and \lit{hung\-ry\-Rate}.
+
+  Type constraints require that \lit{philosophers} connect \lit{Table} to \lit{Philosopher} objects. It is also a containment reference, which makes \lit{Table} the root of the containment hierarchy. Moreover, the multiplicity bound \lit{[0..*]} allows any number of philosophers around the table, even zero.
+
+  The relations \lit{left} and \lit{right} connect \lit{Philosopher} instances. The relation \lit{right} is the opposite of \lit{left}; therefore the philosopher on the left of someone sees that person on her right and vice verse. Due to the multiplicity bounds \lit{[1]} each philosopher must have a single left and right neighbor.
+
+  \Vref{fig:background:instance} shows an instance model with a single \lit{Table} \lit{T} and two \lit{Philosopher} instances \lit{P1} and \lit{P2}. Because there are only two philosophers around the table both philosophers see the other on their left, as well as on their right.
+\end{runningExample}
+
+\subsection{Graph patterns}
+\label{ssec:background:patterns}
+
+State-of-the-art modeling toolchains often rely of model queries to retrieve fragments of interest from model, specify model to model and model to text transformations, as well as to validate well-formedness constraints on models~\citep{Bergmann11validation,Ujhelyi15incquery}.
+
+Formally, again following \citet{Varro17generation}, we define a graph query \(\phi(x_1, x_2, \ldots, x_n)\) with \(n\) free variables as a first-order logic formula over the metamodel signature \(\Sigma\). The formula may contain atomic propositions of the form \(\lit C_i(x_j)\), \(\lit R_i(x_j, x_\ell)\) and \(\lit A_i(x_j, x_\ell)\), where \(\lit C_i, \lit R_i, \lit A_i \in \Sigma\) are classes, references and attributes, respectively. Furthermore, logical connectives \(\neg, \land, \lor, \Rightarrow\) and quantifiers \(\exists, \forall\) may also appear in formulas.
+
+Model query engine often allow transitive closure computation \(\phi^+\), which makes the query language strictly more expressive than first order logic. If \(\phi\) is a formula with two free variables its transitive closue \(\phi^+(x_i, x_j)\) holds if and only if there are some objects \(x_i = y_1, y_2, \ldots, y_k = x_j\) (\(k \ge 1\)) such that we have \(\phi(y_1, y_2) \land \phi(y_2, y_3) \land \cdots \land \phi(y_{k - 1}, y_k)\)~\citep{Bergmann12incscc}.
+
+For detailed semantics of first-order graph patterns extended with transitive closure we refer to the works of \citet{Semerath17rewriting} and \citet{Varro17generation}.
+
+The tuple \(\ltup q_1, q_2, \ldots, q_n \rtup \in (\Obj \cup \Prim)^n\) is a \emph{match} of \(\phi(x_1, x_2, \ldots, x_n)\) in the instance model \(M\) if \(\phi\) holds with the \emph{match arguments} \(\ltup q_1, q_2, \ldots, q_n \rtup\), i.e.~\(M \vDash \phi(q_1, q_2, \ldots, q_n)\). We will occasionally write the name of the graph pattern before the tuple to emphasize that it is a tuple of match arguments, e.g.~\(\phi\ltup q_1, q_2, \ldots, q_n\rtup\).
+
+The \emph{match set} of the pattern \(\phi\) in the instance model \(M\) contains all of its matches. It is a set, i.e.~it contains each tuple at most once, regardless how many valid bindings are possible for quantified variables inside the pattern.
+
+An \emph{incremental} (or \emph{live}) query engine, such as \textabbr{VIATRA} Query~\citep{Ujhelyi15incquery} maintains the match sets of graph queries by subscribing to \emph{change notifications} from the instance model. The changes are propagated to the match sets, and clients may get notifications about matches appearing and disappearing as the instance model is being modified. The Rete algorithm~\citep{Forgy82rete} is often employed for change propagation.
+
+\begin{runningExample}
+  Consider the instance model from \vref{fig:background:instance} along with the graph pattern
+  \begin{equation}
+    \lit{qPhil}(x_1, x_2) = \lit{Table}(x_1) \land \lit{Philosopher}(x_2) \land \lit{philosophers}(x_1, x_2) 
+  \end{equation}
+  depicted in \vref{fig:background:pattern}, which matches philosophers sitting at a table. Its match set contains two tuples, \(\lit{qPhil}\ltup \lit{T}, \lit{P1}\rtup\) and \(\lit{qPhil}\ltup \lit{T}, \lit{P2}\rtup\), which correspond to the two philosophers in the model.
+\end{runningExample}
 
 \section{Formal models for stochastic analysis}
 
@@ -61,12 +175,12 @@ The arc inscriptions of Petri net may depend on the current marking by replacing
 \end{figure}
 
 \begin{runningExample}\label{ex:background:pn}
-  \Vref{fig:background:pn-example} shows an example Petri net modeling the dining philosophers problem with two philosophers. The philosophers \(i = 1, 2\) are modeled by the places \lit{thinking}\(i\), \lit{waiting}\(i\) and \lit{eating}\(i\). In the initial marking both philosophers are \lit{thinking}. Upon firing \lit{getHungry}\(i\) a philosopher may get hungry and gets to be \lit{waiting} for forks to eat with. If both \lit{fork1} and \lit{fork2} is available, he may then \lit{startEating}\(i\) by picking up both forks. The forks are picked up as a single atomic action, which avoids a possible case for deadlock when both philosophers pick up single forks but are unable to get the other fork to start eating. Therefore this model is the deadlock-free version of the dining philosophers problem. Upon finishing eating, the philosophers put the forks down by firing \lit{finishEating}\(i\) and returning to the \lit{thinking} state.
+  \Vref{fig:background:pn-example} shows an example Petri net modeling the dining philosophers problem with two philosophers. The philosophers \(i = 1, 2\) are modeled by the places \lit{thinking}\(i\), \lit{waiting}\(i\) and \lit{eating}\(i\). In the initial marking both philosophers are \lit{thinking}. Upon firing \lit{getHungry}\(i\) a philosopher may get hungry and gets to be \lit{waiting} for forks to eat with. If both \lit{fork1} and \lit{fork2} is available, she may then \lit{startEating}\(i\) by picking up both forks. The forks are picked up as a single atomic action, which avoids a possible case for deadlock when both philosophers pick up single forks but are unable to get the other fork to start eating. Therefore this model is the deadlock-free version of the dining philosophers problem. Upon finishing eating, the philosophers put the forks down by firing \lit{finishEating}\(i\) and returning to the \lit{thinking} state.
 \end{runningExample}
 
 \subsection{Continuous-time Markov chains}
 
-Continuous-time Markov chains (\textAbbr{CTMC}s) are mathematical tools for describing the behavior of systems in countinous time where the stochastic behavior of the system only depends on its current state~\citepeg{Reibman89transient}. This assumptions is reasonable in a wide class of modeling tasks; hence \textAbbr{CTMC}s are commonly used in the reliability and performability prediction of critical systems.
+Continuous-time Markov chains (\textAbbr{CTMC}s) are mathematical tools for describing the behavior of systems in countinous time where the stochastic behavior of the system only depends on its current state~\citepeg{Reibman89transient}. This assumption is reasonable in a wide class of modeling tasks; hence \textAbbr{CTMC}s are commonly used in the reliability and performability prediction of critical systems.
 
 \begin{dfn}
   A \emph{continuous-time Markov chain} (\textabbr{CTMC})
@@ -181,6 +295,7 @@ Continuous-time Markov chains may be employed in the estimation of performance m
 In parameter-dependent reward models not only does the infinitesimal generator matrix \(Q\colon A \to \RR^{n \times n}\) depend on the parameter vector \(\vec{\uptheta} \in A\) but also can the reward rate vector \(\vec{r}\colon A \to \RR^n\) be parameter-dependent.
 
 \subsection{Stochastic analysis tasks}
+\label{ssec:background:analysis}
 
 Various analysis tasks concerning \textAbbr{CTMC}s and Markov reward models are performed to calculate stochastic metrics or determine whether the system satisfies a reliability or performability requirement. We will refer to such problems as \emph{queries} concerning a stochastic model. Below we attempt to give a short summary of the most basic analyses and computational methods.
 
@@ -199,6 +314,7 @@ These problems can be solved by the analysis of phase-type distributions~\citep{
 \newpara \textbf{Stochastic model checking} consists of decision procedures to determine whether the system under consideration satisfies requirements formalized in stochastic logics. Often stochastic model checking involves the analysis tasks outlined above as subroutines. Logics suitable for continuous-time models include continuous stochastic logic~(\textabbr{CSL})~\citep{Aziz96csl} and continuous stochastic reward logic~(\textabbr{CSRL})~\citep{Kwiatkowska06csrl}. Further approaches to specifying stochastic properties and queries are surveyed in~\vref{ssec:rgspn:relwork-query}.
 
 \subsection{Generalized stochastic Petri nets}
+\label{ssec:background:gspn}
 
 Although continuous-time Markov chains and reward processes base on \textAbbr{CTMC}s allow the study of dependability or reliability, the explicit specification of stochastic processes and rewards is often cumbersome. Generalized stochastic Petri Nets extend Petri nets by assigning exponentially distributed random delays to some transitions and instantaneous random firing to others~\citep{Marsan84gspn}. After the delay associated with an enabled transition is elapsed the transition fires \emph{atomically} and transitions delays are reset.
 
@@ -268,7 +384,7 @@ In the case of parameter-dependent \textAbbr{GSPN}s the reward expression may de
   \end{equation}
   which sums the token counts of the places \lit{thinking1} and \lit{thinking2}.
 
-  The expected transient reward rate \(\Ex R(t)\) is the expected number of philosophers thinking at time \(t\) after starting from the initial marking. The expected steady-state reward rate \(\Ex R(\infty)\) is the mean number of thinking philosophers during long-term operation. The expected accumulated reward \(\Ex Y(t)\) is the total time spent thinking by philosophers until time \(t\) after starting.
+  The expected transient reward rate \(\Ex R(t)\) is the expected number of philosophers thinking at time \(t\) after starting from the initial marking. The expected steady-state reward rate \(\Ex R(\infty)\) is the mean number of thinking philosophers during long-term operation. The expected accumulated reward \(\Ex Y(t)\) is the mean total time spent thinking by philosophers until time \(t\) after starting.
 \end{runningExample}
 
 %%% Local Variables:

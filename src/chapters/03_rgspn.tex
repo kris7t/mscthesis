@@ -233,7 +233,7 @@ Collection types are covariant in their member types; therefore \(\tau \subtype 
 In this section we first define \textabbr{RGSPN} signatures as set of symbols of various kinds.\todo{Change \emph{kinds}.} Then the definition of an \textabbr{RGSPN} on a given signature is elaborated, which extends the signature with the properties of the symbols and the edges of the net. This separation allows deferring the details of the \emph{expressions} of a signature to \vref{sec:rgspn:expression} even though expression will serves as the properties of symbols in the definition of \textAbbr{RGSPN}s.
 
 \begin{dfn}\label{dfn:rgspn:rgspn}
-  An \emph{\textabbr{RGSPN} signatrue} is a 11-tuple
+  An \emph{\textabbr{RGSPN} signatrue} is an 11-tuple
   \begin{equation}
     \Sigma = \ltup P, T_T, T_i, V, \Par, R, C, \rel{dep}, \rel{pretype}, \rel{target}, \rel{member}\rtup \text,
   \end{equation}
@@ -255,14 +255,14 @@ In this section we first define \textabbr{RGSPN} signatures as set of symbols of
 We will abuse notation such that \(\Sigma\) also stands for the set \(P \cup T_t \cup T_i \cup V \cup \Par \cup R \cup C\) of all symbols. Furthermore, \(\Expr_\Sigma\) will denote the set of all algebraic expressions that may mention symbols of \(\Sigma\).
 
 \begin{dfn}\label{dfn:rgspn:impl}
-  An \emph{\textabbr{RGSPN}} is a 11-tuple \(N = \ltup \Sigma, m_0, \lambda, w, \pi, \rel{value}, {\outarc}, {\inarc}, {\inharc}, {\assign}, {\member} \rtup\), where
+  An \emph{\textabbr{RGSPN}} is an 11-tuple \(N = \ltup \Sigma, m_0, \lambda, w, \pi, \rel{value}, {\outarc}, {\inarc}, {\inharc}, {\assign}, {\member} \rtup\), where
   \begin{compactitem}
   \item \(\Sigma = \ltup P, T_T, T_i, V, \Par, R, C, \ldots\rtup\) is an \textabbr{RGSPN} signature;
   \item \(m_0 \colon P \to \Expr_\Sigma\) is the \emph{initial marking} function;
   \item \(\lambda \colon T_T \to \Expr_\Sigma\) is the \emph{timed transition rate} function;
   \item \(w\colon T_i \to \Expr_\Sigma\) is the \emph{immediate transition weight} function;
   \item \(\pi\colon T_i \to \Expr_\Sigma\) is the \emph{immediate transition priority} function;
-  \item \(\rel{value}\colon V \cup \Par \to \Expr_\Sigma \cup \mathbb{R}\) is a function, such that \(\rel{value}(v) \in \Expr_\Sigma\) for all \(v \in V\) and \(\rel{value}(\theta) \in \mathbb{R}\) for all \(\theta \in \Par\);
+  \item \(\rel{value}\colon V \cup \Par \to \Expr_\Sigma \cup \mathbb{R}\) is a function, such that \(\rel{value}(v) \in \Expr_\Sigma\) for all \(v \in V\) and \(\rel{value}(\textit{par}) \in \mathbb{R}\) for all \(\textit{par} \in \Par\);
   \item \({\outarc}, {\inarc}, {\inharc} \subseteq \Sigma \times \Expr_\Sigma \times \Sigma\) are the relations of \emph{output, input} and \emph{inhibitor arcs}, respectively, which are free of parallel arcs, i.e.~\(\ltup p, e_1, t \rtup, \ltup p, e_2, t \rtup \in {\outarc}\) implies \(e_1 = e_2\) and this property holds also for \(\inarc\) and \(\inharc\);
   \item \({\assign} \subseteq R \times \Sigma\) is the relation of \emph{reference assignments};
   \item \({\member} \in \rel{Multiset}(\Sigma \times \Sigma)\) is the multiset relation of \emph{collection memberships}.
