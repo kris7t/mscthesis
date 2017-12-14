@@ -1,0 +1,75 @@
+package hu.bme.mit.inf.petridse.example.dependability.ecore2pn
+
+module StateModule {
+	ref place ^pp^
+}
+
+module InitialStateModule {
+	place ^Pp^ = 1
+}
+
+module ErrorStateModule {
+	place ^Pp^
+}
+
+module ErrorModeModule {
+	marking boolean ^VerrorModeOccurred^ = #^Perror^ >= 1
+
+	place ^Perror^
+}
+
+module OutputErrorModeModule {
+	ref place ^perror^
+	tran ^ToutputToBuffer^ = immediate 1.0 priority 2
+	
+	^perror^ -> ^ToutputToBuffer^
+}
+
+module TransitionModule {
+	ref place ^pfrom^
+	ref place ^pto^
+	ref tran ^tfire^
+
+	^pfrom^ -> ^tfire^ -> ^pto^
+}
+
+module OccurrenceTransitionModule {
+	ref param double ^voccurrenceRate^
+
+	tran ^Tfire^ = exp ^voccurrenceRate^
+}
+
+module PropagatedTransitionModule {
+	ref place ^ptriggerError^
+	tran ^Tfire^ = immediate 1.0 priority 1
+
+	^ptriggerError^ -> ^Tfire^
+}
+
+module PortModule {
+	@FaultConfiguration
+	marking boolean[] ^verrorModes^
+}
+
+module CertainPropagationModule {
+	ref place ^perror^
+	ref tran ^tfire^
+
+	^perror^ -o ^tfire^ -> ^perror^
+}
+
+module UncertainPropagationModule {
+	ref param double ^vprobability^
+
+	place ^Pbuffer^
+	ref place ^pto^
+
+	ref tran ^toutputToBuffer^
+	tran ^TpropagateError^ = immediate ^vprobability^ priority 1
+	tran ^TpropagateSink^ = immediate 1.0 - ^vprobability^ priority 1
+
+	^pto^ -o ^toutputToBuffer^, ^TpropagateError^
+	^Pbuffer^ -o ^toutputToBuffer^ -> ^Pbuffer^
+	^Pbuffer^ -> ^TpropagateError^ -> ^pto^
+	^Pbuffer^ -> ^TpropagateSink^
+}

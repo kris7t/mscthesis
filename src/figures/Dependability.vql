@@ -1,0 +1,109 @@
+package hu.bme.mit.inf.petridse.example.dependability.queries
+
+import "http://example.org/dependability"
+
+pattern state(DepModel : ^DepModel^, Component : ^Component^, State : ^State^) {
+	find component(DepModel, Component);
+	^Component^.^componentType^.^errorModel^.^states^(Component, State);
+}
+
+pattern initialState(DepModel : ^DepModel^, Component : ^Component^, State : ^State^) {
+	find component(DepModel, Component);
+	^Component^.^componentType^.^errorModel^.^initialState^(Component, State);
+}
+
+pattern errorState(DepModel : ^DepModel^, Component : ^Component^, State : ^State^) {
+	find state(DepModel, Component, State);
+	neg find initialState(DepModel, Component, State);
+}
+
+pattern port(DepModel : ^DepModel^, Component : ^Component^, Port : ^Port^) {
+	find component(DepModel, Component);
+	find componentPort(Component, Port);
+}
+
+pattern errorMode(DepModel : ^DepModel^, Component : ^Component^, Port : ^Port^, ErrorMode : ^ErrorMode^) {
+	find port(DepModel, Component, Port);
+	^Port^.^portType^.^errorModes^(Port, ErrorMode);
+}
+
+pattern outputErrorMode(DepModel : ^DepModel^, Component : ^Component^, Port : ^Port^, ErrorMode : ^ErrorMode^) {
+	find component(DepModel, Component);
+	^Component^.^componentType^.^outputPorts^(Component, Port);
+	^Port^.^portType^.^errorModes^(Port, ErrorMode);
+}
+
+pattern transition(DepModel : ^DepModel^, Component : ^Component^, Transition : ^Transition^) {
+	find component(DepModel, Component);
+	^Component^.^componentType^.^errorModel^.^transitions^(Component, Transition);
+}
+
+pattern transitionFromTo(DepModel : ^DepModel^, Component : ^Component^, Transition : Transition, From : State, To : State) {
+	find transition(DepModel, Component, Transition);
+	Transition.sourceState(Transition, From);
+	Transition.targetState(Transition, To);
+}
+
+pattern transitionOccurrenceTrigger(DepModel : DepModel, Component : ^Component^, Transition : ^Transition^, Trigger : ^OccurrenceTrigger^) {
+	find transition(DepModel, Component, Transition);
+	^Transition^.^trigger^(Transition, Trigger);
+	^OccurrenceTrigger^(Trigger);
+}
+
+pattern transitionPropagatedTrigger(DepModel : ^DepModel^, Component : ^Component^, Transition : ^Transition^, Port : ^Port^, ErrorMode : ^ErrorMode^) {
+	find transition(DepModel, Component, Transition);
+	^Transition^.^trigger^(Transition, Trigger);
+	^PropagatedErrorTrigger^.^inputError^.^port^(Trigger, Port);
+	^PropagatedErrorTrigger^.^inputError^.^errorMode^(Trigger, ErrorMode);
+}
+
+pattern transitionPropagates(DepModel : ^DepModel^, Component : ^Component^, Transition : ^Transition^, Port : ^Port^, ErrorMode : ^ErrorMode^) {
+	find transition(DepModel, Component, Transition);
+	^Transition^.^outputError^.^port^(Transition, Port);
+	^Transition^.^outputError^.^errorMode^(Transition, ErrorMode);
+}
+
+pattern connectedErrorModesUncertain(DepModel : ^DepModel^, From : ^Component^, FromPort : ^Port^, To : ^Component^, ToPort : ^Port^, Propagation : ^UncertainPropagation^, ErrorMode : ^ErrorMode^) {
+	find connectedErrorModes(DepModel, From, FromPort, To, ToPort, Propagation, ErrorMode);
+	^UncertainPropagation^(Propagation);
+}
+
+pattern connectedErrorModesCertain(DepModel : ^DepModel^, From : ^Component^, FromPort : ^Port^, To : ^Component^, ToPort : ^Port^, ErrorMode : ^ErrorMode^) {
+	find connectedErrorModes(DepModel, From, FromPort, To, ToPort, Propagation, ErrorMode);
+	^CertainPropagation^(Propagation);
+}
+
+pattern component(DepModel : ^DepModel^, Component : ^Component^) {
+	^DepModel^.^systems^.^components^(DepModel, Component);
+}
+
+private pattern componentTypePort(ComponentType : ^ComponentType^, Port : ^Port^) {
+	^ComponentType^.^inputPorts^(ComponentType, Port);
+} or {
+	^ComponentType^.^outputPorts^(ComponentType, Port);
+}
+
+private pattern componentPort(Component : ^Component^, Port : ^Port^) {
+	^Component^.^componentType^(Component, ComponentType);
+	find componentTypePort(ComponentType, Port);
+}
+
+private pattern connectedPorts(From : ^Component^, FromPort : ^Port^, To : ^Component^, ToPort : ^Port^, Connection : ^Connection^) {
+	^ComponentConnection^.^sourcePort^.^component^(Connection, From);
+	^ComponentConnection^.^sourcePort^.^port^(Connection, FromPort);
+	^ComponentConnection^.^targetPort^.^component^(Connection, To);
+	^ComponentConnection^.^targetPort^.^port^(Connection, ToPort);
+} or {
+	^SystemConnection^.^sourcePort^.^componentPort^.^component^(Connection, From);
+	^SystemConnection^.^sourcePort^.^componentPort^.^port^(Connection, FromPort);
+	^SystemConnection^.^targetPort^.^componentPort^.^component^(Connection, To);
+	^SystemConnection^.^targetPort^.^componentPort^.^port^(Connection, ToPort);
+}
+
+pattern connectedErrorModes(DepModel : ^DepModel^, From : ^Component^, FromPort : ^Port^, To : ^Component^, ToPort : ^Port^, Propagation : ^Propagation^, ErrorMode : ^ErrorMode^) {
+	find component(DepModel, From);
+	find component(DepModel, To);
+	find connectedPorts(From, FromPort, To, ToPort, Connection);
+	^Connection^.^propagation^(Connection, Propagation);
+	^Port^.^portType^.^errorModes^(FromPort, ErrorMode);
+}

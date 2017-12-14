@@ -14,6 +14,8 @@ PDFLATEX_OPTS:=--file-line-error --shell-escape
 
 LATEXMK_OPTS=-pdf -pdflatex="$(PDFLATEX) $(PDFLATEX_OPTS)" -interaction=nonstopmode
 
+SED:=sed
+
 INKSCAPE:=inkscape
 
 INKSCAPE_OPTS:=--without-gui
@@ -22,7 +24,7 @@ INKSCAPE_EXPORT_PDF_OPTS=$(INKSCAPE_OPTS) --export-area=drawing
 
 GS:=gs
 
-GS_OPTS:=-sDEVICE=pdfwrite -q -P- -dNOPAUSE -dBATCH -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite -dOPM=0 -dColorConversionStrategy=/RGB -sProcessColorModel=DeviceRGB -dPDFSETTINGS=/prepress -dOptimize=true -dEmbedAllFonts=true -dSubsetFonts=true -dCompressFonts=true -dCompressPages=true -dCannotEmbedFaontPolicy=/Warning
+GS_OPTS:=-sDEVICE=pdfwrite -q -P- -dNOPAUSE -dBATCH -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite -dOPM=0 -dColorConversionStrategy=/RGB -sProcessColorModel=DeviceRGB -dPDFSETTINGS=/prepress -dOptimize=true -dEmbedAllFonts=true -dSubsetFonts=true -dCompressFonts=true -dCompressPages=true -dCannotEmbedFontPolicy=/Warning
 
 GS_OPTIMIZE_FIGURE_OPTS=$(GS_OPTS)
 
@@ -45,7 +47,10 @@ figures: $(CONVERT_SVG) $(CONVERT_PDF)
 
 $(CONVERT_SVG): out/figures/%.pdf: src/figures/%.svg
 	@echo "Processing SVG figure: $<"
-	@$(INKSCAPE) $(INKSCAPE_EXPORT_PDF_OPTS) --file=$< --export-pdf=$@.inkscape_export
+
+	@$(SED) 's/image-rendering="auto"/image-rendering="pixelated"/' $< > $(@:.pdf=.svg)
+	@$(INKSCAPE) $(INKSCAPE_EXPORT_PDF_OPTS) --file=$(@:.pdf=.svg) --export-pdf=$@.inkscape_export
+	@rm $(@:.pdf=.svg)
 	@$(GS) $(GS_OPTIMIZE_FIGURE_OPTS) -sOutputFile=$@ $@.inkscape_export
 	@rm $@.inkscape_export
 
