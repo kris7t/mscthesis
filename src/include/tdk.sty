@@ -50,6 +50,23 @@
     }{}
 \DeclareFontShape{U}{stmry}{b}{n}{<->ssub * stmry/m/n}{}
 
+% Load italic Fira Mono fonts by zwaldowski
+% https://github.com/zwaldowski/Fira
+\input{T1FiraMono-TLF.fd}
+\pdfmapfile{+zwaldowski.map}
+\DeclareFontShape{T1}{FiraMono-TLF}{b}{it}{
+  <-> \FiraMono@@scale FiraMono-BoldItalic
+}{}
+\DeclareFontShape{T1}{FiraMono-TLF}{mb}{it}{
+  <-> \FiraMono@@scale FiraMono-MediumItalic
+}{}
+\DeclareFontShape{T1}{FiraMono-TLF}{m}{it}{
+  <-> \FiraMono@@scale FiraMono-RegularItalic
+}{}
+\DeclareFontShape{T1}{FiraMono-TLF}{bx}{it}{
+  <-> ssub * FiraMono-TLF/b/it
+}{}
+
 % Improve microtypography
 \RequirePackage[final,babel,kerning,stretch=10,shrink=10]{microtype}
 
@@ -483,23 +500,29 @@
 %
 
 \RequirePackage{listings}
+
+\definecolor{keyword}{HTML}{7F0055}
+\definecolor{string}{HTML}{2A00FF}
+
+% https://tex.stackexchange.com/a/23638/8744
 \lstset{
-  basicstyle=\ttfamily,columns=fullflexible,
-  showspaces=false,showtabs=false,tabsize=2,
+  basicstyle=\ttfamily,columns=flexible,
+  showspaces=false,showtabs=false,tabsize=4,
+  showstringspaces=false,
   breaklines=true,breakatwhitespace=true,
-  numbers=left,numberstyle=\scriptsize,numberblanklines=false,
-  commentstyle=\rmfamily,
-  stringstyle=\color{black!75}
+  numbers=left,numberstyle=\scriptsize,numberblanklines=true,
+  commentstyle={\rmfamily},
+  keywordstyle={\color{keyword}\bfseries},
+  stringstyle=\color{string},
+  escapeinside={(*@}{@*)}
 }
 
-\lstnewenvironment{ruledlisting}{
-  \lstset{
-    captionpos=t,belowcaptionskip=0.7\baselineskip,
-    frame=lines,framerule=\heavyrulewidth,
-    numberbychapter=true,
-    xleftmargin=2em,framexleftmargin=2em
-  }
-}{}
+\lstdefinestyle{block}{
+  captionpos=t,belowcaptionskip=0.7\baselineskip,
+  frame=lines,framerule=\heavyrulewidth,
+  numberbychapter=true,
+  xleftmargin=2em,framexleftmargin=2em
+}
 
 % http://tex.stackexchange.com/a/47694
 \crefname{lstlisting}{Listing}{Listings}

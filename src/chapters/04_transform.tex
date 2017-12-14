@@ -112,13 +112,13 @@ We present the transformation specification language trough a running example. \
 
 \subsection{Feature rules}
 
-The first section of the transformation specification contains \emph{feature rules} that describe the associated symbols relating to the \emph{features} (\emph{attributes}) of the domain model elements. The feature rule section is introduced by the \lit{features} keyword. Each domain class may have a sub-section describing the mapping of its features.
+The first section of the transformation specification contains \emph{feature rules} that describe the associated symbols relating to the \emph{features} (\emph{attributes}) of the domain model elements. The feature rule section is introduced by the \kw{features} keyword. Each domain class may have a sub-section describing the mapping of its features.
 
 By default, each \lit{int}, \lit{double} and \lit{boolean} attribute of a domain class is mapped to a \lit{const} variable symbol in the abstract \textabbr{RGSPN}. The value expression of the variable symbol is a literal that equals to the value of the domain attribute.
 
-Users may override the attribute mapping of \lit{double} features by specifying \lit{param} mapping instead. Attributes marked as \lit{param} are turned into parameter symbols instead.
+Users may override the attribute mapping of \lit{double} features by specifying \lit{param} mapping instead. Attributes marked as \kw{param} are turned into parameter symbols instead.
 
-Lastly, feature rules may specify \texttt{derived} features. An \textabbr{RGSPN} reference symbol with the given type and name is created and is associated with the domain element.
+Lastly, feature rules may specify \kw{derived} features. An \textabbr{RGSPN} reference symbol with the given type and name is created and is associated with the domain element.
 
 \begin{table}%
   \caption{Feature rules for dining philosophers transformation specification.}%
@@ -140,13 +140,13 @@ features {
 \end{lstlisting} & \\
     \includegraphics[scale=0.8]{figures/phil_class}& \begin{lstlisting}
   Philosopher {
-    param eatingRate
+    param ^VeatingRate^
   }
 \end{lstlisting} &\includegraphics[scale=0.8]{figures/phil_features}\\
   \includegraphics[scale=0.8]{figures/table_class}& \begin{lstlisting}
   Table {
     derived prop double
-        ^totalThinkingTime^
+        ^vtotalThinkingTime^
   }
 \end{lstlisting} &\includegraphics[scale=0.8]{figures/table_features}\\
   & \begin{lstlisting}
@@ -170,7 +170,7 @@ A \emph{mapping} rule associates a \emph{precondition} model query with a set of
 
 For every tuple of match arguments in the match set of the precondition query instances of the assignments, collections memberships and the \textabbr{RGSPN} module are added to the abstract analysis model. The instantiation of modules is perfomed by copying their contents to the abstract analysis model after renaming their symbols to avoid collisions. The match argument tuple serves as the source of traceability links to the instantiated objects.
 
-After the keyword \lit{mapping} the precondition graph pattern is named, followed by its list of parameters. The associated symbols of match arguments are accessible in the body of the mapping rule by mentioning the name of the match argument, followed by the dot operator and the name of the associated symbol.
+After the keyword \kw{mapping} the precondition graph pattern is named, followed by its list of parameters. The associated symbols of match arguments are accessible in the body of the mapping rule by mentioning the name of the match argument, followed by the dot operator and the name of the associated symbol.
 
 The name of the \textabbr{RGSPN} module to instantiate and a \emph{local name} for the module instance may be specified after the \lit{=>} operator. If the module instantiation clause is present symbols inside the module instance can be referred to using the local name of the instance and the dot operator similarly to associated symbol references.
 
@@ -178,7 +178,7 @@ The name of the \textabbr{RGSPN} module to instantiate and a \emph{local name} f
 
 The view trace model can be traversed during the view transformation by \emph{lookup declarations}, analogously to the \texttt{@Lookup} annotation introduced by \citet{Debreceni14viewmodel} for the traversal of traceability relations in view maintenance. Introduced by the keywords \lit{lookup} they name a precondition pattern and provide a list of match arguments. The match arguments must be a subset of the parameters of the containing mapping rule and a pattern match of the specified pattern must exist.
 
-After the operator \lit{=>} a local name may be given to the module instance created by the lookup up mapping rule. Hence it is possible to refer to symbols instantiated by other mapping rules in order to connect them with the rest of the analysis model. The execution of the view transformation, which is described in \vref{chap:transform:view}, ensures that the modules can be instantiated in any order and allows cyclic lookups between mapping rules.
+After the operator \kw{as} a local name may be given to the module instance created by the lookup up mapping rule. Hence it is possible to refer to symbols instantiated by other mapping rules in order to connect them with the rest of the analysis model. The execution of the view transformation, which is described in \vref{chap:transform:view}, ensures that the modules can be instantiated in any order and allows cyclic lookups between mapping rules.
 
 \subsubsection{Edge declarations}
 
@@ -202,25 +202,25 @@ Edges between different \textabbr{RGSPN} module instances and symbols associated
     \includegraphics[scale=0.8]{figures/q_table_pattern}& \begin{lstlisting}
 mapping qTable(T)
     => TableMod TM {
-  T.^totalThinkingTime^
-      := TM.totalThinkingTime
+  T.^vtotalThinkingTime^
+      := TM.^VtotalThinkingTime^
 }
 \end{lstlisting} &\includegraphics[scale=0.8]{figures/table_module}\\[-0.2ex]
   \includegraphics[scale=0.8]{figures/q_phil_pattern}& \begin{lstlisting}
 mapping qPhil(T, P)
     => PhilMod PM {
-  lookup qTable(T) => TM
-  PM.^hungryRate^ := P.hungryRate
-  PM.^eatingRate^ := P.eatingRate
-  TM.^thinkingTimes^
-      += PM.thinkingTime
+  lookup qTable(T) as TM
+  PM.^vhungryRate^ := P.^VhungryRate^
+  PM.^veatingRate^ := P.^VeatingRate^
+  TM.^vthinkingTimes^
+      += PM.^VthinkingTime^
 }
 \end{lstlisting} &\includegraphics[scale=0.8]{figures/phil_module}\\[-2ex]
   \includegraphics[scale=0.8]{figures/q_adjacent_pattern}& \begin{lstlisting}
 mapping qAdjacent(T, L, R) {
-  lookup qPhil(T, L) => PM1
-  lookup qPhil(T, R) => PM2
-  PM2.^leftFork^ := PM1.rightFork
+  lookup qPhil(T, L) as PM1
+  lookup qPhil(T, R) as PM2
+  PM2.^pleftFork^ := PM1.^PrightFork^
 }
 \end{lstlisting} &\includegraphics[scale=0.8]{figures/adjacent_phils_module}\\
     \bottomrule

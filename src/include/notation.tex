@@ -107,6 +107,23 @@
 % Listings
 %
 
+\definecolor{place}{HTML}{1C8000}
+\definecolor{transition}{HTML}{AB3000}
+\definecolor{variable}{HTML}{001AAB}
+\definecolor{emftype}{HTML}{001AAB}
+\definecolor{annotation}{HTML}{646464}
+
+\newcommand*{\kw}[1]{\lit{\color{keyword}\bfseries #1}}
+
+\lstdefinelanguage{vql}{
+  morekeywords={package,import,pattern,find},
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]",
+  morestring=[b]',
+  moredelim=[is][\color{emftype}\bfseries]{^}{^}
+}
+
 \lstdefinelanguage{ecore2pn}{
   morekeywords={acc,all,annotation,any,as,boolean,case,catch,const,default,derived,do,double,e,else,epackage,exp,extends,extension,false,features,finally,first,for,if,immediate,import,instanceof,int,lookup,mapping,marking,module,new,null,optional,package,param,path,place,priority,product,prop,ref,retention,return,static,steadystate,sum,super,switch,synchronized,throw,tran,transformation,true,try,typeof,until,val,var,weight,while},
   morekeywords={[2]A,AF,AG,AX,ABSTRACT_NET,CONCRETE_NET,E,EF,EG,EX,Ex,F,G,Mttf,Pr,SOURCE,U,W,X},
@@ -115,7 +132,14 @@
   morecomment=[s]{/*}{*/},
   morestring=[b]",
   morestring=[b]',
-  moredelim=[is][\color{black!75}]{^}{^}
+  moredelim=[is][\color{place}\itshape]{^p}{^},
+  moredelim=[is][\color{transition}\itshape]{^t}{^},
+  moredelim=[is][\color{variable}\itshape]{^v}{^},
+  moredelim=[is][\color{place}]{^P}{^},
+  moredelim=[is][\color{transition}]{^T}{^},
+  moredelim=[is][\color{variable}]{^V}{^},
+  morekeywords={[3]@Description,@RewardConfiguration,@FaultConfiguration},
+  keywordstyle={[3]\color{annotation}}
 }
 
 %%% Local Variables:

@@ -1,0 +1,28 @@
+package hu.bme.mit.inf.petridse.example.philosophers.ecore2pn
+
+module PhilModule {
+	ref param double ^vhungryRate^
+	ref param double ^veatingRate^
+
+	prop double ^VthinkingTime^ = if (#^Pthinking^ >= 1) 1 else 0
+	prop boolean ^VisHungry^ = #^Pwaiting^ >= 1
+
+	place ^Pthinking^ = 1
+	place ^Pwaiting^
+	place ^Peating^
+	place ^PrightFork^ = 1
+	ref place ^PleftFork^
+
+	// Timed transition with rate (*@\texttt{\itshape hungryRate}@*).
+	tran ^TgetHungry^ = exp ^vhungryRate^
+	// Immediate transition with probability weight (*@\texttt{1.0}@*), priority is (*@\texttt{1}@*) by default.
+	tran ^TstartEating^ = immediate 1.0
+	tran ^TfinishEating^ = exp ^veatingRate^
+
+	// Chains of arcs can be written with chains of arrows.
+	// Arc weights default to (*@\texttt{0}@*), but can be specified as e.g. (*@\texttt{-2->}@*).
+	^Pthinking^ -> ^TgetHungry^ -> ^Pwaiting^ -> ^TstartEating^ -> ^Peating^
+		 -> ^TfinishEating^ -> ^Pthinking^
+	^PrightFork^, ^PleftFork^ -> ^TstartEating^
+	^TfinishEating^ -> ^PrightFork^, ^PleftFork^
+}

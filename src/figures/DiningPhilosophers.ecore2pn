@@ -1,0 +1,53 @@
+package hu.bme.mit.inf.petridse.example.philosophers.ecore2pn
+
+import "http://example.org/philosophers"
+import hu.bme.mit.inf.petridse.example.philosophers.patterns.*
+
+transformation DiningPhilosophers {
+	features {
+		Philosopher {
+			@Description(text="Likes rice 'this' much.")
+			param ^VeatingRate^
+
+			@RewardConfiguration derived prop double ^vthinkingTime^
+			@FaultConfiguration derived prop boolean ^visHungry^
+		}
+
+		Table {
+			@RewardConfiguration
+			derived prop double ^vtotalThinkingTime^
+			@FaultConfiguration
+			derived prop boolean[] ^vhungryFaultModes^
+		}
+	}
+
+	/** Create the Petri net mapping for the table. */
+	mapping table(Table) => TableModule TableM {
+		// Bind the metric (*@\texttt{totalThinkingTime}@*) and the collection of fault modes
+		// (*@\texttt{\itshape hungryFaultModes}@*) to the domain object (*@\texttt{Table}@*) as derived features.
+		Table.^vtotalThinkingTime^ := TableM.^VtotalThinkingTime^
+		Table.^vhungryFaultModes^ := TableM.^vhungryFaultModes^
+	}
+
+	/** Create the Petri net mapping for each philosopher. */
+	mapping philosopher(Table, Phil) => PhilModule PhilM {
+		lookup table(Table) as TableM
+		PhilM.^vhungryRate^ := Phil.^VhungryRate^
+		PhilM.^veatingRate^ := Phil.^VeatingRate^
+		// First (*@\texttt{PhilM.totalThinkingTime}@*) is assigned to the derived feature
+		// (*@\texttt{Phil.\textit{totalThinkingTime}}@*)(*@\ldots@*)
+		Phil.^vthinkingTime^ := PhilM.^VthinkingTime^
+		// (*@\ldots@*)then (*@\texttt{Phil.\textit{totalThinkingTime}}@*) is added to the collection
+		// (*@\texttt{TableM.\textit{thinkingTimes}}@*).
+		TableM.^vthinkingTimes^ += Phil.^vthinkingTime^
+		Phil.^visHungry^ := PhilM.isHungry
+		TableM.^vhungryFaultModes^ += Phil.^visHungry^
+	}
+
+	/** Adjacent philosophers must share forks. */
+	mapping adjacentPhilosophers(Table, Left, Right) {
+		lookup philosopher(Table, Left) as LeftM
+		lookup philosopher(Table, Right) as RightM
+		RightM.^pleftFork^ := LeftM.^PrightFork^
+	}
+}

@@ -1,0 +1,22 @@
+package hu.bme.mit.inf.petridse.example.philosophers.patterns
+
+import "http://example.org/philosophers"
+
+/** Find the table around which the philosophers sit. */
+pattern table(Table : ^Table^) {
+	^Table^(Table);
+}
+
+/** Find each Phil around the Table. */
+pattern philosopher(Table : ^Table^, Phil : ^Philosopher^) {
+	^Philosopher^(Phil);
+	Table.philosophers(Table, Phil);
+}
+
+/** Left and Right sit next to each other around the Table. */
+pattern adjacentPhilosophers(Table : ^Table^, Left : ^Philosopher^, 
+		Right : ^Philosopher^) {
+	^Philosopher^.^right^(Left, Right);
+	^Table^.^philosophers^(Table, Left);
+	^Table^.^philosophers^(Table, Right);
+}
