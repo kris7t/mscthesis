@@ -34,10 +34,10 @@ Metamodels explicitly describe the abstract syntax of modeling languages. We wil
 Instances of metamodels are regarded as first-order structures:
 
 \begin{dfn}
-  An \emph{instance model} \(M = \ltup \Obj, \Prim; \II \rtup\) of the metamodel \(\Sigma\) is a first-order two-sorted structure, where
+  An \emph{instance model} \(M = \ltup \Obj, \Prim, \II \rtup\) of the metamodel \(\Sigma\) is a first-order two-sorted structure, where
   \begin{compactitem}
   \item \(\Obj = \{o_1, o_2, \ldots, o_N\}\) is a finite set of \emph{objects} (or \emph{individuals});
-  \item \(\Prim\) is a set of possible primitive values of attributes, for example, \(\Prim = \RR \cup \BB\), where \(\RR\) is the set of real numbers and \(\BB = \{\lit{true}, \lit{false}\}\);
+  \item \(\Prim\) is a set of possible primitive values of attributes, for example, \(\Prim \subseteq \RR \cup \BB\), where \(\RR\) is the set of real numbers and \(\BB = \{\lit{true}, \lit{false}\}\);
   \item \(\II\colon \Sigma \to \Obj \cup (\Obj \times \Obj) \cup (\Obj \times \Prim)\) is the \emph{interpretation function}, such that
     \begin{compactitem}
     \item \(\II(\lit C_i) = \lit C_i^M \subseteq \Obj\) for all classes \(\lit C_i \in \Sigma\);
@@ -141,7 +141,7 @@ Petri nets are a widely used graphical and mathematical modeling tool for system
   \item \(T\) is a finite set of \emph{transitions};
   \item \(m_0 \colon P \to \NN\) is the \emph{initial marking function};
   \item \(\pi \colon T \to \NN\) is the \emph{transition priority function};
-  \item \({\outarc}, {\inarc}, {\inharc} \subseteq \Sigma \times \NNpos \times \Sigma\) are the relations of \emph{output, input} and \emph{inhibitor arcs}, respectively, which are free of parallel arcs, i.e.~\(\ltup p, n_1, t \rtup, \ltup p, n_2, t \rtup \in {\outarc}\) implies \(n_1 = n_2\) and this property holds also for \(\inarc\) and \(\inharc\).
+  \item \({\outarc}, {\inarc}, {\inharc} \subseteq P \times \NNpos \times T\) are the relations of \emph{output, input} and \emph{inhibitor arcs}, respectively, which are free of parallel arcs, i.e.~\(\ltup p, n_1, t \rtup, \ltup p, n_2, t \rtup \in {\outarc}\) implies \(n_1 = n_2\) and this property holds also for \(\inarc\) and \(\inharc\).
   \end{compactitem}
 \end{dfn}
 
@@ -165,7 +165,7 @@ The Petri net is \emph{bounded} is there is an upper bound \(K \in \NN\) such th
 
 The state space of a bounded Petri net can be determined efficiently by the \emph{saturation} algorithm~\citep{Ciardo01saturation,Ciardo12tenyears}. Extensions have been proposed to the  algorithm to handle transition priorities effectively~\citep{Miner06saturation,Marussy17priorities}.
 
-The arc inscriptions of Petri net may depend on the current marking by replacing the positive integers \(\NNpos\) with a set of algebraic expressions \(\Expr_P\) over the token counts of places. In the marking dependent setting \({\outarc}, {\inarc}, {\inharc} \subseteq \Sigma \times \Expr_P \times \Sigma\) and the inscription expressions are evaluated according to the marking \(m\) when firing transitions \(m \tranto{t} m'\). Such \emph{Petri nets with marking-dependent arcs} can simplify formal modeling \citep{Ciardo93decomposition}; however, they may preclude the use of some analysis techniques.
+The arc inscriptions of Petri net may depend on the current marking by replacing the positive integers \(\NNpos\) with a set of algebraic expressions \(\Expr_P\) over the token counts of places. In the marking dependent setting \({\outarc}, {\inarc}, {\inharc} \subseteq P \times \Expr_P \times T\) and the inscription expressions are evaluated according to the marking \(m\) when firing transitions \(m \tranto{t} m'\). Such \emph{Petri nets with marking-dependent arcs} can simplify formal modeling \citep{Ciardo93decomposition}; however, they may preclude the use of some analysis techniques.
 
 \begin{figure}
   \centering
@@ -367,7 +367,7 @@ This simple translation makes \textAbbr{SPN}s especially amenable to analysis. F
 
 \subsubsection{Marking- and parameter-dependent models}
 
-The arc inscriptions of \textAbbr{GSPN}s can be made marking-dependent similarly to Petri nets, such that the arcs \({\outarc}, {\inarc}, {\inharc} \subseteq \Sigma \times \Expr_P \times \Sigma\) contain algebraic expressions of the token counts of the places \(P\). Moreover, the transition rates and weights can be made marking dependent, such that we have \(\lambda\colon T \to \Expr_P\).
+The arc inscriptions of \textAbbr{GSPN}s can be made marking-dependent similarly to Petri nets, such that the arcs \({\outarc}, {\inarc}, {\inharc} \subseteq P \times \Expr_P \times T\) contain algebraic expressions of the token counts of the places \(P\). Moreover, the transition rates and weights can be made marking dependent, such that we have \(\lambda\colon T \to \Expr_P\).
 
 Dependence on a set of parameters \(\Par\) may also be introduced. In this case \(\lambda\colon T \to \Expr_{P, \Par}\), where \(\Expr_{P, \Par}\) is the set of algebraic expressions depending on token counts of \(P\) and the values of the parameters in \(\Par\). Parameter-dependent \textAbbr{GSPN}s are translated into parametric \textAbbr{CTMC}s, where the values of \(Par\) are encoded as the parameter vector \(\vec{\uptheta} \in A \subseteq \RR^{\lvert \Par \rvert}\) and the feasible region \(A\) of parameter values is determined according to domain requirements.
 
