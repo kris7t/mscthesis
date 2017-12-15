@@ -24,11 +24,11 @@ INKSCAPE_EXPORT_PDF_OPTS=$(INKSCAPE_OPTS) --export-area=drawing
 
 GS:=gs
 
-GS_OPTS:=-sDEVICE=pdfwrite -q -P- -dNOPAUSE -dBATCH -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite -dOPM=0 -dColorConversionStrategy=/RGB -sProcessColorModel=DeviceRGB -dPDFSETTINGS=/prepress -dOptimize=true -dEmbedAllFonts=true -dSubsetFonts=true -dCompressFonts=true -dCompressPages=true -dCannotEmbedFontPolicy=/Warning
+GS_OPTS:=-sDEVICE=pdfwrite -q -P- -dNOPAUSE -dBATCH -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite -dOPM=0 -dColorConversionStrategy=/RGB -sProcessColorModel=DeviceRGB -dPDFSETTINGS=/prepress -dOptimize=true -dEmbedAllFonts=true -dCompressFonts=true -dCompressPages=true -dCannotEmbedFontPolicy=/Warning
 
-GS_OPTIMIZE_FIGURE_OPTS=$(GS_OPTS)
+GS_OPTIMIZE_FIGURE_OPTS=$(GS_OPTS) -dSubsetFonts=false
 
-GS_CREATE_PDFA_OPTS=-dPDFA=2 -dPDFACompatibilityPolicy=1 $(GS_OPTS)
+GS_CREATE_PDFA_OPTS=-dPDFA=2 -dPDFACompatibilityPolicy=1 $(GS_OPTS) -dSubsetFonts=true
 
 .PHONY: all latex figures clean
 

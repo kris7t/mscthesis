@@ -3,7 +3,7 @@
 
 The purpose of this chapter is to briefly recall some preliminaries related to our work, including concepts from model-driven engineering, as well as formal and stochastic modeling. As our work attempts to aid the calculation of stochastic metrics based on engineering models, we describe the stochastic analysis tasks that we are aiming to support.
 
-\Cref{chap:rgspn} builds on generalized stochastic Petri nets, which are described in \vref{ssec:background:gspn}, in order to define a formalism suitable for analysis model fragments. \Cref{chap:transform} uses incremental query execution of graph patterns, which are describen in \vref{ssec:background:patterns}, to instantiate the analysis model fragments according to a changing domain model. Lastly, \cref{chap:apply} discusses the application of the transformation toolchain to aid proposing and solving stochastic analysis task from \vref{ssec:background:analysis} in design-space exploration for the calculation of stochastic metrics on engineering models.
+\Cref{chap:rgspn} builds on generalized stochastic Petri nets, which are described in \vref{ssec:background:gspn}, in order to define a formalism suitable for analysis model fragments. \Cref{chap:transform} uses incremental query execution of graph patterns, which are described in \vref{ssec:background:patterns}, to instantiate the analysis model fragments according to a changing domain model. Lastly, \cref{chap:apply} discusses the application of the transformation toolchain to aid proposing and solving stochastic analysis task from \vref{ssec:background:analysis} in design-space exploration for the calculation of stochastic metrics on engineering models.
 
 Furthermore, \vref{ex:background:running} introduces the \emph{dining philosophers} problem, which is used as a running example throughout this thesis.
 
@@ -47,7 +47,7 @@ Instances of metamodels are regarded as first-order structures:
   \end{compactitem}
 \end{dfn}
 
-Existing metamodeling technologies, such as the Ecore metamodeling langauge from the Eclipse Modeling Framework (\textabbr{EMF})~\citep{Steinberg09emf} often allow the designer of modeling languages to impose additional constraints on instances models. Some possible restrictions are listed below: 
+Existing metamodeling technologies, such as the Ecore metamodeling language from the Eclipse Modeling Framework (\textabbr{EMF})~\citep{Steinberg09emf} often allow the designer of modeling languages to impose additional constraints on instances models. Some possible restrictions are listed below: 
 \begin{itemize*}
 \item \emph{Class inheritance} may specify that instances of a class must be instances of another.
 \item \emph{Abstract classes} and \emph{interfaces} can have no direct instances.
@@ -101,7 +101,7 @@ State-of-the-art modeling toolchains often rely of model queries to retrieve fra
 
 Formally, again following \citet{Varro17generation}, we define a graph query \(\phi(x_1, x_2, \ldots, x_n)\) with \(n\) free variables as a first-order logic formula over the metamodel signature \(\Sigma\). The formula may contain atomic propositions of the form \(\lit C_i(x_j)\), \(\lit R_i(x_j, x_\ell)\) and \(\lit A_i(x_j, x_\ell)\), where \(\lit C_i, \lit R_i, \lit A_i \in \Sigma\) are classes, references and attributes, respectively. Furthermore, logical connectives \(\neg, \land, \lor, \Rightarrow\) and quantifiers \(\exists, \forall\) may also appear in formulas.
 
-Model query engine often allow transitive closure computation \(\phi^+\), which makes the query language strictly more expressive than first order logic. If \(\phi\) is a formula with two free variables its transitive closue \(\phi^+(x_i, x_j)\) holds if and only if there are some objects \(x_i = y_1, y_2, \ldots, y_k = x_j\) (\(k \ge 1\)) such that we have \(\phi(y_1, y_2) \land \phi(y_2, y_3) \land \cdots \land \phi(y_{k - 1}, y_k)\)~\citep{Bergmann12incscc}.
+Model query engines often allow transitive closure computation \(\phi^+\), which makes the query language strictly more expressive than first-order logic. If \(\phi\) is a formula with two free variables its transitive closure \(\phi^+(x_i, x_j)\) holds if and only if there are some objects \(x_i = y_1, y_2, \ldots, y_k = x_j\) (\(k \ge 1\)) such that we have \(\phi(y_1, y_2) \land \phi(y_2, y_3) \land \cdots \land \phi(y_{k - 1}, y_k)\)~\citep{Bergmann12incscc}.
 
 For detailed semantics of first-order graph patterns extended with transitive closure we refer to the works of \citet{Semerath17rewriting} and \citet{Varro17generation}.
 
@@ -121,7 +121,7 @@ An \emph{incremental} (or \emph{live}) query engine, such as \textabbr{VIATRA} Q
 
 \section{Formal models for stochastic analysis}
 
-In this section we recall some of the basic formalisms involved in our work. Petri nets are introduced firsty, which serve as the basis in our framework to express stochastic models. Then we move to the background in stochastic modeling and analysis methods. Portions of this section were adapted from previous work by \citet[Chapter~2]{Klenik15configurable}.
+In this section we recall some of the basic formalisms involved in our work. Petri nets are introduced firstly, which serve as the basis in our framework to express stochastic models. Then we move to the background in stochastic modeling and analysis methods. Portions of this section were adapted from previous work by \citet[Chapter~2]{Klenik15configurable}.
 
 Throughout this section and the rest of this work \(\NN\), \(\NNpos\), \(\RR\), \(\RRpos\) will refer to the sets of natural numbers including zero \(\NN = \{0, 1, 2, \ldots\}\), the set of positive natural numbers \(\NNpos = \NN \setminus \{0\}\), the set of real numbers and the set of positive real numbers, respectively.
 
@@ -180,7 +180,7 @@ The arc inscriptions of Petri net may depend on the current marking by replacing
 
 \subsection{Continuous-time Markov chains}
 
-Continuous-time Markov chains (\textAbbr{CTMC}s) are mathematical tools for describing the behavior of systems in countinous time where the stochastic behavior of the system only depends on its current state~\citepeg{Reibman89transient}. This assumption is reasonable in a wide class of modeling tasks; hence \textAbbr{CTMC}s are commonly used in the reliability and performability prediction of critical systems.
+Continuous-time Markov chains (\textAbbr{CTMC}s) are mathematical tools for describing the behavior of systems in continuous time where the stochastic behavior of the system only depends on its current state~\citepeg{Reibman89transient}. This assumption is reasonable in a wide class of modeling tasks; hence \textAbbr{CTMC}s are commonly used in the reliability and performability prediction of critical systems.
 
 \begin{dfn}
   A \emph{continuous-time Markov chain} (\textabbr{CTMC})
@@ -267,7 +267,7 @@ Selection of numerical solver backends and their parameters in the context of de
 
 \subsubsection{Parametric models}
 
-The infinitesimal generator matrix of \emph{parametric \textabbr{CTMC}} depends on a vector of \emph{parameters} \(\vec{\uptheta} \in A \subseteq \RR^k\), where \(A\) is the \emph{feasible region} of parameter values. The parameters represent unknown or uncertain attributes of the system under study, while the feasible region describes realizable or plausible parameter values. \emph{Parameter optimization} refers to selection of feasible parameter values \(\vec{\uptheta} \in A\) such that some \emph{goal function} is maximized.
+The infinitesimal generator matrix of \emph{parametric \textabbr{CTMC}} depends on a vector of \emph{parameters} \(\vec{\uptheta} \in A \subseteq \RR^k\), where \(A\) is the \emph{feasible region} of parameter values. The parameters represent unknown or uncertain attributes of the system under study, while the feasible region describes realizable or plausible parameter values. \emph{Parameter optimization} refers to the selection of feasible parameter values \(\vec{\uptheta} \in A\) such that some \emph{goal function} is maximized.
 
 Analysis methods for parametric Markov chains include sensitivity analysis~\citep{Blake88sensitivity}, parametric steady-state solution~\citep{Hahn11parametric,Voros17pdn} and parameter synthesis~\citep{Quatmann16mdp}. Some analysis methods only allow specific kinds of parameter-dependence in the infinitesimal matrix elements \(\vec{\uptheta} \mapsto q(\vec{\uptheta})[x, y]\), such as \(C^1\) differentiable expressions~\citep{Blake88sensitivity} or rational functions~\citep{Hahn11parametric}.
 
@@ -311,7 +311,7 @@ These problems can be solved by the analysis of phase-type distributions~\citep{
 
 \newpara \textbf{Sensitivity analysis} concerns the rates of change in stochastic metrics due to changes in parameter values of a parametric \textabbr{CTMC} or reward model. The model reacts to changes of parameters with high absolute sensitivity  more prominently; therefore, they can be promising directions of system optimization. The partial derivatives of the expectation describe above can be computed with respect to the elements of the parameter vector~\citep{Blake88sensitivity,Ramesh93sensitivity}.
 
-\newpara \textbf{Stochastic model checking} consists of decision procedures to determine whether the system under consideration satisfies requirements formalized in stochastic logics. Often stochastic model checking involves the analysis tasks outlined above as subroutines. Logics suitable for continuous-time models include continuous stochastic logic~(\textabbr{CSL})~\citep{Aziz96csl} and continuous stochastic reward logic~(\textabbr{CSRL})~\citep{Kwiatkowska06csrl}. Further approaches to specifying stochastic properties and queries are surveyed in~\vref{ssec:rgspn:relwork-query}.
+\newpara \textbf{Stochastic model checking} consists of decision procedures to determine whether the system under consideration satisfies requirements formalized in a stochastic logic. Often stochastic model checking involves the analysis tasks outlined above as subroutines. Logics suitable for continuous-time models include continuous stochastic logic~(\textabbr{CSL})~\citep{Aziz96csl} and continuous stochastic reward logic~(\textabbr{CSRL})~\citep{Kwiatkowska06csrl}. Further approaches to specifying stochastic properties and queries are surveyed in~\vref{ssec:rgspn:relwork-query}.
 
 \subsection{Generalized stochastic Petri nets}
 \label{ssec:background:gspn}
@@ -338,7 +338,7 @@ Markings in which an immediate transitions is fireable are \emph{vanishing}, whi
 \end{equation}
 
 
-Timed transitions \(t\) have an associated exponentially distributed countdown with rate parameter \(\lambda(t)\). The fireable timed transitions is fired when the countdown expires, which resets the countdown. In contrast, immediate transitions are fires as soon as they become fireable. If multiple immediate transitions are fireable a single transition is picked randomly to be fired. The probability of an immediate transition \(t\) being picked is proportional to its probability weight \(\lambda(t)\). Immediate transitions are fired until a tangible marking is reached.
+Timed transitions \(t\) have an associated exponentially distributed countdown with rate parameter \(\lambda(t)\). The fireable timed transitions is fired when the countdown expires, which resets the countdown. In contrast, immediate transitions are fires as soon as they become fireable. If multiple immediate transitions are fireable, a single transition is picked randomly to be fired. The probability of an immediate transition \(t\) being picked is proportional to its probability weight \(\lambda(t)\). Immediate transitions are fired until a tangible marking is reached.
 
 \begin{figure}
   \centering
@@ -357,7 +357,7 @@ Timed transitions \(t\) have an associated exponentially distributed countdown w
 
 A \emph{stochastic Petri net} (\textabbr{SPN}) is a \textabbr{GSPN} with no immediate transitions, i.e.~\(\pi(t) \equiv 0\) for all \(t \in T\). For such nets all reachable states are tangible, \(\textit{TRS} = \textit{RS}\).
 
-Bounded \textAbbr{SPN}s can be transformed into \textAbbr{CTMC}s in a straightforward way. The state space of the \textabbr{CTMC} is the set \(S = \{0, 1, \ldots, \lvert \textit{TRS} \rvert - 1\}\) and let \(\iota\colon \textit{TRS} \to S\) be a bijection. The off-diagonal elements of the infinitesimal generator matrix \(Q \in \RR^{\lvert \textit{TRS} \rvert \times \lvert \textit{TRS} \rvert}\) can be computed by summing the rates of transitions between states, while diagonal elements are set such that \(Q \vec{1}^T = \vec{0}^T\) is satisfied. Formally, we have
+Bounded \textAbbr{SPN}s can be transformed into \textAbbr{CTMC}s in a straightforward way. Let \(S = \{0, 1, \ldots, \lvert \textit{TRS} \rvert - 1\}\) be the set of states of the \textabbr{CTMC} and let \(\iota\colon \textit{TRS} \to S\) be a bijection. The off-diagonal elements of the infinitesimal generator matrix \(Q \in \RR^{\lvert \textit{TRS} \rvert \times \lvert \textit{TRS} \rvert}\) can be computed by summing the rates of transitions between states, while diagonal elements are set such that \(Q \vec{1}^T = \vec{0}^T\) is satisfied. Formally, we have
 \begin{align}
   q[\iota(m), \iota(m')] &= \sum_{\mathclap{m \tranto{\scriptstyle t} m'}} \lambda(t) \quad\text{if \(m \ne m'\),}
   & q[x, x] &= - \sum_{y \ne x} q[x, y] \text.

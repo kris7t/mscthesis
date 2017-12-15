@@ -22,7 +22,7 @@ In order to \circled{3} generate queries for the stochastic models, we follow \c
 
 In this section we briefly review some existing approaches for modular construction of logical and stochastic formal models, as well as for the specification of properties and metrics of interest over such models. For an overview on performance evaluation techniques for particular component-based software engineering languages, which contrasts with our present work that aims to be generic in the engineering \textabbr{DSL}, we direct the interested reader to the survey by~\citet{Koziolek10review}. 
 
-We are especially interested in \emph{modular} formalisms that allow assembling structured models from modules (or fragments). While arbitrary combination of modules leads to high expressivity, it also restricts the opportunities for \emph{compositional} verification. On the other hand, a formalism is compositional if the properties of model can be verified recursively by verifying simpler properties of its constituent components. These models are often constructed using \emph{composition operators} that restrict arbitrary modularity in order to enforce property preservation. \todo{Cite!---V{\"o}ri said he has a good reference about this distinction.}
+We are especially interested in \emph{modular} formalisms that allow assembling structured models from modules (or fragments). While arbitrary combination of modules leads to high expressivity, it also restricts the opportunities for \emph{compositional} verification. On the other hand, a formalism is compositional if the properties of model can be verified recursively by verifying simpler properties of its constituent components. These models are often constructed using \emph{composition operators} that restrict arbitrary modularity in order to enforce property preservation.
 
 We opt for modularity instead of compositionality to avoid restricting the model transformations that will automatically assemble the stochastic models according to an architectural \textabbr{DSL} instance. However, this means solution techniques will have to consider the assembled model in its entierty and cannot depend on preservation of the properties of the components.
 
@@ -36,7 +36,7 @@ Continuous-time Markov chains (\textAbbr{CTMC}s) are common tools for the reliab
 
 \newpara \textbf{Stochastic process algebras} incorporate random timings into the denotational semantics of process calculi~\citep{Hermanns02algebra} while allowing compositional verification. However, composition is syntactically restricted to set of allowed process operators, such as parallel and sequential composition of two subprocesses. An example formalism of this class is the Performance Enhanced Process Algebra (\textabbr{PEPA}) defined by \citet{Hillston95pepa}.
 
-\newpara Although all \textAbbr{CTMC}s can be expressed with any of these formalism classes, a significant advantage of higher-level models is the ability to expresses complicated behaviors of systems with small models. In this regard, \textAbbr{GSPN}s can express \textAbbr{QN}s without increasing model size~\citep{Vernon86comparison}. Comparison of Petri nets and process algebras is more difficult due to the vastly differing modeling styles~\citep{Donatelli95comparison}. The definable composition operators for Petri nets only conserve a limited set of properties; for a review we refer to Chapter~2 of the book by \citet{Hejiao12pppnpa}.
+\newpara Although all \textAbbr{CTMC}s can be expressed with any of these formalism classes, a significant advantage of higher-level models is the ability to expresses complicated behaviors of systems with small models. In this regard, \textAbbr{GSPN}s can express \textAbbr{QN}s without increasing model size~\citep{Vernon86comparison}. Comparison of Petri nets and process algebras is more difficult due to the vastly different modeling styles~\citep{Donatelli95comparison}. The definable composition operators for Petri nets only conserve a limited set of properties; for a review we refer to Chapter~2 of the book by \citet{Hejiao12pppnpa}.
 
 Modularity in various Petri net formalisms was surveyed by \citet{Marechal12modular}. Following their categorization we briefly review some formalisms below:
 
@@ -66,7 +66,7 @@ with the \textAbbr{CTMC}. A wide variety of analyses are possible, such as the
 computation of the expected steady-state reward \(\Ex R(\infty)\), the expected
 transient reward \(\Ex R(t)\) or the expected accumulated reward \(\Ex Y(t) = \Ex \int_{0}^t R(\tau)\, \dd\tau\)~\citepeg{Reibman89transient}. The results are interpreted as the mean values of the measures of interest. Sensitivity analysis~\citepeg{Blake88sensitivity} can determine the rate of change in a metric caused by changing model parameters. Reward analysis can be generalized to Markov decision processes to study the effects of external control in stochastic systems~\citep{Baier17maximizing}.
 
-Several logics have been developed to study temporal and stochastic properties. Probabilistic computation tree logic (\textabbr{PCTL}) was proposed by \citet{Hansson94pctl} for discrete-time systems, while continuous stochastic logic~(\textabbr{CSL})~\citep{Aziz96csl} and \textabbr{CSL} with timed automata~(\(\textabbr{CSL}^{\textabbr{TA}}\))~\citep{Donatelli09cslta} can describe properties of continuous-time systems. Cntinuous stochastic reward logic~(\textabbr{CSRL}) to incorporates reward analysis into \textabbr{CSL}~\citep{Kwiatkowska06csrl}. A generalized version of \textabbr{CSRL}~(\textabbr{GCSRL}) was developed by~\citet{Kuntz07gcsrl} for \textAbbr{GSPN}s and other systems with both timed and untimed stochastic behavior.
+Several logics have been developed to study temporal and stochastic properties. Probabilistic computation tree logic (\textabbr{PCTL}) was proposed by \citet{Hansson94pctl} for discrete-time systems, while continuous stochastic logic~(\textabbr{CSL})~\citep{Aziz96csl} and \textabbr{CSL} with timed automata~(\(\textabbr{CSL}^{\textabbr{TA}}\))~\citep{Donatelli09cslta} can describe properties of continuous-time systems. Continuous stochastic reward logic~(\textabbr{CSRL}) to incorporates reward analysis into \textabbr{CSL}~\citep{Kwiatkowska06csrl}. A generalized version of \textabbr{CSRL}~(\textabbr{GCSRL}) was developed by~\citet{Kuntz07gcsrl} for \textAbbr{GSPN}s and other systems with both timed and untimed stochastic behavior.
 
 \subsubsection{Queries for component-based models}
 
@@ -101,7 +101,7 @@ To simplify presentation the separation of module interfaces and implementations
 
 The \textabbr{RGSPN} formalism consists of symbols, and \emph{edges} between the symbols. The latter generalize Petri net arcs by also permitting reference assignments and collection memberships among the edges of the Petri net graph.
 
-Each symbol has a \emph{kind}\todo{We should find a better term than \emph{kind}, as in the current implementation, this term is used in another (slightly related) sense for determining the appearance of symbols in textual and graphical concrete syntaxes.},  which determines what information is needed to define the symbol, and a \emph{type}, which determines the context where the symbol may be used. The type system, which is elaborated in \vref{ssec:rgspn:typesystem}, contains type for places, transitions, and variables. However, the mapping between symbol kinds and types is not one-to-one, since the type of references can be set to determine the types of symbols they may point at.
+Each symbol has a \emph{kind},  which determines what information is needed to define the symbol, and a \emph{type}, which determines the context where the symbol may be used. The type system, which is elaborated in \vref{ssec:rgspn:typesystem}, contains type for places, transitions, and variables. However, the mapping between symbol kinds and types is not one-to-one, since the type of references can be set to determine the types of symbols they may point at.
 
 \subsubsection{Symbol kinds}
 
@@ -119,7 +119,8 @@ The \textabbr{RGSPN} formalism has six symbol kinds:
 
 References allow assembling different Petri net modules by merely adding reference assignments. As it will be shown in \vref{sec:transform:execution}, setting a single reference can correspond to redirecting many arcs in the net. Hence references help exploiting the modularity already present in the graph structure of Petri nets.
 
-\newpara \textbf{Collections,} similarly to references, point to other symbols. A collection may point to multiple symbols at one is their type is consistent with the \emph{member type} of the collection. The graphical notation is derived from the member type by adding a drop shadow.
+\newpara \textbf{Collections,} similarly to references, point to other symbols.
+A collection may point to multiple symbols as long as their type is consistent with the \emph{member type} of the collection. The graphical notation is derived from the member type by adding a drop shadow.
 
 Collections enable modular query specification in \textAbbr{RGSPN}s. While Petri nets are graphs, which can be easily extended by adding new arcs, performance measures are queries and described by algebraic expressions of a much stricter tree structure. Although variable references can serve as \enquote{holes} in the expression trees, they do not allow arbitrary aggregation of queries. For example, consider a performance measure which is defined as the sum of other measure corresponding to the components of the system. An expression of the form \(v_1 + v_2\) can only serve as the aggregate measure of exactly two components, which must have their elementary performance measures assigned to the references \(v_1\) and \(v_2\).
 
@@ -127,7 +128,7 @@ In \vref{sec:rgspn:expression} we introduce \emph{aggregation functions} into th
 
 \subsubsection{Edges}
 
-Any relation between two \textabbr{RGSPN} symbol will be called an \emph{edge}. Three kinds\todo{Kind?} of edges are introduced, which are \emph{arcs}, \emph{reference assingments} and \emph{collection memberships}.
+Any relation between two \textabbr{RGSPN} symbol will be called an \emph{edge}. Three kinds of edges are introduced, which are \emph{arcs}, \emph{reference assignments} and \emph{collection memberships}.
 
 Petri net arcs between transitions and places may be \emph{output}, \emph{input} or \emph{inhibitor} arcs. Either end may be a reference to an appropriate place or transition instead of a concrete symbol. Arcs are equipped with possibly marking-dependent \emph{inscription}, which is the number of tokens moved by the transition. If the inscription is the constant \(1\), we will omit it. Parallel arcs between the same symbols and with the same arc kind are forbidden.
 
@@ -146,7 +147,7 @@ Collection memberships connect collections to their member symbols. Either end o
   \label{ex:rgspn:example}
   \Vref{fig:rgspn:example} shows an \textabbr{RGSPN} model of the dining philosophers problem with two philosophers sitting around a table.
 
-  While the immediate transitions \symb{start\-Eating1} and \symb{start\-Eating2} have constant weights and priorities, the timed transitions all refer to different symbols in their rate expressions. Node the difference between the variables \symb{hungry\-Rate1}, \symb{hungry\-Rate2} and the parameters \symb{eating\-Rate1}, \symb{eating\-Rate2}. Although these variables and symbols are all set to real number constants, the parameters are preserved as continuously changeable quantities when the model is passed to an external tool.
+  While the immediate transitions \symb{start\-Eating1} and \symb{start\-Eating2} have constant weights and priorities, the timed transitions all refer to different symbols in their rate expressions. Note the difference between the variables \symb{hungry\-Rate1}, \symb{hungry\-Rate2} and the parameters \symb{eating\-Rate1}, \symb{eating\-Rate2}. Although these variables and symbols are all set to real number constants, the parameters are preserved as continuously changeable quantities when the model is passed to an external tool.
 
   The self-contained subnets \symb{philosohper1} and \symb{philosopher2} contain reference places \symb{right\-Fork1} and \symb{right\-Fork2}. The subnets are connected by reference assignments. The reference places specify no initial marking at all---not even a zero marking---, because they are slaves of the pointed master symbols \symb{left\-Fork2} and \symb{left\-Fork1}, respectively.
 
@@ -231,7 +232,7 @@ Collection types are covariant in their member types; therefore \(\tau \subtype 
 
 \subsection{Formal definition}
 
-In this section we first define \textabbr{RGSPN} signatures as set of symbols of various kinds.\todo{Change \emph{kinds}.} Then the definition of an \textabbr{RGSPN} on a given signature is elaborated, which extends the signature with the properties of the symbols and the edges of the net. This separation allows deferring the details of the \emph{expressions} of a signature to \vref{sec:rgspn:expression} even though expression will serves as the properties of symbols in the definition of \textAbbr{RGSPN}s.
+In this section we first define \textabbr{RGSPN} signatures as a set of symbols of various kinds. Then the definition of an \textabbr{RGSPN} on a given signature is elaborated, which extends the signature with the properties of the symbols and the edges of the net. This separation allows deferring the details of the \emph{expressions} of a signature to \vref{sec:rgspn:expression} even though expression will serves as the properties of symbols in the definition of \textAbbr{RGSPN}s.
 
 \begin{dfn}\label{dfn:rgspn:rgspn}
   An \emph{\textabbr{RGSPN} signatrue} is an 11-tuple
@@ -241,7 +242,7 @@ In this section we first define \textabbr{RGSPN} signatures as set of symbols of
   where the sets \(P, T_t, T_i, V, \Par, R, C,\) are disjoint and
   \begin{compactitem}
   \item \(P\) is a set of \emph{places};
-  \item \(T_T\) and \(T_i\) are a sets of \emph{timed} and \emph{immediate transitions}, respectively;
+  \item \(T_T\) and \(T_i\) are sets of \emph{timed} and \emph{immediate transitions}, respectively;
   \item \(V\) is a set of \emph{variables};
   \item \(\Par\) is a set of \emph{parameters};
   \item \(R\) is a set of \emph{references};
@@ -272,7 +273,7 @@ We will abuse notation such that \(\Sigma\) also stands for the set \(P \cup T_t
 
 Note the separation between timed \(T_T\) and immediate transitions \(T_i\). In \textAbbr{GSPN}s timed and immediate transitions are usually discriminated by setting \(\pi(t) = 0\) for all \(t \in T_T\)~\citep{Marsan84gspn}. However, in our setting the priority \(\pi(t)\) may contain an algebraic expression; therefore determining whether \(\pi(t) = 0\) would require nontrivial computations. By explicitly partitioning the set of transitions \(T = T_T \djcup T_i\) this computation is avoided.
  
-All quantitative aspects of the net are described by expressions \(\Expr_\Sigma\) with the exception of the values of the parameters, which must be real numbers.\todo{Should this go somewhere else?} As any computation is forbidden inside parameter values, so that parameter synthesis tool may set new values of the parameters without needing to respect any constraints between parameter values implicit in the value computations. Explicit constraints, such as interval bounds for parameters may be added as an extension of \textAbbr{RGSPN}s; however, they are currently not supported. If multiple values depending on a shared set of parameters are needed, variable symbols with value expressions may be used instead.
+All quantitative aspects of the net are described by expressions \(\Expr_\Sigma\) with the exception of the values of the parameters, which must be real numbers. As any computation is forbidden inside parameter values, so that parameter synthesis tool may set new values of the parameters without needing to respect any constraints between parameter values implicit in the value computations. Explicit constraints, such as interval bounds for parameters may be added as an extension of \textAbbr{RGSPN}s; however, they are currently not supported. If multiple values depending on a shared set of parameters are needed, variable symbols with value expressions may be used instead.
 
 Edges of the net are between pairs of arbitrary symbols, e.g.~arcs are not restricted to go from place symbols to transition symbols, because any symbol may be replaced by a reference of compatible type. However, reference assignments must assign the symbol to be pointed at to a reference, as no other symbol kind can act as an assignable.
 
@@ -461,7 +462,7 @@ A complete set of typing rules for \(\Expr_\Sigma\) is presented in~\vref{fig:rg
 
 The types of unary operators, binary operators, conditional and aggregate expressions are captured by the rules \textsc{T-Unary}, \textsc{T-Bin}, \textsc{T-If} and \textsc{T-Agg}. Instead of introducing types for operators and typing rules for operator application, typing rules for all operators are written out explicitly. While this approach increases the number of typing rules considerably, the lack of function types and polymorphic types allows the syntax of \(\rel{Type}\) to remain simple. If more generality is desired, the type system may be extended to support user-defined operators and operator types as described in \vref{rem:rgspn:colored}.
 
-In spite of being handled only in the type derivation rules, several operators are polymorphic in the types of the arguments. However, \textsc{T-BinaryDiv} forces both arguments of the division operator be be real numbers, so that ambiguities concerning integer division are avoided. Most compound expressions are \emph{dependency polymorphic}, that is, the types of their arguments may have any dependency qualifier \(\delta\), which will be inherited by the type of the whole expression. The exceptions are the \(\textabbr{CTL}^*\) operators, which operate on \lit{path} formulas and produce \lit{path} or \lit{prop} state formulas. 
+In spite of being handled only in the type derivation rules, several operators are polymorphic in the types of the arguments. However, \textsc{T-BinaryDiv} forces both arguments of the division operator be real numbers, so that ambiguities concerning integer division are avoided. Most compound expressions are \emph{dependency polymorphic}, that is, the types of their arguments may have any dependency qualifier \(\delta\), which will be inherited by the type of the whole expression. The exceptions are the \(\textabbr{CTL}^*\) operators, which operate on \lit{path} formulas and produce \lit{path} or \lit{prop} state formulas. 
 
 Variable and marking references are handled by \textsc{T-Var} and \textsc{T-Marking}. Referring to markings of places always produces a \lit{marking} dependent \lit{int}. \textsc{T-Literal} assigns \lit{const} types to literal constants. Lastly, \textsc{T-Sub} allows the use of subtyping in type derivations.
 
@@ -495,7 +496,7 @@ Type coercion from \lit{int} to \lit{double} act in the obvious way. Dependence 
 
 \subsubsection{Operators and mentioned symbols}
 
-Now we will clarify the semantics \(\llbracket \_ \rrbracket\) of the expressions \(\Expr_\Sigma\) themselves. The intepretations of expressions conform with the types, i.e.~if \(\Sigma \vdash e \oftype \tau\), then we have \(\llbracket e \rrbracket \in \llbracket \tau \rrbracket\).
+Now we will clarify the semantics \(\llbracket \_ \rrbracket\) of the expressions \(\Expr_\Sigma\) themselves. The interpretations of expressions conform with the types, i.e.~if \(\Sigma \vdash e \oftype \tau\), then we have \(\llbracket e \rrbracket \in \llbracket \tau \rrbracket\).
 
 Operators from \vref{eq:rgspn:expression} act pointwise on the interpretation functions, e.g.~to calculate \(e_1 \mathbin{\diamond} e_2\), \(e_1\) and \(e_2\) are separately evaluated in the dependence context, then the operator \(\diamond\) is applied to the resulting values.\footnote{This makes variable types with a dependence qualifier other than \lit{const} specializations of \emph{Reader} (also known as \emph{Environment}) applicative functors~\citep[Section~8]{McBride08applicative}.}
 
