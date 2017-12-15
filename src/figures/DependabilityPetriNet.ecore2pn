@@ -80,7 +80,7 @@ transformation DependabilityPetriNet {
 	mapping connectedErrorModesUncertain(DepModel, From, FromPort, To, ToPort, Propagation, ErrorMode) => UncertainPropagationModule P {
 		lookup outputErrorMode(DepModel, From, FromPort, ErrorMode) as EMFrom
 		lookup errorMode(DepModel, To, ToPort, ErrorMode) as EMTo
-		P.^toutputToBuffer% := EMFrom.^ToutputToBuffer^
+		P.^toutputToBuffer^ := EMFrom.^ToutputToBuffer^
 		P.^pto^ := EMTo.^perror^
 		P.^vprobability^ := Propagation.^Vprobability^
 	}

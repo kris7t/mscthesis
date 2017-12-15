@@ -94,6 +94,9 @@
 \renewcommand*{\cftchapterfont}{\normalfont\sffamily\bfseries}
 \renewcommand*{\cftchapterpagefont}{\cftchapterfont}
 
+% Appendices should have small-caps letters.
+\apptocmd{\appendix}{\renewcommand*{\thechapter}{\textabbr{\Alph{chapter}}}}{}{}
+
 % Tabular numbers in TOC
 \renewcommand{\cftchapterpagefont}{\normalfont\fontfamily{FiraSans-TLF}\bfseries}   
 \renewcommand{\cftsectionpagefont}{\normalfont\LFfont} 
@@ -514,7 +517,8 @@
   commentstyle={\rmfamily},
   keywordstyle={\color{keyword}\bfseries},
   stringstyle=\color{string},
-  escapeinside={(*@}{@*)}
+  escapeinside={(*@}{@*)},
+  literate={fi}{f{}i}2
 }
 
 \lstdefinestyle{block}{
@@ -527,6 +531,18 @@
 % http://tex.stackexchange.com/a/47694
 \crefname{lstlisting}{Listing}{Listings}
 \Crefname{lstlisting}{Listing}{Listings}
+
+% Silence overfull vbox errors we can't do anything about in multi-page
+% listings.
+% https://tex.stackexchange.com/a/62318/8744
+\newcommand*{\tdk@orig@lstinputlisting}{}
+\let\tdk@orig@lstinputlisting\lstinputlisting
+\renewcommand*{\lstinputlisting}[2][]{%
+  \let\tdk@orig@textbottom\@textbottom
+  \global\def\@textbottom{\vskip \z@ \@plus 5pt}%
+  \tdk@orig@lstinputlisting[#1]{#2}%
+  \global\let\@textbottom\tdk@orig@textbottom
+}
 
 %
 % Bibliography

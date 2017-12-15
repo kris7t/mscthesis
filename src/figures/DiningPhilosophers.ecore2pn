@@ -6,18 +6,16 @@ import hu.bme.mit.inf.petridse.example.philosophers.patterns.*
 transformation DiningPhilosophers {
 	features {
 		Philosopher {
-			@Description(text="Likes rice 'this' much.")
+			^A@Description^(text="Likes rice 'this' much.")
 			param ^VeatingRate^
 
-			@RewardConfiguration derived prop double ^vthinkingTime^
-			@FaultConfiguration derived prop boolean ^visHungry^
+			^A@RewardConfiguration^ derived prop double ^vthinkingTime^
+			^A@FaultConfiguration^ derived prop boolean ^visHungry^
 		}
 
 		Table {
-			@RewardConfiguration
-			derived prop double ^vtotalThinkingTime^
-			@FaultConfiguration
-			derived prop boolean[] ^vhungryFaultModes^
+			^A@RewardConfiguration^ derived prop double ^vtotalThinkingTime^
+			^A@FaultConfiguration^ derived prop boolean[] ^vhungryFaultModes^
 		}
 	}
 

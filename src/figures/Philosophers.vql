@@ -14,8 +14,7 @@ pattern philosopher(Table : ^Table^, Phil : ^Philosopher^) {
 }
 
 /** Left and Right sit next to each other around the Table. */
-pattern adjacentPhilosophers(Table : ^Table^, Left : ^Philosopher^, 
-		Right : ^Philosopher^) {
+pattern adjacentPhilosophers(Table : ^Table^, Left : ^Philosopher^,  Right : ^Philosopher^) {
 	^Philosopher^.^right^(Left, Right);
 	^Table^.^philosophers^(Table, Left);
 	^Table^.^philosophers^(Table, Right);

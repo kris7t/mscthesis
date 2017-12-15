@@ -47,7 +47,7 @@ module PropagatedTransitionModule {
 }
 
 module PortModule {
-	@FaultConfiguration
+	^A@FaultConfiguration^
 	marking boolean[] ^verrorModes^
 }
 

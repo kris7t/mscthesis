@@ -1,6 +1,37 @@
 \chapter{Conclusions and future work}
 \label{chap:conclusion}
 
-\paragraph*{Acknowledgements}
+We have developed a formalism and model transformation tool to support design-space exploration with stochastic metrics. The work described in this thesis can be summarized in accordance with the thesis topic as follows:
+
+\begin{enumerate}
+\item We surveyed techniques in the literature for analysis and optimization of stochastic models focusing on approaches that combine model-driven engineering and stochastic analysis in \vref{sec:intro:relwork}. In addition, further literature review was conducted in stochastic modeling and query formalisms in \vref{sec:rgspn:relwork} and on incremental view transformations approaches for the automatic derivation of stochastic models in \vref{chap:transform:relwork}.
+\item A novel formalism for describing modular stochastic models, which was called reference generalized stochastic Petri net (\textabbr{RGSPN}), was proposed in \vref{chap:rgspn}. The formalism builds on generalized stochastic Petri nets~\citep{Marsan84gspn} and the extensions for modularity by \citet{Kindler09modular} in \textabbr{ISO}/\textabbr{IEC}~15909-1:\citeyear{ISO1590912004} high-level Petri nets. Moreover, strong typing was incorporated to aid in model development and in finding bugs.
+
+  In \vref{chap:transform} a lightweight view model transformation engine was proposed to create stochastic analysis models from domains-specific models by assembling \textabbr{RGSPN} fragments. Precondition graph queries employed in the style of the view transformations suggested by \citet{Debreceni14viewmodel} ensure flexibility. The transformation specification language affords the same aids to users as our modular Petri net formalism. In addition, the transformations can be packaged and ran with our transformation engine without further intervention or knowledge specific to stochastic modeling.
+
+  We believe that the combination of the aforementioned tools can effectively serve the needs for derivation of stochastic models of design-space space exploration in a variety of domains, while remaining to be easy to use for engineers.
+
+\item A prototype implementation of the modeling formalism and the transformation engine was implemented as a plug-in of the Eclipse Oxygen.1 integrated development environment based on the Eclipse Modeling Foundation~\citep{Steinberg09emf} modeling platform. Moreover, a development environment for transformation specifications was developed during a summer internship. The implemented tools are described in \vref{sec:apply:environment}.
+
+  Our contributions were illustrated with the dining philosophers problem, which was introduced in \vref{ex:background:running} and used as a running example throughout this thesis. The artifacts describing the example transformation are presented in \vref{app:phils} with textual concrete syntax. In addition, a more complex example concerning an architectural modeling language~\citep{Ecsedi16architecture} for reliability analysis is shown in \vref{app:architecture}.
+
+\item \Vref{chap:apply} discussed the applicability of our work in a variety of design-space exploration patterns~\citep{Vanherpen14patterns}. In particular, the scalability of our incremental transformation engine was evaluated empirically in \vref{sec:apply:eval}. Incremental analysis model update was found to be beneficial over batch updates when the changes propagated from the source engineering models are small, which often happens in design-space exploration toolchains. 
+
+  Possible avenues for future work were highlighted in this theses in various Remarks within the main body of the text and are highlighted in the present conclusions.
+\end{enumerate}
+
+The transformation tools presented in this work have been to used corroborate the results of manual stochastic modeling and analysis by supplying automatically derived stochastic models of an automotive system in collaboration with an industrial partner. The modeling language and transformation used in the collaboration is presented in \cref{app:architecture}.
+
+Possible future work and extensions are in three major areas. Firstly, and perhaps most pressingly, the presented formalism and transformation framework should be integrated with a design-space exploration toolchain, such as \textabbr{VIATRA-DSE}~\citep{Hegedus13guided}, and a stochastic analysis tool, such as PetriDotNet~\citep{Voros17pdn}, so that its effectiveness in proposing candidate architectures can be studied, as well as it can be introduced into engineering practice.
+
+Secondly, the \textabbr{RGSPN} formalism could be extended to support additional stochastic modeling concepts, such as colored Petri nets. The main challenge in this area appears to be that the advantages of strong typing~\citep{Kindler07modular} should be preserved while letting enabling specific colored net structures, such as stochastic well-formed nets~\citep{Chiola93swn}, be exploited.
+
+Thirdly, there is a need for deeper, changes driven integration between model transformation tools and external solvers. Such integration was suggested recently by \citet{Molnar16componentwise} and \citet[Section~2.8]{Meyers16thesis}. An additional, promising line of research is the application of model transformations to phased mission systems~\citep{Mura01pms}, where the evaluated model changes at phase boundaries during analysis. Pushing model changes to an external solver as part of the analysis would enable the specification of phase changes directly on engineering models.
+
+\paragraph*{Acknowledgments}
 \phantomsection
-\addcontentsline{toc}{chapter}{Acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgments}
+
+This work was partially supported by the \textabbr{MTA}-\textabbr{BME} Lendület 2015 Research Group on Cyber-Physical Systems and the \textabbr{\'UNKP}-16-2-\textabbr{I} New National Excellence Program of the Ministry of Human Capacities. This work was partially carried out in the framework of the \textabbr{EFOP}-3.6.2-16-2017-00013 project supported by the European Union and co-financed by the European Social Fund. We thank ThyssenKrupp Presta~Kft.\ and Péter Lantos for the summer internship.
+
+I would like to thank Prof.~Miklós Telek, Prof.~Dániel Varró, Dr.~István Majzik, Dr.~Gábor Bergmann, Dr.~Zoltán Micskei, Oszkár Semeráth, Csaba Debreceni and Gábor Szárnyas for their insightful comments and discussions. Lastly, but by no means least, I would like to thank my supervisors, Vince Molnár and András Vörös for their overarching support.
