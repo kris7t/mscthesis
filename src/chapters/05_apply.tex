@@ -80,7 +80,7 @@ Finally, if required, the optimal solution or a set of solutions can be transfor
 
 To answer the queries posed as variable symbols in the \textabbr{RGSPN} analysis models external stochastic analysis tools must be invoked. As discussed in the previous section, this requires a modification of the \textabbr{DSE} toolchain to produce input for the external tool, invoke it and parse its output. However, additional support for this workflow must be incorporated into the analysis tool, too.
 
-Firstly, the analysis tool needs to have an interface for unattended execution. Various ways to provide this interface include command-line applications and web services. For example, the PetriDotNet analysis tool contains a separate binary executable for running stochastic analyses in the command line.\footnote{This tool, similarly to the rest of PetriDotNet~1.5b2 is available from \url{https://inf.mit.bme.hu/en/research/tools/petridotnet} upon request. More information can be found in the user manual by \citet{Voros17pdnmanual}.} While initiatives such as the Model Checking Contest~(\textabbr{MCC})~\citep{Kordon17mcc} and the Petri Nets Repository~\citep{Hillah17repository} strive for common interfaces for Petri net analysis tools, to our best knowledge, no generic interface is widely supported. Hence even though models serialized in the \textabbr{PNML} format are portable between solvers, each of them must be called in a specific way.
+Firstly, the analysis tool needs to have an interface for unattended execution. Various ways to provide this interface include command-line applications and web services. For example, the PetriDotNet analysis tool contains a separate binary executable for running stochastic analyses in the command line.\footnote{This tool, similarly to the rest of PetriDotNet~1.5b2 is available from \url{https://inf.mit.bme.hu/en/research/tools/petridotnet} upon request. More information can be found in the user manual by \citet{Voros17pdnmanual}.} Initiatives such as the Model Checking Contest~(\textabbr{MCC})~\citep{Kordon17mcc} and the Petri Nets Repository~\citep{Hillah17repository} strive for common interfaces for Petri net analysis tools. In contrast with the \textabbr{JANI} format for quantitative model checking, to our best knowledge, no generic interface is widely supported for Petri net queries. Hence even though models serialized in the \textabbr{PNML} format are portable between solvers, each of them must be called in a specific way.
 
 Secondly, any parameters required by the analysis in addition to the stochastic model and the queries must be supplied automatically. For stochastic Petri net analysis, these parameters include the ordering of state variable in symbolic analysis methods when the model is converted into a \textabbr{CTMC} and the choice of numeric algorithm to solve the arising systems of linear or differential equations.
 
@@ -124,13 +124,6 @@ The software consists of two major components. Both \textabbr{RGSPN} modules and
 \subsection{Specification environment}
 \label{sec:apply:environment}
 
-\begin{figure}
-  \centering
-  \includegraphics[width={\dimexpr\textwidth-2\fboxrule},frame]{figures/annotated_screenshot}
-  \caption{Sreenshot of the transformation specification environment. The showcased features include \circled{1}~the transformation description editor with syntax highlighting, \circled{2}~the outline view for transformations, \circled{3}~the \emph{Ecore2Pn Transformation} execution and traceability viewer and \circled{4}~the \textabbr{RGSPN} graph \emph{Petri Net} visualizer.}
-  \label{fig:apply:screenshot}
-\end{figure}
-
 A specification development environment named \emph{Ecore2Pn} (Ecore to Petri net transformation) was implemented for \textabbr{RGSPN}-based transformation development.\footnote{The specification development environment was implemented by the author during his summer internship at \emph{ThyssenKrupp Presta Hungary Kft.}} A screenshot of the tool is shown in \vref{fig:apply:screenshot}.
 
 The plug-in suite contains concrete textual syntaxes for \textabbr{RGSPN} modules and transformation descriptions based on the Xtext language engineering framework. Integrated devlopment environment (\textabbr{IDE}) features, such as semantics-aware syntax highlighting, content assist for code completion, jump-to-definition and outline view are available. The definition of model queries as preconditions for the \textabbr{RGSPN} transformation rules is possible with the \textabbr{VIATRA} Query \textabbr{EMF} query definition editor~\citep{Ujhelyi15incquery}.
@@ -152,6 +145,13 @@ Code generation is used throughout the specification development environment to 
 The \textabbr{RGSPN} modules and the transformation description defined by the user are turned into Java code for compilation. In this way the transformation description can be passed to the execution engine by just instantiating a class, just like how \textabbr{VIATRA} Query generates pattern-specific matcher code from graph patterns for type-safe consumption~\citep[Section~2.3]{Ujhelyi15incquery}. Moreover, as model queries, \textabbr{RGSPN} modules and transformations become Java classes, their dependencies can be managed by the Java \textabbr{CLASSPATH} mechanism. For example, and \textabbr{RGSPN} module can be seamlessly upgraded by replacing its containing archive on the \textabbr{CLASSPATH} without breaking compatibility with transformation definitions in other archives that refer to the module.
 
 Additional helper code is generated for derived features defined in transformations. The helper simulates derived features in code written in the \emph{Xtend}\footnoteurl{https://www.eclipse.org/xtend/} programming language. The \emph{extension methods} feature allows traversal of the traceability relations created by the \textabbr{RGSPN} transformation engine to obtain derived feature symbols as if they were true properties of the domain model elements.
+
+\begin{figure}
+  \centering
+  \includegraphics[width={\dimexpr\textwidth-2\fboxrule},frame]{figures/annotated_screenshot}
+  \caption{Sreenshot of the transformation specification environment. The showcased features include \circled{1}~the transformation description editor with syntax highlighting, \circled{2}~the outline view for transformations, \circled{3}~the \emph{Ecore2Pn Transformation} execution and traceability viewer and \circled{4}~the \textabbr{RGSPN} graph \emph{Petri Net} visualizer.}
+  \label{fig:apply:screenshot}
+\end{figure}
 
 \subsection{Transformation execution}
 
