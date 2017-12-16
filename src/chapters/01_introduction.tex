@@ -1,9 +1,25 @@
 \chapter{Introduction}
 \label{chap:intro}
 
-Multi-paradigm modeling captures the design of complex systems by employing multiple formalism and working with multiple levels of abstraction
+Multi-paradigm modeling captures the design of complex systems by employing multiple formalism and working with multiple levels of abstraction~\citep{Giese06multiparadigm}. Often domain-specific languages~(\textabbr{DSL}) or domain-specific modeling languages~(\textabbr{DSML}s) are created as focused formalisms for specific problem domains. Model queries transformations between formalisms and levels of abstractions provide integration of modeling languages even in complex industrial toolchains.
 
-\todo*{General intro text comes here}
+The viewpoints of reliability, dependability, performability and other quantitative non-functional requirements are of extreme importance in the design of critical systems, which may put significant economic costs of even human life at stake. These requirements are concerned with the probabilistic behaviors of systems. Therefore the approximation of metrics of interest with mathematical rigor requires the solution of formal stochastic models by stochastic analysis.
+
+The manual construction of precise formal models often requires specialized expertise. An alternative is the derivation of stochastic models from higher-level engineering formalism by model transformation, which endows the engineering modeling language with transformational semantics.
+
+In the design of complex systems, such cyber-physical systems and systems-of-systems, the need frequently arises to examine multiple design candidates or obtain design alternatives that are optimal with respect to some properties. Design-space exploration (\textabbr{DSE})~\citepeg{Vanherpen14patterns} and search-based software engineering (\textabbr{SBSE})~\citepeg{Harman12survey} are disciplines that are concerned with the selection of design candidates by exhaustive or (meta-)heuristic search to satisfy constraints and optimize goals.
+
+When designing complex critical systems, there is a desire to employ \textabbr{DSE} and \textabbr{SBSE} methods to optimize quantitative non-functional requirements. Doing so requires formal stochastic models of the architectures under consideration. However, designing systems directly with formal models may be infeasible, both due to the required specialized expertise, as well as the low level of afforded abstraction. Hence the needs of high-level design with domain-specific languages and low-level, formal analysis are in conflict.
+
+Many approaches have been developed to construct models from a formal analysis viewpoint according to a higher level engineering model~\citepeg{Bernardi03building,Bernardi08umlprofile,Martens10evolutionary,Smith11interoperability}. However, these approaches often restrict themselves to a single, general-purpose engineering modeling language, such as \textabbr{UML}~\citep{Rumbaugh04uml}, Sys\mixedabbr{ML}~\citep{Friedenthal16sysml}, \textabbr{AADL}~\citep{Feiler12aadl} or Palladio~\citep{Becker08palladio}. Therefore, their applicability to multi-paradigm modeling is limited.
+
+We propose a generic approach based on model transformations for constructing formal stochastic models for instances of any engineering modeling language, including domain-specific modeling languages. A transformation specification provided by the user describe the transformational semantics of the modeling language. We also proposed a modular stochastic modeling formalism, which we call reference generalized stochastic Petri nets (\textAbbr{RGSPN}s) to define stochastic model fragments that correspond to elements of the engineering model.
+
+The approach builds on existing transformation methods and formalisms; moreover, common affordances of development environments, such as type checking with strong typing and content assist, are provided for ease of use. Moreover, model fragments and transformation specifications can be packaged as a black box so that end users of the source modeling languages do not need to interact with features specific to stochastic modeling.
+
+The transformation engine was designed with the characteristics of \textabbr{DSE} toolchains in mind. We also consider integration with stochastic analysis tools and solvers, as well as empirically validate the scalability of our approach.
+
+In the next sections we review the related works concerning the optimization of stochastic models, especially in the context of model-driven engineering. Then we conclude this chapter by describing our approach in more detail, as well as the structure of this thesis.
 
 \section{Related work: optimization and stochastic modeling}
 \label{sec:intro:relwork}
@@ -20,18 +36,18 @@ Search-based techniques are also applied to formal models run time adaptation. \
 
 Synthesis of optimal policies in Markov decision processes is another common optimization task for stochastic models~\citep{Baier17maximizing}. \citet{Mason17assurance} provided assurance for the correctness of policies learned with reinforcement learning by employing stochastic verification. Abstractions based on Markov decision processes were exploited also by \citet{Quatmann16mdp} for optimizing parameters of stochastic models. 
 
-On the other hand, the number of approaches for deriving stochastic models from engineering models, such as \textabbr{UML}~\citep{Rumbaugh04uml}, Sys\mixedabbr{ML}~\citep{Friedenthal16sysml}, \textabbr{AADL}~\citep{Feiler12aadl} or Palladio~\citep{Becker08palladio} instance models is much larger. Fourteen \textabbr{UML} profiles for dependability analysis were surveyed by \citet{Bernardi08umlprofile}. A more recent survey on the topic is that of \citet{Koziolek10review}.
+On the other hand, the number of approaches for deriving stochastic models from instances of common,  general-purpose engineering modeling languages is much larger. Fourteen \textabbr{UML} profiles for dependability analysis were surveyed by \citet{Bernardi08umlprofile}. A more recent survey on the topic is that of \citet{Koziolek10review}.
 
-A general approach for the optimization of engineering models according to stochastic metrics was proposed by \citet{Koziolek11generic}. They provide and encoding for architectural models that enables the application of search-based techniques, such as genetic algorithms, for optimization. The PerOpteryx~\citep{Martens10evolutionary} framework applies this encoding for architectures defined in with Palladio Component Model~\citep{Becker08palladio} for evolutionary optimization. The metrics for optimization can be defined by discrete-event simulations, layered queuing networks~\citep{Franks09lqn} and discrete-time Markov chains~\citep{Koziolek09dependencies}.
+A general approach for the optimization of engineering models according to stochastic metrics was proposed by \citet{Koziolek11generic}. They provide and encoding for architectural models that enables the application of search-based techniques, such as genetic algorithms, for optimization. The PerOpteryx~\citep{Martens10evolutionary} framework applies this encoding for architectures defined with the Palladio Component Model~\citep{Becker08palladio} for evolutionary optimization. The metrics for optimization can be defined by discrete-event simulations, layered queuing networks~\citep{Franks09lqn} and discrete-time Markov chains~\citep{Koziolek09dependencies}.
 
-We further survey the literature on modular stochastic modeling formalisms and queries in \vref{sec:rgspn:relwork}, while incremental transformation approaches are reviewed in \vref{chap:transform:relwork}.
+We further review the literature on modular stochastic modeling formalisms and queries in \vref{sec:rgspn:relwork}, while some incremental transformation approaches are recalled in \vref{chap:transform:relwork}.
 
 \section{Overview of our approach}
 \label{sec:intro:approach}
 
 In our current work we aim to propose an approach for the construction of stochastic models from engineering models without human intervention in order to evaluate automatically derived architecture proposals in design-space exploration by stochastic analysis.
 
-The proposed transformation process is flexible in the sense that---instead of basing our approach on a single engineering modeling language---the creation of transformations for new architectural domain-specific languages (\textAbbr{DSL}s) in new problem domains are supported without demanding additional specialized knowledge from the users.
+The proposed transformation process is flexible in the sense that---instead of basing our approach on a single engineering modeling language---the creation of transformations for new architectural \textabbr{DSML}s in new problem domains are supported without demanding additional specialized knowledge from the users.
 
 \begin{figure}
   \centering
