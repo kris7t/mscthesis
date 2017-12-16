@@ -1,13 +1,11 @@
 \chapter{Modular formalism for stochastic~models}
 \label{chap:rgspn}
 
-In our current work we aim to propose an approach for the construction of stochastic models from engineering models without human intervention in order to evaluate automatically derived architecture proposals in design-space exploration by stochastic analysis.
+In this chapter we turn to stochastic modeling approaches with modules to propose a formalism for the \emph{modules} (or \emph{fragments}) of the stochastic model corresponding to the analyzed aspects of the engineering model. The transformation, which is discussed in \cref{chap:transform}, will instantiate the modules specified by the user to automatically derive the analysis model.
 
-The proposed transformation process should be flexible in the sense that---instead of basing our approach on a single engineering modeling language such as \textabbr{UML}~\citep{Rumbaugh04uml}, Sys\mixedabbr{ML}~\citep{Friedenthal16sysml}, \textabbr{AADL}~\citep{Feiler12aadl} or Palladio~\citep{Becker08palladio}---the creation of transformations for new architectural domain-specific languages (\textAbbr{DSL}s) in new problem domains should be supported and should not demand additional specialized knowledge from the users. Therefore the formal models should be based on a stochastic formalism that has sufficient descriptive power to support engineering practice. In addition, compatibility of the derived models with existing stochastic verification tools should be ensured so that recent developments in formal methods may be leveraged for high-performance analysis. Hence reusing an existing formalism is dictated by both \circled{1}~ease of use and \circled{2}~portability.
+As stated in our introduction in \vref{sec:intro:approach}, formal models should be based on a stochastic formalism that has sufficient descriptive power to support engineering practice. In addition, compatibility of the derived models with existing stochastic verification tools should be ensured so that recent developments in formal methods may be leveraged for high-performance analysis. Hence reusing an existing formalism is dictated by both \circled{1}~ease of use and \circled{2}~portability.
 
 Analysis tools usually separate the input formal model and the \emph{query} to be answered~\citepeg[Section~4.2]{Voros17pdnmanual}, which is a performance metric to be calculated or a logical requirement to be verified. Therefore, when stochastic models are automatically derived for design-space exploration, \circled{3}~the appropriate queries must also be generated. The queries, which may depend on the structure of the engineering model in the same way as the derived stochastic model, serve as the objective functions and constraints of the exploration strategy.
-
-To achieve these three objectives, in this chapter we turn to stochastic modeling approaches with modules to propose a formalism for the \emph{modules} (or \emph{fragments}) of the stochastic model corresponding to the analyzed aspects of the engineering model. The transformation, which is discussed in \cref{chap:transform}, will instantiate the modules specified by the user to automatically derive the analysis model.
 
 After briefly reviewing related work, we describe our proposed formalism based on modular Petri nets, an extension of the \textabbr{ISO}/\textabbr{IEC}~15909-1:\citeyear{ISO1590912004} standard on High-level Petri nets with a formally defined module concept~\citep{Kindler09modular}.
 
@@ -370,6 +368,19 @@ Note that marking expressions and collection aggregations directly take a symbol
 
 \subsection{Typing}
 
+A complete set of typing rules for \(\Expr_\Sigma\) is presented in~\vref{fig:rgspn:typing}, which describes the relation \(\_ \vdash \_ \oftype \_\). The judgement \(\Sigma \vdash e \oftype \tau\) assigns a type \(\tau\) to an expression \(e \in \rel{Expr}(\Sigma)\) in the context of an \textabbr{RGSPN} signature \(\Sigma\). 
+
+The types of unary operators, binary operators, conditional and aggregate expressions are captured by the rules \textsc{T-Unary}, \textsc{T-Bin}, \textsc{T-If} and \textsc{T-Agg}. Instead of introducing types for operators and typing rules for operator application, typing rules for all operators are written out explicitly. While this approach increases the number of typing rules considerably, the lack of function types and polymorphic types allows the syntax of \(\rel{Type}\) to remain simple. If more generality is desired, the type system may be extended to support user-defined operators and operator types as described in \vref{rem:rgspn:colored}.
+
+In spite of being handled only in the type derivation rules, several operators are polymorphic in the types of the arguments. However, \textsc{T-BinaryDiv} forces both arguments of the division operator be real numbers, so that ambiguities concerning integer division are avoided. Most compound expressions are \emph{dependency polymorphic}, that is, the types of their arguments may have any dependency qualifier \(\delta\), which will be inherited by the type of the whole expression. The exceptions are the \(\textabbr{CTL}^*\) operators, which operate on \lit{path} formulas and produce \lit{path} or \lit{prop} state formulas. 
+
+Variable and marking references are handled by \textsc{T-Var} and \textsc{T-Marking}. Referring to markings of places always produces a \lit{marking} dependent \lit{int}. \textsc{T-Literal} assigns \lit{const} types to literal constants. Lastly, \textsc{T-Sub} allows the use of subtyping in type derivations.
+
+\subsection{Semantics}
+\label{ssec:rgspn:semantics}
+
+In this section we sketch the semantics of \(\Expr_\Sigma\) both for structural expression of an \textabbr{RGSPN} and for performance measures and queries. Most of the expression evaluation happens in external analysis tools when marking- and parameter-dependent expressions are interpreted to construct a \textabbr{CTMC} from the Petri net and when queries are answered. Therefore, exporting \textAbbr{RGSPN}s for external tools must be performed with care to ensure that the tool interprets the provided input according to these semantics. This may require nontrivial transformation of the expressions to the input language of the tool and may even be impossible to fully achieve when the external tool is missing some analysis features. In the latter case, the user receives an error message during export.
+
 \begin{table}[t!]
   \caption{Typing rules for expressions.}
   \label{fig:rgspn:typing}
@@ -457,19 +468,6 @@ Note that marking expressions and collection aggregations directly take a symbol
     \bottomrule
   \end{tabu}
 \end{table}
-
-A complete set of typing rules for \(\Expr_\Sigma\) is presented in~\vref{fig:rgspn:typing}, which describes the relation \(\_ \vdash \_ \oftype \_\). The judgement \(\Sigma \vdash e \oftype \tau\) assigns a type \(\tau\) to an expression \(e \in \rel{Expr}(\Sigma)\) in the context of an \textabbr{RGSPN} signature \(\Sigma\). 
-
-The types of unary operators, binary operators, conditional and aggregate expressions are captured by the rules \textsc{T-Unary}, \textsc{T-Bin}, \textsc{T-If} and \textsc{T-Agg}. Instead of introducing types for operators and typing rules for operator application, typing rules for all operators are written out explicitly. While this approach increases the number of typing rules considerably, the lack of function types and polymorphic types allows the syntax of \(\rel{Type}\) to remain simple. If more generality is desired, the type system may be extended to support user-defined operators and operator types as described in \vref{rem:rgspn:colored}.
-
-In spite of being handled only in the type derivation rules, several operators are polymorphic in the types of the arguments. However, \textsc{T-BinaryDiv} forces both arguments of the division operator be real numbers, so that ambiguities concerning integer division are avoided. Most compound expressions are \emph{dependency polymorphic}, that is, the types of their arguments may have any dependency qualifier \(\delta\), which will be inherited by the type of the whole expression. The exceptions are the \(\textabbr{CTL}^*\) operators, which operate on \lit{path} formulas and produce \lit{path} or \lit{prop} state formulas. 
-
-Variable and marking references are handled by \textsc{T-Var} and \textsc{T-Marking}. Referring to markings of places always produces a \lit{marking} dependent \lit{int}. \textsc{T-Literal} assigns \lit{const} types to literal constants. Lastly, \textsc{T-Sub} allows the use of subtyping in type derivations.
-
-\subsection{Semantics}
-\label{ssec:rgspn:semantics}
-
-In this section we sketch the semantics of \(\Expr_\Sigma\) both for structural expression of an \textabbr{RGSPN} and for performance measures and queries. Most of the expression evaluation happens in external analysis tools when marking- and parameter-dependent expressions are interpreted to construct a \textabbr{CTMC} from the Petri net and when queries are answered. Therefore, exporting \textAbbr{RGSPN}s for external tools must be performed with care to ensure that the tool interprets the provided input according to these semantics. This may require nontrivial transformation of the expressions to the input language of the tool and may even be impossible to fully achieve when the external tool is missing some analysis features. In the latter case, the user receives an error message during export.
 
 \subsubsection{Pretypes and dependence qualifiers}
 

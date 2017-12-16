@@ -53,7 +53,7 @@ Existing metamodeling technologies, such as the Ecore metamodeling language from
 \item \emph{Abstract classes} and \emph{interfaces} can have no direct instances.
 \item \emph{Type constraints} on references and attributes restrict the class of the object originating the reference or attribute and the class of the object at the end of the reference, as well as the type of the primitive attribute value.
 \item \emph{Multiplicity constraints} place lower or upper bounds on the number of references or attributes from an object.
-\item Objects may be organized into a \emph{containment hierarchy}, in which and object is either a \emph{containment root}, or is connected to its \emph{container} in the hierarchy with exactly one \emph{containment} reference. The containment hierarchy forms a forest of containment roots, which is traversed when the object graph is serialized.
+\item Objects may be organized into a \emph{containment hierarchy}, in which an object is either a \emph{containment root}, or is connected to its \emph{container} in the hierarchy with exactly one \emph{containment} reference. The containment hierarchy forms a forest of containment roots, which is traversed when the object graph is serialized.
 \item \emph{Opposite constants} require some references to always go in a direction opposite to another, i.e.~\(\lit{R}(o_i, o_j)\) should hold if and only if we have \(\lit{R}^{\textrm{op}}(o_j, o_i)\).
 \end{itemize*}
 
@@ -179,6 +179,7 @@ The arc inscriptions of Petri net may depend on the current marking by replacing
 \end{runningExample}
 
 \subsection{Continuous-time Markov chains}
+\label{ssec:background:ctmc}
 
 Continuous-time Markov chains (\textAbbr{CTMC}s) are mathematical tools for describing the behavior of systems in continuous time where the stochastic behavior of the system only depends on its current state~\citepeg{Reibman89transient}. This assumption is reasonable in a wide class of modeling tasks; hence \textAbbr{CTMC}s are commonly used in the reliability and performability prediction of critical systems.
 
