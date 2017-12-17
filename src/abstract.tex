@@ -4,9 +4,13 @@
   \addcontentsline{toc}{chapter}{Kivonat}
   \thispagestyle{plain}
   
-  Ide kerül a kivonat.
+  A komplex kritikus rendszerek és kiberfizikai rendszerek modellvezérelt tervezéséhez az iparban elterjedt eszközök számos szakterület-specifikus modellezési nyelvet alkalmaznak. Ezek között szerepelnek mérnöki modellezési nyelvek, valamint a rendszerek megbízhatóságával, rendelkezésre állásával és teljesítményével kapcsolatos kvantitatív nemfunkcionális követelményeinek matematikai precizitású sztochasztikus analíziséhez szükséges formális modellezési nyelvek. Az utóbbi modellek elkészítése azonban sokszor kézzel történik, és különleges szaktudást igényel.
+
+  A tervezésitér-bejárás és a keresesés alapú szoftverfejlesztés eszközkészlete lehetővé teszi, hogy a rendszertervezés során automatikusan előállított és kiértékelt tervezési alternatívákat vizsgáljunk, illetve megadott szempontok szerint optimális alternatívákat keressünk. Ha a kiértékelés szempontjai között szerepelnek kvantitatív nemfunkcionális jellemzők, az optimalizálást vagy az alacsony szintű sztochasztikus matematikai modellek fölött kell elvégezni, vagy a mérnöki modellekből a matematikai modelleket atomatikusan, modell\-transzformációval kell előállítani.
+
+  Egy olyan modelltranszformációs keretrendszerre teszünk javaslatot, mely kifejezettem a tervezésitér-bejáró eszközökhöz lett tervezve. Ezen felül bemutatunk egy, a moduláris Petri-hálókon alapuló matematikai formalizmust, mellyel leírhatóak az előállítandó sztochasztikus modellek részletei. Mgközelítésünket egy esettanulmánnyal szemléltetjük, és mérésekkel értékeljük a skálázhatóságát.
   
-  \paragraph{Kulcsszavak} diplomaterv, sablon, \LaTeX
+  \paragraph{Kulcsszavak} tervezésitér-bejárás, keresés alapú szoftverfejlesztés, sztochasztikus Petri-háló, modelltranszformáció, nézeti modellek
 \end{otherlanguage}
 
 \vspace*{0pt plus 1fill}
@@ -16,13 +20,15 @@
 \addcontentsline{toc}{chapter}{Abstract}
 \thispagestyle{plain}
 
-Complex industrial toolchains employ multi-paradigm modeling techniques with multiple domain-specific modeling languages in the design of large critical systems, such as critical cyber-physical systems and systems-of-systems. Stochastic analysis is used to rigorously approximate metrics related to the reliability, dependability and performability and other quantitative non-functional requirements of these systems by solving formal stochastic models. The construction of the analysis models is often manual and requires specialized expertise.
+Complex industrial toolchains employ multi-paradigm modeling techniques, as well as multiple domain-specific modeling languages in the design of large critical systems, such as critical cyber-physical systems and systems-of-systems. Stochastic analysis is used to rigorously approximate metrics related to the reliability, dependability, performability and other quantitative non-functional requirements of these systems by solving formal stochastic models. The construction of the models for stochastic analysis is often manual and requires specialized expertise.
 
 As the need arises to consider multiple design candidates, design-space exploration and search-based software engineering techniques are employed to propose and evaluate automatically generated alternatives according to selected constraints and goal functions. The optimization of quantitative non-functional requirements necessitates either working with low-level formal models or the automatic derivation of stochastic analysis models from the engineering models.
 
-We propose a model transformation approach which was specifically designed for use in design-space exploration toolchains, as well as a formalism for expressing modular stochastic models based on modular Petri nets. Our approach is demonstrated with a case study and its scalability is empirically evaluated.
+We propose a model transformation approach which was specifically designed for use in design-space exploration toolchains, as well as a formalism for expressing stochastic model fragments based on modular Petri nets. Our approach is demonstrated with a case study and its scalability is empirically evaluated.
 
-\paragraph{Keywords} domain-specific modeling, design-space exploration, search-based software engineering, stochastic analysis, model transformation, view model, Petri nets
+\paragraph{Keywords} design-space exploration, search-based software engineering, stochastic Petri nets, change-driven model transformations, view models
+
+\vspace*{0pt plus 1fill}
 
 %%% Local Variables:
 %%% mode: latex
