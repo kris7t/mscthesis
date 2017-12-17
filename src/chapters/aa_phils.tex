@@ -1,16 +1,31 @@
 \chapter{Case study: dining philosophers}
 \label{app:phils}
 
+This case study presents the artifacts with their concrete textual syntax for
+dining philosophers problem introduced in \vref{ex:background:running}.
+
+We present the transformation \vref{ex:transform:feature} and \vref{ex:transform:mapping} with added symbols and annotations for reward analysis and mean-time-to-first-failure analysis with the PetriDotNet stochastic analysis tool.
+
 \section{Graph queries}
+
+Graph queries are written in the query language of \textabbr{VIATRA} Query~\citep{Ujhelyi15incquery}, a live model query evaluation tool. Due to the similarities with Datalog and other logical query languages, we follow the convention of starting variable names with a capital letter. Occasionally, this leads to a variable having the same name as its type; however, the result is not ambiguous. Class, reference and attribute names are highlighted in blue for clarity.
 
 \lstinputlisting[style=block,language=vql,caption={Philosophers.vql}]{figures/Philosophers.vql}
 
 \section{Petri net modules}
+
+Petri net modules used the concrete syntax of our Ecore2Pn tool. Places, transitions and variables are highlighted in green, gold and blue, respectively. Names of references are written in italics.
+
+The \textabbr{RGSPN} modules presented below extend the modules from \vref{ex:transform:mapping} with symbols for mean-time-to-first-failure analysis. The objective of this analysis is to determine the first philosopher to get hungry.
 
 \lstinputlisting[style=block,language=ecore2pn,caption={PhilModule.ecore2pn}]{figures/PhilModule.ecore2pn}
 
 \lstinputlisting[style=block,language=ecore2pn,caption={TableModule.ecore2pn}]{figures/TableModule.ecore2pn}
 
 \section{Transformation specification}
+
+We repeat the transformation specification from \vref{ex:transform:feature} and \vref{ex:transform:mapping} with the extensions for analyses performed with PetriDotNet.
+
+The results of some analyses of models generated with this transformation were studied in the context of parameter identification of stochastic Petri nets by \citet[Chapter~5]{Molnar17optimization}.
 
 \lstinputlisting[style=block,language=ecore2pn,caption={DiningPhilosophers.ecore2pn}]{figures/DiningPhilosophers.ecore2pn}

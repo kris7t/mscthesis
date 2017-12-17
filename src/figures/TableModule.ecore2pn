@@ -3,5 +3,6 @@ package hu.bme.mit.inf.petridse.example.philosophers.ecore2pn
 module TableModule {
 	prop double[] ^vthinkingTimes^
 	prop double ^VtotalThinkingTime^ = sum(^vthinkingTimes^)
+	// Collection of error modes for (*@\textrm{mean-time-to-first-failure}@*) analysis.
 	prop boolean[] ^vhungryFaultModes^
 }

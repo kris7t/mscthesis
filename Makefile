@@ -47,7 +47,6 @@ figures: $(CONVERT_SVG) $(CONVERT_PDF)
 
 $(CONVERT_SVG): out/figures/%.pdf: src/figures/%.svg
 	@echo "Processing SVG figure: $<"
-
 	@$(SED) 's/image-rendering="auto"/image-rendering="pixelated"/' $< > $(@:.pdf=.svg)
 	@$(INKSCAPE) $(INKSCAPE_EXPORT_PDF_OPTS) --file=$(@:.pdf=.svg) --export-pdf=$@.inkscape_export
 	@rm $(@:.pdf=.svg)

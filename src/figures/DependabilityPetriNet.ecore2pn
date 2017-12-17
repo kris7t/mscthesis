@@ -1,47 +1,60 @@
 package hu.bme.mit.inf.petridse.example.dependability.ecore2pn
 
+// Import the dependability metamodel with a qualified name.
 import "http://example.org/dependability" as dependability
 import hu.bme.mit.inf.petridse.example.dependability.queries.*
 
 transformation DependabilityPetriNet {
 	features {
+		// Qualified references to classes from the metamodel.
 		dependability::OccurrenceTrigger {
-			@Description(text="Occurrence rate of the fault.")
+			^A@Description^(text="Occurrence rate of the fault.")
 			param ^VoccurrenceRate^
 		}
 
 		dependability::UncertainPropagation {
-			@Description(text="Probability of fault propagation.")
+			^A@Description^(text="Probability of fault propagation.")
 			param ^Vprobability^
 		}
 	}
 
+	// Create a placeholder for each state.
+	// We do not refer to the modul instance here, so it can remain unnamed.
 	mapping state(DepModel, Component, State) => StateModule
 
+	// Instantiated states with initial marking.
 	mapping initialState(DepModel, Component, State) => InitialStateModule IS {
 		lookup state(DepModel, Component, State) as S
 		S.^pp^ := IS.^Pp^
 	}
 
+	// Instantiate states without initial marking.
 	mapping errorState(DepModel, Component, State) => ErrorStateModule ES {
 		lookup state(DepModel, Component, State) as S
 		S.^pp^ := ES.^Pp^
 	}
 	
+	// Instantiate a module containing the hazard rate analysis queries.
 	mapping port(DepModel, Component, Port) => PortModule
 
+	// Each error mode is represented by a place.
 	mapping errorMode(DepModel, Component, Port, ErrorMode) => ErrorModeModule EM {
 		lookup port(DepModel, Component, Port) as P
 		P.^verrorModes^ += EM.^VerrorModeOccurred^
 	}	
 	
+	// Add the transition for output error modes.
 	mapping outputErrorMode(DepModel, Component, Port, ErrorMode) => OutputErrorModeModule OutEM {
 		lookup errorMode(DepModel, Component, Port, ErrorMode) as EM
 		OutEM.^perror^ := EM.^Perror^
 	}
 
+	// Add the Petri net fragment for state transitions.
 	mapping transition(DepModel, Component, Transition) => TransitionModule
 
+	// Connect the state transitions to their source and target states.
+	// We did not add connections in the (*@\lit{transition}@*) rule,
+    // so that it can be looked up more easily, without pollution with more match arguments.
 	mapping transitionFromTo(DepModel, Component, Transition, From, To) {
 		lookup transition(DepModel, Component, Transition) as Tran
 		lookup state(DepModel, Component, From) as SF
@@ -50,12 +63,14 @@ transformation DependabilityPetriNet {
 		Tran.^pto^ := ST.^pp^
 	}
 
+	// Map occurrence triggers with their occurence rate parameter symbols.
 	mapping transitionOccurrenceTrigger(DepModel, Component, Transition, Trigger) => OccurrenceTransitionModule OT {
 		lookup transition(DepModel, Component, Transition) as Tran
 		OT.^voccurrenceRate^ := Trigger.^VoccurrenceRate^
 		Tran.^tfire^ := OT.^Tfire^
 	}
 
+	// Map propagated transitions.
 	mapping transitionPropagatedTrigger(DepModel, Component, Transition, Port, ErrorMode) => PropagatedTransitionModule PT {
 		lookup transition(DepModel, Component, Transition) as Tran
 		lookup errorMode(DepModel, Component, Port, ErrorMode) as EM
@@ -63,6 +78,7 @@ transformation DependabilityPetriNet {
 		Tran.^tfire^ := PT.^Tfire^
 	}
 
+	// Reuse the (*@\lit{CertainPropagationModule}@*) for output error mode propagation.
 	mapping transitionPropagates(DepModel, Component, Transition, Port, ErrorMode) => CertainPropagationModule TP {
 		lookup transition(DepModel, Component, Transition) as Tran
 		lookup errorMode(DepModel, Component, Port, ErrorMode) as EM
@@ -70,6 +86,7 @@ transformation DependabilityPetriNet {
 		TP.^perror^ := EM.^Perror^
 	}
 
+	// Add the error mode propagating fragment for certain connections.
 	mapping connectedErrorModesCertain(DepModel, From, FromPort, To, ToPort, ErrorMode) => CertainPropagationModule P {
 		lookup outputErrorMode(DepModel, From, FromPort, ErrorMode) as EMFrom
 		lookup errorMode(DepModel, To, ToPort, ErrorMode) as EMTo
@@ -77,6 +94,7 @@ transformation DependabilityPetriNet {
 		P.^perror^ := EMTo.^perror^
 	}
 
+	// Add the error mode propagating fragment for uncertain connections.
 	mapping connectedErrorModesUncertain(DepModel, From, FromPort, To, ToPort, Propagation, ErrorMode) => UncertainPropagationModule P {
 		lookup outputErrorMode(DepModel, From, FromPort, ErrorMode) as EMFrom
 		lookup errorMode(DepModel, To, ToPort, ErrorMode) as EMTo

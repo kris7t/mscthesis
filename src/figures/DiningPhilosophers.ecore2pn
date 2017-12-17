@@ -6,20 +6,24 @@ import hu.bme.mit.inf.petridse.example.philosophers.patterns.*
 transformation DiningPhilosophers {
 	features {
 		Philosopher {
+			// Textual description of the parameter symbol.
 			^A@Description^(text="Likes rice 'this' much.")
 			param ^VeatingRate^
 
+			// Reward analysis in PetriDotNet.
 			^A@RewardConfiguration^ derived prop double ^vthinkingTime^
+			// (*@\textrm{Mean-time-to-first-failure}@*) analysis in PetriDotNet.
 			^A@FaultConfiguration^ derived prop boolean ^visHungry^
 		}
 
 		Table {
 			^A@RewardConfiguration^ derived prop double ^vtotalThinkingTime^
+			// (*@\textrm{Mean-time-to-first-failure}@*) analysis with multiple error modes.
 			^A@FaultConfiguration^ derived prop boolean[] ^vhungryFaultModes^
 		}
 	}
 
-	/** Create the Petri net mapping for the table. */
+	// Create the Petri net mapping for the table.
 	mapping table(Table) => TableModule TableM {
 		// Bind the metric (*@\texttt{totalThinkingTime}@*) and the collection of fault modes
 		// (*@\texttt{\itshape hungryFaultModes}@*) to the domain object (*@\texttt{Table}@*) as derived features.
@@ -27,7 +31,7 @@ transformation DiningPhilosophers {
 		Table.^vhungryFaultModes^ := TableM.^vhungryFaultModes^
 	}
 
-	/** Create the Petri net mapping for each philosopher. */
+	// Create the Petri net mapping for each philosopher.
 	mapping philosopher(Table, Phil) => PhilModule PhilM {
 		lookup table(Table) as TableM
 		PhilM.^vhungryRate^ := Phil.^VhungryRate^
@@ -42,7 +46,7 @@ transformation DiningPhilosophers {
 		TableM.^vhungryFaultModes^ += Phil.^visHungry^
 	}
 
-	/** Adjacent philosophers must share forks. */
+	// Adjacent philosophers must share forks.
 	mapping adjacentPhilosophers(Table, Left, Right) {
 		lookup philosopher(Table, Left) as LeftM
 		lookup philosopher(Table, Right) as RightM

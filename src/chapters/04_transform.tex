@@ -156,7 +156,7 @@ features {
   \end{tabular}
 \end{table}
 
-\begin{runningExample}
+\begin{runningExample}\label{ex:transform:feature}
   The metamodel for the dining philosophers domain contains the classes \lit{Philosopher} and \lit{Table}. The two attributes of type \lit{double} of \lit{Philosopher} are \lit{eating\-Rate} and \lit{hungry\-Rate}, while \lit{Table} has no attributes.
 
   For \lit{Philosopher} the feature rule in \vref{tbl:transform:feature} marks the attribute \lit{eating\-Rate} as a parameter. Hence \lit{eating\-Rate} is mapped to the \textabbr{RGSPN} as a parameter symbol, while \lit{const} variable symbol is created for \lit{hungry\-Rate}.
@@ -227,7 +227,7 @@ mapping qAdjacent(T, L, R) {
   \end{tabular}
 \end{table}
 
-\begin{runningExample}
+\begin{runningExample}\label{ex:transform:mapping}
   In \vref{tbl:transform:mapping} three mapping rules are given for the dining philosophers domain. The feature rules in \vref{tbl:transform:feature} are assumed for the mappings.
 
   The pattern \lit{qTable} matches for all instances \lit{T} of the class \lit{Table}. An instance of the module \lit{TableMod} is created with the local name \lit{TM}. The symbol \lit{total\-Thinking\-Time} of \lit{TM} is assigned to the derived symbol with the same name of the domain object \lit{T}.

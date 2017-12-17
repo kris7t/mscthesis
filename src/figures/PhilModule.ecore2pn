@@ -5,6 +5,7 @@ module PhilModule {
 	ref param double ^veatingRate^
 
 	prop double ^VthinkingTime^ = if (#^Pthinking^ >= 1) 1 else 0
+	// Error mode for (*@\textrm{mean-time-to-first-failure}@*) analysis.
 	prop boolean ^VisHungry^ = #^Pwaiting^ >= 1
 
 	place ^Pthinking^ = 1

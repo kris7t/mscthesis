@@ -413,7 +413,7 @@
 \theorempreskip{11pt plus 3pt minus 6pt}
 \theorempostskip{11pt plus 3pt minus 6pt}
 
-\newtheorem{remark}[example]{Remark}
+\newtheorem{remark}{Remark}[chapter]
 \AtBeginEnvironment{remark}{\small}
 
 %
@@ -745,7 +745,7 @@
 \newcommand*{\tdk@mainmatterpages}{0}
 \newcommand*{\tdk@setallpages}[1]{\global\edef\tdk@allpages{#1}}
 \newcommand*{\tdk@setmainmatterpages}[1]{%
-  \global\edef\tdk@mainmatterpages{\the\numexpr#1+1}%
+  \global\edef\tdk@mainmatterpages{#1}%
   \global\toggletrue{tdk@hasappendix}%
 }
 
@@ -799,16 +799,18 @@
 }
 
 \xpretocmd{\mainmatter}{%
+  \clearpage
   \phantomsection
   \label{tdk@lastFrontMatterPage}%
   \AtNextContentsLine{\label{tdk@firstMainMatterPage}}
 }{}{}
 
 \xpretocmd{\appendix}{%
+  \clearpage
   \phantomsection
   \label{tdk@lastMainMatterPage}%
-  \immediate\write\@auxout{\noexpand\tdk@setmainmatterpages{\arabic{tdk@pagecnt}}}%
-  \AtNextContentsLine{\label{tdk@firstAppendixPage}}%
+  \AtNextContentsLine{\label{tdk@firstAppendixPage}%
+    \immediate\write\@auxout{\noexpand\tdk@setmainmatterpages{\arabic{tdk@pagecnt}}}}%
 }{}{}
 
 %

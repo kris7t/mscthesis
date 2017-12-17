@@ -1,30 +1,38 @@
 package hu.bme.mit.inf.petridse.example.dependability.ecore2pn
 
+/* Placeholder for places created for states. */
 module StateModule {
 	ref place ^pp^
 }
 
+/* An initial state has an initial marking. */
 module InitialStateModule {
 	place ^Pp^ = 1
 }
 
+/* Error states have no initial marking. */
 module ErrorStateModule {
 	place ^Pp^
 }
 
+/* An error mode of a port instance is signified by a place. */
 module ErrorModeModule {
+	// Condition triggered when the error occurs.
 	marking boolean ^VerrorModeOccurred^ = #^Perror^ >= 1
 
 	place ^Perror^
 }
 
+/* Output error modes have an additional transition to propagate the error. */
 module OutputErrorModeModule {
 	ref place ^perror^
+    // Send the error token to the input ports connected with this port.
 	tran ^ToutputToBuffer^ = immediate 1.0 priority 2
 	
 	^perror^ -> ^ToutputToBuffer^
 }
 
+/* Transition between two states of an error model. */
 module TransitionModule {
 	ref place ^pfrom^
 	ref place ^pto^
@@ -33,12 +41,15 @@ module TransitionModule {
 	^pfrom^ -> ^tfire^ -> ^pto^
 }
 
+/* Occurrence transitions are timed. */
 module OccurrenceTransitionModule {
 	ref param double ^voccurrenceRate^
 
 	tran ^Tfire^ = exp ^voccurrenceRate^
 }
 
+/* Propagated transitions are immediate.
+(*@\phantom{/}@*) * additional arcs will be added to control when the transition can fire. */
 module PropagatedTransitionModule {
 	ref place ^ptriggerError^
 	tran ^Tfire^ = immediate 1.0 priority 1
@@ -46,26 +57,34 @@ module PropagatedTransitionModule {
 	^ptriggerError^ -> ^Tfire^
 }
 
+/* A port has an associated collection of error modes indicator variables.
+(*@\phantom{/}@*) * The collection is passed to PetriDotNet for hazar rate analysis. */
 module PortModule {
 	^A@FaultConfiguration^
 	marking boolean[] ^verrorModes^
 }
 
+/* Single certain propagation of an error. */
 module CertainPropagationModule {
 	ref place ^perror^
 	ref tran ^tfire^
 
+	// The inhibitor arc prevents the same error mode from propagating twice.
 	^perror^ -o ^tfire^ -> ^perror^
 }
 
+/* Uncertaion certain propagation of an error. */
 module UncertainPropagationModule {
 	ref param double ^vprobability^
 
+	// Buffer place to temporarily keep the error token.
 	place ^Pbuffer^
 	ref place ^pto^
 
 	ref tran ^toutputToBuffer^
+	// Propagate the error with a given probability (*@\(p\)\ldots@*)
 	tran ^TpropagateError^ = immediate ^vprobability^ priority 1
+	// (*@\ldots@*)or discard it with propability (*@\(1 - p\)@*).
 	tran ^TpropagateSink^ = immediate 1.0 - ^vprobability^ priority 1
 
 	^pto^ -o ^toutputToBuffer^, ^TpropagateError^

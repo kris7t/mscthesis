@@ -2,54 +2,66 @@ package hu.bme.mit.inf.petridse.example.dependability.queries
 
 import "http://example.org/dependability"
 
+/* Match all states of component instances. */
 pattern state(DepModel : ^DepModel^, Component : ^Component^, State : ^State^) {
 	find component(DepModel, Component);
 	^Component^.^componentType^.^errorModel^.^states^(Component, State);
 }
 
+/* The initial state is selected by an additional reference. */
 pattern initialState(DepModel : ^DepModel^, Component : ^Component^, State : ^State^) {
 	find component(DepModel, Component);
 	^Component^.^componentType^.^errorModel^.^initialState^(Component, State);
 }
 
+/* Any non-initial states are error states. */
 pattern errorState(DepModel : ^DepModel^, Component : ^Component^, State : ^State^) {
 	find state(DepModel, Component, State);
 	neg find initialState(DepModel, Component, State);
 }
 
+/* Match all ports of component instances. */
 pattern port(DepModel : ^DepModel^, Component : ^Component^, Port : ^Port^) {
 	find component(DepModel, Component);
 	find componentPort(Component, Port);
 }
 
+/* Match all error modes of component instance ports. */
 pattern errorMode(DepModel : ^DepModel^, Component : ^Component^, Port : ^Port^, ErrorMode : ^ErrorMode^) {
 	find port(DepModel, Component, Port);
 	^Port^.^portType^.^errorModes^(Port, ErrorMode);
 }
 
+/* An error mode is an output error mode if it belongs to an output port. */
 pattern outputErrorMode(DepModel : ^DepModel^, Component : ^Component^, Port : ^Port^, ErrorMode : ^ErrorMode^) {
 	find component(DepModel, Component);
 	^Component^.^componentType^.^outputPorts^(Component, Port);
 	^Port^.^portType^.^errorModes^(Port, ErrorMode);
 }
 
+/* Match all transitions within component instances. */
 pattern transition(DepModel : ^DepModel^, Component : ^Component^, Transition : ^Transition^) {
 	find component(DepModel, Component);
 	^Component^.^componentType^.^errorModel^.^transitions^(Component, Transition);
 }
 
-pattern transitionFromTo(DepModel : ^DepModel^, Component : ^Component^, Transition : Transition, From : State, To : State) {
+/* Connect a transition to its source and target states. */
+pattern transitionFromTo(DepModel : ^DepModel^, Component : ^Component^, Transition : ^Transition^, From : ^State^, To : ^State^) {
 	find transition(DepModel, Component, Transition);
 	Transition.sourceState(Transition, From);
 	Transition.targetState(Transition, To);
 }
 
-pattern transitionOccurrenceTrigger(DepModel : DepModel, Component : ^Component^, Transition : ^Transition^, Trigger : ^OccurrenceTrigger^) {
+/* Transition with an occurrence trigger.
+ * The occurrence trigger specifies the occurrence rate of the transition. */
+pattern transitionOccurrenceTrigger(DepModel : ^DepModel^, Component : ^Component^, Transition : ^Transition^, Trigger : ^OccurrenceTrigger^) {
 	find transition(DepModel, Component, Transition);
 	^Transition^.^trigger^(Transition, Trigger);
 	^OccurrenceTrigger^(Trigger);
 }
 
+/* Transition triggered by an error mode on a port.
+(*@\phantom{/}@*)* The component instance of the port is the component instance of the transition. */
 pattern transitionPropagatedTrigger(DepModel : ^DepModel^, Component : ^Component^, Transition : ^Transition^, Port : ^Port^, ErrorMode : ^ErrorMode^) {
 	find transition(DepModel, Component, Transition);
 	^Transition^.^trigger^(Transition, Trigger);
@@ -57,49 +69,65 @@ pattern transitionPropagatedTrigger(DepModel : ^DepModel^, Component : ^Componen
 	^PropagatedErrorTrigger^.^inputError^.^errorMode^(Trigger, ErrorMode);
 }
 
+/* The transition causes the error mode to appear on the port.
+(*@\phantom{/}@*)* The component instance of the port is the component instance of the transition. */
 pattern transitionPropagates(DepModel : ^DepModel^, Component : ^Component^, Transition : ^Transition^, Port : ^Port^, ErrorMode : ^ErrorMode^) {
 	find transition(DepModel, Component, Transition);
 	^Transition^.^outputError^.^port^(Transition, Port);
 	^Transition^.^outputError^.^errorMode^(Transition, ErrorMode);
 }
 
+/* An uncertain connection causes the error mode to propagate between the component ports.
+(*@\phantom{/}@*)* System ports are not matched directly,
+(*@\phantom{/}@*)* because their delegated component ports stand for them. */
 pattern connectedErrorModesUncertain(DepModel : ^DepModel^, From : ^Component^, FromPort : ^Port^, To : ^Component^, ToPort : ^Port^, Propagation : ^UncertainPropagation^, ErrorMode : ^ErrorMode^) {
 	find connectedErrorModes(DepModel, From, FromPort, To, ToPort, Propagation, ErrorMode);
 	^UncertainPropagation^(Propagation);
 }
 
+/* A certain connection causes the error mode to propagate between the component ports. */
 pattern connectedErrorModesCertain(DepModel : ^DepModel^, From : ^Component^, FromPort : ^Port^, To : ^Component^, ToPort : ^Port^, ErrorMode : ^ErrorMode^) {
 	find connectedErrorModes(DepModel, From, FromPort, To, ToPort, Propagation, ErrorMode);
 	^CertainPropagation^(Propagation);
 }
 
+/* A component of the dependability model. */
 pattern component(DepModel : ^DepModel^, Component : ^Component^) {
 	^DepModel^.^systems^.^components^(DepModel, Component);
 }
 
+// Private helper patterns:
+
+/* Match all ports instances within a component type. */
 private pattern componentTypePort(ComponentType : ^ComponentType^, Port : ^Port^) {
 	^ComponentType^.^inputPorts^(ComponentType, Port);
 } or {
 	^ComponentType^.^outputPorts^(ComponentType, Port);
 }
 
+/* Match all port instances of a component instance,
+(*@\phantom{/}@*)* which are exactly those of its component type */
 private pattern componentPort(Component : ^Component^, Port : ^Port^) {
 	^Component^.^componentType^(Component, ComponentType);
 	find componentTypePort(ComponentType, Port);
 }
 
+/* Match two connected ports of component instances. */
 private pattern connectedPorts(From : ^Component^, FromPort : ^Port^, To : ^Component^, ToPort : ^Port^, Connection : ^Connection^) {
+    // The connection is either a direct component connection(*@\ldots@*)
 	^ComponentConnection^.^sourcePort^.^component^(Connection, From);
 	^ComponentConnection^.^sourcePort^.^port^(Connection, FromPort);
 	^ComponentConnection^.^targetPort^.^component^(Connection, To);
 	^ComponentConnection^.^targetPort^.^port^(Connection, ToPort);
 } or {
+    // (*@\ldots@*)or is a system connection between delegated component ports.
 	^SystemConnection^.^sourcePort^.^componentPort^.^component^(Connection, From);
 	^SystemConnection^.^sourcePort^.^componentPort^.^port^(Connection, FromPort);
 	^SystemConnection^.^targetPort^.^componentPort^.^component^(Connection, To);
 	^SystemConnection^.^targetPort^.^componentPort^.^port^(Connection, ToPort);
 }
 
+/* Match all the error modes of two connected ports of component instances. */
 pattern connectedErrorModes(DepModel : ^DepModel^, From : ^Component^, FromPort : ^Port^, To : ^Component^, ToPort : ^Port^, Propagation : ^Propagation^, ErrorMode : ^ErrorMode^) {
 	find component(DepModel, From);
 	find component(DepModel, To);
