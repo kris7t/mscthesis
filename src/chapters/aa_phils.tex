@@ -1,14 +1,14 @@
 \chapter{Case study: dining philosophers}
 \label{app:phils}
 
-This case study presents the artifacts with their concrete textual syntax for
-dining philosophers problem introduced in \vref{ex:background:running}.
+This case study contains the artifacts with their concrete textual syntax for
+dining philosophers problem introduced in \vref{ex:background:running}, which were also used in our empirical evaluation in \vref{sec:apply:eval}. Furthermore, the behaviors of some analyses of models generated with this transformation were studied by \citet[Chapter~5]{Molnar17optimization} in the context of parameter identification of stochastic Petri nets.
 
-We present the transformation \vref{ex:transform:feature} and \vref{ex:transform:mapping} with added symbols and annotations for reward analysis and mean-time-to-first-failure analysis with the PetriDotNet stochastic analysis tool.
+We present the transformation from \vref{ex:transform:feature} and \vref{ex:transform:mapping} with added symbols and annotations for reward analysis and mean-time-to-first-failure analysis with the PetriDotNet stochastic analysis tool.
 
 \section{Graph queries}
 
-Graph queries are written in the query language of \textabbr{VIATRA} Query~\citep{Ujhelyi15incquery}, a live model query evaluation tool. Due to the similarities with Datalog and other logical query languages, we follow the convention of starting variable names with a capital letter. Occasionally, this leads to a variable having the same name as its type; however, the result is not ambiguous. Class, reference and attribute names are highlighted in blue for clarity.
+Graph queries are written in the query language of \textabbr{VIATRA} Query~\citep{Ujhelyi15incquery}, a live model query evaluation tool. Due to the similarities with Datalog and other logical query languages, we follow the convention of starting variable names with a capital letters. Occasionally, this leads to a variable having the same name as its type; however, the result is not ambiguous in the syntax of \textabbr{VIATRA} Query. Class, reference and attribute names are highlighted in blue for clarity.
 
 \lstinputlisting[style=block,language=vql,caption={Philosophers.vql}]{figures/Philosophers.vql}
 
@@ -20,12 +20,12 @@ The \textabbr{RGSPN} modules presented below extend the modules from \vref{ex:tr
 
 \lstinputlisting[style=block,language=ecore2pn,caption={PhilModule.ecore2pn}]{figures/PhilModule.ecore2pn}
 
+The \textabbr{RGSPN} module for the table only contains variable and collection symbols.
+
 \lstinputlisting[style=block,language=ecore2pn,caption={TableModule.ecore2pn}]{figures/TableModule.ecore2pn}
 
 \section{Transformation specification}
 
 We repeat the transformation specification from \vref{ex:transform:feature} and \vref{ex:transform:mapping} with the extensions for analyses performed with PetriDotNet.
-
-The results of some analyses of models generated with this transformation were studied in the context of parameter identification of stochastic Petri nets by \citet[Chapter~5]{Molnar17optimization}.
 
 \lstinputlisting[style=block,language=ecore2pn,caption={DiningPhilosophers.ecore2pn}]{figures/DiningPhilosophers.ecore2pn}

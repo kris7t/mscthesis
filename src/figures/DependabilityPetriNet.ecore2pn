@@ -22,7 +22,7 @@ transformation DependabilityPetriNet {
 	// We do not refer to the modul instance here, so it can remain unnamed.
 	mapping state(DepModel, Component, State) => StateModule
 
-	// Instantiated states with initial marking.
+	// Instantiate states with initial marking.
 	mapping initialState(DepModel, Component, State) => InitialStateModule IS {
 		lookup state(DepModel, Component, State) as S
 		S.^pp^ := IS.^Pp^

@@ -1,7 +1,7 @@
 \chapter{Background}
 \label{chap:background}
 
-The purpose of this chapter is to briefly recall some preliminaries related to our work, including concepts from model-driven engineering, as well as formal and stochastic modeling. As our work attempts to aid the calculation of stochastic metrics based on engineering models, we describe the stochastic analysis tasks that we are aiming to support.
+The purpose of this chapter is to briefly recall some preliminaries related to our work, including concepts from model-driven engineering, as well as formal and stochastic modeling. As our work attempts to aid the calculation of stochastic metrics based on engineering models, we also describe the stochastic analysis tasks that we are aiming to support.
 
 \Cref{chap:rgspn} builds on generalized stochastic Petri nets, which are described in \vref{ssec:background:gspn}, in order to define a formalism suitable for analysis model fragments. \Cref{chap:transform} uses incremental query execution of graph patterns, which are described in \vref{ssec:background:patterns}, to instantiate the analysis model fragments according to a changing domain model. Lastly, \cref{chap:apply} discusses the application of the transformation toolchain to aid proposing and solving stochastic analysis task from \vref{ssec:background:analysis} in design-space exploration for the calculation of stochastic metrics on engineering models.
 
@@ -15,7 +15,7 @@ The syntax of modeling languages is traditionally partitioned into \emph{abstrac
 
 \subsection{Metamodels and instance models}
 
-Metamodels explicitly describe the abstract syntax of modeling languages. We will adopt the formal description of metamodels and first-order logical structures from the work of \citet{Varro17generation} and extend them to support primitive-valued attributes. Metamodels are regarded as first-order signatures:
+Metamodels explicitly describe the abstract syntax of modeling languages. We will adopt the formal description of metamodels as first-order logical structures from the work of \citet{Varro17generation} and extend them to support primitive-valued attributes. Metamodels are regarded as first-order signatures:
 
 \begin{dfn}
   A \emph{metamodel} is a first-order two-sorted logical signature
@@ -47,17 +47,17 @@ Instances of metamodels are regarded as first-order structures:
   \end{compactitem}
 \end{dfn}
 
-Existing metamodeling technologies, such as the Ecore metamodeling language from the Eclipse Modeling Framework (\textabbr{EMF})~\citep{Steinberg09emf} often allow the designer of modeling languages to impose additional constraints on instances models. Some possible restrictions are listed below: 
+Existing metamodeling technologies, such as the Ecore metamodeling language from the Eclipse Modeling Framework (\textabbr{EMF})~\citep{Steinberg09emf} often allow the designers of modeling languages to impose additional constraints on instances models. Some possible restrictions are listed below: 
 \begin{itemize*}
 \item \emph{Class inheritance} may specify that instances of a class must be instances of another.
 \item \emph{Abstract classes} and \emph{interfaces} can have no direct instances.
 \item \emph{Type constraints} on references and attributes restrict the class of the object originating the reference or attribute and the class of the object at the end of the reference, as well as the type of the primitive attribute value.
 \item \emph{Multiplicity constraints} place lower or upper bounds on the number of references or attributes from an object.
-\item Objects may be organized into a \emph{containment hierarchy}, in which an object is either a \emph{containment root}, or is connected to its \emph{container} in the hierarchy with exactly one \emph{containment} reference. The containment hierarchy forms a forest of containment roots, which is traversed when the object graph is serialized.
+\item Objects may be organized into a \emph{containment hierarchy,} in which an object is either a \emph{containment root,} or is connected to its \emph{container} in the hierarchy with exactly one \emph{containment} reference. The containment hierarchy forms a forest of containment roots, which is traversed when the object graph is serialized.
 \item \emph{Opposite constants} require some references to always go in a direction opposite to another, i.e.~\(\lit{R}(o_i, o_j)\) should hold if and only if we have \(\lit{R}^{\textrm{op}}(o_j, o_i)\).
 \end{itemize*}
 
-Further \emph{well-formedness constraints} may be specified with \emph{constraint languages}, such as the object constraint language~(\textabbr{OCL})~\citep{OMG14ocl} or with graph patterns~\citep{Bergmann11validation}.
+Further \emph{well-formedness constraints} may be specified with \emph{constraint languages,} such as the object constraint language~(\textabbr{OCL})~\citep{OMG14ocl} or with graph patterns~\citep{Bergmann11validation}.
 
 \begin{figure}%
   \begin{minipage}[t]{0.3333\textwidth}
@@ -81,33 +81,33 @@ Further \emph{well-formedness constraints} may be specified with \emph{constrain
 \end{figure}
 
 \begin{runningExample}\label{ex:background:running}
-  We now introduce the \emph{dining philosophers} domain, which will be used as a running example throughout this thesis. A number of philosophers sit around a circular table, such that each philosopher has someone on her left and also on her right. Each philosopher has a single fork. The forks are places between philosophers so that adjacent philosophers must share a fork. A philosopher can only think if she is not hungry and can only eat if she is holding both forks from her left and right.
+  We now introduce the \emph{dining philosophers} domain, which will be used as a running example throughout this thesis. A number of philosophers sit around a circular table, such that each philosopher has someone on her left and also on her right. Each philosopher has a single fork. The forks are placed between philosophers so that adjacent philosophers must share a fork. A philosopher can only think if she is not hungry and can only eat if she is holding both forks from her left and right.
 
-  Philosophers have an \emph{hungry rate}, which determines how often the get hungry and a \emph{eating rate} which determines how fast they eat. We are interested in evaluating seating plans (arrangements) of philosophers to determine the total amount of philosophical knowledge produced, i.e.~the time the philosophers spent thinking. By swapping philosophers around the table we can avoid seating two gluttonous philosophers or two slow eaters next to each other; thus we can minimize the contentions for forks that prevent philosophers from satiating their hunger before they can resume thinking.
+  Philosophers have a \emph{hungry rate}, which determines how often they get hungry and a \emph{eating rate} which determines how fast they eat. We are interested in evaluating seating plans (arrangements) of philosophers to determine the total amount of philosophical knowledge produced, i.e.~the time the philosophers spent thinking. By swapping philosophers around the table we can avoid seating two gluttonous philosophers or two slow eaters next to each other; thus we can minimize the contentions for forks that prevent philosophers from satiating their hunger before they can resume thinking.
 
   \Vref{fig:background:metamodel} shows a class diagram for the metamodel of the dining philosophers problem. It contains two classes, \lit{Table} and \lit{Philosopher}, three relations, \lit{philosophers}, \lit{left}, \lit{right}, as well as two attributes, \lit{eat\-ing\-Rate} and \lit{hung\-ry\-Rate}.
 
-  Type constraints require that \lit{philosophers} connect \lit{Table} to \lit{Philosopher} objects. It is also a containment reference, which makes \lit{Table} the root of the containment hierarchy. Moreover, the multiplicity bound \lit{[0..*]} allows any number of philosophers around the table, even zero.
+  Type constraints require that \lit{philosophers} connect \lit{Table} objects to \lit{Philosopher} objects. It is also a containment reference, which makes \lit{Table} the root of the containment hierarchy. Moreover, the multiplicity bound \lit{[0..*]} allows any number of philosophers around the table, even zero.
 
   The relations \lit{left} and \lit{right} connect \lit{Philosopher} instances. The relation \lit{right} is the opposite of \lit{left}; therefore the philosopher on the left of someone sees that person on her right and vice verse. Due to the multiplicity bounds \lit{[1]} each philosopher must have a single left and right neighbor.
 
-  \Vref{fig:background:instance} shows an instance model with a single \lit{Table} \lit{T} and two \lit{Philosopher} instances \lit{P1} and \lit{P2}. Because there are only two philosophers around the table both philosophers see the other on their left, as well as on their right.
+  \Vref{fig:background:instance} shows an instance model with a single \lit{Table} \lit{T} and two \lit{Philosopher} instances \lit{P1} and \lit{P2}. Because there are only two philosophers around the table, both philosophers see the other on their left, as well as on their right.
 \end{runningExample}
 
 \subsection{Graph patterns}
 \label{ssec:background:patterns}
 
-State-of-the-art modeling toolchains often rely of model queries to retrieve fragments of interest from model, specify model to model and model to text transformations, as well as to validate well-formedness constraints on models~\citep{Bergmann11validation,Ujhelyi15incquery}.
+State-of-the-art modeling toolchains often rely of model queries to retrieve fragments of interest from model, to specify model to model and model to text transformations, as well as to validate well-formedness constraints on models~\citep{Bergmann11validation,Ujhelyi15incquery}.
 
 Formally, again following \citet{Varro17generation}, we define a graph query \(\phi(x_1, x_2, \ldots, x_n)\) with \(n\) free variables as a first-order logic formula over the metamodel signature \(\Sigma\). The formula may contain atomic propositions of the form \(\lit C_i(x_j)\), \(\lit R_i(x_j, x_\ell)\) and \(\lit A_i(x_j, x_\ell)\), where \(\lit C_i, \lit R_i, \lit A_i \in \Sigma\) are classes, references and attributes, respectively. Furthermore, logical connectives \(\neg, \land, \lor, \Rightarrow\) and quantifiers \(\exists, \forall\) may also appear in formulas.
 
-Model query engines often allow transitive closure computation \(\phi^+\), which makes the query language strictly more expressive than first-order logic. If \(\phi\) is a formula with two free variables its transitive closure \(\phi^+(x_i, x_j)\) holds if and only if there are some objects \(x_i = y_1, y_2, \ldots, y_k = x_j\) (\(k \ge 1\)) such that we have \(\phi(y_1, y_2) \land \phi(y_2, y_3) \land \cdots \land \phi(y_{k - 1}, y_k)\)~\citep{Bergmann12incscc}.
+Model query engines often allow transitive closure computation \(\phi^+\), which makes the query language strictly more expressive than first-order logic. If \(\phi\) is a formula with two free variables, its transitive closure \(\phi^+(x_i, x_j)\) holds if and only if there are some objects \(x_i = y_1, y_2, \ldots, y_k = x_j\) (\(k \ge 1\)) such that we have \(\phi(y_1, y_2) \land \phi(y_2, y_3) \land \cdots \land \phi(y_{k - 1}, y_k)\)~\citep{Bergmann12incscc}.
 
 For detailed semantics of first-order graph patterns extended with transitive closure we refer to the works of \citet{Semerath17rewriting} and \citet{Varro17generation}.
 
 The tuple \(\ltup q_1, q_2, \ldots, q_n \rtup \in (\Obj \cup \Prim)^n\) is a \emph{match} of \(\phi(x_1, x_2, \ldots, x_n)\) in the instance model \(M\) if \(\phi\) holds with the \emph{match arguments} \(\ltup q_1, q_2, \ldots, q_n \rtup\), i.e.~\(M \vDash \phi(q_1, q_2, \ldots, q_n)\). We will occasionally write the name of the graph pattern before the tuple to emphasize that it is a tuple of match arguments, e.g.~\(\phi\ltup q_1, q_2, \ldots, q_n\rtup\).
 
-The \emph{match set} of the pattern \(\phi\) in the instance model \(M\) contains all of its matches. It is a set, i.e.~it contains each tuple at most once, regardless how many valid bindings are possible for quantified variables inside the pattern.
+The \emph{match set} of the pattern \(\phi\) in the instance model \(M\) contains all of its matches. It is a set, i.e.~it contains each tuple at most once, regardless how many valid bindings are possible for the quantified variables inside the pattern.
 
 An \emph{incremental} (or \emph{live}) query engine, such as \textabbr{VIATRA} Query~\citep{Ujhelyi15incquery} maintains the match sets of graph queries by subscribing to \emph{change notifications} from the instance model. The changes are propagated to the match sets, and clients may get notifications about matches appearing and disappearing as the instance model is being modified. The Rete algorithm~\citep{Forgy82rete} is often employed for change propagation.
 
@@ -154,18 +154,18 @@ The transition \(t\) is \emph{enabled} in the marking \(m\) if \(m(p) \ge n\) fo
 
 An enabled transition is \emph{fireable}, written as \(\tranenabled{m}{t}\), if no enabled transition has higher priority, i.e.~\(\pi(t') \le \pi(t)\) for all enabled transitions \(t'\).
 
-A fireable transition \(t\) can be \emph{fired} to yield a marking \(m'\), written as \(m \tranto{t} m'\), where \(m'(p) = m(p) - n_{\textrm{in}}+ n_{\textrm{out}}\) if \(p \xrightarrow{n_{\textrm{in}}} t\) and \(p \xleftarrow{n_{\textrm{out}}} t\). In only an input or output arc is present between \(t\) and \(p\), the token count of \(p\) is only decreased or increased, respectively. Places not connected to \(t\) by an arc have their token count unchanged.
+A fireable transition \(t\) can be \emph{fired} to yield a marking \(m'\), written as \(m \tranto{t} m'\), where \(m'(p) = m(p) - n_{\textrm{in}}+ n_{\textrm{out}}\) if \(p \xrightarrow{n_{\textrm{in}}} t\) and \(p \xleftarrow{n_{\textrm{out}}} t\). If only an input or output arc is present between \(t\) and \(p\), the token count of \(p\) is only decreased or increased, respectively. Places not connected to \(t\) by an arc have their token count unchanged.
 
 A marking \(m'\) is \emph{reachable} from \(m\), written as \(m \reachto m'\), if there is a sequence of markings and transitions such that \(m = m_1 \tranto{t_1} m_2 \tranto{t_2} \cdots \tranto{t_{k - 1}} m_k = m'\). The \emph{reachable state space} \(\RS\) of a Petri net is the set of markings reachable from its initial marking,
 \begin{equation}
   \RS = \{m\colon P \to \NN \mid m_0 \reachto m \} \text.
 \end{equation}
 
-The Petri net is \emph{bounded} is there is an upper bound \(K \in \NN\) such that \(m(p) \le K\) for all \(p \in P\) and \(m \in \RS\). The reachable state space \(RS\) is finite if and only if the net is bounded.
+The Petri net is \emph{bounded} if there is an upper bound \(K \in \NN\) such that \(m(p) \le K\) for all \(p \in P\) and \(m \in \RS\). The reachable state space \(RS\) is finite if and only if the net is bounded.
 
-The state space of a bounded Petri net can be determined efficiently by the \emph{saturation} algorithm~\citep{Ciardo01saturation,Ciardo12tenyears}. Extensions have been proposed to the  algorithm to handle transition priorities effectively~\citep{Miner06saturation,Marussy17priorities}.
+The state space of a bounded Petri net can be determined efficiently by the \emph{saturation} algorithm~\citep{Ciardo01saturation,Ciardo12tenyears}. Extensions have been proposed for the  algorithm to handle transition priorities effectively~\citep{Miner06saturation,Marussy17priorities}.
 
-The arc inscriptions of Petri net may depend on the current marking by replacing the positive integers \(\NNpos\) with a set of algebraic expressions \(\Expr_P\) over the token counts of places. In the marking dependent setting \({\outarc}, {\inarc}, {\inharc} \subseteq P \times \Expr_P \times T\) and the inscription expressions are evaluated according to the marking \(m\) when firing transitions \(m \tranto{t} m'\). Such \emph{Petri nets with marking-dependent arcs} can simplify formal modeling \citep{Ciardo93decomposition}; however, they may preclude the use of some analysis techniques.
+The arc inscriptions of a Petri net may depend on the current marking by replacing the positive integers \(\NNpos\) with a set of algebraic expressions \(\Expr_P\) over the token counts of places. In the marking dependent setting \({\outarc}, {\inarc}, {\inharc} \subseteq P \times \Expr_P \times T\) and the inscription expressions are evaluated according to the marking \(m\) when firing transitions \(m \tranto{t} m'\). Such \emph{Petri nets with marking-dependent arcs} can simplify formal modeling \citep{Ciardo93decomposition}; however, they may preclude the use of some analysis techniques.
 
 \begin{figure}
   \centering
@@ -175,7 +175,7 @@ The arc inscriptions of Petri net may depend on the current marking by replacing
 \end{figure}
 
 \begin{runningExample}\label{ex:background:pn}
-  \Vref{fig:background:pn-example} shows an example Petri net modeling the dining philosophers problem with two philosophers. The philosophers \(i = 1, 2\) are modeled by the places \lit{thinking}\(i\), \lit{waiting}\(i\) and \lit{eating}\(i\). In the initial marking both philosophers are \lit{thinking}. Upon firing \lit{getHungry}\(i\) a philosopher may get hungry and gets to be \lit{waiting} for forks to eat with. If both \lit{fork1} and \lit{fork2} is available, she may then \lit{startEating}\(i\) by picking up both forks. The forks are picked up as a single atomic action, which avoids a possible case for deadlock when both philosophers pick up single forks but are unable to get the other fork to start eating. Therefore this model is the deadlock-free version of the dining philosophers problem. Upon finishing eating, the philosophers put the forks down by firing \lit{finishEating}\(i\) and returning to the \lit{thinking} state.
+  \Vref{fig:background:pn-example} shows an example Petri net modeling the dining philosophers problem with two philosophers. The philosophers \(i = 1, 2\) are modeled by the places \lit{thinking}\(i\), \lit{waiting}\(i\) and \lit{eating}\(i\). In the initial marking both philosophers are \lit{thinking}. Upon firing \lit{getHungry}\(i\) a philosopher may get hungry and starts \lit{waiting} for forks to eat with. If both \lit{fork1} and \lit{fork2} is available, she may then \lit{startEating}\(i\) by picking up both forks. The forks are picked up as a single atomic action. This avoids a possible case for deadlock when both philosophers pick up single forks but are unable to get the other fork and start eating. Therefore this model is the deadlock-free version of the dining philosophers problem. Upon finishing eating, the philosophers put their forks down by firing \lit{finishEating}\(i\) and returning to the \lit{thinking} state.
 \end{runningExample}
 
 \subsection{Continuous-time Markov chains}
@@ -199,10 +199,10 @@ Continuous-time Markov chains (\textAbbr{CTMC}s) are mathematical tools for desc
     \Pr(X(t_k) = x_k \mid X(t_{k - 1}) = x_{k - 1}) = \Pr(X(t_k - t_{k -
       1}) = x_k \mid X(0) = x_{k - 1}) \text,
   \end{equation}
-  i.e.~it is invariant to time shifting. In this work we will restrict our attention to time-homogenous \textAbbr{CTMC}s over finite state spaces.
+  i.e.~it is invariant under time shifting. In this work we will restrict our attention to time-homogenous \textAbbr{CTMC}s over finite state spaces.
 \end{dfn}
 
-The \emph{state probabilities} at time $t$ form a finite-dimensional vector \(\vec{\uppi}(t) \in \RR^n\), where \(\pi(t)[x] = \Pr(X(t) = x)\). Following the convention from \textabbr{CTMC} literature all vectors considered will be row vectors, i.e.~\(n\) element vectors are equivalent to matrices with a single row and \(n\) columns. Moreover, the \(i\)th element of the vector \(\vec{v}\) will be written as \(v[i]\), where indexing is zero-based (\(i = 0, 1, \ldots, n - 1\)).
+The \emph{state probabilities} at time $t$ form a finite-dimensional vector \(\vec{\uppi}(t) \in \RR^n\), where \(\pi(t)[x] = \Pr(X(t) = x)\). Following the convention from \textabbr{CTMC} literature, all vectors considered will be row vectors, i.e.~\(n\) element vectors are equivalent to matrices with a single row and \(n\) columns. Moreover, the \(i\)th element of the vector \(\vec{v}\) will be written as \(v[i]\), where indexing is zero-based (\(i = 0, 1, \ldots, n - 1\)).
 
 The vectors \(\vec{\uppi}(t)\) satisfy the differential equation
 \begin{equation}
@@ -252,7 +252,7 @@ The off-diagonal elements \(q[x, y] \ge 0\) of \(Q\) describe state transitions 
 
 \subsubsection{Steady-state probabilities}
 
-A state \(y\) is \emph{reachable} from the state \(x\), written as \(x \reachto y\), if there exists a sequence of states \(x = z_1, z_2, z_3, \ldots, z_{k - 1}, z_k = y\), such that \(q[z_i, z_{i + 1}] > 0\) for all \(i = 1, 2, \ldots, k - 1\). If \(x \reachto y\) for all pairs of states \(x, y \in S\) the Markov chain is \emph{irreducible}.
+A state \(y\) is \emph{reachable} from the state \(x\), written as \(x \reachto y\), if there exists a sequence of states \(x = z_1, z_2, z_3, \ldots, z_{k - 1}, z_k = y\), such that \(q[z_i, z_{i + 1}] > 0\) for all \(i = 1, 2, \ldots, k - 1\). If \(x \reachto y\) for all pairs of states \(x, y \in S\), the Markov chain is \emph{irreducible}.
 
 The \emph{steady-state probability distribution} \(\vec{\uppi} = \lim_{t \to \infty} \vec{\uppi}(t)\) exists and is independent from the \emph{initial distribution} \(\vec{\uppi}(0) = \vec{\uppi}_0\) if and only if the \textabbr{CTMC} is irreducible. The steady-state distribution satisfies the system of linear equations
 \begin{equation}
@@ -268,13 +268,13 @@ Selection of numerical solver backends and their parameters in the context of de
 
 \subsubsection{Parametric models}
 
-The infinitesimal generator matrix of \emph{parametric \textabbr{CTMC}} depends on a vector of \emph{parameters} \(\vec{\uptheta} \in A \subseteq \RR^k\), where \(A\) is the \emph{feasible region} of parameter values. The parameters represent unknown or uncertain attributes of the system under study, while the feasible region describes realizable or plausible parameter values. \emph{Parameter optimization} refers to the selection of feasible parameter values \(\vec{\uptheta} \in A\) such that some \emph{goal function} is maximized.
+The infinitesimal generator matrix of a \emph{parametric \textabbr{CTMC}} depends on a vector of \emph{parameters} \(\vec{\uptheta} \in A \subseteq \RR^k\), where \(A\) is the \emph{feasible region} of parameter values. The parameters represent unknown or uncertain attributes of the system under study, while the feasible region describes realizable or plausible parameter values. \emph{Parameter optimization} refers to the selection of feasible parameter values \(\vec{\uptheta} \in A\) such that some \emph{goal function} is maximized.
 
-Analysis methods for parametric Markov chains include sensitivity analysis~\citep{Blake88sensitivity}, parametric steady-state solution~\citep{Hahn11parametric,Voros17pdn} and parameter synthesis~\citep{Quatmann16mdp}. Some analysis methods only allow specific kinds of parameter-dependence in the infinitesimal matrix elements \(\vec{\uptheta} \mapsto q(\vec{\uptheta})[x, y]\), such as \(C^1\) differentiable expressions~\citep{Blake88sensitivity} or rational functions~\citep{Hahn11parametric}.
+Analysis methods for parametric Markov chains include sensitivity analysis~\citep{Blake88sensitivity}, parametric steady-state solution~\citep{Hahn11parametric,Voros17pdn} and parameter synthesis~\citep{Quatmann16mdp}. Some analysis methods only allow specific kinds of parameter-dependence in the generator matrix elements \(\vec{\uptheta} \mapsto q(\vec{\uptheta})[x, y]\), such as \(C^1\) differentiable expressions~\citep{Blake88sensitivity} or rational functions~\citep{Hahn11parametric}.
 
 \subsubsection{Markov reward models}
 
-Continuous-time Markov chains may be employed in the estimation of performance measures of models by defining \emph{rewards} that associate \emph{reward rates} with the states of a \textabbr{CTMC}. The reward rate random variable $R(t)$ can describe performance measures defined at a single point of time, such as resource utilization or probability of failure, while the \emph{accumulated reward} random variable $Y(t)$ may correspond to performance measures associated with intervals of time, such as total downtime.
+Continuous-time Markov chains may be employed in the estimation of performance measures of models by defining \emph{rewards} that associate \emph{reward rates} with the states of a \textabbr{CTMC}. The reward rate random variable $R(t)$ can describe performance measures defined at a single point of time, such as resource utilization or the probability of failure, while the \emph{accumulated reward} random variable $Y(t)$ may correspond to performance measures associated with intervals of time, such as the total downtime.
 
 \begin{dfn}
   A \emph{continuous-time Markov reward process} over a finite state space \(S = \{0, 1, \ldots, n - 1\}\) is a pair \(\ltup X, \vec{r} \rtup\), where \(X\) is a \textabbr{CTMC} over \(S\) and \(\vec{r} \in \RR^n\) is a \emph{reward rate vector}. The reward rate stochastic process \(R = \{ R(t) = r[X(t)] \mid t \ge 0 \}\) describes the momentary \emph{reward rate} associated with the active state of the \textabbr{CTMC}.
@@ -302,7 +302,7 @@ Various analysis tasks concerning \textAbbr{CTMC}s and Markov reward models are 
 
 \newpara \textbf{Steady-state analysis} refers to the calculation of the steady-state expectation \(\Ex R(\infty) = \lim_{t \to \infty} \Ex R(t)\) to characterize the values of reliability or performability metrics during long-term system operation. Because the steady state expectation is calculated according to the formula \(\Ex R(\infty) = \vec{\uppi} \, \vec{r}^T\), where \(\vec{\uppi}\) is the steady-state probability vector form \vref{eq:background:ctmc-steadystate}, this form of analysis is tantamount to the solution of \cref{eq:background:ctmc-steadystate}.
 
-\newpara \textbf{Transient and accumulated analysis} is concerned with the transient behavior of the modeled system when it is started from an initial probability distribution \(\vec{\uppi}\). An initial problem with \vref{eq:background:ctmc-diffeq} is solved subject to the initial condition \(\vec{\uppi}(0) = \vec{\uppi}_0\). Then the expected transient reward value \(\Ex R(t) = \vec{\uppi}(t) \, \vec{r}^T\) can be calculated.
+\newpara \textbf{Transient and accumulated analysis} is concerned with the transient behavior of the modeled system when it is started from an initial probability distribution \(\vec{\uppi}_0\). An initial value problem with \vref{eq:background:ctmc-diffeq} is solved subject to the initial condition \(\vec{\uppi}(0) = \vec{\uppi}_0\). Then the expected transient reward value \(\Ex R(t) = \vec{\uppi}(t) \, \vec{r}^T\) can be calculated.
 
 Variations of the \emph{uniformization} algorithm~\citepeg{Moorsel97uniformization,Dijk17uniformization} can solve \cref{eq:background:ctmc-diffeq} efficiently. Moreover, \(\vec{L}(t) = \int_{0}^{t} \vec{\uppi}(\tau) \,\dd\tau\) can also be obtained by uniformization in order to calculate \(\Ex Y(t) = \vec{L}(t) \, \vec{r}^T\) for the analysis of accumulated metrics.
 
@@ -310,14 +310,14 @@ Variations of the \emph{uniformization} algorithm~\citepeg{Moorsel97uniformizati
 
 These problems can be solved by the analysis of phase-type distributions~\citep{Neuts75phasetype} derived from the \textabbr{CTMC} and the state partitions \(D\) of interest by linear equations solvers, analogously to the calculation of steady-state expectations.
 
-\newpara \textbf{Sensitivity analysis} concerns the rates of change in stochastic metrics due to changes in parameter values of a parametric \textabbr{CTMC} or reward model. The model reacts to changes of parameters with high absolute sensitivity  more prominently; therefore, they can be promising directions of system optimization. The partial derivatives of the expectation describe above can be computed with respect to the elements of the parameter vector~\citep{Blake88sensitivity,Ramesh93sensitivity}.
+\newpara \textbf{Sensitivity analysis} concerns the rates of change in stochastic metrics due to changes in parameter values of a parametric \textabbr{CTMC} or reward model. The model reacts to changes of parameters with high absolute sensitivity  more prominently; therefore they can be promising directions of system optimization. The partial derivatives of the expectation describes above can be computed with respect to the elements of the parameter vector~\citep{Blake88sensitivity,Ramesh93sensitivity}.
 
 \newpara \textbf{Stochastic model checking} consists of decision procedures to determine whether the system under consideration satisfies requirements formalized in a stochastic logic. Often stochastic model checking involves the analysis tasks outlined above as subroutines. Logics suitable for continuous-time models include continuous stochastic logic~(\textabbr{CSL})~\citep{Aziz96csl} and continuous stochastic reward logic~(\textabbr{CSRL})~\citep{Kwiatkowska06csrl}. Further approaches to specifying stochastic properties and queries are surveyed in~\vref{ssec:rgspn:relwork-query}.
 
 \subsection{Generalized stochastic Petri nets}
 \label{ssec:background:gspn}
 
-Although continuous-time Markov chains and reward processes base on \textAbbr{CTMC}s allow the study of dependability or reliability, the explicit specification of stochastic processes and rewards is often cumbersome. Generalized stochastic Petri Nets extend Petri nets by assigning exponentially distributed random delays to some transitions and instantaneous random firing to others~\citep{Marsan84gspn}. After the delay associated with an enabled transition is elapsed the transition fires \emph{atomically} and transitions delays are reset.
+Although continuous-time Markov chains and reward processes based on \textAbbr{CTMC}s allow the study of dependability or reliability, the explicit specification of stochastic processes and rewards is often cumbersome. Generalized stochastic Petri Nets extend Petri nets by assigning exponentially distributed random delays to some transitions and instantaneous random firing to others~\citep{Marsan84gspn}. After the delay associated with an enabled timed transition is elapsed the transition fires \emph{atomically} and the transition delays are reset.
 
 \begin{dfn}
   A \emph{generalized stochastic Petri net} (\textabbr{GSPN}) is an 8-tuple
@@ -339,7 +339,7 @@ Markings in which an immediate transitions is fireable are \emph{vanishing}, whi
 \end{equation}
 
 
-Timed transitions \(t\) have an associated exponentially distributed countdown with rate parameter \(\lambda(t)\). The fireable timed transitions is fired when the countdown expires, which resets the countdown. In contrast, immediate transitions are fires as soon as they become fireable. If multiple immediate transitions are fireable, a single transition is picked randomly to be fired. The probability of an immediate transition \(t\) being picked is proportional to its probability weight \(\lambda(t)\). Immediate transitions are fired until a tangible marking is reached.
+Timed transitions \(t\) have an associated exponentially distributed countdown with rate parameter \(\lambda(t)\). Fireable timed transitions are fired when their countdown expires, which resets the countdown. In contrast, immediate transitions are fired as soon as they become fireable. If multiple immediate transitions are fireable, a single transition is picked randomly to be fired. The probability of an immediate transition \(t\) being picked is proportional to its probability weight \(\lambda(t)\). Immediate transitions are fired until a tangible marking is reached.
 
 \begin{figure}
   \centering
@@ -351,12 +351,12 @@ Timed transitions \(t\) have an associated exponentially distributed countdown w
 \begin{runningExample}\label{ex:background:gspn}
   \Vref{fig:background:gspn-example} shows a \textabbr{GSPN} version of the dining philosophers model form \vref{ex:background:pn}. The timed transitions \lit{getHungry1}, \lit{getHungry2}, \lit{finishEating1} and \lit{finishEating2} have rates \(0.5\), \(0.45\), \(3.0\) and \(2.8\), respectively.
 
-  The transitions \lit{startEating1} and \lit{startEating2} are immediate with equal priority and weight. Hence philosophers start eating as soon as they become hungry and there are forks available.
+  The transitions \lit{startEating1} and \lit{startEating2} are immediate with equal priority and weight. Hence philosophers start eating as soon as they become hungry and there are forks available. Both philosophers can be selected to eat with equal priority if both are hungry at the same time.
 \end{runningExample}
 
 \subsubsection{Stochastic Petri nets}
 
-A \emph{stochastic Petri net} (\textabbr{SPN}) is a \textabbr{GSPN} with no immediate transitions, i.e.~\(\pi(t) \equiv 0\) for all \(t \in T\). For such nets all reachable states are tangible, \(\textit{TRS} = \textit{RS}\).
+A \emph{stochastic Petri net} (\textabbr{SPN}) is a \textabbr{GSPN} with no immediate transitions, i.e.~\(\pi(t) \equiv 0\) for all \(t \in T\). In such nets all reachable states are tangible, \(\textit{TRS} = \textit{RS}\).
 
 Bounded \textAbbr{SPN}s can be transformed into \textAbbr{CTMC}s in a straightforward way. Let \(S = \{0, 1, \ldots, \lvert \textit{TRS} \rvert - 1\}\) be the set of states of the \textabbr{CTMC} and let \(\iota\colon \textit{TRS} \to S\) be a bijection. The off-diagonal elements of the infinitesimal generator matrix \(Q \in \RR^{\lvert \textit{TRS} \rvert \times \lvert \textit{TRS} \rvert}\) can be computed by summing the rates of transitions between states, while diagonal elements are set such that \(Q \vec{1}^T = \vec{0}^T\) is satisfied. Formally, we have
 \begin{align}
@@ -368,13 +368,13 @@ This simple translation makes \textAbbr{SPN}s especially amenable to analysis. F
 
 \subsubsection{Marking- and parameter-dependent models}
 
-The arc inscriptions of \textAbbr{GSPN}s can be made marking-dependent similarly to Petri nets, such that the arcs \({\outarc}, {\inarc}, {\inharc} \subseteq P \times \Expr_P \times T\) contain algebraic expressions of the token counts of the places \(P\). Moreover, the transition rates and weights can be made marking dependent, such that we have \(\lambda\colon T \to \Expr_P\).
+The arc inscriptions of \textAbbr{GSPN}s can be made marking-dependent similarly to Petri nets, which lets the arcs \({\outarc}, {\inarc}, {\inharc} \subseteq P \times \Expr_P \times T\) contain arbitrary algebraic expressions of the token counts of the places \(P\). Moreover, the transition rates and weights can be made marking dependent, which results in \(\lambda\colon T \to \Expr_P\).
 
-Dependence on a set of parameters \(\Par\) may also be introduced. In this case \(\lambda\colon T \to \Expr_{P, \Par}\), where \(\Expr_{P, \Par}\) is the set of algebraic expressions depending on token counts of \(P\) and the values of the parameters in \(\Par\). Parameter-dependent \textAbbr{GSPN}s are translated into parametric \textAbbr{CTMC}s, where the values of \(Par\) are encoded as the parameter vector \(\vec{\uptheta} \in A \subseteq \RR^{\lvert \Par \rvert}\) and the feasible region \(A\) of parameter values is determined according to domain requirements.
+Dependence on a set of parameters \(\Par\) may also be introduced. In this case \(\lambda\colon T \to \Expr_{P, \Par}\), where \(\Expr_{P, \Par}\) is the set of algebraic expressions depending on token counts of \(P\) and the values of the parameters in \(\Par\). Parameter-dependent \textAbbr{GSPN}s are translated into parametric \textAbbr{CTMC}s, where the values of \(Par\) are encoded as the parameter vector \(\vec{\uptheta} \in A \subseteq \RR^{\lvert \Par \rvert}\). The feasible region \(A\) of parameter values can be determined according to domain requirements.
 
 \subsubsection{Reward nets}
 
-Generalized stochastic Petri nets can specify Markov reward models are well as \textAbbr{CTMC}s. The \emph{reward expression} \(r \in \Expr_P\) is an algebraic expression which may refer to token counts of places. The reward expression \(r\) is translated into a reward vector \(\vec{r}\) upon analysis in order to calculate expectations and answer queries regarding the reward value.
+Generalized stochastic Petri nets can specify not only \textAbbr{CTMC}s, but also Markov reward models. The \emph{reward expression} \(r \in \Expr_P\) is an algebraic expression which may refer to token counts of places. The reward expression \(r\) is translated into a reward vector \(\vec{r}\) upon analysis in order to calculate expectations and answer queries regarding the reward value.
 
 In the case of parameter-dependent \textAbbr{GSPN}s the reward expression may depend on the values of the parameters, such that we have \(r \in \Expr_{P, \Par}\).
 

@@ -1,7 +1,7 @@
 \chapter{Modular formalism for stochastic~models}
 \label{chap:rgspn}
 
-In this chapter we turn to stochastic modeling approaches with modules to propose a formalism for the \emph{modules} (or \emph{fragments}) of the stochastic model corresponding to the analyzed aspects of the engineering model. The transformation, which is discussed in \cref{chap:transform}, will instantiate the modules specified by the user to automatically derive the analysis model.
+In this chapter we turn to modular stochastic modeling approaches to propose a formalism for the \emph{modules} (or \emph{fragments}) of stochastic models corresponding to the analyzed aspects of engineering models. The transformation, which is discussed in \cref{chap:transform}, will instantiate the modules specified by the user to automatically derive an analysis model.
 
 As stated in our introduction in \vref{sec:intro:approach}, formal models should be based on a stochastic formalism that has sufficient descriptive power to support engineering practice. In addition, compatibility of the derived models with existing stochastic verification tools should be ensured so that recent developments in formal methods may be leveraged for high-performance analysis. Hence reusing an existing formalism is dictated by both \circled{1}~ease of use and \circled{2}~portability.
 
@@ -9,7 +9,7 @@ Analysis tools usually separate the input formal model and the \emph{query} to b
 
 After briefly reviewing related work, we describe our proposed formalism based on modular Petri nets, an extension of the \textabbr{ISO}/\textabbr{IEC}~15909-1:\citeyear{ISO1590912004} standard on High-level Petri nets with a formally defined module concept~\citep{Kindler09modular}.
 
-Petri nets and their extension to stochastic modeling, generalized stochastic Petri nets (\textAbbr{GSPN}s) are a widely used formalism for the analysis of software and hardware systems~\citep{Murata89petri}. Various tools support \textAbbr{GSPN}s, such as \textabbr{SPNP}~\citep{Hirel00spnp}, \textabbr{SMART}~\citep{Ciardo06smart}, M\"obius~\citep{Courtney09mobius}, Great\mixedabbr{SPN}~\citep{Babar10greatspn} and Petri\-Dot\-Net~\citep{Voros17pdn}. Hence we believe most of the target audience of our transformation design-space exploration approach are familiar with them. In addition, to aid finding bugs in the analysis models and to contribute to the \circled{1}~ease of use, static typing, which was first proposed for modular high-level Petri nets by \citet{Kindler07modular}, is supported for both the stochastic model and queries.
+Petri nets and their extension to stochastic modeling, generalized stochastic Petri nets (\textAbbr{GSPN}s) are a widely used formalism for the analysis of software and hardware systems~\citep{Murata89petri}. Various tools support \textAbbr{GSPN}s, such as \textabbr{SPNP}~\citep{Hirel00spnp}, \textabbr{SMART}~\citep{Ciardo06smart}, M\"obius~\citep{Courtney09mobius}, Great\mixedabbr{SPN}~\citep{Babar10greatspn} and Petri\-Dot\-Net~\citep{Voros17pdn}. Hence we believe most of the target audience of our transformation-based design-space exploration approach is familiar with them. In addition, to aid finding bugs in the analysis models and to contribute to the \circled{1}~ease of use, static typing, which was first proposed for modular high-level Petri nets by \citet{Kindler07modular}, is supported for both the stochastic model and the queries.
 
 Models are serialized in the \textabbr{ISO}/\textabbr{IEC}~15909-2:\citeyear{ISO1590922011} \textabbr{PNML} format for \circled{2}~compatibility with a wide variety of external tools.
 
@@ -18,19 +18,19 @@ In order to \circled{3} generate queries for the stochastic models, we follow \c
 \section{Related work: modular stochastic modeling}
 \label{sec:rgspn:relwork}
 
-In this section we briefly review some existing approaches for modular construction of logical and stochastic formal models, as well as for the specification of properties and metrics of interest over such models. For an overview on performance evaluation techniques for particular component-based software engineering languages, which contrasts with our present work that aims to be generic in the engineering \textabbr{DSL}, we direct the interested reader to the survey by~\citet{Koziolek10review}. 
+In this section we briefly review some existing approaches for modular construction of logical and stochastic formal models, as well as for the specification of properties and metrics of interest over such models. For an overview on performance evaluation techniques for particular component-based software engineering languages, which contrast with our present work that aims to be generic in the engineering \textabbr{DSL}, we direct the interested reader to the survey by~\citet{Koziolek10review}. 
 
-We are especially interested in \emph{modular} formalisms that allow assembling structured models from modules (or fragments). While arbitrary combination of modules leads to high expressivity, it also restricts the opportunities for \emph{compositional} verification. On the other hand, a formalism is compositional if the properties of model can be verified recursively by verifying simpler properties of its constituent components. These models are often constructed using \emph{composition operators} that restrict arbitrary modularity in order to enforce property preservation.
+We are especially interested in \emph{modular} formalisms that allow assembling structured models from modules (or fragments). While arbitrary combination of modules leads to high expressivity, it also restricts the opportunities for \emph{compositional} verification. Conversely, a formalism is compositional if the properties of model can be verified recursively by verifying simpler properties of its constituent components. These models are often constructed using \emph{composition operators} that restrict arbitrary modularity in order to enforce property preservation.
 
 We opt for modularity instead of compositionality to avoid restricting the model transformations that will automatically assemble the stochastic models according to an architectural \textabbr{DSL} instance. However, this means solution techniques will have to consider the assembled model in its entierty and cannot depend on preservation of the properties of the components.
 
 \subsection{Modeling formalisms}
 
-Continuous-time Markov chains (\textAbbr{CTMC}s) are common tools for the reliability and performability prediction of critical systems~\citepeg{Reibman89transient}. However, instead of modeling with \textAbbr{CTMC}s directly, usually higher-level formalisms are used to obtain more compact models. The semantics of these models are defined in terms of \textAbbr{CTMC}s or related stochastic processes, such as Markov regenerative processes~\citep{Logothetis95mrm,Telek96mrm}. Usually the higher-level formalism belongs to one of these three classes:
+Continuous-time Markov chains (\textAbbr{CTMC}s) are common tools for the reliability and performability prediction of critical systems~\citepeg{Reibman89transient}. However, instead of modeling with \textAbbr{CTMC}s directly, often higher-level formalisms are used to obtain more compact models. The semantics of these models are defined in terms of \textAbbr{CTMC}s or related stochastic processes, such as Markov regenerative processes~\citep{Logothetis95mrm,Telek96mrm}. Usually the higher-level formalism belongs to one of these three classes:
 
 \newpara \textbf{Queuing networks} (\textAbbr{QN}s) describe the routing of \emph{customers} or \emph{work items} between \emph{queues}. The times spent in queues are described by random variables. The design and analysis of performance models based on hierarchical \textAbbr{QN}s were surveyed by \citet{Smith11interoperability}.
 
-\newpara \textbf{Stochastic Petri nets} (\textAbbr{SPN}s) are Petri nets where transitions are equiped with expontentially distributed \emph{firing delays}. Generalized stochastic Petri nets (\textAbbr{GSPN}s), may contain transitions with either exponentially distributed delays and \emph{immediate} firing~\citep{Marsan84gspn}. Moreover, deterministic~\citep{Logothetis95mrm} and phase-type distributed~\citep{Longo13phasetype} delays may also be incorporated; however, this makes verification significantly more complicated. Another generalization is the stochastic activity network formalism, where arbitrary input and output gates are allowed~\citep{Sanders01san}.
+\newpara \textbf{Stochastic Petri nets} (\textAbbr{SPN}s) are Petri nets where transitions are equiped with expontentially distributed \emph{firing delays}. Generalized stochastic Petri nets (\textAbbr{GSPN}s) may contain transitions with either exponentially distributed delays and \emph{immediate} firing~\citep{Marsan84gspn}. Moreover, deterministic~\citep{Logothetis95mrm} and phase-type distributed~\citep{Longo13phasetype} delays may also be incorporated; however, this makes verification significantly more complicated. Another generalization is the stochastic activity network formalism, where arbitrary input and output gates are allowed~\citep{Sanders01san}.
 
 \newpara \textbf{Stochastic process algebras} incorporate random timings into the denotational semantics of process calculi~\citep{Hermanns02algebra} while allowing compositional verification. However, composition is syntactically restricted to set of allowed process operators, such as parallel and sequential composition of two subprocesses. An example formalism of this class is the Performance Enhanced Process Algebra (\textabbr{PEPA}) defined by \citet{Hillston95pepa}.
 
@@ -41,7 +41,7 @@ Modularity in various Petri net formalisms was surveyed by \citet{Marechal12modu
 \newpara \textbf{Syntactic (na\"\i ve) approaches to modularity} construct analysis models from modules by structural sharing or merging of model elements. \citet{Marechal12modular} refer to this approach as na\"\i ve because often the full analysis model must be assembled to determine its behavior. Thus compositional verification approaches based on the properties of modules are of limited use. However, this approach affords the greatest freedom to users when they define and assemble modules.
 
 Stochastic automata networks\footnote{Perhaps confusingly, stochastic \emph{activity} networks and stochastic \emph{automata} networks are both often abbreviated as \textAbbr{SAN}s. We will refrain from abbreviating either.} formalize the hierarchical structuring of \textAbbr{CTMC}s. Actions of the same \emph{label} can be shared among automata for modeling communicating parallel systems. Labels are also a popular way of merging places~(state variables) and transitions~(actions) in Petri nets; among the 18 variants surveyed by \citet{Marechal12modular} 11 used syntactic sharing of elements with equal labels. 
-\citet{Bernardi03building} proposed a methodology to construct stochastic Petri nets by merging places and transitions according to their labels as part of the DepAu\mixedabbr{DE} project for dependability analysis. \citet{Lopez04activitydiagram} developed a transformation from \textabbr{UML} activity diagram to stochastic Petri nets with the use of labeled Petri nets. \citet{Kuhne09explicit} proposed a label-based model transformation framework that was also illustrated with Petri nets.
+\citet{Bernardi03building} proposed a methodology to construct stochastic Petri nets by merging places and transitions according to their labels as part of the DepAu\mixedabbr{DE} project for dependability analysis. \citet{Lopez04activitydiagram} developed a transformation from \textabbr{UML} activity diagrams to stochastic Petri nets with the use of labeled Petri nets. \citet{Kuhne09explicit} proposed a label-based model transformation framework that was also illustrated with Petri nets.
 
 Syntactic merging is implemented in various stochastic analysis tools. Great\mixedabbr{SPN} provides support for labeled \textAbbr{GSPN}s~\citep{Bernardi00compositionality}. M{\"o}bius lets users compose sub-models by sharing either state variables or actions~\citep{Courtney09mobius}; however, the two approaches cannot be mixed. The \textabbr{PRISM} model checker allows both global state variables and synchronization on common actions~\citep{Kwiatkowska11prism}.
 
@@ -51,7 +51,7 @@ The leader-follower style composition in modular Petri nets proposed by \citet{K
 
 \newpara \textbf{Synchronous or asynchronous message passing} can serve as a means to assemble larger models from modules. The Behavior-Interactions-Priority~(\textabbr{BIP}) formalism presents a rigorous approach to the composition of state-based model using an algebra of \emph{connectors} that transmit synchronous messages~\citep{Basu06bip}. A stochastic extension of \textabbr{BIP} was proposed by \citet{Nouri15sbip} for the composition of discrete-time probabilistic automata. On the other hand, hierarchical queuing networks constructed from simpler modules by model transformation~\citepeg{Moreno08interchange} can be viewed as models on synchronously communicating components. Recently, a composition framework was proposed by \citet{Graics17theta} that supports mixing synchronous and asynchronous communication; however, it does not facilitate stochastic modeling.
 
-\newpara \textbf{Object-oriented approaches} incorporate dynamic instantiation of modules into the operation semantics of the formalism. In Petri nets the net-within-net paradigm is employed most frequently, which allows higher level module operate on dynamically instantiated modules as tokens. An example of this class is the \emph{reference net} formalism implemented by the Renew integrated development environment~\citep{Cabac16renew}.
+\newpara \textbf{Object-oriented approaches} incorporate dynamic instantiation of modules into the operation semantics of the formalism. In Petri nets the net-within-net paradigm is employed most frequently, which allows higher level modules operate on dynamically instantiated modules as tokens. An example of this class is the \emph{reference net} formalism implemented by the Renew integrated development environment~\citep{Cabac16renew}.
 
 \subsection{Query specifications}
 \label{ssec:rgspn:relwork-query}
@@ -68,7 +68,7 @@ Several logics have been developed to study temporal and stochastic properties. 
 
 \subsubsection{Queries for component-based models}
 
-An extension for \textabbr{UML} class diagrams was proposed by \citet{Bernardi03building} to construct stochastic metrics and property specifications for software models. Special derived features are added to represent model parameters, metrics and dependability requirements (prefixed with \enquote{/}, \enquote{\$} and \enquote{/\$}, respectively). \citet{Bernardi04trio} also incorporated \textabbr{TRIO} language for temporal property specification.
+An extension for \textabbr{UML} class diagrams was proposed by \citet{Bernardi03building} to construct stochastic metrics and property specifications for software models. Special derived features are added to represent model parameters, metrics and dependability requirements (prefixed with \enquote{/}, \enquote{\$} and \enquote{/\$}, respectively). \citet{Bernardi04trio} also incorporated the \textabbr{TRIO} language for temporal property specification.
 
 Measure Specification Language (\textabbr{MSL}) uses first-order logic to specify reward structures for component-based stochastic models~\citep{Aldini07msl}. \citet{Aldini11combining} combined \textabbr{MSL} with \textabbr{CSRL} to extend its expressive power to temporal properties.
 
@@ -89,7 +89,7 @@ In this section we propose the specification of modules for \textabbr{GSPN}s sim
 
 To address these challenges, we base our approach on modular Petri nets~\citep{Kindler01modular}, which define modules as a collection of \emph{symbols} (also referred to as \emph{nodes}) and the \emph{arcs} between them. Petri net places and transitions are represented as symbols. A symbol may either be \emph{concrete} symbol or a \emph{reference} to another symbol. \emph{Imports} of a module are references that are pointed to \emph{exports} of ther modules when the module is instantiated.
 
-A module may only specify additional information about a concrete symbol, such as the initial marking of a concrete place or the rate of a timed transition. Thus there is a master-slave relationship between concrete and reference symbols, which avoids contradictions in assembled models. The specification of measures and queries is restricted analogously.
+A module may only specify additional information about a concrete symbol, such as the initial marking of a concrete place or the rate of a timed transition. Thus there is a leader-follower relationship between concrete and reference symbols, which avoids contradictions in assembled models. The specification of measures and queries is restricted analogously.
 
 We incorporate three new symbol \emph{kinds} into modular Petri nets to construct modular \textabbr{GSPN}s. In addition, an \emph{expression language} is proposed to specify the values of both the stochastic attributes of the model elements, such as transition firing rates, and the performance measures and queries of interest. Circularity in models is avoided by an adapting strict typing to mark invalid dependencies as type errors. This approach was inspired by the work of~\citet{Kindler07modular} on strictly typed colored Petri net modules. We call the resulting formalism with extended symbols, expressions and typing \emph{reference generalized stochastic Petri nets} (\textabbr{RGSPN}).
 
@@ -126,13 +126,13 @@ In \vref{sec:rgspn:expression} we introduce \emph{aggregation functions} into th
 
 \subsubsection{Edges}
 
-Any relation between two \textabbr{RGSPN} symbol will be called an \emph{edge}. Three kinds of edges are introduced, which are \emph{arcs}, \emph{reference assignments} and \emph{collection memberships}.
+Any relation between two \textabbr{RGSPN} symbols will be called an \emph{edge}. Three kinds of edges are introduced, which are \emph{arcs}, \emph{reference assignments} and \emph{collection memberships}.
 
 Petri net arcs between transitions and places may be \emph{output}, \emph{input} or \emph{inhibitor} arcs. Either end may be a reference to an appropriate place or transition instead of a concrete symbol. Arcs are equipped with possibly marking-dependent \emph{inscription}, which is the number of tokens moved by the transition. If the inscription is the constant \(1\), we will omit it. Parallel arcs between the same symbols and with the same arc kind are forbidden.
 
 Reference assignments connect references to the symbol at which they point. Indirect references, i.e.~\(r_1 \assign r_2\), \(r_2 \assign s\) are possible and arbitrary chains of references may be built. In particular, an \textabbr{RGSPN} may even contain reference cycles (\(r_1 \assign r_2\), \(r_2 \assign r_1\)), or multiple, contradictory assignments (\(r \assign s_1\), \(r \assign s_2\), \(s_1 \ne s_2\)). However, \emph{inconsistent} \textAbbr{RGSPN}s cannot be transformed into \textAbbr{GSPN}s for analysis. Inconsistency handling is discussed in detail in \vref{ssec:transform:inconsistent}.
 
-Collection memberships connect collections to their member symbols. Either end of the membership edge may be a reference to a collection or an appropriate member symbol, respectively. In contrast with arcs, parallel membership edges are possible in order to express positive integer-weighted aggregations.
+Collection memberships connect collections to their member symbols. Either end of the membership edge may be a reference to a collection or an appropriate member symbol, respectively. In contrast with arcs, parallel membership edges are possible in order to express positive integer weighted aggregations.
 
 \begin{figure}
   \centering
@@ -147,7 +147,7 @@ Collection memberships connect collections to their member symbols. Either end o
 
   While the immediate transitions \symb{start\-Eating1} and \symb{start\-Eating2} have constant weights and priorities, the timed transitions all refer to different symbols in their rate expressions. Note the difference between the variables \symb{hungry\-Rate1}, \symb{hungry\-Rate2} and the parameters \symb{eating\-Rate1}, \symb{eating\-Rate2}. Although these variables and symbols are all set to real number constants, the parameters are preserved as continuously changeable quantities when the model is passed to an external tool.
 
-  The self-contained subnets \symb{philosohper1} and \symb{philosopher2} contain reference places \symb{right\-Fork1} and \symb{right\-Fork2}. The subnets are connected by reference assignments. The reference places specify no initial marking at all---not even a zero marking---, because they are slaves of the pointed master symbols \symb{left\-Fork2} and \symb{left\-Fork1}, respectively.
+  The self-contained subnets \symb{philosohper1} and \symb{philosopher2} contain reference places \symb{right\-Fork1} and \symb{right\-Fork2}. The subnets are connected by reference assignments. The reference places specify no initial marking at all---not even a zero marking---, because they are followers of the pointed leader symbols \symb{left\-Fork2} and \symb{left\-Fork1}, respectively.
 
   The performance measures \symb{thinking\-Time1} and \symb{thinking\-Time2} are added to the collection \symb{thinking\-Times}. Thus the aggregate performance measure \symb{total\-Thinking\-Time} can be formed by the aggregation operator \lit{sum}.
 \end{runningExample}
@@ -271,7 +271,7 @@ We will abuse notation such that \(\Sigma\) also stands for the set \(P \cup T_t
 
 Note the separation between timed \(T_T\) and immediate transitions \(T_i\). In \textAbbr{GSPN}s timed and immediate transitions are usually discriminated by setting \(\pi(t) = 0\) for all \(t \in T_T\)~\citep{Marsan84gspn}. However, in our setting the priority \(\pi(t)\) may contain an algebraic expression; therefore determining whether \(\pi(t) = 0\) would require nontrivial computations. By explicitly partitioning the set of transitions \(T = T_T \djcup T_i\) this computation is avoided.
  
-All quantitative aspects of the net are described by expressions \(\Expr_\Sigma\) with the exception of the values of the parameters, which must be real numbers. As any computation is forbidden inside parameter values, so that parameter synthesis tool may set new values of the parameters without needing to respect any constraints between parameter values implicit in the value computations. Explicit constraints, such as interval bounds for parameters may be added as an extension of \textAbbr{RGSPN}s; however, they are currently not supported. If multiple values depending on a shared set of parameters are needed, variable symbols with value expressions may be used instead.
+All quantitative aspects of the net are described by expressions \(\Expr_\Sigma\) with the exception of the values of the parameters, which must be real numbers. Any computation is forbidden inside parameter values, so that parameter synthesis tool may set new values of the parameters without needing to respect constraints between parameter values implicit in the value computations. Explicit constraints, such as interval bounds for parameters may be added as an extension of \textAbbr{RGSPN}s; however, they are currently not supported. If multiple values depending on a shared set of parameters are needed, variable symbols with value expressions may be used instead.
 
 Edges of the net are between pairs of arbitrary symbols, e.g.~arcs are not restricted to go from place symbols to transition symbols, because any symbol may be replaced by a reference of compatible type. However, reference assignments must assign the symbol to be pointed at to a reference, as no other symbol kind can act as an assignable.
 
@@ -323,13 +323,6 @@ In well-typed \textAbbr{RGSPN}s, where expressions and edges respect strong typi
   
 From now on all discussed \textAbbr{RGSPN}s will be assumed to be well-typed.
 
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.9]{figures/rgspn_example_typed}
-  \caption{Example \textabbr{RGSPN} with type annotations.}
-  \label{fig:rgspn:example-typed}
-\end{figure}
-
 \begin{runningExample}
   \Vref{fig:rgspn:example-typed} shows the model from \vref{ex:rgspn:example} extended with type annotations in blue. Places, transitions and parameters have their expected types \lit{place}, \lit{tran}, \(\vartype{\lit{param}}{\lit{double}}\). Variables are annotated according to their \rel{dep} and \rel{pretype}, while collections bear the collection qualifier suffix \lit{[]}.
 
@@ -342,6 +335,13 @@ From now on all discussed \textAbbr{RGSPN}s will be assumed to be well-typed.
 In this section we propose an abstract syntax for expressions that describe the quantitative aspects of \textabbr{RGSPN} models, including arc inscriptions, initial markings and firing policies in \vref{dfn:rgspn:rgspn}, as well as the performance measures and queries of interest.
 
 The expression language \(\textabbr{CTL}^*\) includes state and path operators in addition to references to net elements, basic arithmetic and logical operators. These additional operators enable defining queries concerning \textabbr{CTL}, \textabbr{LTL} or \(\textabbr{CTL}^*\) properties. Similarly to the flexibility of the type system, the syntax of expressions can be also extended if the definition of further properties, such as \textabbr{CSL} formulas are desired. Validation and interpretation of the queries, such as checking whether a \(\textabbr{CTL}^*\) formula is in \textabbr{CTL} when full \(\textabbr{CTL}^*\) is not supported, is the responsibility of the external model checking tool.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.9]{figures/rgspn_example_typed}
+  \caption{Example \textabbr{RGSPN} with type annotations.}
+  \label{fig:rgspn:example-typed}
+\end{figure}
 
 The valid expression on an \textabbr{RGSPN} signature \(\Sigma\) form the set \(\Expr_\Sigma\) described by the following \textabbr{EBNF}-like grammar:
 \begin{equation}
@@ -379,7 +379,7 @@ Variable and marking references are handled by \textsc{T-Var} and \textsc{T-Mark
 \subsection{Semantics}
 \label{ssec:rgspn:semantics}
 
-In this section we sketch the semantics of \(\Expr_\Sigma\) both for structural expression of an \textabbr{RGSPN} and for performance measures and queries. Most of the expression evaluation happens in external analysis tools when marking- and parameter-dependent expressions are interpreted to construct a \textabbr{CTMC} from the Petri net and when queries are answered. Therefore, exporting \textAbbr{RGSPN}s for external tools must be performed with care to ensure that the tool interprets the provided input according to these semantics. This may require nontrivial transformation of the expressions to the input language of the tool and may even be impossible to fully achieve when the external tool is missing some analysis features. In the latter case, the user receives an error message during export.
+In this section we sketch the semantics of \(\Expr_\Sigma\) both for structural expression of an \textabbr{RGSPN} and for performance measures and queries. Most of the expression evaluation happens in external analysis tools when marking- and parameter-dependent expressions are interpreted to construct a \textabbr{CTMC} from the Petri net and when queries are answered. Therefore, exporting \textAbbr{RGSPN}s for external tools must be performed with care to ensure that the tool interprets the provided input according to these semantics. This may require nontrivial transformation of the expressions to the input language of the tool and may even be impossible to fully achieve when the external tool is missing some analysis features. In the latter case, the user may receive an error message during export.
 
 \begin{table}[t!]
   \caption{Typing rules for expressions.}
@@ -519,7 +519,7 @@ If a symbol \(v\) of variable type is mentioned in an expression, we simply subs
 \end{equation}
 Note that if the reference \(v\) cannot be resolved or it points to an invalid symbol the interpretation is not defined.
 
-Mentioning the marking of place simply refers to the number of tokens of the place after resolving references,
+Mentioning the marking of a place simply refers to the number of tokens of the place after resolving references,
 \begin{equation}
   \llbracket \lit\# p \rrbracket = \begin{cases}
     m \mapsto m(p')\text, & \text{if \(p \leadsto p'\) and \(p' \in P\),} \\
